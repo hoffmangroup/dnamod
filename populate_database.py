@@ -11,6 +11,13 @@ Function:
 4. Using above results, populates DNA post-transciptional modification table
 '''
 
+SYNONYM_SEARCH_STR = 'Synonyms'
+IUPAC_SEARCH_STR = 'IupacNames'
+SMILES_SEARCH_STR = 'smiles'
+FORMULA_SEARCH_STR = 'Formulae'
+CHARGE_SEARCH_STR = 'charge'
+MASS_SEARCH_STR = 'mass'
+
 # Using Suds web services client for soap
 from suds.client import Client
 from sys import maxint
@@ -92,8 +99,8 @@ def filter_stars(content, stars, client):
         # print content[elements] # For Debugging
         if content[elements] == 'Invalid Input' or content[elements] == 'DNE':
             continue
-        elif content[elements].entityStar == stars and\
-             temphold.type == 'has functional parent':
+        elif (content[elements].entityStar == stars and
+              temphold.type == 'has functional parent'):
             result.append(content[elements])
     return result
 
@@ -123,29 +130,75 @@ def get_complete_bases(bases, client):
 
 def create_base_table(bases):
     with open("base.fsdb", "w+") as basefile:
-        basefile.write('#fsdb -F S baseid common_name description\n')
+        basefile.write('#fsdb -F S base_id common_name description\n')
         for base in bases:
             basefile.write(base.chebiAsciiName[0] + '  ' + base.chebiAsciiName
                            + '  ' + base.definition + '\n')
-    return
 
 
-def create_modbase_table(children, bases):
+def concatenate_name(child, attribute):
+    return ([synonym_data.data
+             for synonym_data in getattr(child, attribute)]
+            if attribute in dir(child) else [])
+
+
+def get_entity(child, attribute):
+    return ([getattr(child, attribute)]
+            if attribute in dir(child) else [])
+
+
+def create_other_tables(children, bases):
     modbase = open("mod_base.fsdb", "w+")
-    modbase.write("#fsdb -F S baseid modbaseid position_location type\n")
+    modbase.write("#fsdb -F S modbase_id position_location base_id name_id\
+                  property_id role_id cmod_id\n")
+    covmod = open("cov_modification.fsdb", "w+")
+    covmod.write("#fsdb -F S cmod_id symbol definition\n")
+    name = open("name.fsdb", "w+")
+    name.write("#fsdb -F S name_id chebi_name chebi_id iupac_name other_names\
+               smiles\n")
+    baseprop = open("base_properties.fsdb", "w+")
+    baseprop.write("#fsdb -F S property_id formula net_charge avg_mass\n")
+
+    id_counter = 0
     for base in bases:
         childlist = children[base.chebiAsciiName]
         for child in childlist:
-            # Stuff goes here
-            continue
+            modbase.write(('modbase'+str(id_counter)) + '  ' + '0' + '  ' +
+                          base.chebiAsciiName[0] + '  ' +
+                          ('name'+str(id_counter)) + '  ' +
+                          ('prop'+str(id_counter)) + '  ' + '0' + '  ' +
+                          ('covmod'+str(id_counter)) + '\n')
+
+            covmod.write(('covmod'+str(id_counter)) + '  ' + '0' + '  ' +
+                         str(child.definition) + '\n')
+
+            synonyms = concatenate_name(child, SYNONYM_SEARCH_STR)
+            iupac = concatenate_name(child, IUPAC_SEARCH_STR)
+            smiles = get_entity(child, SMILES_SEARCH_STR)
+            formula = concatenate_name(child, FORMULA_SEARCH_STR)
+            charge = get_entity(child, CHARGE_SEARCH_STR)
+            mass = get_entity(child, MASS_SEARCH_STR)
+
+            name.write('name'+str(id_counter) + '  ' + child.chebiAsciiName
+                       + '  ' + child.chebiId + '  ' + str(iupac) + '  ' +
+                       str(synonyms) + '  ' + str(smiles) + '\n')
+
+            baseprop.write('property'+str(id_counter) + '  ' +
+                           str(formula) + '  ' + str(charge) + '  ' +
+                           str(mass) + '\n')
+
+            id_counter = id_counter + 1
+
     modbase.close()
-    return
+    covmod.close()
+    name.close()
+    baseprop.close()
 
 
 def populate_tables(bases, children, client):
     create_base_table(bases)
-    create_modbase_table(children, bases)
-    return
+    create_other_tables(children, bases)
+
 
 # 1. Performs search of CHEBI database for DNA bases
 # 2. Returns chebiId and chebiAsciiName of bases
@@ -167,6 +220,5 @@ bases = get_complete_bases(bases, client)
 # 4. Using above results, populates DNA post-transciptional modification table
 print "3/4 Creating tables..."
 populate_tables(bases, children, client)
-
 print "4/4 Finishing up..."
 print "Done!"
