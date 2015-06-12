@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset = "UTF-8">
+    <title>DNA Modification Database</title>
+</head>
+
+<body>
+    <h1> {{ ChebiName }} <h1>
+    <hr>
+    <DL>
+    <DT> Description:
+    <DD> {{ Definition }} <br>
+    <p> </p>
+    <DT> Chemical Properties:
+    <DD> Chemical Formula: {{ Formula }}
+    <DD> Net Charge: {{ NetCharge }}
+    <DD> Average Mass: {{ AverageMass }} <br>
+    <p> </p>
+    <DT> Names:
+    <DD> IUPAC: {{ IupacName }}
+    <DD> SMILES: {{ Smiles }}
+    <DD> Synonyms: 
+        <ul id="Synonyms">
+        {for Synonym in Synonyms %}
+            <li> {{ Synonym }} </li>
+        {% endfor %}
+        </ul> <br>   
+    
+    <DT> CHEBI ID: {{ ChebiId }} <br>
+    <p> </p>
+    <DT> Child Of: {{ CommonName }}
+    <DD> {{ Description }}
+    </DL>
+
+</body>
+
+</html>

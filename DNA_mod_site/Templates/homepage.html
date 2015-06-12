@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset = "UTF-8">
+    <title>DNA Modification Database - Home</title>
+</head>
+
+<body>
+    {% for base in bases %}
+    <h1> {{ base }} <h1>
+        <ul>
+        {% for modification in modifications %}
+            <li> <a href= "/{{ modification }}.html" > {{ modification }}</a> </li>
+        {% endfor %}
+        </ul> <br>
+    {% endfor %}
+
+</body>
+
+</html>

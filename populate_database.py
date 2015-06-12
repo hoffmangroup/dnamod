@@ -11,12 +11,16 @@ Function:
 4. Using above results, populates DNA post-transciptional modification table
 '''
 
+# Search Variables made up of CHEBI object attributes
 SYNONYM_SEARCH_STR = 'Synonyms'
 IUPAC_SEARCH_STR = 'IupacNames'
 SMILES_SEARCH_STR = 'smiles'
 FORMULA_SEARCH_STR = 'Formulae'
 CHARGE_SEARCH_STR = 'charge'
 MASS_SEARCH_STR = 'mass'
+
+# Program Constants
+DNA_BASES = ['cytosine', 'thymine', 'adenine', 'guanine', 'uracil']
 
 # Using Suds web services client for soap
 from suds.client import Client
@@ -68,7 +72,7 @@ def search_exact_match(searchKey, client):
 
 def search_for_bases(client):
     # Initialize DNA bases
-    dnaBases = ['cytosine', 'thymine', 'adenine', 'guanine', 'uracil']
+    dnaBases = DNA_BASES
 
     # Code for debugging
     # print dnaBases[0]
@@ -130,10 +134,10 @@ def get_complete_bases(bases, client):
 
 def create_base_table(bases):
     with open("base.fsdb", "w+") as basefile:
-        basefile.write('#fsdb -F S base_id common_name description\n')
+        basefile.write('#fsdb\t-F t\tbase_id\tcommon_name\tdescription\n')
         for base in bases:
-            basefile.write(base.chebiAsciiName[0] + '  ' + base.chebiAsciiName
-                           + '  ' + base.definition + '\n')
+            basefile.write(base.chebiAsciiName[0] + '\t' + base.chebiAsciiName
+                           + '\t' + base.definition + '\n')
 
 
 def concatenate_name(child, attribute):
@@ -149,27 +153,25 @@ def get_entity(child, attribute):
 
 def create_other_tables(children, bases):
     modbase = open("mod_base.fsdb", "w+")
-    modbase.write("#fsdb -F S modbase_id position_location base_id name_id\
-                  property_id role_id cmod_id\n")
+    modbase.write("#fsdb\t-F t\tmodbase_id\tposition_location\tbase_id\tname_id\tproperty_id\trole_id\tcmod_id\n")
     covmod = open("cov_modification.fsdb", "w+")
-    covmod.write("#fsdb -F S cmod_id symbol definition\n")
+    covmod.write("#fsdb\t-F t\tcmod_id\tsymbol\tdefinition\n")
     name = open("name.fsdb", "w+")
-    name.write("#fsdb -F S name_id chebi_name chebi_id iupac_name other_names\
-               smiles\n")
+    name.write("#fsdb\t-F t\tname_id\tchebi_name\tchebi_id\tiupac_name\tother_names\tsmiles\n")
     baseprop = open("base_properties.fsdb", "w+")
-    baseprop.write("#fsdb -F S property_id formula net_charge avg_mass\n")
+    baseprop.write("#fsdb\t-F t\tproperty_id\tformula\tnet_charge\tavg_mass\n")
 
     id_counter = 0
     for base in bases:
         childlist = children[base.chebiAsciiName]
         for child in childlist:
-            modbase.write(('modbase'+str(id_counter)) + '  ' + '0' + '  ' +
-                          base.chebiAsciiName[0] + '  ' +
-                          ('name'+str(id_counter)) + '  ' +
-                          ('prop'+str(id_counter)) + '  ' + '0' + '  ' +
+            modbase.write(('modbase'+str(id_counter)) + '\t' + '0' + '\t' +
+                          base.chebiAsciiName[0] + '\t' +
+                          ('name'+str(id_counter)) + '\t' +
+                          ('prop'+str(id_counter)) + '\t' + '0' + '\t' +
                           ('covmod'+str(id_counter)) + '\n')
 
-            covmod.write(('covmod'+str(id_counter)) + '  ' + '0' + '  ' +
+            covmod.write(('covmod'+str(id_counter)) + '\t' + '0' + '\t' +
                          str(child.definition) + '\n')
 
             synonyms = concatenate_name(child, SYNONYM_SEARCH_STR)
@@ -179,12 +181,12 @@ def create_other_tables(children, bases):
             charge = get_entity(child, CHARGE_SEARCH_STR)
             mass = get_entity(child, MASS_SEARCH_STR)
 
-            name.write('name'+str(id_counter) + '  ' + child.chebiAsciiName
-                       + '  ' + child.chebiId + '  ' + str(iupac) + '  ' +
-                       str(synonyms) + '  ' + str(smiles) + '\n')
+            name.write('name'+str(id_counter) + '\t' + child.chebiAsciiName
+                       + '\t' + child.chebiId + '\t' + str(iupac) + '\t' +
+                       str(synonyms) + '\t' + str(smiles) + '\n')
 
-            baseprop.write('property'+str(id_counter) + '  ' +
-                           str(formula) + '  ' + str(charge) + '  ' +
+            baseprop.write('prop'+str(id_counter) + '\t' +
+                           str(formula) + '\t' + str(charge) + '\t' +
                            str(mass) + '\n')
 
             id_counter = id_counter + 1
