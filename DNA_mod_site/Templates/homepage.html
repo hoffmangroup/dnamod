@@ -4,14 +4,24 @@
 <head>
     <meta charset = "UTF-8">
     <title>DNA Modification Database - Home</title>
+
+    <link href="netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
+
+    <style type="text/css">
+      @media (min-width: 768px) { .lead { padding-top: 1ex; } }
+      .unstyled { padding-left: 1em; text-indent: -1em; }
+      @media (max-width: 26.07em) { #hidesmall { display: none;} }
+
+    </style>
 </head>
 
 <body>
     {% for base in bases %}
-    <h1> {{ base }} <h1>
+        <h1> {{ base }} </h1>
+        {% set baseloop = loop %}
         <ul>
-        {% for modification in modifications %}
-            <li> <a href= "/{{ modification }}.html" > {{ modification }}</a> </li>
+        {% for modification in modifications[base] %}
+            <li> <a href= "{{ modification }}.html" > {{ modification }}</a> </li>
         {% endfor %}
         </ul> <br>
     {% endfor %}

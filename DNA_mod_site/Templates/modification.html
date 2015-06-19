@@ -4,40 +4,49 @@
 <head>
     <meta charset = "UTF-8">
     <title>DNA Modification Database - {{ ChebiName }}</title>
+
+    <link href="netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type='text/css'>
+
+    <style type="text/css">
+      @media (min-width: 768px) { .lead { padding-top: 1ex; } }
+      .unstyled { padding-left: 1em; text-indent: -1em; }
+      @media (max-width: 26.07em) { #hidesmall { display: none;} }
+
+    </style>
 </head>
 
 <body>
-    <h1> {{ ChebiName }} <h1>
+    <h1> {{ ChebiName }} </h1>
     <hr>
     <DL>
-    <DT> Description:
+    <DT> <h2> Description: </h2>
     <DD> {{ Definition }} <br>
     <p> </p>
-    <DT> Chemical Properties:
+    <DT> <h2> Chemical Properties: </h2>
     <DD> Chemical Formula: {{ Formula }}
     <DD> Net Charge: {{ NetCharge }}
     <DD> Average Mass: {{ AverageMass }} <br>
     <p> </p>
-    <DT> Names:
+    <DT> <h2> Names: </h2>
     <DD> IUPAC: {{ IupacName }}
     <DD> SMILES: {{ Smiles }}
-    <DD> Synonyms: 
+    <DD> Synonyms:
         <ul id="Synonyms">
         {% for Synonym in Synonyms %}
             <li> {{ Synonym }} </li>
         {% endfor %}
         </ul> <br>   
     
-    <DT> CHEBI ID: {{ ChebiId }} <br>
+    <DT> <h2> CHEBI ID: <a href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ ChebiId }}" > {{ ChebiId }} </a> <br> </h2>
     <p> </p>
-    <DT> Child Of: {{ CommonName }}
+    <DT> <h2> Child Of: {{ CommonName }} </h2>
     <DD> {{ Description }} <br>
     </DL>
 
 </body>
 
 <footer>
-    <a href= "/homepage.html" > Home</a>
+    <a href= "homepage.html" > Home</a>
 </footer>
 
 </html>

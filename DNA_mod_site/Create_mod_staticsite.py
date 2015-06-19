@@ -11,9 +11,12 @@ Function:
 '''
 # Using Jinja2 as templating engine
 import os
+import csv
 import subprocess
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
+
+BASES = 'Adenine','Thymine','Cytosine','Guanine','Uracil'
 
 def get_modifications():
     # FSDB command designed to get database info:
@@ -52,29 +55,34 @@ def create_html_pages():
 
     # result file header:
     # #fsdb -F t property_id cmod_id name_id base_id modbase_id position_location role_id common_name description chebi_name chebi_id iupac_name other_names smiles symbol definition formula net_charge avg_mass
-    with open('/mnt/work1/users/home2/asood/DNA_Base_Database/result2.fsdb', 'r') as f:
-        for line in f:
-            if line[0] == '#':
-                continue
-            data = line.split('\t')
+    for BASE in BASES:
+        links = []
+        with open('/mnt/work1/users/home2/asood/DNA_Base_Database/result.fsdb', 'r') as f1:
+            reader = csv.reader(f1, dialect='excel-tab')
+            for line in reader:
+                if line[0][0] == '#':
+                    continue
+                #data = line.split('\t')
+                data = line
+                if data[3] == BASE[0].lower():
+                    pwd = '/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/static/'
+                    if not os.path.exists(pwd):
+                        os.makedirs(pwd)
 
-            pwd = '/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/static/'
-            if not os.path.exists(pwd):
-                os.makedirs(pwd)
+                    writefile = '/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/static/'+ data[9] +'.html'
+                    f = open(writefile, 'w+')
+                    temp = data[12]
+                    temp = temp[1:-1]
+                    synonyms = temp.split(', ')
+                    iupac = data[11]
+                    iupac = iupac[1:-1]
+                    render = page_template.render(ChebiName=data[9], Definition=data[15], Formula=data[16], NetCharge=data[17], AverageMass=data[18], IupacName=iupac, Smiles=data[13], Synonyms=synonyms, ChebiId=data[10], CommonName=data[7],Description=data[8])
+                    f.write(render)
+                    f.close()
+                    link = data[9]
+                    links.append(link)
 
-            writefile = '/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/static/' + data[9] +'.html'
-            f = open(writefile, 'w+')
-            temp = data[12]
-            temp = temp[1:-1]
-            synonyms = temp.split(', ')
-            iupac = data[11]
-            iupac = iupac[1:-1]
-            render = page_template.render(ChebiName=data[9], Definition=data[15], Formula=data[16], NetCharge=data[17], AverageMass=data[18], IupacName=iupac, Smiles=data[13], Synonyms=synonyms, ChebiId=data[10], CommonName=data[7],Description=data[8])
-            f.write(render)
-            f.close()
-            link = data[9]
-            links.append(link)
-    homepageLinks['cytosine'] = links
+        homepageLinks[BASE] = links
     return homepageLinks
 
 def create_homepage(homepageLinks):
@@ -84,15 +92,16 @@ def create_homepage(homepageLinks):
     page_template = env.get_template('modification.html')
     home_template = env.get_template('homepage.html')
 
-    links = homepageLinks['cytosine']
-
     writefile = '/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/static/homepage.html'
     f = open(writefile, 'w+')
-    render = home_template.render(bases=['cytosine'], modifications = links)
+    render = home_template.render(bases=BASES, modifications = homepageLinks)
     f.write(render)
     f.close()
 
 
-get_modifications()
+#get_modifications()
 links = create_html_pages()
+#print links['Adenine']
+#print links['Cytosine']
 create_homepage(links)
+print "Static Site Generated"
