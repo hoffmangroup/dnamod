@@ -18,6 +18,9 @@ SMILES_SEARCH_STR = 'smiles'
 FORMULA_SEARCH_STR = 'Formulae'
 CHARGE_SEARCH_STR = 'charge'
 MASS_SEARCH_STR = 'mass'
+CITATION_SEARCH_STR = 'Citations'
+ONTOLOGY_SEARCH_STR = "OntologyParents"
+ONTOLOGY_HAS_ROLE = "has role"
 
 # Program Constants
 DNA_BASES = ['cytosine', 'thymine', 'adenine', 'guanine', 'uracil']
@@ -151,15 +154,25 @@ def get_entity(child, attribute):
             if attribute in dir(child) else [])
 
 
+def get_roles(child, attribute, selector):
+    return ([ontologyObject
+             for ontologyObject in getattr(child, attribute)
+            if ontologyObject.type == ONTOLOGY_HAS_ROLE])
+
+
 def create_other_tables(children, bases):
     modbase = open("mod_base.fsdb", "w+")
-    modbase.write("#fsdb\t-F t\tmodbase_id\tposition_location\tbase_id\tname_id\tproperty_id\trole_id\tcmod_id\n")
+    modbase.write("#fsdb\t-F t\tmodbase_id\tposition_location\tbase_id\tname_id\tproperty_id\tcitation_id\tcmod_id\trole_id\n")
     covmod = open("cov_modification.fsdb", "w+")
     covmod.write("#fsdb\t-F t\tcmod_id\tsymbol\tdefinition\n")
     name = open("name.fsdb", "w+")
     name.write("#fsdb\t-F t\tname_id\tchebi_name\tchebi_id\tiupac_name\tother_names\tsmiles\n")
     baseprop = open("base_properties.fsdb", "w+")
     baseprop.write("#fsdb\t-F t\tproperty_id\tformula\tnet_charge\tavg_mass\n")
+    citation = open("citations.fsdb", "w+")
+    citation.write("#fsdb\t-F t\tcitation_id\tlink\n")
+    roletable = open("roles.fsdb", "w+")
+    roletable.write("#fsdb\t-F t\trole_id\trole\trole_chebi_id\n")
 
     id_counter = 0
     for base in bases:
@@ -168,8 +181,8 @@ def create_other_tables(children, bases):
             modbase.write(('modbase'+str(id_counter)) + '\t' + '0' + '\t' +
                           base.chebiAsciiName[0] + '\t' +
                           ('name'+str(id_counter)) + '\t' +
-                          ('prop'+str(id_counter)) + '\t' + '0' + '\t' +
-                          ('covmod'+str(id_counter)) + '\n')
+                          ('prop'+str(id_counter)) + '\t' + 'cit' + str(id_counter) + '\t' +
+                          ('covmod'+str(id_counter)) + '\t' + 'role'+str(id_counter) + '\n')
 
             covmod.write(('covmod'+str(id_counter)) + '\t' + '0' + '\t' +
                          str(child.definition) + '\n')
@@ -180,6 +193,11 @@ def create_other_tables(children, bases):
             formula = concatenate_name(child, FORMULA_SEARCH_STR)
             charge = get_entity(child, CHARGE_SEARCH_STR)
             mass = get_entity(child, MASS_SEARCH_STR)
+            citations = concatenate_name(child, CITATION_SEARCH_STR)
+
+            roles = get_roles(child, ONTOLOGY_SEARCH_STR, ONTOLOGY_HAS_ROLE)
+            role_names = [role.chebiName for role in roles]
+            role_ids = [role.chebiId for role in roles]
 
             name.write('name'+str(id_counter) + '\t' + child.chebiAsciiName
                        + '\t' + child.chebiId + '\t' + str(iupac) + '\t' +
@@ -189,13 +207,19 @@ def create_other_tables(children, bases):
                            str(formula) + '\t' + str(charge) + '\t' +
                            str(mass) + '\n')
 
+            citation.write('cit'+str(id_counter) + '\t' + str(citations) + '\n')
+
+            roletable.write('role'+str(id_counter) + '\t' + str(role_names) + '\t' +
+                       str(role_ids) + '\n')
+
             id_counter = id_counter + 1
 
     modbase.close()
     covmod.close()
     name.close()
     baseprop.close()
-
+    citation.close()
+    roletable.close()
 
 def populate_tables(bases, children, client):
     create_base_table(bases)

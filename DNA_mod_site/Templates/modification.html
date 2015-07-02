@@ -5,48 +5,86 @@
     <meta charset = "UTF-8">
     <title>DNA Modification Database - {{ ChebiName }}</title>
 
-    <link href="netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type='text/css'>
+    <!-- <link href="netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type='text/css'> -->
+    <!-- <link href="http://meyerweb.com/eric/tools/css/reset/reset.css" rel="stylesheet" type='text/css'> -->
+    <link href="css/style.css" rel="stylesheet" type='text/css'>
 
-    <style type="text/css">
-      @media (min-width: 768px) { .lead { padding-top: 1ex; } }
-      .unstyled { padding-left: 1em; text-indent: -1em; }
-      @media (max-width: 26.07em) { #hidesmall { display: none;} }
-
-    </style>
 </head>
 
 <body>
-    <h1> {{ ChebiName }} </h1>
-    <hr>
-    <DL>
-    <DT> <h2> Description: </h2>
-    <DD> {{ Definition }} <br>
-    <p> </p>
-    <DT> <h2> Chemical Properties: </h2>
-    <DD> Chemical Formula: {{ Formula }}
-    <DD> Net Charge: {{ NetCharge }}
-    <DD> Average Mass: {{ AverageMass }} <br>
-    <p> </p>
-    <DT> <h2> Names: </h2>
-    <DD> IUPAC: {{ IupacName }}
-    <DD> SMILES: {{ Smiles }}
-    <DD> Synonyms:
-        <ul id="Synonyms">
-        {% for Synonym in Synonyms %}
-            <li> {{ Synonym }} </li>
-        {% endfor %}
-        </ul> <br>   
-    
-    <DT> <h2> CHEBI ID: <a href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ ChebiId }}" > {{ ChebiId }} </a> <br> </h2>
-    <p> </p>
-    <DT> <h2> Child Of: {{ CommonName }} </h2>
-    <DD> {{ Description }} <br>
-    </DL>
+    <div class= "TitleBlock" >
+        <h1> {{ ChebiName }} </h1>
+        <!--<h2> Child Of: </h2> -->
+        <a href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ ParentLink }}" > {{ CommonName }} </a>
+    </div>
 
+    <img id="chemicalStructureImage" src="images/{{ ChebiName }}.svg" alt="{{ ChebiName }} Image Not Availabe" height='500' width='500'>
+
+    <div class="BasicInfo">
+        <h2> Description: </h2>
+        <p> {{ Definition }} </p>
+
+
+        <h2> Chemical Properties: </h2>
+        <ul>
+            <li> Chemical Formula: {{ Formula }} </li>
+            <li> Net Charge: {{ NetCharge }} </li>
+            <li> Average Mass: {{ AverageMass }} </li>
+        </ul>
+    </div>
+
+    <div class="Names">
+        <h2> Names: </h2>
+        <ul>
+            <li> IUPAC: {{ IupacName }} </li>
+            <li> SMILES: {{ Smiles }} </li>
+            <li> Synonyms: </li>
+                <ul id="Synonyms">
+                {% if Synonyms|length %}
+                    {% for Synonym in Synonyms %}
+                        <li> {{ Synonym }} </li>
+                    {% endfor %}
+                {% else %}
+                    <li> No Synonyms </li>
+                {% endif %}
+                </ul>
+        </ul>
+    </div>
+
+    <div class="Roles">
+        <h2> Roles: </h2>
+        <ul id="Roles">
+            {% if Roles|length %}
+                {% for Role in Roles %}
+                    <li> <a href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ RolesChebi[loop.index-1] }}" > {{ Role }} </a> </li>
+                {% endfor %}
+             {% else %}
+                <li> No Roles </li>
+             {% endif %}
+        </ul>
+    </div>
+
+    <div class="Links">
+        <h2 id="Inline"> CHEBI ID: </h2> 
+        <a id="Inline" href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ ChebiId }}" > {{ ChebiId }} </a> <br>
+
+        <h2> Citations: </h2>
+        <ul id="Citations">
+             {% if Citations|length %}
+                {% for Citation in Citations %}
+                    <li> PubMed Id: <a href= "http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation }}" > {{ Citation }} </a> </li>
+                {% endfor %}
+             {% else %}
+                <li> No Citations </li>
+             {% endif %}
+        </ul>
+    </div>
 </body>
 
 <footer>
-    <a href= "homepage.html" > Home</a>
+    <a href= "index.html" > Home</a>
+    <a href= "about.html" > About</a>
+    <a href= "contact.html" > Contact</a>
 </footer>
 
 </html>

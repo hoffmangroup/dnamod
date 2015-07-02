@@ -12,11 +12,25 @@ Function:
 # Using Jinja2 as templating engine
 import os
 import csv
+import openbabel
+import pybel
 import subprocess
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
 
-BASES = 'Adenine','Thymine','Cytosine','Guanine','Uracil'
+BASES = 'Adenine','Thymine','Cytosine','Guanine','Uracil', 'Other Links'
+BASE_DICT = {'adenine': 'CHEBI:16708','thymine': 'CHEBI:17821','cytosine': 'CHEBI:16040','guanine': 'CHEBI:16235','uracil': 'CHEBI:17568'}
+
+def render_image(smiles, name):
+    pwd = '/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/static/images'
+    if not os.path.exists(pwd):
+        os.makedirs(pwd)
+    if not smiles:
+        return
+    path = pwd + '/' + name + '.svg'
+    mol = pybel.readstring('smi', smiles)
+    mol.write('svg', path, overwrite=True)
+
 
 def get_modifications():
     # FSDB command designed to get database info:
@@ -41,6 +55,25 @@ def get_modifications():
     '''
 
 
+def check_whitelist(molName):
+    with open('/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/static/whitelist/whitelist', 'r') as whitelist:
+        reader = csv.reader(whitelist, dialect='excel-tab')
+        for line in reader:
+            if line == []:
+                continue
+            if len(line) > 1:
+                #print line
+                stringline = line[0]
+                stringline = stringline.strip()
+                flag = line[1]
+                #print stringline
+                #print flag
+                if len(line) > 1:
+                    if stringline == molName and flag == '*':
+                        return True
+        return False
+
+
 def create_html_pages():
     # Create a Jinja 2 environment object and load in templates
     env = Environment()
@@ -52,6 +85,7 @@ def create_html_pages():
     # Dictionary to store links for hompage
     homepageLinks = {}
     links = []
+    blacklist = []
 
     # result file header:
     # #fsdb -F t property_id cmod_id name_id base_id modbase_id position_location role_id common_name description chebi_name chebi_id iupac_name other_names smiles symbol definition formula net_charge avg_mass
@@ -64,25 +98,54 @@ def create_html_pages():
                     continue
                 #data = line.split('\t')
                 data = line
-                if data[3] == BASE[0].lower():
+                if data[5] == BASE[0].lower():
                     pwd = '/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/static/'
                     if not os.path.exists(pwd):
                         os.makedirs(pwd)
 
-                    writefile = '/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/static/'+ data[9] +'.html'
+                    writefile = '/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/static/'+ data[10] +'.html'
                     f = open(writefile, 'w+')
-                    temp = data[12]
+
+                    temp = data[13]
                     temp = temp[1:-1]
                     synonyms = temp.split(', ')
-                    iupac = data[11]
+                    if synonyms == ['']: synonyms = []
+
+                    temp = data[20]
+                    temp = temp[1:-1]
+                    citations = temp.split(', ')
+                    if citations == ['']: citations = []
+
+                    iupac = data[12]
                     iupac = iupac[1:-1]
-                    render = page_template.render(ChebiName=data[9], Definition=data[15], Formula=data[16], NetCharge=data[17], AverageMass=data[18], IupacName=iupac, Smiles=data[13], Synonyms=synonyms, ChebiId=data[10], CommonName=data[7],Description=data[8])
+
+                    temp = data[21]
+                    temp = temp[1:-1]
+                    roles = temp.split(', ')
+                    if roles == ['']: roles = []
+
+                    temp = data[22]
+                    temp = temp[1:-1]
+                    roles_ids = temp.split(', ')
+                    if roles_ids == ['']: roles_ids = []
+
+                    render = page_template.render(ChebiName=data[10], Definition=data[16], Formula=data[17], NetCharge=data[18], AverageMass=data[19], IupacName=iupac, Smiles=data[14], Synonyms=synonyms, ChebiId=data[11], CommonName=data[8],Description=data[9], Citations = citations, ParentLink = BASE_DICT[data[8]], Roles = roles, RolesChebi = roles_ids)
                     f.write(render)
                     f.close()
-                    link = data[9]
-                    links.append(link)
+
+                    link = data[10]
+                    #print link
+                    if check_whitelist(link):
+                        links.append(link)
+                    else:
+                        blacklist.append(link)
+
+                    smiles  = data[14]
+                    smiles = smiles[1:-1]
+                    render_image(smiles, data[10])
 
         homepageLinks[BASE] = links
+    homepageLinks['Other Links'] = blacklist
     return homepageLinks
 
 def create_homepage(homepageLinks):
@@ -92,7 +155,7 @@ def create_homepage(homepageLinks):
     page_template = env.get_template('modification.html')
     home_template = env.get_template('homepage.html')
 
-    writefile = '/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/static/homepage.html'
+    writefile = '/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/static/index.html'
     f = open(writefile, 'w+')
     render = home_template.render(bases=BASES, modifications = homepageLinks)
     f.write(render)
