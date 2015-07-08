@@ -1,0 +1,6 @@
+#fsdb	-F t	base_id	common_name	description
+c	cytosine	An aminopyrimidine that is pyrimidin-2-one having the amino group located at position 4.
+t	thymine	A pyrimidine nucleobase that is uracil in which the hydrogen at position 5 is replaced by a methyl group.
+a	adenine	The parent compound of the 6-aminopurines, composed of a purine having an amino group at C-6.
+g	guanine	A 2-aminopurine carrying a 6-oxo substituent.
+u	uracil	A common and naturally occurring pyrimidine nucleobase in which the pyrimidine ring is substituted with two oxo groups at positions 2 and 4. Found in RNA, it base pairs with adenine and replaces thymine during DNA transcription.

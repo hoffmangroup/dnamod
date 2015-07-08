@@ -1,0 +1,133 @@
+* {
+    font-size: 20px;
+    font: Times New Roman;
+}
+
+.TitleBlock {
+    background-color: rgba(135,206,250,0.9);
+    border-bottom: 3px solid black;
+    width: 100%;
+    display: inline-block;
+    clear: both;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+.TitleBlock h1 {
+    padding: 10px;
+    margin: auto;
+    float: left;
+    font-size: 30px;
+}
+
+.TitleBlock h2 {
+    margin: auto;
+    float: right;
+    font-size: 30px;
+}
+
+.TitleBlock a {
+    padding: 10px;
+    margin:auto;
+    float: right;
+    font-size: 30px;
+}
+
+body {
+    margin: auto;
+    width: 100%;
+}
+
+#chemicalStructureImage {
+    border: 3px solid black;
+    height: 500px;
+    width: 500px;
+    margin-right: 100px;
+    margin-left: auto;
+    margin-top: 50px;
+    display: block;
+    float: right;
+    position: relative;
+    top: 50%;
+}
+
+.BasicInfo {
+    padding: 10px;
+    height: 50%;
+    font-size: 20px;
+    margin-top: 50px;
+}
+
+.Names {
+    padding: 10px;
+    height: 50%;
+    font-size: 20px;
+}
+
+.Roles {
+    padding: 10px;
+    height: 50%;
+    font-size: 20px;
+}
+
+.Links {
+    padding: 10px;
+    height: 50%;
+    font-size: 20px;
+    margin-bottom: 50px;
+}
+
+footer {
+    background-color: rgba(135,206,250,0.9);
+    border-top: 3px solid black;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+    clear: both;
+    position: fixed;
+    text-align: center;
+}
+
+footer a {
+    display: inline-block;
+    text-align: center;
+    margin: auto;
+    position: relative;
+    padding: 10px;
+}
+
+#Inline {
+    display: inline;
+}
+
+.IndexLayout {
+    padding: 10px;
+    height: 50%;
+    font-size: 20px;
+    margin-top: 50px;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:link {
+    color: rgb(119, 43, 201);
+}
+
+/* visited link */
+a:visited {
+    color: rgb(119, 43, 201);
+}
+
+/* mouse over link */
+a:hover {
+    color: rgb(119, 43, 201);
+    font-weight: bold;
+}
+
+/* selected link */
+a:active {
+    color: rgb(119, 43, 201);
+}

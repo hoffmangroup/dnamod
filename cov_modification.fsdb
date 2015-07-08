@@ -1,0 +1,97 @@
+#fsdb	-F t	cmod_id	symbol	definition
+covmod0	0	A pyrimidine 2'-deoxyribonucleoside having cytosine as the nucleobase.
+covmod1	0	A pyrimidine nucleoside derived from the formal condensation of the N(1)-nitrogen of 4-amino-5-methylcytosine with 2,5-anhydro-4-(hydroxymethyl)-alpha-L-lyxofuranose.
+covmod2	0	Pyrimidine substituted with a methoxy group at position C-2 and an amine group at C-4.
+covmod3	0	A nucleobase analogue that is cytosine in which the hydrogen at position 5 is replaced by a formyl group.
+covmod4	0	A nucleobase analogue that is cytosine in which the hydrogen at position 5 is replaced by a hydroxymethyl group.
+covmod5	0	A pyrimidone that is cytosine substituted by an ethyl group at position 3.
+covmod6	0	A pyrimidone that is cytosine in which the hydrogen attached to the nitrogen at position 3 is substituted by a methyl group.
+covmod7	0	A monothioacetal that consists of cytosine having a (2R,5S)-2-(hydroxymethyl)-1,3-oxathiolan-5-yl moiety attached at position 1. An inhibitor of HIV-1 reverse transcriptase.
+covmod8	0	A nucleobase analogue that is cytosine in which the hydrogen at position 5 is replaced by a carboxy group.
+covmod9	0	A pyrimidine nucleoside in which cytosine is attached to ribofuranose via a beta-N(1)-glycosidic bond.
+covmod10	0	None
+covmod11	0	None
+covmod12	0	A pyrimidine that is a derivative of cytosine, having a methyl group at the 5-position.
+covmod13	0	A pyrimidine nucleoside in which cytosine is attached to D-arabinofuranose via a beta-N(1)-glycosidic bond.
+covmod14	0	A pyrimidone that is cytosine bearing an N(4)-methyl substituent.
+covmod15	0	A pyrimidone that is cytosine in which the hydrogen attached to the nitrogen at position 1 is substituted by a methyl group.
+covmod16	0	None
+covmod17	0	None
+covmod18	0	A pyrimidone that is thymine in which the hydrogen at position 6 is substituted by a 3-hydroxypropyl group.
+covmod19	0	A pyrimidone that is thymine in which the hydrogen at position 6 is substituted by a 1,3-dihydroxyisobutyl group.
+covmod20	0	A pyrimidone that is thymine which is substituted at position 6 by a [(4R,5R)-4-(hydroxymethyl)thymin-5-yl]methyl group.
+covmod21	0	A pyrimidine 2'-deoxyribonucleoside that is the L-enantiomer of thymine. A synthetic thymidine nucleoside analogue with activity against HBV DNA polymerase.
+covmod22	0	A pyrimidine 2'-deoxyribonucleoside composed of 2'-deoxyuridine having a 5-hydroxymethyl substituent.
+covmod23	0	A nucleoside analogue obtained by formal dehydration across positions 2 and 3 of thymidine. An inhibitor of HIV-1 reverse transcriptase
+covmod24	0	A pyrimidine 2'-deoxyribonucleoside having thymine as the nucleobase.
+covmod25	0	A pyrimidone obtained by formal addition of hydrogen across the 5,6-position of thymine.
+covmod26	0	None
+covmod27	0	A carbobicyclic compound that is bicyclo[3.1.0]hexane which is substituted at the 1-pro-S, 3-pro-S, and 4-pro-R positions by thymin-1-yl, hydroxy, and hydroxymethyl groups, respectively.
+covmod28	0	A pyrimidone that is thymine which is substituted at positions 1 and 6 by a (2-hydroxyethoxy)methyl group and a phenylsulfanyl group, respectively.
+covmod29	0	A carbobicyclic compound that is bicyclo[3.1.0]hexane which is substituted at the 2-pro-S, 4-pro-S and 5-pro-R positions by thymin-1-yl, hydroxy, and hydroxymethyl groups, respectively.
+covmod30	0	A nucleoside monophosphate analogue derived from the formal condensation of the N(1)-nitrogen of adenine with 2,5-anhydro-4-[(phosphonooxy)methyl]-alpha-L-lyxofuranose.
+covmod31	0	An N-glycosyl compound that is N-benzyladenine in which an alpha-D-glucopyranosyl residue is attached at position N-9.
+covmod32	0	Adenine substituted at N-6 by geminal methyl groups.
+covmod33	0	A nucleoside analogue found in Bacillus megaterium in which an adenine moiety is attached to position 2 of a of an oxetane ring which is substituted at positions 3 and 4 by hydroxymethyl groups.
+covmod34	0	A member of the class of 6-aminopurinnes that is adenine in which one of the exocyclic amino hydrogens is replaced by a hydroxy group.
+covmod35	0	A 2,6-diaminopurine that is the N(6)-hydroxy derivative of 2,6-diamino-3H-purine.
+covmod36	0	A member of the class of 6-aminopurines that is adenine in which one of the hydrogens of the amino group is replaced by a benzyl group.
+covmod37	0	A ribonucleoside composed of a molecule of adenine attached to a ribofuranose moiety via a beta-N(9)-glycosidic bond.
+covmod38	0	None
+covmod39	0	A purine nucleoside in which adenine is attached to arabinofuranose via a beta-N(9)-glycosidic bond.
+covmod40	0	Any member of the class of 6-aminopurines that is adenine bearing a single methyl substituent.
+covmod41	0	None
+covmod42	0	Any purine bearing an alkylamino substituent at the 6-position.
+covmod43	0	A purine nucleoside in which  adenine  is attached to xylofuranose via a beta-N(9)-glycosidic bond.
+covmod44	0	A purine nucleoside having adenine as the nucleobase and a carboxy group at C-5'.
+covmod45	0	None
+covmod46	0	An oxopurine that is guanine in which the hydrogen at position 8 is replaced by an oxo group and in which the nitrogens at positions 7 and 9 each bear a hydrogen.
+covmod47	0	An oxopurine that is guanine which is substituted by an oxo group at position 8.
+covmod48	0	An alanine derivative consisting of alanine having a 6-oxo-6,9-dihydro-1H-purin-2-yl group attached to the amino function.
+covmod49	0	An oxopurine that is  guanine substituted by a [(1,3-dihydroxypropan-2-yl)oxy]methyl group at position 9. Ganciclovir is an antiviral drug used to treat or prevent AIDS-related cytomegalovirus infections.
+covmod50	0	A deoxyribonucleotide residue in which the nucleobase moiety is guanine.
+covmod51	0	An oxopurine that is  guanine substituted by a (2-hydroxyethoxy)methyl substituent at position 9.
+covmod52	0	A member of the class of 2-aminopurines that is guanine in which the hydrogen at position 9 is substituted by a 4-hydroxy-3-(hydroxymethyl)but-1-yl group. An antiviral drug, it is administered topically for treatment of herpes labialis. A prodrug, famciclovir, is used for oral administration.
+covmod53	0	The L-valinyl ester of ganciclovir, into which it is rapidly converted by intestinal and hepatic esterases. It is a synthetic analogue of 2'-deoxyguanosine.
+covmod54	0	None
+covmod55	0	An  oxopurine that is  guanine with an oxo group at position 8 and a methyl substituent at position 7.
+covmod56	0	A purine nucleoside in which guanine is attached to ribofuranose via a beta-N(9)-glycosidic bond.
+covmod57	0	A 2-aminopurine that is guanine bearing a single methyl substituent.
+covmod58	0	A nucleotide having guanine as the base.
+covmod59	0	None
+covmod60	0	A purine nucleoside in which O-methylguanine is attached to arabinofuranose via a beta-N(9)-glycosidic bond. Inhibits DNA synthesis and causes cell death; a prodrug of 9-beta-D-arabinofuranosylguanine (ara-G).
+covmod61	0	A pyrimidone that is uracil which is substituted at positions 1, 5, and 6 by ethoxymethyl, isopropyl, and 3,5-dimethylbenzyl groups, respectively.
+covmod62	0	A pyrimidone that is uracil which is substituted at positions 1, 5, and 6 by benzyloxymethyl, isopropyl, and benzyl groups, respectively.
+covmod63	0	A pyrimidone that is uracil which is substituted at positions 1, 5 and 6 by ethoxymethyl, isopropyl, and benzyl groups, respectively. A non-nucleoside inhibitor of HIV-1 reverse transcriptase, emivirine was an unsuccessful experimental agent for the treatment of HIV.
+covmod64	0	A pyrimidone that is uracil in which positions 1, 5, and 6 are substituted by ethoxymethyl, isopropyl, and phenylsulfanyl groups, respectively.
+covmod65	0	A pyrimidine having keto groups at the 2- and 4-positions and a bromo group at the 5-position.
+covmod66	0	An organoiodine compound consisting of uracil having an iodo substituent at the 5-position.
+covmod67	0	A benzyl ether that consists of acyclouridine bearing a 3-(benzyloxy)benzyl substituent at position 5.
+covmod68	0	A pyrimidone that is uracil which is substituted by a 2-hydroxyethoxymethyl group at position 1 and a benzyl group at position 5.
+covmod69	0	A pyrimidone that is uracil in which positions 1, 5, and 6 are substituted by ethoxymethyl, isopropyl, and cyclohexylsulfanyl groups, respectively.
+covmod70	0	A nucleobase analogue that is uracil in which the oxo group at C-2 is replaced by a thioxo group.
+covmod71	0	A pyrimidone that is uracil with methyl group substituents at positions 1 and 3.
+covmod72	0	A pyrimidone that is uracil with methyl group substituents at positions 1 and 5.
+covmod73	0	A pyrimidone that is uracil with methyl group substituents at positions 3 and 5.
+covmod74	0	An organochlorine compound consisting of uracil having an chloro substituent at the 5-position.
+covmod75	0	A C-nitro compound consisting of uracil having a nitro group at the 5-position.
+covmod76	0	A pyrimidone that is uracil with a methyl group substituent at position 1.
+covmod77	0	A pyrimidone that is uracil with a methyl group at position 3.
+covmod78	0	A pyrimidone that is uracil with a methyl group at position 6.
+covmod79	0	A member of the class of pyrimidone, which is (as the monohydrate of its sodium salt) in combination with ombitasvir, paritaprevir and ritonavir (under the trade name Viekira Pak) for treatment of chronic hepatitis C virus genotype 1 infection as well as cirrhosis of the liver.
+covmod80	0	A ribonucleoside composed of a molecule of uracil attached to a ribofuranose moiety via a beta-N(1)-glycosidic bond.
+covmod81	0	None
+covmod82	0	A pyrimidinemonocarboxylic acid that is uracil bearing a carboxy substituent at position C-6.
+covmod83	0	None
+covmod84	0	None
+covmod85	0	A primary alcohol that is uracil bearing a hydroxymethyl substituent at the 5-position.
+covmod86	0	A pyrimidine obtained by formal addition of hydrogen across the 5,6-position of uracil.
+covmod87	0	A nucleobase analogue that is uracil in which the hydrogen at position 5 is replaced by fluorine. It is an antineoplastic agent which acts as an antimetabolite - following conversion to the active deoxynucleotide, it inhibits DNA synthesis (by blocking the conversion of deoxyuridylic acid to thymidylic acid by the cellular enzyme thymidylate synthetase) and so slows tumour growth.
+covmod88	0	An alanine derivative that is L-alanine bearing a 5-fluorouracil-1-yl substituent at position 3. A more potent and selective AMPA receptor agonist (at hGluR1 and hGluR2) than AMPA itself (Ki = 14.7, 25.1, and 1820 nM for hGluR1, hGluR2 and hGluR5 respectively).
+covmod89	0	A monocarboxylic acid comprising uracil having a carboxymethyl substituent at the 6-position.
+covmod90	0	None
+covmod91	0	None
+covmod92	0	A pyrimidinethione consisting of uracil in which the 2-oxo group is substituted by a thio group and the hydrogen at position 6 is substituted by a propyl group.
+covmod93	0	The 3-(uracil-1-yl) derivative of L-alanine.
+covmod94	0	A phosphonic acid consisting of 1-cyclopentyluracil having a phosphomethoxy group at position 2 on the cyclopentyl ring with (1R,2R)-trans-stereochemistry.
+covmod95	0	None

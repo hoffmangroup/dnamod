@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset = "UTF-8">
+    <title>DNA Modification Database - Home</title>
+
+    <!-- <link href="netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+    <link href="css/style.css" rel="stylesheet" type='text/css'>
+
+    </style>
+</head>
+
+<body>
+    <div class= "TitleBlock" >
+        <h1> DNA Modification Database </h1>
+    </div>
+
+    <div class= "IndexLayout" >
+        {% for base in bases %}
+            <h1> {{ base }} </h1>
+            {% set baseloop = loop %}
+            <ul>
+            {% for modification in modifications[base] %}
+                <li> <a href= "{{ modification }}.html" > {{ modification }}</a> </li>
+            {% endfor %}
+            </ul> <br>
+        {% endfor %}
+    </div>
+
+    <footer>
+        <a href= "index.html" > Home</a>
+    </footer>
+
+</body>
+
+</html>
