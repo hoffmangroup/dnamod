@@ -172,7 +172,7 @@ def create_other_tables(children, bases):
     citation = open("citations.fsdb", "w+")
     citation.write("#fsdb\t-F t\tcitation_id\tlink\n")
     roletable = open("roles.fsdb", "w+")
-    roletable.write("#fsdb\t-F t\trole_id\trole\tchebi_id\n")
+    roletable.write("#fsdb\t-F t\trole_id\trole\trole_chebi_id\n")
 
     id_counter = 0
     for base in bases:

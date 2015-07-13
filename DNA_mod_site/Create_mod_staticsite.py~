@@ -18,11 +18,16 @@ import subprocess
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
 
+# Program Constants
 BASES = 'Adenine','Thymine','Cytosine','Guanine','Uracil', 'Other Links'
 BASE_DICT = {'adenine': 'CHEBI:16708','thymine': 'CHEBI:17821','cytosine': 'CHEBI:16040','guanine': 'CHEBI:16235','uracil': 'CHEBI:17568'}
+FILE_PATH = os.path.dirname(os.path.abspath(__file__))
+FILE_PATH_UP = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..'))
+print FILE_PATH
+print FILE_PATH_UP
 
 def render_image(smiles, name):
-    pwd = '/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/static/images'
+    pwd = FILE_PATH + '/DNA_mod_site/static/images'
     if not os.path.exists(pwd):
         os.makedirs(pwd)
     if not smiles:
@@ -37,7 +42,7 @@ def get_modifications():
     # dbrow '_base_id =~ /c/' -i mod_base.fsdb | dbjoin -i - -i base.fsdb -R base_id | dbjoin -i - -i name.fsdb -R name_id | dbjoin -i - -i cov_modification.fsdb -R cmod_id | dbjoin -i - -i base_properties.fsdb -R property_id > result.fsdb
 
     # Need to point to this directory: /mnt/work1/users/asood/mordor_home/DNA_Base_Database/
-    ans = subprocess.call("dbrow '_base_id =~ /c/' -i mod_base.fsdb | dbjoin -i - -i base.fsdb -R base_id | dbjoin -i - -i name.fsdb -R name_id | dbjoin -i - -i cov_modification.fsdb -R cmod_id | dbjoin -i - -i base_properties.fsdb -R property_id > result2.fsdb",cwd = '/mnt/work1/users/home2/asood/DNA_Base_Database', shell = True)
+    ans = subprocess.call("dbrow '_base_id =~ /c/' -i mod_base.fsdb | dbjoin -i - -i base.fsdb -R base_id | dbjoin -i - -i name.fsdb -R name_id | dbjoin -i - -i cov_modification.fsdb -R cmod_id | dbjoin -i - -i base_properties.fsdb -R property_id > result2.fsdb",cwd = FILE_PATH, shell = True)
 
     if ans == 1:
         print "Error: Reevaluate FSDB pipeline"
@@ -56,7 +61,7 @@ def get_modifications():
 
 
 def check_whitelist(molName):
-    with open('/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/static/whitelist/whitelist', 'r') as whitelist:
+    with open(FILE_PATH + '/static/whitelist/whitelist', 'r') as whitelist:
         reader = csv.reader(whitelist, dialect='excel-tab')
         for line in reader:
             if line == []:
@@ -77,7 +82,7 @@ def check_whitelist(molName):
 def create_html_pages():
     # Create a Jinja 2 environment object and load in templates
     env = Environment()
-    env.loader=FileSystemLoader('/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/Templates')
+    env.loader=FileSystemLoader(FILE_PATH + '/Templates')
 
     page_template = env.get_template('modification.html')
     home_template = env.get_template('homepage.html')
@@ -91,7 +96,7 @@ def create_html_pages():
     # #fsdb -F t property_id cmod_id name_id base_id modbase_id position_location role_id common_name description chebi_name chebi_id iupac_name other_names smiles symbol definition formula net_charge avg_mass
     for BASE in BASES:
         links = []
-        with open('/mnt/work1/users/home2/asood/DNA_Base_Database/result.fsdb', 'r') as f1:
+        with open(FILE_PATH_UP + '/result.fsdb', 'r') as f1:
             reader = csv.reader(f1, dialect='excel-tab')
             for line in reader:
                 if line[0][0] == '#':
@@ -99,11 +104,11 @@ def create_html_pages():
                 #data = line.split('\t')
                 data = line
                 if data[5] == BASE[0].lower():
-                    pwd = '/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/static/'
+                    pwd = FILE_PATH + '/static/'
                     if not os.path.exists(pwd):
                         os.makedirs(pwd)
 
-                    writefile = '/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/static/'+ data[10] +'.html'
+                    writefile = FILE_PATH + '/static/'+ data[10] +'.html'
                     f = open(writefile, 'w+')
 
                     temp = data[13]
@@ -150,12 +155,12 @@ def create_html_pages():
 
 def create_homepage(homepageLinks):
     env = Environment()
-    env.loader=FileSystemLoader('/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/Templates')
+    env.loader=FileSystemLoader(FILE_PATH + '/Templates')
 
     page_template = env.get_template('modification.html')
     home_template = env.get_template('homepage.html')
 
-    writefile = '/mnt/work1/users/home2/asood/DNA_Base_Database/DNA_mod_site/static/index.html'
+    writefile = FILE_PATH + '/static/index.html'
     f = open(writefile, 'w+')
     render = home_template.render(bases=BASES, modifications = homepageLinks)
     f.write(render)
