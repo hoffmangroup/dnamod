@@ -20,64 +20,71 @@
 
     <img id="chemicalStructureImage" src="images/{{ ChebiName }}.svg" alt="{{ ChebiName }} Image Not Availabe" height='500' width='500'>
 
-    <div class="BasicInfo">
-        <h2> Description: </h2>
-        <p> {{ Definition }} </p>
+    <div class="ContentLayout">
+        <div class="BasicInfo">
+            <h2> Description: </h2>
+            <p> {{ Definition }} </p>
 
 
-        <h2> Chemical Properties: </h2>
-        <ul>
-            <li> Chemical Formula: {{ Formula }} </li>
-            <li> Net Charge: {{ NetCharge }} </li>
-            <li> Average Mass: {{ AverageMass }} </li>
-        </ul>
-    </div>
+            <h2> Chemical Properties: </h2>
+            <ul>
+                <li> Chemical Formula: {{ Formula }} </li>
+                <li> Net Charge: {{ NetCharge }} </li>
+                <li> Average Mass: {{ AverageMass }} </li>
+            </ul>
+        </div>
 
-    <div class="Names">
-        <h2> Names: </h2>
-        <ul>
-            <li> IUPAC: {{ IupacName }} </li>
-            <li> SMILES: {{ Smiles }} </li>
-            <li> Synonyms: </li>
-                <ul id="Synonyms">
-                {% if Synonyms|length %}
-                    {% for Synonym in Synonyms %}
-                        <li> {{ Synonym }} </li>
+        <div class="Names">
+            <h2> Names: </h2>
+            <ul>
+                <li> IUPAC: {{ IupacName }} </li>
+                <li> SMILES: {{ Smiles }} </li>
+                <li> Synonyms: </li>
+                    <ul id="Synonyms">
+                    {% if Synonyms|length %}
+                        {% for Synonym in Synonyms %}
+                            <li> {{ Synonym }} </li>
+                        {% endfor %}
+                    {% else %}
+                        <li> No Synonyms </li>
+                    {% endif %}
+                    </ul>
+            </ul>
+        </div>
+
+    <!--
+        <div class="Roles">
+            <h2> Roles: </h2>
+            <ul id="Roles">
+                {% if Roles|length %}
+                    {% for Role in Roles %}
+                        <li> <a href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ RolesChebi[loop.index-1] }}" > {{ Role }} </a> </li>
+                    {% endfor %}
+                 {% else %}
+                    <li> No Roles </li>
+                 {% endif %}
+            </ul>
+        </div>
+    -->
+
+        <div class="Links">
+            <h2 id="Inline"> Database References: </h2> 
+            <a id="Inline" href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ ChebiId }}" > {{ ChebiId }} </a> <br>
+
+            <h2> Citations: </h2>
+            <ul id="Citations">
+                {% if Citations|length %}
+                    {% for Citation in Citations %}
+                        <li>{{ Citation["author"] }} {{ Citation["title"] }} {{ Citation["date"] }}. </li>
+                        <ul>
+                            <li> PubMed Id: <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation["pmid"] }}' > {{ Citation["pmid"] }} </a> </li>
+                        </ul>
                     {% endfor %}
                 {% else %}
-                    <li> No Synonyms </li>
+                    <li> No Citations </li>
                 {% endif %}
-                </ul>
-        </ul>
-    </div>
-
-    <div class="Roles">
-        <h2> Roles: </h2>
-        <ul id="Roles">
-            {% if Roles|length %}
-                {% for Role in Roles %}
-                    <li> <a href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ RolesChebi[loop.index-1] }}" > {{ Role }} </a> </li>
-                {% endfor %}
-             {% else %}
-                <li> No Roles </li>
-             {% endif %}
-        </ul>
-    </div>
-
-    <div class="Links">
-        <h2 id="Inline"> CHEBI ID: </h2> 
-        <a id="Inline" href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ ChebiId }}" > {{ ChebiId }} </a> <br>
-
-        <h2> Citations: </h2>
-        <ul id="Citations">
-             {% if Citations|length %}
-                {% for Citation in Citations %}
-                    <li> PubMed Id: <a href= "http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation }}" > {{ Citation }} </a> </li>
-                {% endfor %}
-             {% else %}
-                <li> No Citations </li>
-             {% endif %}
-        </ul>
+            </ul>
+        </div>
     </div>
 </body>
 

@@ -156,9 +156,9 @@ def create_html_pages():
             else:
                 blacklist.append(link)
         
-        links = sorted(links, key=str.lower)
+        links = sorted(links)
         homepageLinks[BASE] = links
-        blacklist = sorted(blacklist, key=str.lower)
+        blacklist = sorted(blacklist)
         blacklistBase = 'Unverified' + BASE
         homepageLinks[blacklistBase] = blacklist
     return homepageLinks

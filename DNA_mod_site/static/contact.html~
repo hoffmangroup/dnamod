@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset = "UTF-8">
+    <title>DNA Modification Database - Home</title>
+
+    <!-- <link href="netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+    <link href="css/style.css" rel="stylesheet" type='text/css'>
+
+    </style>
+</head>
+
+<body>
+    <div class= "TitleBlock" >
+        <h1> Contact </h1>
+    </div>
+
+    <div class= "ContentLayout" >
+        <p> There is a moderated {} that you can subsribe to for information on new releases of {}. </p>
+        <p> There is also a {} for general discussion and questions about the use of {}. </p>
+        <p> There is an isse tracker on BitBucket for {}: {} </p>
+        <p> For other support with {} please email {}. </p>
+    </div>
+
+    <footer>
+        <a href= "index.html" > Home</a>
+        <a href= "about.html" > About</a>
+        <a href= "contact.html" > Contact</a>
+    </footer>
+
+</body>
+
+</html>

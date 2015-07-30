@@ -51,32 +51,37 @@
         </ul>
     </div>
 
+<!--
     <div class="Roles">
         <h2> Roles: </h2>
         <ul id="Roles">
             {% if Roles|length %}
                 {% for Role in Roles %}
-                    <li> <a href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ RolesChebi[loop.index] }}" > {{ Role }} </a> </li>
+                    <li> <a href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ RolesChebi[loop.index-1] }}" > {{ Role }} </a> </li>
                 {% endfor %}
              {% else %}
                 <li> No Roles </li>
              {% endif %}
         </ul>
     </div>
+-->
 
     <div class="Links">
-        <h2 id="Inline"> CHEBI ID: </h2> 
+        <h2 id="Inline"> Database References: </h2> 
         <a id="Inline" href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ ChebiId }}" > {{ ChebiId }} </a> <br>
 
         <h2> Citations: </h2>
         <ul id="Citations">
-             {% if Citations|length %}
+            {% if Citations|length %}
                 {% for Citation in Citations %}
-                    <li> PubMed Id: <a href= "http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation }}" > {{ Citation }} </a> </li>
+                    <li>{{ Citation["author"] }} {{ Citation["title"] }} {{ Citation["date"] }}. </li>
+                    <ul>
+                        <li> PubMed Id: <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation["pmid"] }}' > {{ Citation["pmid"] }} </a> </li>
+                    </ul>
                 {% endfor %}
-             {% else %}
+            {% else %}
                 <li> No Citations </li>
-             {% endif %}
+            {% endif %}
         </ul>
     </div>
 </body>
