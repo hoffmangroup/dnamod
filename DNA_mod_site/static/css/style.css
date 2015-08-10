@@ -27,6 +27,7 @@ html {
 }
 
 .TitleBlock h2 {
+    padding: 10px;
     margin: auto;
     float: right;
     font-size: 30px;

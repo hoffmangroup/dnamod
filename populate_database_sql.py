@@ -28,6 +28,7 @@ MASS_SEARCH_STR = 'mass'
 CITATION_SEARCH_STR = 'Citations'
 ONTOLOGY_SEARCH_STR = "OntologyParents"
 ONTOLOGY_HAS_ROLE = "has role"
+RESET_TABLES = True
 
 # Program Constants
 DNA_BASES = ['cytosine', 'thymine', 'adenine', 'guanine', 'uracil']
@@ -145,15 +146,16 @@ def create_base_table(bases):
     c = conn.cursor()
 
     c.execute('''DROP TABLE IF EXISTS base''')
-    c.execute('''CREATE TABLE IF NOT EXISTS base 
-                (baseid TEXT PRIMARY KEY NOT NULL, 
-                 commonname text, 
+    c.execute('''CREATE TABLE IF NOT EXISTS base
+                (baseid TEXT PRIMARY KEY NOT NULL,
+                 commonname text,
                  basedefinition text)''')
     conn.commit()
 
     for base in bases:
         c.execute("INSERT INTO base VALUES(?,?,?)",
-                  (base.chebiAsciiName[0], base.chebiAsciiName, base.definition) )
+                  (base.chebiAsciiName[0],
+                   base.chebiAsciiName, base.definition))
     conn.commit()
     conn.close()
 
@@ -177,7 +179,7 @@ def get_roles(child, attribute, selector):
 
 def get_full_citation(PMID):
     result = []
-    isbook = False
+    # isbook = False # Unsed at the moment
     isarticle = False
     Entrez.email = "jai.sood@hotmail.com"
     handle = Entrez.efetch("pubmed", id=PMID, retmode="xml")
@@ -189,115 +191,124 @@ def get_full_citation(PMID):
             article = record['MedlineCitation']['Article']
             if'ArticleTitle' in article.keys():
                 articleTitle = article['ArticleTitle']
-            else: articleTitle = None
+            else:
+                articleTitle = None
             if'AuthorList' in article.keys():
                 authors = article['AuthorList']
-            else: authors = None
+            else:
+                authors = None
             if'ArticleDate' in article.keys():
                 publicationDate = article['ArticleDate']
-            else: publicationDate = None
+            else:
+                publicationDate = None
         else:
-            isbook = True
+            # isbook = True # Unused at the moment
             article = record['BookDocument']['Book']
             if'BookTitle' in article.keys():
                 articleTitle = article['BookTitle']
-            else: articleTitle = None
+            else:
+                articleTitle = None
             if'AuthorList' in article.keys():
                 authors = article['AuthorList']
-            else: authors = None
+            else:
+                authors = None
             if'PubDate' in article.keys():
                 publicationDate = article['PubDate']
-            else: publicationDate = None
-    
+            else:
+                publicationDate = None
+
     handle.close()
 
-    if articleTitle != None and articleTitle != []:
+    if articleTitle is not None and articleTitle != []:
         result.append(articleTitle)
     else:
         result.append('Title Not Found')
 
     if isarticle:
-        if publicationDate != None and publicationDate != []:
-            date = (publicationDate[0]['Month'] + '-' + publicationDate[0]['Day']
-                    + '-' + publicationDate[0]['Year'])
+        if publicationDate is not None and publicationDate != []:
+            date = (publicationDate[0]['Month'] + '-' +
+                    publicationDate[0]['Day'] + '-' +
+                    publicationDate[0]['Year'])
             result.append(str(date))
-        else: 
+        else:
             result.append('Publication Date Not Found')
     else:
-        if publicationDate != None and publicationDate != []:
+        if publicationDate is not None and publicationDate != []:
             date = (publicationDate['Month'] + '-' + publicationDate['Day']
                     + '-' + publicationDate['Year'])
             result.append(date)
-        else: 
+        else:
             result.append('Publication Date Not Found')
 
-    if authors != None and authors != []:
-        name = authors[0]['LastName'] + ', ' + authors[0]['Initials'] + '. et al.'
+    if authors is not None and authors != []:
+        name = (authors[0]['LastName'] + ', ' + authors[0]['Initials'] +
+                '. et al.')
         result.append(name)
     else:
         result.append('Author Not Found')
 
     return result
-    
+
 
 def create_other_tables(children, bases):
     conn = sqlite3.connect('DNA_mod_database.db')
     c = conn.cursor()
 
     # Reset Tables
-    c.execute('''DROP TABLE IF EXISTS modbase''')
-    c.execute('''DROP TABLE IF EXISTS covmod''')
-    c.execute('''DROP TABLE IF EXISTS names''')
-    c.execute('''DROP TABLE IF EXISTS baseprops''')
-    c.execute('''DROP TABLE IF EXISTS citations''')
-    c.execute('''DROP TABLE IF EXISTS roles''')
-    c.execute('''DROP TABLE IF EXISTS citation_lookup''')
-    c.execute('''DROP TABLE IF EXISTS roles_lookup''')
-    conn.commit()
+    if RESET_TABLES is True:
+        c.execute('''DROP TABLE IF EXISTS modbase''')
+        c.execute('''DROP TABLE IF EXISTS covmod''')
+        c.execute('''DROP TABLE IF EXISTS names''')
+        c.execute('''DROP TABLE IF EXISTS baseprops''')
+        c.execute('''DROP TABLE IF EXISTS citations''')
+        c.execute('''DROP TABLE IF EXISTS roles''')
+        c.execute('''DROP TABLE IF EXISTS citation_lookup''')
+        c.execute('''DROP TABLE IF EXISTS roles_lookup''')
+        conn.commit()
 
     # Create Tables
-    c.execute('''CREATE TABLE IF NOT EXISTS modbase 
+    c.execute('''CREATE TABLE IF NOT EXISTS modbase
                 (modbaseid INTEGER PRIMARY KEY NOT NULL,
-                 position text, 
-                 baseid text, 
-                 nameid integer, 
-                 propertyid integer, 
-                 citationid text, 
-                 cmodid integer, 
-                 roleid integer, 
-                 FOREIGN KEY(nameid) REFERENCES names(nameid), 
-                 FOREIGN KEY(propertyid) REFERENCES baseprops(propertyid), 
+                 position text,
+                 baseid text,
+                 nameid integer,
+                 propertyid integer,
+                 citationid text,
+                 cmodid integer,
+                 roleid integer,
+                 FOREIGN KEY(nameid) REFERENCES names(nameid),
+                 FOREIGN KEY(propertyid) REFERENCES baseprops(propertyid),
                  FOREIGN KEY(cmodid) REFERENCES covmod(cmodid),
                  FOREIGN KEY(citationid) REFERENCES citations(citationid),
                  FOREIGN KEY(roleid) REFERENCES roles(roleid))''')
 
-    c.execute('''CREATE TABLE IF NOT EXISTS covmod 
-                (cmodid INTEGER PRIMARY KEY NOT NULL, 
-                 symbol text, 
+    c.execute('''CREATE TABLE IF NOT EXISTS covmod
+                (cmodid INTEGER PRIMARY KEY NOT NULL,
+                 symbol text,
                  definition text)''')
 
-    c.execute('''CREATE TABLE IF NOT EXISTS names 
-                (nameid INTEGER PRIMARY KEY NOT NULL, 
-                 chebiname text, 
-                 chebiid text, 
-                 iupacname text, 
-                 othernames text, 
+    c.execute('''CREATE TABLE IF NOT EXISTS names
+                (nameid INTEGER PRIMARY KEY NOT NULL,
+                 chebiname text,
+                 chebiid text,
+                 iupacname text,
+                 othernames text,
                  smiles text)''')
 
-    c.execute('''CREATE TABLE IF NOT EXISTS baseprops 
-                (propertyid INTEGER PRIMARY KEY NOT NULL, 
-                 formula text, 
-                 netcharge text, 
+    c.execute('''CREATE TABLE IF NOT EXISTS baseprops
+                (propertyid INTEGER PRIMARY KEY NOT NULL,
+                 formula text,
+                 netcharge text,
                  avgmass text)''')
 
-    c.execute('''CREATE TABLE IF NOT EXISTS citations 
+    c.execute('''CREATE TABLE IF NOT EXISTS citations
                 (citationid text PRIMARY KEY NOT NULL,
                  title text,
                  pubdate text,
                  authors text)''')
 
-    c.execute('''CREATE TABLE IF NOT EXISTS roles 
-                (roleid text PRIMARY KEY NOT NULL, 
+    c.execute('''CREATE TABLE IF NOT EXISTS roles
+                (roleid text PRIMARY KEY NOT NULL,
                  role text)''')
 
     c.execute('''CREATE TABLE IF NOT EXISTS citation_lookup
@@ -336,41 +347,41 @@ def create_other_tables(children, bases):
             # Populate roles and citations tables with unique data
             for role in range(len(roles)):
                 c.execute("SELECT count(*) FROM roles WHERE roleid = ?",
-                          (role_ids[role],) )
+                          (role_ids[role],))
                 data = c.fetchone()[0]
                 if data == 0:
                     c.execute("INSERT INTO roles VALUES(?,?)",
-                              (role_ids[role], role_names[role]) )
+                              (role_ids[role], role_names[role]))
 
             for citation in citations:
                 c.execute("SELECT * FROM citations WHERE citationid = ?",
-                          [citation] )
+                          [citation])
                 data = c.fetchone()
                 if data is None:
                     citationinfo = get_full_citation(citation)
                     c.execute("INSERT INTO citations VALUES(?,?,?,?)",
                               (citation, citationinfo[0], citationinfo[1],
-                               citationinfo[2]) )
+                               citationinfo[2]))
 
             c.execute("INSERT INTO baseprops VALUES(NULL,?,?,?)",
-                      (str(formula), str(charge), str(mass)) ) 
+                      (str(formula), str(charge), str(mass)))
             c.execute("INSERT INTO names VALUES(NULL,?,?,?,?,?)",
                       (child.chebiAsciiName, child.chebiId,
-                       str(iupac), str(synonyms), str(smiles)) ) 
+                       str(iupac), str(synonyms), str(smiles)))
             c.execute("INSERT INTO covmod VALUES(NULL,?,?)",
-                      ('0', child.definition) )
+                      ('0', child.definition))
             rowid = c.lastrowid
 
             for role in range(len(roles)):
                 c.execute("INSERT INTO roles_lookup VALUES(?,?)",
-                          (rowid, role_ids[role]) )
+                          (rowid, role_ids[role]))
             for citation in citations:
                 c.execute("INSERT INTO citation_lookup VALUES(?,?)",
-                          (rowid, citation) )
+                          (rowid, citation))
 
             c.execute("INSERT INTO modbase VALUES(NULL,?,?,?,?,?,?,?)",
                       ('0', base.chebiAsciiName[0], rowid,
-                       rowid, rowid, rowid, rowid) )
+                       rowid, rowid, rowid, rowid))
             conn.commit()
 
     conn.close()
