@@ -20,14 +20,15 @@ import itertools
 import os
 import pybel
 import sqlite3
+import sys
 # Using Jinja2 as templating engine
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
 
 # Program Constants
 ENCODING = 'utf8'
-BASES = 'Adenine', 'Thymine', 'Cytosine', 'Guanine', 'Uracil'
-VERIFIED_BASES = 'Adenine', 'Thymine', 'Cytosine', 'Guanine'
+BASES = 'Adenine', 'Cytosine', 'Guanine', 'Thymine', 'Uracil'
+VERIFIED_BASES = 'Adenine', 'Cytosine', 'Guanine', 'Thymine'
 UNVERIFIED_BASES = ('UnverifiedAdenine', 'UnverifiedThymine',
                     'UnverifiedCytosine', 'UnverifiedGuanine',
                     'UnverifiedUracil')
@@ -37,6 +38,11 @@ BASE_DICT = {'adenine': 'CHEBI:16708', 'thymine': 'CHEBI:17821',
 FILE_PATH = os.path.dirname(os.path.abspath(__file__))
 FILE_PATH_UP = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 CITATION_ORDERED_KEYS_ENCODED = ['pmid', 'title', 'date', 'author']
+WHITE_LIST = []
+
+# Import custom functions from dnamod_utils.py
+sys.path.insert(0, FILE_PATH_UP)
+import dnamod_utils
 
 
 def render_image(smiles, name):
@@ -48,20 +54,6 @@ def render_image(smiles, name):
     path = pwd + '/' + name + '.svg'
     mol = pybel.readstring('smi', smiles)
     mol.write('svg', path, overwrite=True)
-
-
-def check_whitelist(molName):
-    with open(FILE_PATH + '/static/whitelist/whitelist', 'r') as whitelist:
-        reader = csv.reader(whitelist, dialect='excel-tab')
-        for line in reader:
-            if line == []:
-                continue
-            if len(line) > 1:
-                stringline = line[1]
-                stringline = stringline.strip()
-                if stringline == molName:
-                    return True
-        return False
 
 
 def get_citations(lookup_key, cursor):
@@ -182,7 +174,7 @@ def create_html_pages():
 
             # Check if mod is on whitelist
             link = chebiname
-            if check_whitelist(link):
+            if link in WHITE_LIST:
                 links.append(link)
             else:
                 blacklist.append(link)
@@ -222,7 +214,8 @@ def create_homepage(homepageLinks):
     f.write(render)
     f.close()
 
-
+print("Generating Static Site....")
+WHITE_LIST = dnamod_utils.get_list('whitelist')
 links = create_html_pages()
 create_homepage(links)
 print("Static Site Generated")

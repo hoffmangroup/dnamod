@@ -28,16 +28,18 @@ html {
 
 .TitleBlock h2 {
     padding: 10px;
+    padding-right: 0px;
     margin: auto;
     float: right;
-    font-size: 30px;
+    font-size: 25px;
+    font-weight: normal;
 }
 
 .TitleBlock a {
     padding: 10px;
     margin:auto;
     float: right;
-    font-size: 30px;
+    font-size: 25px;
 }
 
 body {
