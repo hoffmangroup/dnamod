@@ -3,6 +3,19 @@
 
 from __future__ import with_statement, division, print_function
 
+'''
+Ankur Jai Sood
+29/5/2015
+
+Populate_database.py
+Function:
+1. Performs search of CHEBI database for DNA bases
+2. Returns chebiId and chebiAsciiName of bases
+3. Searches CHEBI database for all entities of which
+   the DNA bases are functional parents
+4. Using above results, populates DNA post-transciptional modification table
+'''
+
 # Using Suds web services client for soap
 import csv
 import os
@@ -147,8 +160,11 @@ def get_complete_bases(bases, client):
 
 
 def create_base_table(bases):
-    conn = sqlite3.connect('DNA_mod_database.db')
+    conn = sqlite3.connect(FILE_PATH + '/DNA_mod_database.db')
     c = conn.cursor()
+
+    c.execute('''PRAGMA foreign_keys = ON''')
+    conn.commit()
 
     if RESET_TABLES is True:
         c.execute('''DROP TABLE IF EXISTS base''')
@@ -267,16 +283,19 @@ def create_other_tables(children, bases):
     conn = sqlite3.connect('DNA_mod_database.db')
     c = conn.cursor()
 
+    c.execute('''PRAGMA foreign_keys = ON''')
+    conn.commit()
+
     # Reset Tables
     if RESET_TABLES is True:
-        c.execute('''DROP TABLE IF EXISTS modbase''')
         c.execute('''DROP TABLE IF EXISTS covmod''')
         c.execute('''DROP TABLE IF EXISTS names''')
         c.execute('''DROP TABLE IF EXISTS baseprops''')
-        c.execute('''DROP TABLE IF EXISTS citations''')
-        c.execute('''DROP TABLE IF EXISTS roles''')
         c.execute('''DROP TABLE IF EXISTS citation_lookup''')
         c.execute('''DROP TABLE IF EXISTS roles_lookup''')
+        c.execute('''DROP TABLE IF EXISTS citations''')
+        c.execute('''DROP TABLE IF EXISTS roles''')
+        c.execute('''DROP TABLE IF EXISTS modbase''')
         conn.commit()
 
     # Create Tables
@@ -289,11 +308,10 @@ def create_other_tables(children, bases):
                  citationid text,
                  cmodid integer,
                  roleid integer,
-                 FOREIGN KEY(nameid) REFERENCES names(nameid),
-                 FOREIGN KEY(propertyid) REFERENCES baseprops(propertyid),
-                 FOREIGN KEY(cmodid) REFERENCES covmod(cmodid),
-                 FOREIGN KEY(citationid) REFERENCES citations(citationid),
-                 FOREIGN KEY(roleid) REFERENCES roles(roleid))''')
+                 FOREIGN KEY(baseid) REFERENCES base(baseid) ON DELETE CASCADE ON UPDATE CASCADE,
+                 FOREIGN KEY(nameid) REFERENCES names(nameid) ON DELETE CASCADE ON UPDATE CASCADE,
+                 FOREIGN KEY(propertyid) REFERENCES baseprops(propertyid) ON DELETE CASCADE ON UPDATE CASCADE,
+                 FOREIGN KEY(cmodid) REFERENCES covmod(cmodid) ON DELETE CASCADE ON UPDATE CASCADE)''')
 
     c.execute('''CREATE TABLE IF NOT EXISTS covmod
                 (cmodid INTEGER PRIMARY KEY NOT NULL,
@@ -327,15 +345,15 @@ def create_other_tables(children, bases):
     c.execute('''CREATE TABLE IF NOT EXISTS citation_lookup
                 (modid int,
                  citationid text,
-                 FOREIGN KEY(modid) REFERENCES modbase(modbaseid),
-                 FOREIGN KEY(citationid) REFERENCES citations(citationid),
+                 FOREIGN KEY(modid) REFERENCES modbase(modbaseid) ON DELETE CASCADE ON UPDATE CASCADE,
+                 FOREIGN KEY(citationid) REFERENCES citations(citationid) ON DELETE CASCADE ON UPDATE CASCADE,
                  PRIMARY KEY(modid, citationid))''')
 
     c.execute('''CREATE TABLE IF NOT EXISTS roles_lookup
                 (modid int,
                  roleid text,
-                 FOREIGN KEY(modid) REFERENCES modbase(modbaseid),
-                 FOREIGN KEY(roleid) REFERENCES roles(roleid),
+                 FOREIGN KEY(modid) REFERENCES modbase(modbaseid) ON DELETE CASCADE ON UPDATE CASCADE,
+                 FOREIGN KEY(roleid) REFERENCES roles(roleid) ON DELETE CASCADE ON UPDATE CASCADE,
                  PRIMARY KEY(modid, roleid))''')
     conn.commit()
 
@@ -391,19 +409,23 @@ def create_other_tables(children, bases):
                        str(iupac), str(synonyms), str(smiles)))
             c.execute("INSERT OR IGNORE INTO covmod VALUES(NULL,?,?)",
                       ('0', child.definition))
+            conn.commit()
             rowid = c.lastrowid
-
-            for role in range(len(roles)):
-                c.execute("INSERT OR IGNORE INTO roles_lookup VALUES(?,?)",
-                          (rowid, role_ids[role]))
-
-            for citation in citations:
-                c.execute("INSERT OR IGNORE INTO citation_lookup VALUES(?,?)",
-                          (rowid, citation))
+            print(rowid)
 
             c.execute("INSERT OR IGNORE INTO modbase VALUES(NULL,?,?,?,?,?,?,?)",
                       ('0', base.chebiAsciiName[0], rowid,
                        rowid, rowid, rowid, rowid))
+            conn.commit()
+
+            for role in range(len(roles)):
+                c.execute("INSERT OR IGNORE INTO roles_lookup VALUES(?,?)",
+                          (rowid, role_ids[role])) #XXX
+            conn.commit()
+
+            for citation in citations:
+                c.execute("INSERT OR IGNORE INTO citation_lookup VALUES(?,?)",
+                          (rowid, citation))
             conn.commit()
 
     conn.close()
