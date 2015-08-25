@@ -59,7 +59,7 @@ def render_image(smiles, name):
 def get_citations(lookup_key, cursor):
     c = cursor.cursor()
     citationList = []
-    c.execute("SELECT * FROM citation_lookup WHERE modid = ?", (lookup_key,))
+    c.execute("SELECT * FROM citation_lookup WHERE nameid = ?", (lookup_key,))
     results = c.fetchall()
     for row in results:
         citationid = row[1]
@@ -113,18 +113,18 @@ def create_html_pages():
 
         for mod in mods:
             # Read data:
-            formula = mod[8]
-            netcharge = mod[9]
-            avgmass = mod[10]
-            definition = mod[12]
-            chebiname = mod[13].encode('ascii')
-            chebiid = mod[14]
-            iupacname = mod[15]
-            synonyms = mod[16]
-            smiles = mod[17].encode('ascii')
-            commonname = mod[18]
+            formula = mod[3]
+            netcharge = mod[7]
+            avgmass = mod[5]
+            definition = mod[8]
+            chebiname = mod[9].encode('ascii')
+            chebiid = mod[0]
+            iupacname = mod[10]
+            synonyms = mod[11]
+            smiles = mod[12].encode('ascii')
+            commonname = mod[13]
 
-            citation_lookup = mod[5]
+            citation_lookup = mod[0]
             # roles_lookup = mod[7] # unused as roles are not on site
 
             citations = get_citations(citation_lookup, conn)
@@ -134,6 +134,7 @@ def create_html_pages():
             roles = []
             roles_ids = []
 
+            print("Creating page: " + chebiname + ".html")
             # Process SMILES to render image
             smiles = smiles[1:-1]
             render_image(smiles, chebiname)

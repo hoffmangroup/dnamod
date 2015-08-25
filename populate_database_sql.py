@@ -300,36 +300,31 @@ def create_other_tables(children, bases):
 
     # Create Tables
     c.execute('''CREATE TABLE IF NOT EXISTS modbase
-                (modbaseid INTEGER PRIMARY KEY NOT NULL,
+                (nameid text PRIMARY KEY NOT NULL,
                  position text,
                  baseid text,
-                 nameid integer,
-                 propertyid integer,
-                 citationid text,
+                 formulaid text,
                  cmodid integer,
-                 roleid integer,
                  FOREIGN KEY(baseid) REFERENCES base(baseid) ON DELETE CASCADE ON UPDATE CASCADE,
                  FOREIGN KEY(nameid) REFERENCES names(nameid) ON DELETE CASCADE ON UPDATE CASCADE,
-                 FOREIGN KEY(propertyid) REFERENCES baseprops(propertyid) ON DELETE CASCADE ON UPDATE CASCADE,
+                 FOREIGN KEY(formulaid) REFERENCES baseprops(formulaid) ON DELETE CASCADE ON UPDATE CASCADE,
                  FOREIGN KEY(cmodid) REFERENCES covmod(cmodid) ON DELETE CASCADE ON UPDATE CASCADE)''')
 
     c.execute('''CREATE TABLE IF NOT EXISTS covmod
-                (cmodid INTEGER PRIMARY KEY NOT NULL,
+                (cmodid integer PRIMARY KEY NOT NULL,
                  symbol text,
+                 netcharge text,
                  definition text)''')
 
     c.execute('''CREATE TABLE IF NOT EXISTS names
-                (nameid INTEGER PRIMARY KEY NOT NULL,
-                 chebiname text,
-                 chebiid text,
+                (chebiname text,
+                 nameid text PRIMARY KEY NOT NULL,
                  iupacname text,
                  othernames text,
                  smiles text)''')
 
     c.execute('''CREATE TABLE IF NOT EXISTS baseprops
-                (propertyid INTEGER PRIMARY KEY NOT NULL,
-                 formula text,
-                 netcharge text,
+                (formulaid text PRIMARY KEY NOT NULL,
                  avgmass text)''')
 
     c.execute('''CREATE TABLE IF NOT EXISTS citations
@@ -343,30 +338,44 @@ def create_other_tables(children, bases):
                  role text)''')
 
     c.execute('''CREATE TABLE IF NOT EXISTS citation_lookup
-                (modid int,
+                (nameid text,
                  citationid text,
-                 FOREIGN KEY(modid) REFERENCES modbase(modbaseid) ON DELETE CASCADE ON UPDATE CASCADE,
+                 FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE,
                  FOREIGN KEY(citationid) REFERENCES citations(citationid) ON DELETE CASCADE ON UPDATE CASCADE,
-                 PRIMARY KEY(modid, citationid))''')
+                 PRIMARY KEY(nameid, citationid))''')
 
     c.execute('''CREATE TABLE IF NOT EXISTS roles_lookup
-                (modid int,
+                (nameid text,
                  roleid text,
-                 FOREIGN KEY(modid) REFERENCES modbase(modbaseid) ON DELETE CASCADE ON UPDATE CASCADE,
+                 FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE,
                  FOREIGN KEY(roleid) REFERENCES roles(roleid) ON DELETE CASCADE ON UPDATE CASCADE,
-                 PRIMARY KEY(modid, roleid))''')
+                 PRIMARY KEY(nameid, roleid))''')
     conn.commit()
 
     # Populate Tables
+    formulafill = 0;
     for base in bases:
         childlist = children[base.chebiAsciiName]
         # Retreive childlist of current base
         for child in childlist:
             # Parse CHEBI datastructure for relevant info
             synonyms = concatenate_list(child, SYNONYM_SEARCH_STR)
+            print(synonyms)
+            newnames = []
+            for name in synonyms:
+                name = name.encode('utf-8').lower()
+                if name != child.chebiAsciiName:
+                    newnames.append(name)
+            synonyms = list(set(newnames))
+
             iupac = concatenate_list(child, IUPAC_SEARCH_STR)
             smiles = get_entity(child, SMILES_SEARCH_STR)
+
             formula = concatenate_list(child, FORMULA_SEARCH_STR)
+            if not formula:
+                formulafill = formulafill + 1;
+                formula = formulafill;
+
             charge = get_entity(child, CHARGE_SEARCH_STR)
             mass = get_entity(child, MASS_SEARCH_STR)
             citations = concatenate_list(child, CITATION_SEARCH_STR)
@@ -402,30 +411,29 @@ def create_other_tables(children, bases):
                                citationinfo_uni[2]))
                     conn.commit()
 
-            c.execute("INSERT OR IGNORE INTO baseprops VALUES(NULL,?,?,?)",
-                      (str(formula), str(charge), str(mass)))
-            c.execute("INSERT OR IGNORE INTO names VALUES(NULL,?,?,?,?,?)",
+            c.execute("INSERT OR IGNORE INTO baseprops VALUES(?,?)",
+                      (str(formula), str(mass)))
+            c.execute("INSERT OR IGNORE INTO names VALUES(?,?,?,?,?)",
                       (child.chebiAsciiName, child.chebiId,
                        str(iupac), str(synonyms), str(smiles)))
-            c.execute("INSERT OR IGNORE INTO covmod VALUES(NULL,?,?)",
-                      ('0', child.definition))
+            c.execute("INSERT OR IGNORE INTO covmod VALUES(NULL,?,?,?)",
+                      ('0', str(charge), child.definition))
             conn.commit()
             rowid = c.lastrowid
-            print(rowid)
 
-            c.execute("INSERT OR IGNORE INTO modbase VALUES(NULL,?,?,?,?,?,?,?)",
-                      ('0', base.chebiAsciiName[0], rowid,
-                       rowid, rowid, rowid, rowid))
+            c.execute("INSERT OR IGNORE INTO modbase VALUES(?,?,?,?,?)",
+                      (child.chebiId, '0', base.chebiAsciiName[0],
+                       str(formula), rowid))
             conn.commit()
 
             for role in range(len(roles)):
                 c.execute("INSERT OR IGNORE INTO roles_lookup VALUES(?,?)",
-                          (rowid, role_ids[role])) #XXX
+                          (child.chebiId, role_ids[role]))
             conn.commit()
 
             for citation in citations:
                 c.execute("INSERT OR IGNORE INTO citation_lookup VALUES(?,?)",
-                          (rowid, citation))
+                          (child.chebiId, citation))
             conn.commit()
 
     conn.close()
