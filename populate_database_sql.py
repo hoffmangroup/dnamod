@@ -41,6 +41,7 @@ RESET_TABLES = True
 
 # Program Constants
 BLACK_LIST = []
+WHITE_LIST = []
 DNA_BASES = ['cytosine', 'thymine', 'adenine', 'guanine', 'uracil']
 FILE_PATH = os.path.dirname(os.path.abspath(__file__))
 print("Operating from: {}".format(FILE_PATH))
@@ -130,20 +131,36 @@ def get_children(bases, client):
     return modDictionary
 
 
+def get_recursive_children(entity, client, childrenverified, additionalChildren):
+    if entity.chebiAsciiName not in BLACK_LIST:
+        if childrenverified:
+            entity['verifiedstatus'] = 1;
+        else:
+            entity['verifiedstatus'] = 0;
+        print("---------- CHILD of BASE: {0:100} Verified: {1} ".format(entity.chebiAsciiName, childrenverified))
+        result = client.service.getOntologyChildren(entity.chebiId)
+        if result:
+            result = result.ListElement
+            result = filter_stars(result, 3, client)
+            for child in result:
+                recursivestep = get_recursive_children(child, client, childrenverified, additionalChildren)
+                result = result + recursivestep
+            result = set(result)
+            result = list(result)
+            additionalChildren.extend(result)
+    return additionalChildren
+
 def get_further_children(entities, client):
+    childrenverified = False;
     additionalChildren = []
     for entity in entities:
-        if entity.chebiAsciiName not in BLACK_LIST:
-            print("---------- CHILD of BASE: {}".format(entity.chebiAsciiName))
-            result = client.service.getOntologyChildren(entity.chebiId)
-            if result:
-                result = result.ListElement
-                result = filter_stars(result, 3, client)
-                recursivestep = get_further_children(result, client)
-                result = result + recursivestep
-                result = set(result)
-                result = list(result)
-                additionalChildren.extend(result)
+        if entity.chebiAsciiName in WHITE_LIST:
+            entity['verifiedstatus'] = 1;
+            childrenverified = True;
+        else:
+            entity['verifiedstatus'] = 0;
+            childrenverified = False;
+        additionalChildren = get_recursive_children(entity, client, childrenverified, additionalChildren)
     return additionalChildren
 
 
@@ -305,6 +322,7 @@ def create_other_tables(children, bases):
                  baseid text,
                  formulaid text,
                  cmodid integer,
+                 verifiedstatus integer,
                  FOREIGN KEY(baseid) REFERENCES base(baseid) ON DELETE CASCADE ON UPDATE CASCADE,
                  FOREIGN KEY(nameid) REFERENCES names(nameid) ON DELETE CASCADE ON UPDATE CASCADE,
                  FOREIGN KEY(formulaid) REFERENCES baseprops(formulaid) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -360,10 +378,9 @@ def create_other_tables(children, bases):
         for child in childlist:
             # Parse CHEBI datastructure for relevant info
             synonyms = concatenate_list(child, SYNONYM_SEARCH_STR)
-            print(synonyms)
             newnames = []
             for name in synonyms:
-                name = name.encode('utf-8').lower()
+                name = str(name.encode('utf-8')).lower()
                 if name != child.chebiAsciiName:
                     newnames.append(name)
             synonyms = list(set(newnames))
@@ -421,9 +438,9 @@ def create_other_tables(children, bases):
             conn.commit()
             rowid = c.lastrowid
 
-            c.execute("INSERT OR IGNORE INTO modbase VALUES(?,?,?,?,?)",
+            c.execute("INSERT OR IGNORE INTO modbase VALUES(?,?,?,?,?,?)",
                       (child.chebiId, '0', base.chebiAsciiName[0],
-                       str(formula), rowid))
+                       str(formula), rowid, child['verifiedstatus']))
             conn.commit()
 
             for role in range(len(roles)):
@@ -443,6 +460,7 @@ def populate_tables(bases, children, client):
     create_base_table(bases)
     create_other_tables(children, bases)
 
+WHITE_LIST = dnamod_utils.get_list('whitelist')
 BLACK_LIST = dnamod_utils.get_list('blacklist')
 print("1/4 Searching for bases...")
 bases = search_for_bases(client)

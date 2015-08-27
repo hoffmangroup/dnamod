@@ -38,7 +38,6 @@ BASE_DICT = {'adenine': 'CHEBI:16708', 'thymine': 'CHEBI:17821',
 FILE_PATH = os.path.dirname(os.path.abspath(__file__))
 FILE_PATH_UP = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 CITATION_ORDERED_KEYS_ENCODED = ['pmid', 'title', 'date', 'author']
-WHITE_LIST = []
 
 # Import custom functions from dnamod_utils.py
 sys.path.insert(0, FILE_PATH_UP)
@@ -114,15 +113,15 @@ def create_html_pages():
         for mod in mods:
             # Read data:
             formula = mod[3]
-            netcharge = mod[7]
-            avgmass = mod[5]
-            definition = mod[8]
-            chebiname = mod[9].encode('ascii')
+            netcharge = mod[8]
+            avgmass = mod[6]
+            definition = mod[9]
+            chebiname = mod[10].encode('ascii')
             chebiid = mod[0]
-            iupacname = mod[10]
-            synonyms = mod[11]
-            smiles = mod[12].encode('ascii')
-            commonname = mod[13]
+            iupacname = mod[11]
+            synonyms = mod[12]
+            smiles = mod[13].encode('ascii')
+            commonname = mod[14]
 
             citation_lookup = mod[0]
             # roles_lookup = mod[7] # unused as roles are not on site
@@ -144,6 +143,11 @@ def create_html_pages():
             synonyms = synonyms.split(', ')
             if synonyms == ['']:
                 synonyms = []
+            result = []
+            for name in synonyms:
+                name = name[1:-1]
+                result.append(name)
+            synonyms = result
 
             smiles = smiles.decode('ascii')
             chebiname = chebiname.decode('ascii')
@@ -175,7 +179,7 @@ def create_html_pages():
 
             # Check if mod is on whitelist
             link = chebiname
-            if link in WHITE_LIST:
+            if mod[5]:
                 links.append(link)
             else:
                 blacklist.append(link)
@@ -216,7 +220,6 @@ def create_homepage(homepageLinks):
     f.close()
 
 print("Generating Static Site....")
-WHITE_LIST = dnamod_utils.get_list('whitelist')
 links = create_html_pages()
 create_homepage(links)
 print("Static Site Generated")
