@@ -455,10 +455,57 @@ def create_other_tables(children, bases):
 
     conn.close()
 
+def create_custom_citations():
+    conn = sqlite3.connect('DNA_mod_database.db')
+    c = conn.cursor()
+
+    c.execute('''PRAGMA foreign_keys = ON''')
+
+    c.execute('''CREATE TABLE IF NOT EXISTS sequencing_citations
+                (nameid text,
+                 PMid text,
+                 seq_technology text,
+                 resolution text,
+                 enrichment_method text,
+                 FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE)''')
+    conn.commit()
+    
+    with open(FILE_PATH + '/sequencing', 'r') as file:
+        reader = csv.reader(file, dialect='excel-tab')
+        for line in reader:
+            if line[0] == '#':
+                continue
+            if len(line) > 1:
+                stringline = line
+                print(stringline)
+                c.execute("INSERT OR IGNORE INTO sequencing_citations VALUES(?,?,?,?,?)",
+                          (stringline[0], stringline[1], stringline[2], stringline[3], stringline[4]))
+
+    conn.commit()
+    conn.close()
+
 
 def populate_tables(bases, children, client):
     create_base_table(bases)
     create_other_tables(children, bases)
+    create_custom_citations()
+
+
+def check_for_duplicates():
+    conn = sqlite3.connect('DNA_mod_database.db')
+    c = conn.cursor()
+
+    c.execute('''PRAGMA foreign_keys = ON''')
+    conn.commit()
+
+    for nameid in c.execute('''SELECT nameid FROM modbase'''):
+        synonyms = c.execute('''SELECT othernames FROM names WHERE nameid = ?''', nameid)
+        for name in synonyms:
+            c.execute('''SELECT nameid FROM names WHERE chebiname = ?''', name)
+            matchname = c.fetchone()
+            print(name, matchname)
+            if name == matchname:
+                print("Match!")
 
 WHITE_LIST = dnamod_utils.get_list('whitelist')
 BLACK_LIST = dnamod_utils.get_list('blacklist')
@@ -470,4 +517,5 @@ bases = get_complete_bases(bases, client)
 print("3/4 Creating tables...")
 populate_tables(bases, children, client)
 print("4/4 Finishing up...")
+check_for_duplicates()
 print("Done!")

@@ -77,6 +77,12 @@ body {
     font-size: 20px;
 }
 
+.Sequencing {
+    padding: 10px;
+    height: 50%;
+    font-size: 20px;
+}
+
 .Links {
     padding: 10px;
     height: 50%;
@@ -195,4 +201,8 @@ a:active {
     padding: 0px;
     margin-top: 0px;
     margin-bottom: 0px;
+}
+
+table, th, td {
+    border: 1px solid black;
 }

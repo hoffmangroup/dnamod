@@ -38,6 +38,7 @@ BASE_DICT = {'adenine': 'CHEBI:16708', 'thymine': 'CHEBI:17821',
 FILE_PATH = os.path.dirname(os.path.abspath(__file__))
 FILE_PATH_UP = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 CITATION_ORDERED_KEYS_ENCODED = ['pmid', 'title', 'date', 'author']
+SEQUENCING_ORDERED_KEYS = ['chebiid', 'pmid', 'seqtech', 'res', 'enrich']
 
 # Import custom functions from dnamod_utils.py
 sys.path.insert(0, FILE_PATH_UP)
@@ -71,6 +72,16 @@ def get_citations(lookup_key, cursor):
     return citationList
 
 
+def get_sequencing(id, cursor):
+    c = cursor.cursor()
+    sequenceList = []
+    c.execute("SELECT * from sequencing_citations WHERE nameid = ?", (id,))
+    results = c.fetchall()
+    for row in results:
+        sequenceList.append(dict(itertools.izip(SEQUENCING_ORDERED_KEYS, row)))
+    return sequenceList
+
+    
 def create_html_pages():
     # Load in SQLite database
     conn = sqlite3.connect(FILE_PATH_UP + '/DNA_mod_database.db')
@@ -160,6 +171,8 @@ def create_html_pages():
                 for citation in citations:
                     citation[key] = citation[key].decode(ENCODING)
 
+            sequences = get_sequencing(citation_lookup, conn)
+            
             render = page_template.render(ChebiName=chebiname,
                                           Definition=definition,
                                           Formula=formula,
@@ -173,7 +186,8 @@ def create_html_pages():
                                           Citations=citations,
                                           ParentLink=BASE_DICT[commonname],
                                           Roles=roles,
-                                          RolesChebi=roles_ids)
+                                          RolesChebi=roles_ids,
+                                          Sequences=sequences)
             f.write(render)
             f.close()
 
