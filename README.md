@@ -39,6 +39,7 @@ To update and recreate the database one would usually run *populate_database_sql
 ### Dependencies: ###
 
 Installation of the following dependencies along with Python will allow you to run DNAmod without error.
+
 1. Python SOAP client SUDs
 
 2. SQLite
