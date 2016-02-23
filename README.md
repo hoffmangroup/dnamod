@@ -1,32 +1,26 @@
-# README #
+# DNAmod #
 
-This README outlines the steps needed to set up Python so that DNAmod can run on your machine.
+The DNAmod webpage is: [https://www.pmgenomics.ca/hoffmanlab/proj/dnamod](https://www.pmgenomics.ca/hoffmanlab/proj/dnamod).
 
-## What is this repository for? ##
+This outlines the steps needed to set up a Python environment to reproduce or run a local DNAmod instance.
 
-### Summary: ###
+## Summary ##
 
 Covalent DNA modifications have been found in numerous organisms and more are continually being discovered and characterized, as detection methods improve. Many of these modifications can affect the conformation of the DNA double helix, often resulting in downstream effects upon transcription factor binding. Some of these modifications have been demonstrated to be stable, while others are viewed as merely transient.
 
-DNAmod catalogs information on known DNA modifications. It aims to profile modifications' properties, with diagrams and links to databases such as ChEBI. It also captures citations to published literature on these modifications. This makes it easier for those new to the field to explore the array of potential modifications.
+DNAmod catalogs information on known DNA modifications. It aims to profile modifications' properties, with diagrams and links to databases such as [ChEBI](http://www.ebi.ac.uk/chebi). It also captures citations to published literature on these modifications. This makes it easier for those new to the field to explore the array of potential modifications.
 
-DNAmod is comprised of this static website and a backing SQLite database. The database is created using Python, including the SOAP client suds and Biopython. The website is also created using Python, makes use of Open Babel via its Python wrapper, Pybel, and uses the Jinja2 templating engine.
+DNAmod is comprised of this static website and a backing [SQLite](https://www.sqlite.org/) database. The database is created using Python, including the SOAP client [suds](https://fedorahosted.org/suds/) and [Biopython](http://biopython.org/wiki/Main_Page). The website is also created using Python, makes use of [Open Babel](http://openbabel.org/) via its Python wrapper, [Pybel](https://openbabel.org/docs/dev/UseTheLibrary/Python_Pybel.html), and uses the [Jinja2](http://jinja.pocoo.org/) templating engine.
 
-This project is open source and updated regularly. We also manually curate the modifications verified to occur in vivo.
+This project is open source and updated regularly. We also manually curate the modifications verified to occur *in vivo*.
 
-* Version
-February 20th, 2016 - Version 1.0
-* License
-GNU General Purpose License, version 2 (GPLv2)
+## Installation ##
 
-## How do I get set up? ##
-
-### Set up: ###
 To set up ensure that Python is installed on your machine along with the dependencies listed below.
 
 *DNA_mod_database.db* contains the SQLite database for DNAmod.
 
-*populate_database_sql.py* pulls data from CHEBI and imports the data into the SQLite database.
+*populate_database_sql.py* pulls data from ChEBI and imports the data into the SQLite database.
 
 *create_mod_staticsite_sql.py* takes the SQLite database and pushes it through the Jinja2 templates located in the templates folder to create the static site. The location of the static site is the *static* folder.
 
@@ -36,21 +30,25 @@ The *sequencing* file allows the user to add custom citations to the database an
 
 To update and recreate the database one would usually run *populate_database_sql.py* followed by *create_mod_staticsite_sql.py* however running the shell script *update_dnamod.sh* will complete those steps. The shell script *sync_live_site.sh* can be reconfigured to allow you to quickly update your live site location for DNAmod. 
 
-### Dependencies: ###
+### Dependencies ###
 
 Installation of the following dependencies along with Python will allow you to run DNAmod without error.
 
-1. Python SOAP client SUDs
+1. [suds](https://fedorahosted.org/suds/) (a Python SOAP client)
 
-2. SQLite
+2. [SQLite](https://www.sqlite.org/)
 
-3. Biopython
+3. [Biopython](http://biopython.org/wiki/Main_Page)
 
-4. Pybel
+4. [Pybel](https://openbabel.org/docs/dev/UseTheLibrary/Python_Pybel.html)
 
-5. Jinja2
+5. [Jinja2](http://jinja.pocoo.org/)
 
-### Who do I talk to? ###
+## License ##
+
+Released under the GNU General Purpose License, version 2 (GPLv2).
+
+## Contacts ##
 
 This project was created at the [Hoffman Lab](https://www.pmgenomics.ca/hoffmanlab/) by Ankur Jai Sood, Coby Viner, and Michael M. Hoffman.
 
