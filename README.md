@@ -1,0 +1,56 @@
+# README #
+
+This README outlines the steps needed to set up Python so that DNAmod can run on your machine.
+
+## What is this repository for? ##
+
+### Summary: ###
+
+Covalent DNA modifications have been found in numerous organisms and more are continually being discovered and characterized, as detection methods improve. Many of these modifications can affect the conformation of the DNA double helix, often resulting in downstream effects upon transcription factor binding. Some of these modifications have been demonstrated to be stable, while others are viewed as merely transient.
+
+DNAmod catalogs information on known DNA modifications, of which the well-known 5-methylcytosine is only one. It aims to profile modifications' properties, with diagrams and links to databases such as ChEBI. It also captures citations to published literature on these modifications. This makes it easier for those new to the field to explore the array of potential modifications.
+
+DNAmod is comprised of this static website and a backing SQLite database. The database is created using Python, including the SOAP client suds and Biopython. The website is also created using Python, makes use of Open Babel via its Python wrapper, Pybel, and uses the Jinja2 templating engine.
+
+This project is open source and its code is on BitBucket. We update DNAmod on a monthly basis and manually curate the modifications verified to occur in vivo.
+
+* Version
+February 20th, 2016 - Version 1.0
+
+## How do I get set up? ##
+
+### Set up: ###
+To set up ensure that Python is installed on your machine along with the dependencies listed below.
+
+*DNA_mod_database.db* contains the SQLite database for DNAmod.
+
+*populate_database_sql.py* pulls data from CHEBI and imports the data into the SQLite database.
+
+*create_mod_staticsite_sql.py* takes the SQLite database and pushes it through the Jinja2 templates located in the templates folder to create the static site. The location of the static site is the *static* folder.
+
+The whitelist and blacklist located in the *whitelist* folder control the modifications which show up as verified on the finished site. These can be reconfigured depending on your preferences.
+
+The *sequencing* file allows the user to add custom citations to the database and associate these citations to particular modifications. Changing the format of this file may also warrant modification of the Jinja2 template *modification.html*.
+
+To update and recreate the database one would usually run *populate_database_sql.py* followed by *create_mod_staticsite_sql.py* however running the shell script *update_dnamod.sh* will complete those steps. The shell script *sync_live_site.sh* can be reconfigured to allow you to quickly update your live site location for DNAmod. 
+
+### Dependencies: ###
+
+Installation of the following dependencies along with Python will allow you to run DNAmod without error.
+1. Python SOAP client SUDs
+
+2. SQLite
+
+3. Biopython
+
+4. Pybel
+
+5. Jinja2
+
+### Who do I talk to? ###
+
+This project was created at the [Hoffman Lab](https://www.pmgenomics.ca/hoffmanlab/) by Ankur Jai Sood, Coby Viner, and Michael M. Hoffman.
+
+There is a moderated [dnamod-announce](https://listserv.utoronto.ca/cgi-bin/wa?A0=DNAMOD-ANNOUNCE-L&X=E5FDFD12D6CD9E97CC&Y) mailing list that you can subscribe to for information on new releases of DNAmod.
+
+There is also a [dnamod-users](https://listserv.utoronto.ca/cgi-bin/wa?A0=DNAMOD-L&X=E5FDFD12D6CD9E97CC&Y) mailing list for general discussion and questions about the use of DNAmod.
