@@ -46,7 +46,7 @@ Installation of the following dependencies along with Python will allow you to r
 
 ## License ##
 
-Released under the GNU General Purpose License, version 2 (GPLv2).
+Released under the [GNU General Purpose License, version 2 (GPLv2)](http://www.gnu.org/licenses/gpl-2.0-standalone.html).
 
 ## Contacts ##
 
