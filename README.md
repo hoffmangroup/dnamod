@@ -8,14 +8,16 @@ This README outlines the steps needed to set up Python so that DNAmod can run on
 
 Covalent DNA modifications have been found in numerous organisms and more are continually being discovered and characterized, as detection methods improve. Many of these modifications can affect the conformation of the DNA double helix, often resulting in downstream effects upon transcription factor binding. Some of these modifications have been demonstrated to be stable, while others are viewed as merely transient.
 
-DNAmod catalogs information on known DNA modifications, of which the well-known 5-methylcytosine is only one. It aims to profile modifications' properties, with diagrams and links to databases such as ChEBI. It also captures citations to published literature on these modifications. This makes it easier for those new to the field to explore the array of potential modifications.
+DNAmod catalogs information on known DNA modifications. It aims to profile modifications' properties, with diagrams and links to databases such as ChEBI. It also captures citations to published literature on these modifications. This makes it easier for those new to the field to explore the array of potential modifications.
 
 DNAmod is comprised of this static website and a backing SQLite database. The database is created using Python, including the SOAP client suds and Biopython. The website is also created using Python, makes use of Open Babel via its Python wrapper, Pybel, and uses the Jinja2 templating engine.
 
-This project is open source and its code is on BitBucket. We update DNAmod on a monthly basis and manually curate the modifications verified to occur in vivo.
+This project is open source and updated regularly. We also manually curate the modifications verified to occur in vivo.
 
 * Version
 February 20th, 2016 - Version 1.0
+* License
+GNU General Purpose License, version 2 (GPLv2)
 
 ## How do I get set up? ##
 
