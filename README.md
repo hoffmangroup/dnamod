@@ -34,11 +34,9 @@ To update and recreate the database one would usually run ```populate_database_s
 
 The following dependencies, in addition to Python, are needed to build DNAmod.
 
-1. [Jinja2](http://jinja.pocoo.org/)
+1. [OpenBabel](http://openbabel.org/wiki/Category:Installation)
 
-2. [OpenBabel](http://openbabel.org/wiki/Category:Installation)
-
-3. [SQLite](https://www.sqlite.org/)
+2. [SQLite](https://www.sqlite.org/)
 
 #### PyPI packages ####
 
@@ -46,11 +44,13 @@ The following packages can be obtained from [The Python Package Index, PyPI](htt
 
 1. [Biopython](http://biopython.org/wiki/Main_Page): ```biopython``` on PyPI
 
-2. [Pybel](https://openbabel.org/docs/dev/UseTheLibrary/Python_Pybel.html): ```openbabel``` on PyPI
+2. [```Jinja2```](http://jinja.pocoo.org/)
 
-3. [```suds```](https://fedorahosted.org/suds/) (a Python SOAP client)
+3. [Pybel](https://openbabel.org/docs/dev/UseTheLibrary/Python_Pybel.html): ```openbabel``` on PyPI
 
-4. [```unicodecsv```](https://pypi.python.org/pypi/unicodecsv)
+4. [```suds```](https://fedorahosted.org/suds/) (a Python SOAP client)
+
+5. [```unicodecsv```](https://pypi.python.org/pypi/unicodecsv)
 
 ## License ##
 
