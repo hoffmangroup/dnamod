@@ -16,16 +16,19 @@ Function:
 4. Using above results, populates DNA post-transciptional modification table
 '''
 
-# Using Suds web services client for soap
-import csv
 import os
 import sqlite3
-import sys
-from suds.client import Client
+
 from Bio import Entrez
+from suds.client import Client  # Using Suds web services client for soap
 from sys import maxint
+import unicodecsv as csv
 
 import dnamod_utils
+
+# XXX register this with NCBI
+Entrez.email = "jai.sood@hotmail.com" # XXX come up with an alternative for this... (perhaps a DNAmod address)
+Entrez.tool = "DNAmod"
 
 # Search Variables made up of CHEBI object attributes
 SYNONYM_SEARCH_STR = 'Synonyms'
@@ -39,7 +42,10 @@ ONTOLOGY_SEARCH_STR = "OntologyParents"
 ONTOLOGY_HAS_ROLE = "has role"
 RESET_TABLES = True
 
-# Program Constants
+ChEBI_ID_PREFIX = "CHEBI:"
+
+NO_ENRICHMENT_STRING = "None"
+
 BLACK_LIST = []
 WHITE_LIST = []
 
@@ -221,11 +227,11 @@ def get_roles(child, attribute, selector):
 
 
 def get_full_citation(PMID):
-    print("Adding Citation: ",PMID)
+    print("Adding Citation: {}".format(PMID))
     result = []
-    # isbook = False # Unsed at the moment
+    # isbook = False # Unused at the moment
     isarticle = False
-    Entrez.email = "jai.sood@hotmail.com"
+
     handle = Entrez.efetch("pubmed", id=PMID, retmode="xml")
     records = Entrez.parse(handle)
 
@@ -459,17 +465,24 @@ def create_custom_citations(conn, sql_conn_cursor, ref_annots_file_name):
                              FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE)''')
     conn.commit()
     
-    with open(ref_annots_file_name) as file:
-        reader = csv.reader(file, dialect='excel-tab')
+    with open(ref_annots_file_name, 'rb') as file:
+        # use a generator expression to ignore comments
+        reader = csv.reader((row for row in file if not row.startswith('#')),
+                            delimiter="\t")
         for line in reader:
-            if line[0] == '#':
-                continue
-            if len(line) > 1:
-                stringline = line
-                print(stringline)
-                sql_conn_cursor.execute("INSERT OR IGNORE INTO sequencing_citations VALUES(?,?,?,?,?)",
-                                        (stringline[0], stringline[1], stringline[2],
-                                         stringline[3], stringline[4]))
+            assert len(line) > 3  # min. of four columns
+
+            # add ID prefix, if missing
+            if not line[0].startswith(ChEBI_ID_PREFIX):
+                line[0] = ChEBI_ID_PREFIX + line[0]
+
+            if len(line) < 5:  # no enrichment
+                line.append(NO_ENRICHMENT_STRING)
+
+            print(line)
+            sql_conn_cursor.execute("INSERT OR IGNORE INTO sequencing_citations VALUES(?,?,?,?,?)",
+                                    (line[0], line[1], line[2],
+                                     line[3], line[4]))
 
     conn.commit()
 
