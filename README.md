@@ -34,9 +34,11 @@ To update and recreate the database one would usually run ```populate_database_s
 
 The following dependencies, in addition to Python, are needed to build DNAmod.
 
-1. [SQLite](https://www.sqlite.org/)
+1. [Jinja2](http://jinja.pocoo.org/)
 
-2. [Jinja2](http://jinja.pocoo.org/)
+2. [OpenBabelGUI](http://openbabel.org/wiki/Category:Installation)
+
+3. [SQLite](https://www.sqlite.org/)
 
 #### PyPI packages ####
 
