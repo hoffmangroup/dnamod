@@ -1,1 +1,14 @@
 #chebi	pmid	seqtech	resolution	enrichment
+# ------------------------------------------------
+# 5mC
+27551	16809668	HELP assay	limited restriction endonuclease, microarray
+27551	19273619	Methyl-Seq	limited restriction endonuclease
+27551	18950712	MeDIP-Seq	low chemical
+27551	265521	Maxam–Gilbert sequencing	single-base very costly and low-throughput
+27551	23301810	Maxam–Gilbert-Wang sequencing	single-base very costly and low-throughput
+27551	24209366	Maxam–Gilbert-Huang sequencing	single-base very costly and low-throughput
+27551	20813757	Maxam–Gilbert-Münzel sequencing	single-base very costly and low-throughput
+27551	1542678	BS-Seq	single-base
+27551	19829295	BS-Seq	single-base
+27551	19442738	RRBS	single-base	methylation-insensitive restriction digestion
+# ------------------------------------------------
