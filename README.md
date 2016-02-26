@@ -36,7 +36,7 @@ The following dependencies, in addition to Python, are needed to build DNAmod.
 
 1. [Jinja2](http://jinja.pocoo.org/)
 
-2. [OpenBabelGUI](http://openbabel.org/wiki/Category:Installation)
+2. [OpenBabel](http://openbabel.org/wiki/Category:Installation)
 
 3. [SQLite](https://www.sqlite.org/)
 
