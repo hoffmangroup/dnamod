@@ -32,17 +32,25 @@ To update and recreate the database one would usually run ```populate_database_s
 
 ### Dependencies ###
 
-Installation of the following dependencies along with Python will allow you to run DNAmod without error.
+The following dependencies, in addition to Python, are needed to build DNAmod.
 
-1. [suds](https://fedorahosted.org/suds/) (a Python SOAP client)
+1. [OpenBabel](http://openbabel.org/wiki/Category:Installation)
 
 2. [SQLite](https://www.sqlite.org/)
 
-3. [Biopython](http://biopython.org/wiki/Main_Page)
+#### PyPI packages ####
 
-4. [Pybel](https://openbabel.org/docs/dev/UseTheLibrary/Python_Pybel.html)
+The following packages can be obtained from [The Python Package Index, PyPI](https://pypi.python.org/pypi) and installed with ```pip```.
 
-5. [Jinja2](http://jinja.pocoo.org/)
+1. [Biopython](http://biopython.org/wiki/Main_Page): ```biopython``` on PyPI
+
+2. [```Jinja2```](http://jinja.pocoo.org/)
+
+3. [Pybel](https://openbabel.org/docs/dev/UseTheLibrary/Python_Pybel.html): ```openbabel``` on PyPI
+
+4. [```suds```](https://fedorahosted.org/suds/) (a Python SOAP client)
+
+5. [```unicodecsv```](https://pypi.python.org/pypi/unicodecsv)
 
 ## License ##
 
