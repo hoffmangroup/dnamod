@@ -36,19 +36,19 @@ The following dependencies, in addition to Python, are needed to build DNAmod.
 
 1. [SQLite](https://www.sqlite.org/)
 
-2. [Pybel](https://openbabel.org/docs/dev/UseTheLibrary/Python_Pybel.html)
-
-3. [Jinja2](http://jinja.pocoo.org/)
+2. [Jinja2](http://jinja.pocoo.org/)
 
 #### PyPI packages ####
 
 The following packages can be obtained from [The Python Package Index, PyPI](https://pypi.python.org/pypi) and installed with ```pip```.
 
-1. [Biopython](http://biopython.org/wiki/Main_Page)
+1. [Biopython](http://biopython.org/wiki/Main_Page): ```biopython``` on PyPI
 
-2. [suds](https://fedorahosted.org/suds/) (a Python SOAP client)
+2. [Pybel](https://openbabel.org/docs/dev/UseTheLibrary/Python_Pybel.html): ```openbabel``` on PyPI
 
-3. [unicodecsv](https://pypi.python.org/pypi/unicodecsv)
+3. [```suds```](https://fedorahosted.org/suds/) (a Python SOAP client)
+
+4. [```unicodecsv```](https://pypi.python.org/pypi/unicodecsv)
 
 ## License ##
 
