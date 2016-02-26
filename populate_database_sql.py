@@ -42,9 +42,16 @@ RESET_TABLES = True
 # Program Constants
 BLACK_LIST = []
 WHITE_LIST = []
+
 DNA_BASES = ['cytosine', 'thymine', 'adenine', 'guanine', 'uracil']
+
 FILE_PATH = os.path.dirname(os.path.abspath(__file__))
+
 print("Operating from: {}".format(FILE_PATH))
+
+DATABASE_FILE_FULLPATH = os.path.join(FILE_PATH, "DNA_mod_database.db")
+
+REF_ANNOTS_FULLPATH = os.path.join(FILE_PATH, "ref_annots_sequencing.txt")
 
 url = 'https://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
 client = Client(url)
@@ -176,8 +183,7 @@ def get_complete_bases(bases, client):
     return result
 
 
-def create_base_table(bases):
-    conn = sqlite3.connect(FILE_PATH + '/DNA_mod_database.db')
+def create_base_table(conn, bases):
     c = conn.cursor()
 
     c.execute('''PRAGMA foreign_keys = ON''')
@@ -296,8 +302,7 @@ def get_full_citation(PMID):
     return result
 
 
-def create_other_tables(children, bases):
-    conn = sqlite3.connect('DNA_mod_database.db')
+def create_other_tables(conn, children, bases):
     c = conn.cursor()
 
     c.execute('''PRAGMA foreign_keys = ON''')
@@ -455,8 +460,7 @@ def create_other_tables(children, bases):
 
     conn.close()
 
-def create_custom_citations():
-    conn = sqlite3.connect('DNA_mod_database.db')
+def create_custom_citations(conn, ref_annots_file_name):
     c = conn.cursor()
 
     c.execute('''PRAGMA foreign_keys = ON''')
@@ -470,7 +474,7 @@ def create_custom_citations():
                  FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE)''')
     conn.commit()
     
-    with open(FILE_PATH + '/sequencing', 'r') as file:
+    with open(ref_annots_file_name) as file:
         reader = csv.reader(file, dialect='excel-tab')
         for line in reader:
             if line[0] == '#':
@@ -485,14 +489,13 @@ def create_custom_citations():
     conn.close()
 
 
-def populate_tables(bases, children, client):
-    create_base_table(bases)
-    create_other_tables(children, bases)
-    create_custom_citations()
+def populate_tables(conn, bases, children, client):
+    create_base_table(conn, bases)
+    create_other_tables(conn, children, bases)
+    create_custom_citations(conn, REF_ANNOTS_FULLPATH)
 
 
-def check_for_duplicates():
-    conn = sqlite3.connect('DNA_mod_database.db')
+def check_for_duplicates(conn):
     c = conn.cursor()
 
     c.execute('''PRAGMA foreign_keys = ON''')
@@ -509,13 +512,20 @@ def check_for_duplicates():
 
 WHITE_LIST = dnamod_utils.get_list('whitelist')
 BLACK_LIST = dnamod_utils.get_list('blacklist')
+
 print("1/4 Searching for bases...")
 bases = search_for_bases(client)
+
 print("2/4 Searching for children...")
 children = get_children(bases, client)
 bases = get_complete_bases(bases, client)
+
+conn = sqlite3.connect(DATABASE_FILE_FULLPATH)
+
 print("3/4 Creating tables...")
-populate_tables(bases, children, client)
+populate_tables(conn, bases, children, client)
+
 print("4/4 Finishing up...")
-check_for_duplicates()
+check_for_duplicates(conn)
+
 print("Done!")
