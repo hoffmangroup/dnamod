@@ -53,7 +53,7 @@ DATABASE_FILE_FULLPATH = os.path.join(FILE_PATH, "DNA_mod_database.db")
 
 REF_ANNOTS_FULLPATH = os.path.join(FILE_PATH, "ref_annots_sequencing.txt")
 
-url = 'https://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
+url = 'http://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
 client = Client(url)
 
 
@@ -183,29 +183,23 @@ def get_complete_bases(bases, client):
     return result
 
 
-def create_base_table(conn, bases):
-    c = conn.cursor()
-
-    c.execute('''PRAGMA foreign_keys = ON''')
-    conn.commit()
-
+def create_base_table(conn, sql_conn_cursor, bases):
     if RESET_TABLES is True:
-        c.execute('''DROP TABLE IF EXISTS base''')
+        sql_conn_cursor.execute('''DROP TABLE IF EXISTS base''')
 
-    c.execute('''CREATE TABLE IF NOT EXISTS base
-                (baseid TEXT PRIMARY KEY NOT NULL,
-                 commonname text,
-                 basedefinition text)''')
+    sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS base
+                            (baseid TEXT PRIMARY KEY NOT NULL,
+                             commonname text,
+                             basedefinition text)''')
     conn.commit()
 
     for base in bases:
-        c.execute("UPDATE base SET commonname=?, basedefinition=? WHERE commonname=?",(base.chebiAsciiName, base.chebiAsciiName, base.chebiAsciiName[0]))
+        sql_conn_cursor.execute("UPDATE base SET commonname=?, basedefinition=? WHERE commonname=?",(base.chebiAsciiName, base.chebiAsciiName, base.chebiAsciiName[0]))
         conn.commit()
-        c.execute("INSERT OR IGNORE INTO base VALUES(?,?,?)",
-                  (base.chebiAsciiName[0],
-                   base.chebiAsciiName, base.definition))
+        sql_conn_cursor.execute("INSERT OR IGNORE INTO base VALUES(?,?,?)",
+                                (base.chebiAsciiName[0],
+                                 base.chebiAsciiName, base.definition))
     conn.commit()
-    conn.close()
 
 
 def concatenate_list(child, attribute):
@@ -302,77 +296,73 @@ def get_full_citation(PMID):
     return result
 
 
-def create_other_tables(conn, children, bases):
-    c = conn.cursor()
-
-    c.execute('''PRAGMA foreign_keys = ON''')
-    conn.commit()
-
+def create_other_tables(conn, sql_conn_cursor, children, bases):
     # Reset Tables
     if RESET_TABLES is True:
-        c.execute('''DROP TABLE IF EXISTS covmod''')
-        c.execute('''DROP TABLE IF EXISTS names''')
-        c.execute('''DROP TABLE IF EXISTS baseprops''')
-        c.execute('''DROP TABLE IF EXISTS citation_lookup''')
-        c.execute('''DROP TABLE IF EXISTS roles_lookup''')
-        c.execute('''DROP TABLE IF EXISTS citations''')
-        c.execute('''DROP TABLE IF EXISTS roles''')
-        c.execute('''DROP TABLE IF EXISTS modbase''')
+        sql_conn_cursor.execute('''DROP TABLE IF EXISTS covmod''')
+        sql_conn_cursor.execute('''DROP TABLE IF EXISTS names''')
+        sql_conn_cursor.execute('''DROP TABLE IF EXISTS baseprops''')
+        sql_conn_cursor.execute('''DROP TABLE IF EXISTS citation_lookup''')
+        sql_conn_cursor.execute('''DROP TABLE IF EXISTS roles_lookup''')
+        sql_conn_cursor.execute('''DROP TABLE IF EXISTS citations''')
+        sql_conn_cursor.execute('''DROP TABLE IF EXISTS roles''')
+        sql_conn_cursor.execute('''DROP TABLE IF EXISTS modbase''')
         conn.commit()
 
     # Create Tables
-    c.execute('''CREATE TABLE IF NOT EXISTS modbase
-                (nameid text PRIMARY KEY NOT NULL,
-                 position text,
-                 baseid text,
-                 formulaid text,
-                 cmodid integer,
-                 verifiedstatus integer,
-                 FOREIGN KEY(baseid) REFERENCES base(baseid) ON DELETE CASCADE ON UPDATE CASCADE,
-                 FOREIGN KEY(nameid) REFERENCES names(nameid) ON DELETE CASCADE ON UPDATE CASCADE,
-                 FOREIGN KEY(formulaid) REFERENCES baseprops(formulaid) ON DELETE CASCADE ON UPDATE CASCADE,
-                 FOREIGN KEY(cmodid) REFERENCES covmod(cmodid) ON DELETE CASCADE ON UPDATE CASCADE)''')
+    sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS modbase
+                            (nameid text PRIMARY KEY NOT NULL,
+                             position text,
+                             baseid text,
+                             formulaid text,
+                             cmodid integer,
+                             verifiedstatus integer,
+                             FOREIGN KEY(baseid) REFERENCES base(baseid) ON DELETE CASCADE ON UPDATE CASCADE,
+                             FOREIGN KEY(nameid) REFERENCES names(nameid) ON DELETE CASCADE ON UPDATE CASCADE,
+                             FOREIGN KEY(formulaid) REFERENCES baseprops(formulaid) ON DELETE CASCADE ON UPDATE CASCADE,
+                             FOREIGN KEY(cmodid) REFERENCES covmod(cmodid) ON DELETE CASCADE ON UPDATE CASCADE)''')
 
-    c.execute('''CREATE TABLE IF NOT EXISTS covmod
-                (cmodid integer PRIMARY KEY NOT NULL,
-                 symbol text,
-                 netcharge text,
-                 definition text)''')
+    sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS covmod
+                            (cmodid integer PRIMARY KEY NOT NULL,
+                             symbol text,
+                             netcharge text,
+                             definition text)''')
 
-    c.execute('''CREATE TABLE IF NOT EXISTS names
-                (chebiname text,
-                 nameid text PRIMARY KEY NOT NULL,
-                 iupacname text,
-                 othernames text,
-                 smiles text)''')
+    sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS names
+                            (chebiname text,
+                             nameid text PRIMARY KEY NOT NULL,
+                             iupacname text,
+                             othernames text,
+                             smiles text)''')
 
-    c.execute('''CREATE TABLE IF NOT EXISTS baseprops
-                (formulaid text PRIMARY KEY NOT NULL,
-                 avgmass text)''')
+    sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS baseprops
+                            (formulaid text PRIMARY KEY NOT NULL,
+                             avgmass text)''')
 
-    c.execute('''CREATE TABLE IF NOT EXISTS citations
-                (citationid text PRIMARY KEY NOT NULL,
-                 title text,
-                 pubdate text,
-                 authors text)''')
+    sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS citations
+                            (citationid text PRIMARY KEY NOT NULL,
+                             title text,
+                             pubdate text,
+                             authors text)''')
 
-    c.execute('''CREATE TABLE IF NOT EXISTS roles
-                (roleid text PRIMARY KEY NOT NULL,
-                 role text)''')
+    sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS roles
+                            (roleid text PRIMARY KEY NOT NULL,
+                             role text)''')
 
-    c.execute('''CREATE TABLE IF NOT EXISTS citation_lookup
-                (nameid text,
-                 citationid text,
-                 FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE,
-                 FOREIGN KEY(citationid) REFERENCES citations(citationid) ON DELETE CASCADE ON UPDATE CASCADE,
-                 PRIMARY KEY(nameid, citationid))''')
+    sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS citation_lookup
+                            (nameid text,
+                             citationid text,
+                             FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE,
+                             FOREIGN KEY(citationid) REFERENCES citations(citationid) ON DELETE CASCADE ON UPDATE CASCADE,
+                             PRIMARY KEY(nameid, citationid))''')
 
-    c.execute('''CREATE TABLE IF NOT EXISTS roles_lookup
-                (nameid text,
-                 roleid text,
-                 FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE,
-                 FOREIGN KEY(roleid) REFERENCES roles(roleid) ON DELETE CASCADE ON UPDATE CASCADE,
-                 PRIMARY KEY(nameid, roleid))''')
+    sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS roles_lookup
+                            (nameid text,
+                             roleid text,
+                             FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE,
+                             FOREIGN KEY(roleid) REFERENCES roles(roleid) ON DELETE CASCADE ON UPDATE CASCADE,
+                             PRIMARY KEY(nameid, roleid))''')
+    
     conn.commit()
 
     # Populate Tables
@@ -408,70 +398,65 @@ def create_other_tables(conn, children, bases):
 
             # Populate roles and citations tables with unique data
             for role in range(len(roles)):
-                c.execute("SELECT count(*) FROM roles WHERE roleid = ?",
+                sql_conn_cursor.execute("SELECT count(*) FROM roles WHERE roleid = ?",
                           (role_ids[role],))
-                data = c.fetchone()[0]
+                data = sql_conn_cursor.fetchone()[0]
                 if data == 0:
-                    c.execute("UPDATE roles SET role=? WHERE roleid=?",(role_names[role], role_ids[role]))
+                    sql_conn_cursor.execute("UPDATE roles SET role=? WHERE roleid=?",(role_names[role], role_ids[role]))
                     conn.commit()
-                    c.execute("INSERT OR IGNORE INTO roles VALUES(?,?)",
+                    sql_conn_cursor.execute("INSERT OR IGNORE INTO roles VALUES(?,?)",
                               (role_ids[role], role_names[role]))
                     conn.commit()
 
             for citation in citations:
-                c.execute("SELECT * FROM citations WHERE citationid = ?",
+                sql_conn_cursor.execute("SELECT * FROM citations WHERE citationid = ?",
                           [citation])
-                data = c.fetchone()
+                data = sql_conn_cursor.fetchone()
                 if data is None:
                     citationinfo = get_full_citation(citation)
                     citationinfo_uni = [info.decode('utf-8') for info in citationinfo]
 
-                    c.execute("UPDATE citations SET title=?, pubdate=?, authors=? WHERE citationid=?",(citationinfo_uni[0], citationinfo_uni[1], citationinfo_uni[2], citation))
+                    sql_conn_cursor.execute("UPDATE citations SET title=?, pubdate=?, authors=? WHERE citationid=?",(citationinfo_uni[0], citationinfo_uni[1], citationinfo_uni[2], citation))
                     conn.commit()
-                    c.execute("INSERT OR IGNORE INTO citations VALUES(?,?,?,?)",
+                    sql_conn_cursor.execute("INSERT OR IGNORE INTO citations VALUES(?,?,?,?)",
                               (citation, citationinfo_uni[0], citationinfo_uni[1],
                                citationinfo_uni[2]))
                     conn.commit()
 
-            c.execute("INSERT OR IGNORE INTO baseprops VALUES(?,?)",
+            sql_conn_cursor.execute("INSERT OR IGNORE INTO baseprops VALUES(?,?)",
                       (str(formula), str(mass)))
-            c.execute("INSERT OR IGNORE INTO names VALUES(?,?,?,?,?)",
+            sql_conn_cursor.execute("INSERT OR IGNORE INTO names VALUES(?,?,?,?,?)",
                       (child.chebiAsciiName, child.chebiId,
                        str(iupac), str(synonyms), str(smiles)))
-            c.execute("INSERT OR IGNORE INTO covmod VALUES(NULL,?,?,?)",
+            sql_conn_cursor.execute("INSERT OR IGNORE INTO covmod VALUES(NULL,?,?,?)",
                       ('0', str(charge), child.definition))
             conn.commit()
-            rowid = c.lastrowid
+            rowid = sql_conn_cursor.lastrowid
 
-            c.execute("INSERT OR IGNORE INTO modbase VALUES(?,?,?,?,?,?)",
+            sql_conn_cursor.execute("INSERT OR IGNORE INTO modbase VALUES(?,?,?,?,?,?)",
                       (child.chebiId, '0', base.chebiAsciiName[0],
                        str(formula), rowid, child['verifiedstatus']))
             conn.commit()
 
             for role in range(len(roles)):
-                c.execute("INSERT OR IGNORE INTO roles_lookup VALUES(?,?)",
+                sql_conn_cursor.execute("INSERT OR IGNORE INTO roles_lookup VALUES(?,?)",
                           (child.chebiId, role_ids[role]))
             conn.commit()
 
             for citation in citations:
-                c.execute("INSERT OR IGNORE INTO citation_lookup VALUES(?,?)",
+                sql_conn_cursor.execute("INSERT OR IGNORE INTO citation_lookup VALUES(?,?)",
                           (child.chebiId, citation))
             conn.commit()
 
-    conn.close()
 
-def create_custom_citations(conn, ref_annots_file_name):
-    c = conn.cursor()
-
-    c.execute('''PRAGMA foreign_keys = ON''')
-
-    c.execute('''CREATE TABLE IF NOT EXISTS sequencing_citations
-                (nameid text,
-                 PMid text,
-                 seq_technology text,
-                 resolution text,
-                 enrichment_method text,
-                 FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE)''')
+def create_custom_citations(conn, sql_conn_cursor, ref_annots_file_name):
+    sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS sequencing_citations
+                            (nameid text,
+                             PMid text,
+                             seq_technology text,
+                             resolution text,
+                             enrichment_method text,
+                             FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE)''')
     conn.commit()
     
     with open(ref_annots_file_name) as file:
@@ -482,33 +467,29 @@ def create_custom_citations(conn, ref_annots_file_name):
             if len(line) > 1:
                 stringline = line
                 print(stringline)
-                c.execute("INSERT OR IGNORE INTO sequencing_citations VALUES(?,?,?,?,?)",
-                          (stringline[0], stringline[1], stringline[2], stringline[3], stringline[4]))
+                sql_conn_cursor.execute("INSERT OR IGNORE INTO sequencing_citations VALUES(?,?,?,?,?)",
+                                        (stringline[0], stringline[1], stringline[2],
+                                         stringline[3], stringline[4]))
 
     conn.commit()
-    conn.close()
 
 
-def populate_tables(conn, bases, children, client):
-    create_base_table(conn, bases)
-    create_other_tables(conn, children, bases)
-    create_custom_citations(conn, REF_ANNOTS_FULLPATH)
+def populate_tables(conn, sql_conn_cursor, bases, children, client):
+    create_base_table(conn, sql_conn_cursor, bases)
+    create_other_tables(conn, sql_conn_cursor, children, bases)
+    create_custom_citations(conn, sql_conn_cursor, REF_ANNOTS_FULLPATH)
 
 
-def check_for_duplicates(conn):
-    c = conn.cursor()
-
-    c.execute('''PRAGMA foreign_keys = ON''')
-    conn.commit()
-
-    for nameid in c.execute('''SELECT nameid FROM modbase'''):
-        synonyms = c.execute('''SELECT othernames FROM names WHERE nameid = ?''', nameid)
+def check_for_duplicates(sql_conn_cursor):
+    for nameid in sql_conn_cursor.execute('''SELECT nameid FROM modbase'''):
+        synonyms = sql_conn_cursor.execute('''SELECT othernames FROM names WHERE nameid = ?''', nameid)
         for name in synonyms:
-            c.execute('''SELECT nameid FROM names WHERE chebiname = ?''', name)
-            matchname = c.fetchone()
+            sql_conn_cursor.execute('''SELECT nameid FROM names WHERE chebiname = ?''', name)
+            matchname = sql_conn_cursor.fetchone()
             print(name, matchname)
             if name == matchname:
                 print("Match!")
+
 
 WHITE_LIST = dnamod_utils.get_list('whitelist')
 BLACK_LIST = dnamod_utils.get_list('blacklist')
@@ -522,10 +503,17 @@ bases = get_complete_bases(bases, client)
 
 conn = sqlite3.connect(DATABASE_FILE_FULLPATH)
 
+sql_conn_cursor = conn.cursor()
+
+sql_conn_cursor.execute('''PRAGMA foreign_keys = ON''')
+conn.commit()
+
 print("3/4 Creating tables...")
-populate_tables(conn, bases, children, client)
+populate_tables(conn, sql_conn_cursor, bases, children, client)
 
 print("4/4 Finishing up...")
-check_for_duplicates(conn)
+check_for_duplicates(sql_conn_cursor)
+
+conn.close()
 
 print("Done!")
