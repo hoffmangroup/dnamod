@@ -17,5 +17,6 @@
 16964	25946119	Hardisty-labelling	single-base	targeted enrichment
 # ------------------------------------------------
 # 5fU
-80961	25946119	Hardisty-labelling	single-base	targeted enrichment
+# XXX add once foreign key constraint violation does not occur for this or associate with corresponding 5hmU annotation.
+#80961	25946119	Hardisty-labelling	single-base	targeted enrichment
 # ------------------------------------------------
