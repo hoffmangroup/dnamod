@@ -11,4 +11,11 @@
 27551	1542678	BS-Seq	single-base
 27551	19829295	BS-Seq	single-base
 27551	19442738	RRBS	single-base	methylation-insensitive restriction digestion
+27551	25943404	SMRT-BS	single-base	currently only targeted sequencing
+# ------------------------------------------------
+# 5hmU
+16964	25946119	Hardisty-labelling	single-base	targeted enrichment
+# ------------------------------------------------
+# 5fU
+80961	25946119	Hardisty-labelling	single-base	targeted enrichment
 # ------------------------------------------------
