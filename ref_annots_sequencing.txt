@@ -4,6 +4,8 @@ ChEBI	Reference	Mapping method	Method detail	Resolution	Enrichment
 27551	16809668	HELP assay	restriction endonuclease	low	microarray probes
 27551	19273619	Methyl-Seq	restriction endonuclease	low
 27551	18950712	MeDIP-Seq	affinity-based	low
+27551	19906696	MBD-Seq	affinity-based	low
+27551	23443545	TAmC-Seq	chemical tagging	high
 27551	265521,23301810,24209366,20813757	Maxam–Gilbert sequencing		single-base
 27551	1542678	BS-Seq		single-base
 27551	19829295	BS-Seq	chemical conversion	single-base
