@@ -29,4 +29,6 @@ ChEBI	Reference	Mapping method	Method detail	Resolution	Enrichment
 # 5hmU, 5fU
 16964,80961	25946119	Hardisty-labelling	chemical tagging	single-base	target sequences
 # ------------------------------------------------
-
+# 5hmU
+16964	25462560	Yu-labelling	chemical tagging	single-base	5hmU:G mismatch only
+# ------------------------------------------------
