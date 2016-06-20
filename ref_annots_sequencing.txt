@@ -8,7 +8,7 @@ ChEBI	Reference	Mapping method	Method detail	Resolution	Enrichment
 27551	1542678	BS-Seq		single-base
 27551	19829295	BS-Seq	chemical conversion	single-base
 27551	19442738	RRBS	chemical conversion	single-base	methylation-insensitive restriction digestion
-27551	25943404	SMRT-BS		single-base	target sequences
+27551	25943404	SMRT-BS		chemical conversion	single-base	target sequences
 # ------------------------------------------------
 # 5fC
 76794	24755596	redBS-Seq	chemical conversion	single-base
@@ -19,6 +19,12 @@ ChEBI	Reference	Mapping method	Method detail	Resolution	Enrichment
 # 5caC
 76793	23758547	CAB-Seq		chemical conversion	single-base
 76793	27172168	caMAB-seq	chemical conversion	single-base
+# ------------------------------------------------
+# 5mC, 5hmC, 6mA
+27551,76792,28871	20453866	SMRT	direct detection	single-base	target sequences
+# ------------------------------------------------
+# 8oxoG, 1mA, 5hmU - also applies to: 8oxoA, O6-MedG, O4-MedT, 5hC, 5hU
+16964,44605,18083	20453866	SMRT	direct detection	single-base	target sequences
 # ------------------------------------------------
 # 5hmU, 5fU
 16964,80961	25946119	Hardisty-labelling	chemical tagging	single-base	target sequences
