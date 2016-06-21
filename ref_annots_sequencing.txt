@@ -26,7 +26,7 @@ ChEBI	Reference	Mapping method	Method detail	Resolution	Enrichment
 27551,76792,28871	20453866	SMRT	direct detection	single-base	target sequences
 # ------------------------------------------------
 # 8oxoG, 1mA, 5hmU - also applies to: 8oxoA, O6-MedG, O4-MedT, 5hC, 5hU
-16964,44605,18083	20453866	SMRT	direct detection	single-base	target sequences
+16964,44605,18083	22185597	SMRT	direct detection	single-base	target sequences
 # ------------------------------------------------
 # 5hmU, 5fU
 16964,80961	25946119	Hardisty-labelling	chemical tagging	single-base	target sequences
