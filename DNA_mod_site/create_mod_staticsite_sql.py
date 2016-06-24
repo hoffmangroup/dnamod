@@ -38,7 +38,7 @@ BASE_DICT = {'adenine': 'CHEBI:16708', 'thymine': 'CHEBI:17821',
 FILE_PATH = os.path.dirname(os.path.abspath(__file__))
 FILE_PATH_UP = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 CITATION_ORDERED_KEYS_ENCODED = ['pmid', 'title', 'date', 'author']
-SEQUENCING_ORDERED_KEYS = ['chebiid', 'pmid', 'seqtech', 'res', 'enrich']
+SEQUENCING_ORDERED_KEYS = ['chebiid', 'pmid', 'author', 'date', 'seqtech', 'res', 'enrich']
 
 # Import custom functions from dnamod_utils.py
 sys.path.insert(0, FILE_PATH_UP)
@@ -78,7 +78,15 @@ def get_sequencing(id, cursor):
     c.execute("SELECT * from sequencing_citations WHERE nameid = ?", (id,))
     results = c.fetchall()
     for row in results:
-        sequenceList.append(dict(itertools.izip(SEQUENCING_ORDERED_KEYS, row)))
+        referenceList = row[1].split(",")
+        for reference in referenceList:
+            c.execute("SELECT * FROM citations WHERE citationid = ?",
+                      (reference,))
+            query = c.fetchone()
+            author = query[3]
+            date = query[2]
+            newrow = (row[0], reference, author, date, row[2], row[3], row[4])
+            sequenceList.append(dict(itertools.izip(SEQUENCING_ORDERED_KEYS, newrow)))
     return sequenceList
 
     
@@ -162,6 +170,12 @@ def create_html_pages():
 
             smiles = smiles.decode('ascii')
             chebiname = chebiname.decode('ascii')
+            
+            # Formatting
+            formula = formula[1:-1]
+            netcharge = netcharge[1:-1]
+            iupacname = iupacname[1:-1]
+            avgmass = avgmass[1:-1]
 
             # Write html page
             writefile = pwd + chebiname + '.html'
