@@ -18,6 +18,7 @@ Function:
 
 import os
 import sqlite3
+import pprint
 
 from Bio import Entrez
 from suds.client import Client  # Using Suds web services client for soap
@@ -252,10 +253,10 @@ def get_full_citation(PMID):
                 authors = article['AuthorList']
             else:
                 authors = None
-            if'ArticleDate' in article.keys():
+            if'PubDate' in article.keys():
+                publicationDate = article['PubDate']
+            elif'ArticleDate' in article.keys():
                 publicationDate = article['ArticleDate']
-            else:
-                publicationDate = None
         else:
             # isbook = True # Unused at the moment
             article = record['BookDocument']['Book']
@@ -270,11 +271,13 @@ def get_full_citation(PMID):
                 authors = None
             if'PubDate' in article.keys():
                 publicationDate = article['PubDate']
-            else:
-                publicationDate = None
+            #else:
+                #publicationDate = None
 
     handle.close()
-
+    
+    print(publicationDate)
+    
     if articleTitle:
         result.append(articleTitle.encode('utf-8'))
     else:
@@ -286,6 +289,7 @@ def get_full_citation(PMID):
                     publicationDate[0]['Day'] + '-' +
                     publicationDate[0]['Year'])
             result.append(date)
+            print(date)
         else:
             result.append('Publication Date Not Found')
     else:
@@ -293,6 +297,7 @@ def get_full_citation(PMID):
             date = (publicationDate['Month'] + '-' + publicationDate['Day']
                     + '-' + publicationDate['Year'])
             result.append(date)
+            print(date)
         else:
             result.append('Publication Date Not Found')
     if authors:

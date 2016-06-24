@@ -91,7 +91,7 @@
                     </tr>
                     {% for Sequence in Sequences %}
                         <tr>
-                            <td> <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Sequence["pmid"] }}' > {{ Sequence["pmid"] }} </a> </td>
+                            <td> <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Sequence["pmid"] }}' > {{ Sequence["author"] }} {{ '      ' }} <i> {{ Sequence["date"] }} </i> </a> </td>
                             <td> {{ Sequence["seqtech"] }} </td>
                             <td> {{ Sequence["res"] }} </td>
                             <td> {{ Sequence["enrich"] }} </td>
