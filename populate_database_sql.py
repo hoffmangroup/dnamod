@@ -40,7 +40,7 @@ MASS_SEARCH_STR = 'mass'
 CITATION_SEARCH_STR = 'Citations'
 ONTOLOGY_SEARCH_STR = "OntologyParents"
 ONTOLOGY_HAS_ROLE = "has role"
-RESET_TABLES = True
+RESET_TABLES = False
 
 ChEBI_ID_PREFIX = "CHEBI:"
 
@@ -243,6 +243,7 @@ def get_full_citation(PMID):
         if 'MedlineCitation' in record.keys():
             isarticle = True
             article = record['MedlineCitation']['Article']
+            #print(article)
             if'ArticleTitle' in article.keys():
                 articleTitle = article['ArticleTitle']
             else:
@@ -258,6 +259,7 @@ def get_full_citation(PMID):
         else:
             # isbook = True # Unused at the moment
             article = record['BookDocument']['Book']
+            #print(article)
             if'BookTitle' in article.keys():
                 articleTitle = article['BookTitle']
             else:
@@ -418,7 +420,7 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
                 sql_conn_cursor.execute("SELECT * FROM citations WHERE citationid = ?",
                           [citation])
                 data = sql_conn_cursor.fetchone()
-                if data is None:
+                if True: #data is None:
                     citationinfo = get_full_citation(citation)
                     citationinfo_uni = [info.decode('utf-8') for info in citationinfo]
 
@@ -456,6 +458,7 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
 
 
 def create_custom_citations(conn, sql_conn_cursor, ref_annots_file_name):
+    print("---------- Adding Custom Annotations ----------")
     sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS sequencing_citations
                             (nameid text,
                              PMid text,
@@ -471,19 +474,36 @@ def create_custom_citations(conn, sql_conn_cursor, ref_annots_file_name):
                             delimiter="\t")
         for line in reader:
             assert len(line) > 3  # min. of four columns
-
-            # add ID prefix, if missing
-            if not line[0].startswith(ChEBI_ID_PREFIX):
-                line[0] = ChEBI_ID_PREFIX + line[0]
-
+            
             if len(line) < 5:  # no enrichment
                 line.append(NO_ENRICHMENT_STRING)
+            
+            references = line[1].split(",")
+            for reference in references:
+                citationinfo = get_full_citation(reference)
+                citationinfo_uni = [info.decode('utf-8') for info in citationinfo]
 
-            print(line)
-            sql_conn_cursor.execute("INSERT OR IGNORE INTO sequencing_citations VALUES(?,?,?,?,?)",
-                                    (line[0], line[1], line[2],
-                                     line[3], line[4]))
-
+                sql_conn_cursor.execute("UPDATE citations SET title=?, pubdate=?, authors=? WHERE citationid=?",(citationinfo_uni[0], citationinfo_uni[1], citationinfo_uni[2], reference))
+                conn.commit()
+                sql_conn_cursor.execute("INSERT OR IGNORE INTO citations VALUES(?,?,?,?)",
+                                       (reference, citationinfo_uni[0], citationinfo_uni[1],
+                                         citationinfo_uni[2]))
+            
+            ids = line[0].split(",")
+            for id in ids:
+                # add ID prefix, if missing
+                if not id.startswith(ChEBI_ID_PREFIX):
+                    id = ChEBI_ID_PREFIX + id
+            
+                print("Adding " + line[2] + " citation for " + id)
+                sql_conn_cursor.execute("INSERT OR IGNORE INTO sequencing_citations VALUES(?,?,?,?,?)",
+                                       (id, line[1], line[2],
+                                         line[3], line[4]))
+                                         
+                for reference in references:
+                    sql_conn_cursor.execute("INSERT OR IGNORE INTO citation_lookup VALUES(?,?)",
+                                           (id, reference))
+                    
     conn.commit()
 
 
@@ -499,7 +519,7 @@ def check_for_duplicates(sql_conn_cursor):
         for name in synonyms:
             sql_conn_cursor.execute('''SELECT nameid FROM names WHERE chebiname = ?''', name)
             matchname = sql_conn_cursor.fetchone()
-            print(name, matchname)
+            #print(name, matchname)
             if name == matchname:
                 print("Match!")
 

@@ -162,6 +162,12 @@ def create_html_pages():
 
             smiles = smiles.decode('ascii')
             chebiname = chebiname.decode('ascii')
+            
+            # Formatting
+            formula = formula[1:-1]
+            netcharge = netcharge[1:-1]
+            iupacname = iupacname[1:-1]
+            avgmass = avgmass[1:-1]
 
             # Write html page
             writefile = pwd + chebiname + '.html'

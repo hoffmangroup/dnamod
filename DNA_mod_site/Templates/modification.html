@@ -25,31 +25,44 @@
             <h2> Description: </h2>
             <p> {{ Definition }} </p>
 
-
             <h2> Chemical Properties: </h2>
-            <ul>
-                <li> Chemical Formula: {{ Formula }} </li>
-                <li> Net Charge: {{ NetCharge }} </li>
-                <li> Average Mass: {{ AverageMass }} </li>
-            </ul>
+            <table id="ChemProps" cellpadding="5">
+                <tr>
+                    <th> Chemical Formula </th>
+                    <th> Net Charge </th>
+                    <th> Average Mass </th>
+                </tr>
+                <tr>
+                    <td> {{ Formula }} </td>
+                    <td> {{ NetCharge }} </td>
+                    <td> {{ AverageMass }} </td>
+                </tr>
+            </table>
         </div>
 
         <div class="Names">
-            <h2> Names: </h2>
-            <ul>
-                <li> IUPAC: {{ IupacName }} </li>
-                <li> SMILES: {{ Smiles }} </li>
-                <li> Synonyms: </li>
-                    <ul id="Synonyms">
+            <h2 id="Inline"> Names: </h2>
+            <table id="Names" cellpadding="5">
+                <tr>
+                    <th> IUPAC </th>
+                    <th> SMILES </th>
                     {% if Synonyms|length %}
-                        {% for Synonym in Synonyms %}
-                            <li> {{ Synonym }} </li>
-                        {% endfor %}
-                    {% else %}
-                        <li> No Synonyms </li>
+                        <th> Synonyms </th>
                     {% endif %}
-                    </ul>
-            </ul>
+                </tr>
+                <tr>
+                    <td> {{ IupacName }} </td>
+                    <td> {{ Smiles }} </td>
+                    {% if Synonyms|length %}
+                        <td>
+                            <ul id="Synonyms">
+                            {% for Synonym in Synonyms %}
+                                <li> {{ Synonym }} </li>
+                            {% endfor %}
+                        </td>
+                    {% endif %}
+                </tr>
+            </table>
         </div>
 
     <!--
@@ -66,44 +79,46 @@
             </ul>
         </div>
     -->
-        <div class="Sequencing">
-            <h2 id="Inline"> Sequencing Data: </h2>
-            <table id="Sequences">
-                <tr>
-                    <th> Reference (PMID) </th>
-                    <th> Sequencing Technology </th>
-                    <th> Resolution </th>
-                    <th> Enrichment </th>
-                </tr>
-                {% for Sequence in Sequences %}
+        {% if Sequences|length %}
+            <div class="Sequencing">
+                <h2 id="Inline"> Mapping Techniques: </h2>
+                <table id="Sequences" cellpadding="5">
                     <tr>
-                        <td> {{ Sequence["pmid"] }} </td>
-                        <td> {{ Sequence["seqtech"] }} </td>
-                        <td> {{ Sequence["res"] }} </td>
-                        <td> {{ Sequence["enrich"] }} </td>
+                        <th> Reference (PMID) </th>
+                        <th> Sequencing Technology </th>
+                        <th> Resolution </th>
+                        <th> Enrichment </th>
                     </tr>
-                {% endfor %}
-            </table>
-        </div>
+                    {% for Sequence in Sequences %}
+                        <tr>
+                            <td> <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Sequence["pmid"] }}' > {{ Sequence["pmid"] }} </a> </td>
+                            <td> {{ Sequence["seqtech"] }} </td>
+                            <td> {{ Sequence["res"] }} </td>
+                            <td> {{ Sequence["enrich"] }} </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endif %}
             
         <div class="Links">
             <h2 id="Inline"> Database References: </h2> 
             <a id="Inline" href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ ChebiId }}" > {{ ChebiId }} </a> <br>
 
-            <h2> Citations: </h2>
-            <ul id="Citations">
-                {% if Citations|length %}
-                    {% for Citation in Citations %}
-                        <li>{{ Citation["author"] }} {{ Citation["title"] }} {{ Citation["date"] }}. </li>
-                        <ul>
-                            <li> PubMed Id: <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation["pmid"] }}' > {{ Citation["pmid"] }} </a> </li>
-                        </ul>
-                    {% endfor %}
-                {% else %}
-                    <li> No Citations </li>
-                {% endif %}
-            </ul>
+            {% if Citations|length %}
+                <h2> Citations: </h2>
+                <ul id="Citations">
+                    {% if Citations|length %}
+                        {% for Citation in Citations %}
+                            <li>{{ Citation["author"] }} <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation["pmid"] }}' > {{ Citation["title"] }} </a> {{ Citation["date"] }}. </li>
+                        {% endfor %}
+                    {% else %}
+                        <li> No Citations </li>
+                    {% endif %}
+                </ul>
+            {% endif %}
         </div>
+        
     </div>
 </body>
 
