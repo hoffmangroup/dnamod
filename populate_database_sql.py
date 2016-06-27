@@ -464,51 +464,56 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
 
 def create_custom_citations(conn, sql_conn_cursor, ref_annots_file_name):
     print("---------- Adding Custom Annotations ----------")
-    sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS sequencing_citations
-                            (nameid text,
-                             PMid text,
-                             seq_technology text,
-                             resolution text,
-                             enrichment_method text,
-                             FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE)''')
-    conn.commit()
     
     with open(ref_annots_file_name, 'rb') as file:
         # use a generator expression to ignore comments
         reader = csv.reader((row for row in file if not row.startswith('#')),
                             delimiter="\t")
-        for line in reader:
+        for num, line in enumerate(reader):
             assert len(line) > 3  # min. of four columns
             
             if len(line) < 5:  # no enrichment
                 line.append(NO_ENRICHMENT_STRING)
-            
-            references = line[1].split(",")
-            for reference in references:
-                citationinfo = get_full_citation(reference)
-                citationinfo_uni = [info.decode('utf-8') for info in citationinfo]
 
-                sql_conn_cursor.execute("UPDATE citations SET title=?, pubdate=?, authors=? WHERE citationid=?",(citationinfo_uni[0], citationinfo_uni[1], citationinfo_uni[2], reference))
+            if num == 0:  # header
+                # XXX TODO fix to correctly use ? syntax
+                sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS sequencing_citations
+                                        ({} text,
+                                         {} text,
+                                         {} text,
+                                         {} text,
+                                         {} text,
+                                         FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE)
+                                         '''.format(*line))
                 conn.commit()
-                sql_conn_cursor.execute("INSERT OR IGNORE INTO citations VALUES(?,?,?,?)",
-                                       (reference, citationinfo_uni[0], citationinfo_uni[1],
-                                         citationinfo_uni[2]))
-            
-            ids = line[0].split(",")
-            for id in ids:
-                # add ID prefix, if missing
-                if not id.startswith(ChEBI_ID_PREFIX):
-                    id = ChEBI_ID_PREFIX + id
-            
-                print("Adding " + line[2] + " citation for " + id)
-                sql_conn_cursor.execute("INSERT OR IGNORE INTO sequencing_citations VALUES(?,?,?,?,?)",
-                                       (id, line[1], line[2],
-                                         line[3], line[4]))
-                                         
+            else:
+                references = line[1].split(",")
+
                 for reference in references:
-                    sql_conn_cursor.execute("INSERT OR IGNORE INTO citation_lookup VALUES(?,?)",
-                                           (id, reference))
-                    
+                    citationinfo = get_full_citation(reference)
+                    citationinfo_uni = [info.decode('utf-8') for info in citationinfo]
+
+                    sql_conn_cursor.execute("UPDATE citations SET title=?, pubdate=?, authors=? WHERE citationid=?",(citationinfo_uni[0], citationinfo_uni[1], citationinfo_uni[2], reference))
+                    conn.commit()
+                    sql_conn_cursor.execute("INSERT OR IGNORE INTO citations VALUES(?,?,?,?)",
+                                           (reference, citationinfo_uni[0], citationinfo_uni[1],
+                                             citationinfo_uni[2]))
+                
+                ids = line[0].split(",")
+                for id in ids:
+                    # add ID prefix, if missing
+                    if not id.startswith(ChEBI_ID_PREFIX):
+                        id = ChEBI_ID_PREFIX + id
+                
+                    print("Adding " + line[2] + " citation for " + id)
+                    sql_conn_cursor.execute("INSERT OR IGNORE INTO sequencing_citations VALUES(?,?,?,?,?)",
+                                           (id, line[1], line[2],
+                                             line[3], line[4]))
+                                             
+                    for reference in references:
+                        sql_conn_cursor.execute("INSERT OR IGNORE INTO citation_lookup VALUES(?,?)",
+                                               (id, reference))
+                        
     conn.commit()
 
 

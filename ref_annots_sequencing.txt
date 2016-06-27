@@ -1,4 +1,4 @@
-# ChEBI	Reference	Mapping method	Method detail	Resolution	Enrichment
+ChEBI	Reference	Mapping method	Method detail	Resolution	Enrichment
 # ------------------------------------------------
 # 5mC
 27551	16809668	HELP assay	restriction endonuclease	low	microarray probes

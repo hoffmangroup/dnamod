@@ -88,6 +88,16 @@ def get_expanded_alphabet(lookup_key):
                                           result)))
             return expandedList
 
+# XXX TODO refactor to do this properly...
+
+
+def get_sequencing_headers(cursor):
+    c = cursor.cursor()
+    c.execute("PRAGMA table_info(sequencing_citations)")
+    header = [result[1] for result in c.fetchall()]
+    print(tuple(header)) # XXX
+    return tuple(header)
+
 
 def get_sequencing(id, cursor):
     c = cursor.cursor()
@@ -118,18 +128,9 @@ def create_html_pages():
 
     page_template = env.get_template('modification.html')
 
-    # TODO refactor to simply use the first line and make it un-commented
-    # TODO Consider allowing comments throughout
-    # Load in sequencing column names
-    reader = csv.reader((row for row in file if row.startswith('#')),
-                        delimiter="\t")
-    line = reader[0]
-    assert len(line) > 3
-
-    reference_title = line[1]
-    mappingmethod_title = line[2]
-    resolution_title = line[4]
-    enrichment_title = line[5]
+    # XXX TODO refactor
+    _, reference_title, mappingmethod_title, resolution_title, enrichment_title = \
+        get_sequencing_headers(conn)
 
     # Dictionary to store links for hompage
     homepageLinks = {}
@@ -216,7 +217,6 @@ def create_html_pages():
             for key in CITATION_ORDERED_KEYS_ENCODED:  # decode encoded values
                 for citation in citations:
                     citation[key] = citation[key].decode(ENCODING)
-
             sequences = get_sequencing(citation_lookup, conn)
             expandedalpha = get_expanded_alphabet(chebiname)
 
