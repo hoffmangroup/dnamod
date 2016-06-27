@@ -38,23 +38,25 @@
                     <td> {{ AverageMass }} </td>
                 </tr>
             </table>
-			
-			<table id="ExpandedAlpha" cellpadding="5">
-                <tr>
-                    <th> Abbreviation </th>
-                    <th> Name </th>
-                    <th> Symbol </th>
-					<th> Complement </th>
-					<th> Complement Symbol </th>
-                </tr>
-                <tr>
-                    <td> {{ ExpandedAlpha["abbreviation"] }} </td>
-                    <td> {{ ExpandedAlpha["name"] }} </td>
-                    <td> {{ ExpandedAlpha["symbol"] }} </td>
-					<td> {{ ExpandedAlpha["complement"] }} </td>
-                    <td> {{ ExpandedAlpha["complement symbol"] }} </td>
-                </tr>
-            </table>
+	    
+            {% if ExpandedAlpha is not none %}
+                <table id="ExpandedAlpha" cellpadding="5">
+                    <tr>
+                        <th> Abbreviation </th>
+                        <th> Name </th>
+                        <th> Symbol </th>
+                        <th> Complement </th>
+                        <th> Complement Symbol </th>
+                    </tr>
+                    <tr>
+                        <td> {{ ExpandedAlpha["abbreviation"] }} </td>
+                        <td> {{ ExpandedAlpha["name"] }} </td>
+                        <td> {{ ExpandedAlpha["symbol"] }} </td>
+                        <td> {{ ExpandedAlpha["complement"] }} </td>
+                        <td> {{ ExpandedAlpha["complement symbol"] }} </td>
+                    </tr>
+                </table>
+            {% endif %}
         </div>
 
         <div class="Names">

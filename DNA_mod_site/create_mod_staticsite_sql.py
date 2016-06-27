@@ -240,7 +240,9 @@ def create_html_pages():
                                           MappingTitle=mappingmethod_title,
                                           ResolutionTitle=resolution_title,
                                           EnrichmentTitle=enrichment_title,
-                                          ExpandedAlpha=expandedalpha)
+                                          # NB: can pass ExpandedAlpha=None to disable
+                                          ExpandedAlpha=None)
+                                          #ExpandedAlpha=expandedalpha)
             f.write(render)
             f.close()
 
