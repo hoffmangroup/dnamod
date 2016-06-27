@@ -14,13 +14,11 @@ Function:
 3. Creates a html page for the modifcation based on created jinja2 template
 4. Creates a home page with links to html modification pages
 '''
-import csv
 import codecs
-import itertools
+from itertools import izip
 import os
 import pybel
 import sqlite3
-import sys
 import unicodecsv as csv
 
 # Using Jinja2 as templating engine
@@ -40,12 +38,10 @@ BASE_DICT = {'adenine': 'CHEBI:16708', 'thymine': 'CHEBI:17821',
 FILE_PATH = os.path.dirname(os.path.abspath(__file__))
 FILE_PATH_UP = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 CITATION_ORDERED_KEYS_ENCODED = ['pmid', 'title', 'date', 'author']
-SEQUENCING_ORDERED_KEYS = ['chebiid', 'pmid', 'author', 'date', 'seqtech', 'res', 'enrich']
-EXPANDED_ALPHABET_ORDERED_KEYS = ['abbreviation', 'name', 'symbol', 'complement', 'complement symbol']
-
-# Import custom functions from dnamod_utils.py
-sys.path.insert(0, FILE_PATH_UP)
-import dnamod_utils
+SEQUENCING_ORDERED_KEYS = ['chebiid', 'pmid', 'author', 'date',
+                           'seqtech', 'res', 'enrich']
+EXPANDED_ALPHABET_ORDERED_KEYS = ['abbreviation', 'name', 'symbol',
+                                  'complement', 'complement symbol']
 
 
 def render_image(smiles, name):
@@ -70,26 +66,29 @@ def get_citations(lookup_key, cursor):
                   (citationid,))
         query = c.fetchone()
 
-        citationList.append(dict(itertools.izip(CITATION_ORDERED_KEYS_ENCODED,
+        citationList.append(dict(izip(CITATION_ORDERED_KEYS_ENCODED,
                             [item.encode(ENCODING) for item in query])))
     return citationList
 
+
 def get_expanded_alphabet(lookup_key):
-	reader = csv.reader((row for row in file if not row.startswith('#')),
-                         delimiter="\t")
-	expandedList = [];
-	for line in reader:
-		if lookup_key == line[1].lower():
-			abbreviation = line[0];
-			alphaname = line[1];
-			alphasymbol = line[2];
-			alphacomp = line[3];
-			compsymbol = line[4];
-			result = [abbreviation, alphaname, alphasymbol, alphacomp, compsymbol];
-			expandedList.append(dict(itertools.izip(EXPANDED_ALPHABET_ORDERED_KEYS, result)))
-			return expandedList
-			
-	
+    reader = csv.reader((row for row in file if not row.startswith('#')),
+                        delimiter="\t")
+    expandedList = []
+    for line in reader:
+        if lookup_key == line[1].lower():
+            abbreviation = line[0]
+            alphaname = line[1]
+            alphasymbol = line[2]
+            alphacomp = line[3]
+            compsymbol = line[4]
+            result = [abbreviation, alphaname, alphasymbol,
+                      alphacomp, compsymbol]
+            expandedList.append(dict(izip(EXPANDED_ALPHABET_ORDERED_KEYS,
+                                          result)))
+            return expandedList
+
+
 def get_sequencing(id, cursor):
     c = cursor.cursor()
     sequenceList = []
@@ -104,10 +103,10 @@ def get_sequencing(id, cursor):
             author = query[3]
             date = query[2]
             newrow = (row[0], reference, author, date, row[2], row[3], row[4])
-            sequenceList.append(dict(itertools.izip(SEQUENCING_ORDERED_KEYS, newrow)))
+            sequenceList.append(dict(izip(SEQUENCING_ORDERED_KEYS, newrow)))
     return sequenceList
 
-    
+
 def create_html_pages():
     # Load in SQLite database
     conn = sqlite3.connect(FILE_PATH_UP + '/DNA_mod_database.db')
@@ -119,17 +118,17 @@ def create_html_pages():
 
     page_template = env.get_template('modification.html')
 
-	# Load in sequencing column names
-	reader = csv.reader((row for row in file if row.startswith('#')),
+    # Load in sequencing column names
+    reader = csv.reader((row for row in file if row.startswith('#')),
                         delimiter="\t")
-	line = reader[0];
-	assert len(line) > 3
-	
-	reference_title = line[1];
-	mappingmethod_title = line[2];
-	resolution_title = line[4];
-	enrichment_title = line[5];
-	
+    line = reader[0]
+    assert len(line) > 3
+
+    reference_title = line[1]
+    mappingmethod_title = line[2]
+    resolution_title = line[4]
+    enrichment_title = line[5]
+
     # Dictionary to store links for hompage
     homepageLinks = {}
     links = []
@@ -172,6 +171,8 @@ def create_html_pages():
             commonname = mod[14]
 
             citation_lookup = mod[0]
+
+            # XXX TODO cleanup commented-out code
             # roles_lookup = mod[7] # unused as roles are not on site
 
             citations = get_citations(citation_lookup, conn)
@@ -199,7 +200,7 @@ def create_html_pages():
 
             smiles = smiles.decode('ascii')
             chebiname = chebiname.decode('ascii')
-            
+
             # Formatting
             formula = formula[1:-1]
             netcharge = netcharge[1:-1]
@@ -216,7 +217,7 @@ def create_html_pages():
 
             sequences = get_sequencing(citation_lookup, conn)
             expandedalpha = get_expanded_alphabet(chebiname)
-			
+
             render = page_template.render(ChebiName=chebiname,
                                           Definition=definition,
                                           Formula=formula,
@@ -232,11 +233,11 @@ def create_html_pages():
                                           Roles=roles,
                                           RolesChebi=roles_ids,
                                           Sequences=sequences,
-										  ReferenceTitle = reference_title,
-										  MappingTitle = mappingmethod_title,
-										  ResolutionTitle = resolution_title,
-										  EnrichmentTitle = enrichment_title
-										  ExpandedAlpha = expandedalpha)
+                                          ReferenceTitle=reference_title,
+                                          MappingTitle=mappingmethod_title,
+                                          ResolutionTitle=resolution_title,
+                                          EnrichmentTitle=enrichment_title,
+                                          ExpandedAlpha=expandedalpha)
             f.write(render)
             f.close()
 
