@@ -38,6 +38,23 @@
                     <td> {{ AverageMass }} </td>
                 </tr>
             </table>
+			
+			<table id="ExpandedAlpha" cellpadding="5">
+                <tr>
+                    <th> Abbreviation </th>
+                    <th> Name </th>
+                    <th> Symbol </th>
+					<th> Complement </th>
+					<th> Complement Symbol </th>
+                </tr>
+                <tr>
+                    <td> {{ ExpandedAlpha["abbreviation"] }} </td>
+                    <td> {{ ExpandedAlpha["name"] }} </td>
+                    <td> {{ ExpandedAlpha["symbol"] }} </td>
+					<td> {{ ExpandedAlpha["complement"] }} </td>
+                    <td> {{ ExpandedAlpha["complement symbol"] }} </td>
+                </tr>
+            </table>
         </div>
 
         <div class="Names">
@@ -84,10 +101,10 @@
                 <h2 id="Inline"> Mapping Techniques: </h2>
                 <table id="Sequences" cellpadding="5">
                     <tr>
-                        <th> Reference (PMID) </th>
-                        <th> Sequencing Technology </th>
-                        <th> Resolution </th>
-                        <th> Enrichment </th>
+                        <th> {{ ReferenceTitle }} </th>
+                        <th> {{ MappingTitle }} </th>
+                        <th> {{ ResolutionTitle }} </th>
+                        <th> {{ EnrichmentTitle }} </th>
                     </tr>
                     {% for Sequence in Sequences %}
                         <tr>
