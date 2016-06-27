@@ -118,6 +118,8 @@ def create_html_pages():
 
     page_template = env.get_template('modification.html')
 
+    # TODO refactor to simply use the first line and make it un-commented
+    # TODO Consider allowing comments throughout
     # Load in sequencing column names
     reader = csv.reader((row for row in file if row.startswith('#')),
                         delimiter="\t")
