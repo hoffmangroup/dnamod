@@ -1,7 +1,14 @@
 #!/usr/bin/env bash
 set -o nounset -o pipefail -o errexit
 
+ERR_EXIT=64
+
 # Copy contents of ./static/* into directory for live site
+
+if [[ ! ($(hostname) == 'mordor' && -n $(groups | fgrep 'hoffmangroup')) ]]; then
+    >&2 echo "Must be run on the Hoffman Lab cluster, by a lab member."
+    exit $ERR_EXIT
+fi
 
 SOURCE_DIR="$(dirname $(readlink -f $0))" # From: https://gist.github.com/tvlooy/cbfbdb111a4ebad8b93e
 
