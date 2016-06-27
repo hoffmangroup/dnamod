@@ -1,6 +1,6 @@
 # DNAmod #
 
-The DNAmod webpage is: [https://www.pmgenomics.ca/hoffmanlab/proj/dnamod](https://www.pmgenomics.ca/hoffmanlab/proj/dnamod).
+The DNAmod webpage is: [https://DNAmod.hoffmanlab.org](http://DNAmod.hoffmanlab.org) (which redirects to [https://www.pmgenomics.ca/hoffmanlab/proj/dnamod](https://www.pmgenomics.ca/hoffmanlab/proj/dnamod)).
 
 This outlines the steps needed to set up a Python environment to reproduce or run a local DNAmod instance.
 
