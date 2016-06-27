@@ -476,9 +476,12 @@ def create_custom_citations(conn, sql_conn_cursor, ref_annots_file_name):
                 line.append(NO_ENRICHMENT_STRING)
 
             if num == 0:  # header
-                # XXX TODO fix to correctly use ? syntax
+                line.pop(0)  # remove the first column, since it is our foreign key and not displayed
+                # TODO fix below to perform stringent validation
+                # (see: http://stackoverflow.com/questions/25387537/sqlite3-operationalerror-near-syntax-error)
+                # maybe ignore, since never "user" sourced (since this is static)
                 sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS sequencing_citations
-                                        ({} text,
+                                        (nameid text,
                                          {} text,
                                          {} text,
                                          {} text,

@@ -103,8 +103,10 @@ def get_sequencing_headers(cursor):
 def get_sequencing(id, cursor):
     c = cursor.cursor()
     sequenceList = []
+
     c.execute("SELECT * from sequencing_citations WHERE nameid = ?", (id,))
     results = c.fetchall()
+    
     for row in results:
         referenceList = row[1].split(",")
         for reference in referenceList:
