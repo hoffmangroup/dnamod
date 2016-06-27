@@ -88,14 +88,12 @@ def get_expanded_alphabet(lookup_key):
                                           result)))
             return expandedList
 
-# XXX TODO refactor to do this properly...
 
-
+# XXX TODO refactor
 def get_sequencing_headers(cursor):
     c = cursor.cursor()
     c.execute("PRAGMA table_info(sequencing_citations)")
     header = [result[1] for result in c.fetchall()]
-    print(tuple(header)) # XXX
     return tuple(header)
 
 
