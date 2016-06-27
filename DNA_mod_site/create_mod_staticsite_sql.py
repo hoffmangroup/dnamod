@@ -43,6 +43,8 @@ SEQUENCING_ORDERED_KEYS = ['chebiid', 'pmid', 'author', 'date',
 EXPANDED_ALPHABET_ORDERED_KEYS = ['abbreviation', 'name', 'symbol',
                                   'complement', 'complement symbol']
 
+ALPHABET_FILE = 'expanded_alphabet.txt'
+
 
 def render_image(smiles, name):
     pwd = FILE_PATH + '/static/images'
@@ -71,22 +73,23 @@ def get_citations(lookup_key, cursor):
     return citationList
 
 
-def get_expanded_alphabet(lookup_key):
-    reader = csv.reader((row for row in file if not row.startswith('#')),
-                        delimiter="\t")
-    expandedList = []
-    for line in reader:
-        if lookup_key == line[1].lower():
-            abbreviation = line[0]
-            alphaname = line[1]
-            alphasymbol = line[2]
-            alphacomp = line[3]
-            compsymbol = line[4]
-            result = [abbreviation, alphaname, alphasymbol,
-                      alphacomp, compsymbol]
-            expandedList.append(dict(izip(EXPANDED_ALPHABET_ORDERED_KEYS,
-                                          result)))
-            return expandedList
+def get_expanded_alphabet(lookup_key, alpha_file):
+    with open(alpha_file, 'rb') as file:
+        reader = csv.reader((row for row in file if not row.startswith('#')),
+                            delimiter="\t")
+        expandedList = []
+        for line in reader:
+            if lookup_key == line[1].lower():
+                abbreviation = line[0]
+                alphaname = line[1]
+                alphasymbol = line[2]
+                alphacomp = line[3]
+                compsymbol = line[4]
+                result = [abbreviation, alphaname, alphasymbol,
+                          alphacomp, compsymbol]
+                expandedList.append(dict(izip(EXPANDED_ALPHABET_ORDERED_KEYS,
+                                              result)))
+        return expandedList
 
 
 # XXX TODO refactor
@@ -216,7 +219,7 @@ def create_html_pages():
                 for citation in citations:
                     citation[key] = citation[key].decode(ENCODING)
             sequences = get_sequencing(citation_lookup, conn)
-            expandedalpha = get_expanded_alphabet(chebiname)
+            expandedalpha = get_expanded_alphabet(chebiname, ALPHABET_FILE)
 
             render = page_template.render(ChebiName=chebiname,
                                           Definition=definition,
