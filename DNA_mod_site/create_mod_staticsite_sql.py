@@ -116,12 +116,12 @@ def get_sequencing(id, cursor, seq_headers):
     # overall orders first by date, but still grouped by method
     c.execute('''SELECT DISTINCT seq_c.nameid, ref.citationid,
                      ref.authors, ref.pubdate,
-                     seq_c.{2}, seq_c.{3}, seq_c.{4}
+                     seq_c.[{2}], seq_c.[{3}], seq_c.[{4}]
                  FROM sequencing_citations AS seq_c
-                 JOIN citations AS ref ON seq_c.{1}
+                 JOIN citations AS ref ON seq_c.[{1}]
                     LIKE '%' || ref.citationid || '%'
                  WHERE nameid = ?
-                 ORDER BY COALESCE(seq_c.{2},
+                 ORDER BY COALESCE(seq_c.[{2}],
                                    date(ref.pubdate),
                                    ref.authors, 1)
                  '''.format(*seq_headers),
