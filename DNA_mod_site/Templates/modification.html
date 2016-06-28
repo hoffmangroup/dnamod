@@ -18,9 +18,36 @@
         <h2> A modification of </h2>
     </div>
 
-    <img id="chemicalStructureImage" src="images/{{ ChebiName }}.svg" alt="{{ ChebiName }} Image Not Availabe" height='500' width='500'>
+        <div class="Alphabet">
+            <img id="chemicalStructureImage" src="images/{{ ChebiName }}.svg" alt="{{ ChebiName }} Image Not Availabe" height='500' width='500'>
+            {% if ExpandedAlpha is defined %}
+                <div class = "ExpandedAlpha">
+                    <table cellpadding="5">
+                        <tr>
+                            <th> Abbreviation </th>
+                            <td> {{ ExpandedAlpha["abbreviation"] }} </td>
+                        </tr>
+                        <tr>
+                            <th> Symbol </th>
+                            <td> {{ ExpandedAlpha["symbol"] }} </td>
+                        </tr>
+                        {% if ( (ExpandedAlpha["complement symbol"] is defined) and (ExpandedAlpha["complement symbol"] is not equalto 'NA') ) %}
+                            <tr>
+                                <th> Complement </th>
+                                <td> {{ ExpandedAlpha["complement"] }} </td>
+                            </tr>
+                            <tr>
+                                <th> Symbol </th>
+                                <td> {{ ExpandedAlpha["complement symbol"] }} </td>
+                            </tr>
+                        {% endif %}
+                    </table>
+                </div>
+            {% endif %}
+        </div>
 
     <div class="ContentLayout">
+    
         <div class="BasicInfo">
             <h2> Description: </h2>
             <p> {{ Definition }} </p>
@@ -38,30 +65,9 @@
                     <td> {{ AverageMass }} </td>
                 </tr>
             </table>
-
-            {% if ExpandedAlpha is defined %}
-                <table id="ExpandedAlpha" cellpadding="5">
-                    <tr>
-                        <th> Abbreviation </th>
-                        <td> {{ ExpandedAlpha["abbreviation"] }} </td>
-                    </tr>
-                    <tr>
-                        <th> Symbol </th>
-                        <td> {{ ExpandedAlpha["symbol"] }} </td>
-                    </tr>
-                    {% if ( (ExpandedAlpha["complement symbol"] is defined) and (ExpandedAlpha["complement symbol"] is not equalto 'NA') ) %}
-                        <tr>
-                            <th> Complement </th>
-                            <td> {{ ExpandedAlpha["complement"] }} </td>
-                        </tr>
-                        <tr>
-                            <th> Symbol </th>
-                            <td> {{ ExpandedAlpha["complement symbol"] }} </td>
-                        </tr>
-                    {% endif %}
-                </table>
-            {% endif %}
         </div>
+        
+
 
         <div class="Names">
             <h2 id="Inline"> Names: </h2>
