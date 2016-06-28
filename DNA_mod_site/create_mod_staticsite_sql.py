@@ -171,8 +171,6 @@ def create_html_pages():
             netcharge = mod[8]
             avgmass = mod[6]
             definition = mod[9]
-            if not definition:
-                print(definition)
             chebiname = mod[10].encode('ascii')
             chebiid = mod[0]
             iupacname = mod[11]

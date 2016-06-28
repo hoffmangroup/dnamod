@@ -54,46 +54,50 @@
                 <p> {{ Definition }} </p>
             {% endif %}
 
-            <h2> Chemical Properties: </h2>
-            <table id="ChemProps" cellpadding="5">
-                <tr>
-                    <th> Chemical Formula </th>
-                    <th> Net Charge </th>
-                    <th> Average Mass </th>
-                </tr>
-                <tr>
-                    <td> {{ Formula }} </td>
-                    <td> {{ NetCharge }} </td>
-                    <td> {{ AverageMass }} </td>
-                </tr>
-            </table>
+            {% if Formula or NetCharge or AverageMass %}
+                <h2> Chemical Properties: </h2>
+                <table id="ChemProps" cellpadding="5">
+                    <tr>
+                        <th> Chemical Formula </th>
+                        <th> Net Charge </th>
+                        <th> Average Mass </th>
+                    </tr>
+                    <tr>
+                        <td> {% if Formula %}{{ Formula }}{% endif %} </td>
+                        <td> {% if NetCharge %}{{ NetCharge }}{% endif %} </td>
+                        <td> {% if AverageMass %}{{ AverageMass }}{% endif %} </td>
+                    </tr>
+                </table>
+            {% endif %}
         </div>
         
 
 
         <div class="Names">
-            <h2 id="Inline"> Names: </h2>
-            <table id="Names" cellpadding="5">
-                <tr>
-                    <th> IUPAC </th>
-                    <th> SMILES </th>
-                    {% if Synonyms|length %}
-                        <th> Synonyms </th>
-                    {% endif %}
-                </tr>
-                <tr>
-                    <td> {{ IupacName }} </td>
-                    <td> {{ Smiles }} </td>
-                    {% if Synonyms|length %}
-                        <td>
-                            <ul id="Synonyms">
-                            {% for Synonym in Synonyms %}
-                                <li> {{ Synonym }} </li>
-                            {% endfor %}
-                        </td>
-                    {% endif %}
-                </tr>
-            </table>
+            {% if IupacName or Smiles or Synonyms %}
+                <h2 id="Inline"> Names: </h2>
+                <table id="Names" cellpadding="5">
+                    <tr>
+                        {% if IupacName %}<th> IUPAC </th>{% endif %}
+                        {% if Smiles %}<th> SMILES </th>{% endif %}
+                        {% if Synonyms|length %}
+                            <th> Synonyms </th>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        {% if IupacName %}<td> {{ IupacName }} </td>{% endif %}
+                        {% if Smiles %}<td> {{ Smiles }} </td>{% endif %}
+                        {% if Synonyms|length %}
+                            <td>
+                                <ul id="Synonyms">
+                                {% for Synonym in Synonyms %}
+                                    <li> {{ Synonym }} </li>
+                                {% endfor %}
+                            </td>
+                        {% endif %}
+                    </tr>
+                </table>
+            {% endif %}
         </div>
 
     <!--
