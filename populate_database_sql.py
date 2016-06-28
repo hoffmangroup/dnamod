@@ -487,10 +487,10 @@ def create_custom_citations(conn, sql_conn_cursor, ref_annots_file_name):
                 # maybe ignore, since never "user" sourced (since this is static)
                 sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS sequencing_citations
                                         (nameid text,
-                                         {} text,
-                                         {} text,
-                                         {} text,
-                                         {} text,
+                                         [{}] text,
+                                         [{}] text,
+                                         [{}] text,
+                                         [{}] text,
                                          FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE)
                                          '''.format(*line))
                 conn.commit()
