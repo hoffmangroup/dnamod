@@ -507,8 +507,11 @@ def create_custom_citations(conn, sql_conn_cursor, ref_annots_file_name):
                     citationinfo = get_full_citation(reference)
                     citationinfo_uni = [info.decode('utf-8') for info in citationinfo]
 
-                    sql_conn_cursor.execute("UPDATE citations SET title=?, pubdate=?, authors=? WHERE citationid=?",(citationinfo_uni[0], citationinfo_uni[1], citationinfo_uni[2], reference))
+                    sql_conn_cursor.execute("UPDATE citations SET title=?, pubdate=?, authors=? WHERE citationid=?",
+                                            (citationinfo_uni[0], citationinfo_uni[1],
+                                             citationinfo_uni[2], reference))
                     conn.commit()
+
                     sql_conn_cursor.execute("INSERT OR IGNORE INTO citations VALUES(?,?,?,?)",
                                            (reference, citationinfo_uni[0], citationinfo_uni[1],
                                              citationinfo_uni[2]))
