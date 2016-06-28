@@ -121,7 +121,7 @@ def get_sequencing(id, cursor, seq_headers):
                  JOIN citations AS ref ON seq_c.{1}
                     LIKE '%' || ref.citationid || '%'
                  WHERE nameid = ?
-                 ORDER BY COALESCE(seq_c.{2}
+                 ORDER BY COALESCE(seq_c.{2},
                                    date(ref.pubdate),
                                    ref.authors, 1)
                  '''.format(*seq_headers),
