@@ -116,12 +116,13 @@ def get_sequencing(id, cursor, seq_headers):
     # overall orders first by date, but still grouped by method
     c.execute('''SELECT DISTINCT nameid, ordered_seq_c.citationid,
                      ref.authors, ref.pubdate,
-                     ordered_seq_c.{2}, ordered_seq_c.{3}, ordered_seq_c.{4}
+                     ordered_seq_c.[{2}], ordered_seq_c.[{3}],
+                     ordered_seq_c.[{4}]
                  FROM (
                     SELECT DISTINCT *
                     FROM citations AS ref, sequencing_citations AS seq_c
-                    WHERE seq_c.Reference LIKE '%' || ref.citationid || '%'
-                    GROUP BY seq_c.Mapping
+                    WHERE seq_c.[{1}] LIKE '%' || ref.citationid || '%'
+                    GROUP BY seq_c.[{3}]
                     ORDER BY MIN(COALESCE(date(ref.pubdate), 1)))
                  as ordered_seq_c, citations AS ref
                  WHERE ordered_seq_c.Reference LIKE '%' ||
