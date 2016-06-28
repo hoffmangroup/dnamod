@@ -40,7 +40,7 @@ rsync --progress -av --delete "$MAIN_SITE_DIR"/* "$COPY_PATH" || true
 if [[ "$TESTING_MODE" == false ]]; then
     # commit the changes to the lab Bitbucket
     >&2 echo "Committing changes."
-    (cd "$REAL_PATH" && hg commit --config extensions.hgspellcheck=! -m "Updated DNAmod. Consult its repository ($(echo $(hg paths default) | sed -r 's|ssh://.*?@|https://|')) for details." proj/dnamod)
+    (cd "$REAL_PATH" && hg commit --config extensions.hgspellcheck=! -m "Updated DNAmod. Consult its repository ($(cd $SOURCE_DIR && echo $(hg paths default) | sed -r 's|ssh://.*?@|https://|')) for details." . && hg push ssh://hg@bitbucket.org/hoffmanlab/www-external)
 
     >&2 echo "Pushing to www-external."
     EXTERNAL_DIR='/mnt/work1/users/hoffmangroup/www-external/proj/dnamod'
