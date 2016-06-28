@@ -40,20 +40,29 @@
             </table>
 	    
             {% if ExpandedAlpha is not none %}
+                {% set hasComplementSymbol = false %}
+                {% if ( (ExpandedAlpha["complement symbol"] is defined) and (ExpandedAlpha["complement symbol"] is not equalto 'NA') ) %}
+                    {% set hasComplementSymbol = true %}
+                {% endif %}
+
                 <table id="ExpandedAlpha" cellpadding="5">
                     <tr>
                         <th> Abbreviation </th>
                         <th> Name </th>
                         <th> Symbol </th>
-                        <th> Complement </th>
-                        <th> Complement Symbol </th>
+                        {% if hasComplementSymbol %}
+                            <th> Complement </th>
+                            <th> Complement Symbol </th>
+                        {% endif %}
                     </tr>
                     <tr>
                         <td> {{ ExpandedAlpha["abbreviation"] }} </td>
                         <td> {{ ExpandedAlpha["name"] }} </td>
                         <td> {{ ExpandedAlpha["symbol"] }} </td>
-                        <td> {{ ExpandedAlpha["complement"] }} </td>
-                        <td> {{ ExpandedAlpha["complement symbol"] }} </td>
+                        {% if hasComplementSymbol %}
+                            <td> {{ ExpandedAlpha["complement"] }} </td>
+                            <td> {{ ExpandedAlpha["complement symbol"] }} </td>
+                        {% endif %}
                     </tr>
                 </table>
             {% endif %}
