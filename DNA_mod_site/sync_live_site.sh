@@ -34,7 +34,7 @@ fi
 >&2 echo "Fixing permissions and copying to www directory."
 
 chmod -Rv g+rwX,a+rX "$MAIN_SITE_DIR/.."
-rsync --progress -av "$MAIN_SITE_DIR"/* "$COPY_PATH" || true
+rsync --progress -av --delete "$MAIN_SITE_DIR"/* "$COPY_PATH" || true
 
 # push the actual site to the external directory
 if [[ "$TESTING_MODE" == false ]]; then
@@ -44,7 +44,7 @@ if [[ "$TESTING_MODE" == false ]]; then
 
     >&2 echo "Pushing to www-external."
     EXTERNAL_DIR='/mnt/work1/users/hoffmangroup/www-external/proj/dnamod'
-    rsync --progress -av "$REAL_PATH"/* "$EXTERNAL_DIR" || true
+    rsync --progress -av --delete "$REAL_PATH"/* "$EXTERNAL_DIR" || true
 
     >&2 echo -e "\n\nEmail Qun Jin <qjin@uhnresearch.ca> to push the public webpage.\n"
 fi
