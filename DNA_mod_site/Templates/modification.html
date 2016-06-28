@@ -20,7 +20,7 @@
 
         <div class="Alphabet">
             <img id="chemicalStructureImage" src="images/{{ ChebiName }}.svg" alt="{{ ChebiName }} Image Not Availabe" height='500' width='500'>
-            {% if ExpandedAlpha is defined %}
+            {% if ExpandedAlpha["abbreviation"] is defined %}
                 <div class = "ExpandedAlpha">
                     <table cellpadding="5">
                         <tr>
