@@ -16,14 +16,15 @@ Function:
 4. Using above results, populates DNA post-transciptional modification table
 '''
 
+import datetime
 import os
-import sqlite3
 import pprint
+import sqlite3
+import sys
+import unicodecsv as csv
 
 from Bio import Entrez
 from suds.client import Client  # Using Suds web services client for soap
-import sys
-import unicodecsv as csv
 
 import dnamod_utils
 
@@ -280,7 +281,7 @@ def get_full_citation(PMID):
 
     handle.close()
     
-    # XXX TODO refactor not found instances and overall control flow
+    # XXX TODO refactor not found instances
 
     print(publicationDate)
     
@@ -290,28 +291,21 @@ def get_full_citation(PMID):
         result.append('')
         field_not_found('title')
 
-    if isarticle:
-        if publicationDate:
-            date = (publicationDate[0]['Month'] + '-' +
-                    publicationDate[0]['Day'] + '-' +
-                    publicationDate[0]['Year'])
-            result.append(date)
-            print(date)
-        else:
-            result.append('')
-            field_not_found('date')
+    if publicationDate:
+        if isarticle:
+            publicationDate = publicationDate[0]
+
+        date = datetime.date(int(publicationDate['Year']),
+                             int(publicationDate['Month']),
+                             int(publicationDate['Day']))
+
+        result.append(date.isoformat())
     else:
-        if publicationDate:
-            date = (publicationDate['Month'] + '-' + publicationDate['Day']
-                    + '-' + publicationDate['Year'])
-            result.append(date)
-            print(date)
-        else:
-            result.append('')
-            field_not_found('date (non-article entry)')
+        result.append('')
+        field_not_found('date')
     if authors:
         result.append("{0}, {1}, et al.".format(authors[0]['LastName'].encode("utf-8"),
-                                              authors[0]['Initials'].encode("utf-8")))
+                                                authors[0]['Initials'].encode("utf-8")))
     else:
         result.append('')
         field_not_found('author(s)')

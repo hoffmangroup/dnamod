@@ -104,7 +104,18 @@ def get_sequencing(id, cursor):
     c = cursor.cursor()
     sequenceList = []
 
-    c.execute("SELECT * from sequencing_citations WHERE nameid = ?", (id,))
+    c.execute("PRAGMA table_info(sequencing_citations)")
+    # XXX TODO build-in some defensive checks for this...
+    # the reference column is always the first
+    ref_col_name = [result[1] for result in c.fetchall()][1]
+
+    # TODO consider input from string interpolation here...
+    c.execute('''SELECT *
+                 FROM sequencing_citations AS seq_c
+                 JOIN citations AS ref ON ref.citationid = seq_c.{}
+                 WHERE nameid = ?
+                 ORDER BY date(ref.pubdate)'''.format(ref_col_name),
+              (id,))
     results = c.fetchall()
 
     for row in results:
