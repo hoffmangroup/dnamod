@@ -22,13 +22,13 @@ import pprint
 
 from Bio import Entrez
 from suds.client import Client  # Using Suds web services client for soap
-from sys import maxint
+import sys
 import unicodecsv as csv
 
 import dnamod_utils
 
 # XXX register this with NCBI
-Entrez.email = "jai.sood@hotmail.com" # XXX come up with an alternative for this... (perhaps a DNAmod address)
+Entrez.email = "jai.sood@hotmail.com"  # XXX come up with an alternative for this... (perhaps a DNAmod address)
 Entrez.tool = "DNAmod"
 
 # Search Variables made up of CHEBI object attributes
@@ -64,11 +64,15 @@ url = 'http://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
 client = Client(url)
 
 
-def search_exact_match(searchKey, client):
+def field_not_found(field):
+    print("WARNING: unable to find {} for a reference."
+          "Field left empty.".format(field), file=sys.stderr)
 
+
+def search_exact_match(searchKey, client):
     # Parameters for getLiteEntity() search
     searchCategory = 'ALL'
-    maximumResults = maxint
+    maximumResults = sys.maxint
     starsCategory = 'THREE ONLY'
 
     # Save results from query into list
@@ -276,12 +280,15 @@ def get_full_citation(PMID):
 
     handle.close()
     
+    # XXX TODO refactor not found instances and overall control flow
+
     print(publicationDate)
     
     if articleTitle:
         result.append(articleTitle.encode('utf-8'))
     else:
-        result.append('Title Not Found')
+        result.append('')
+        field_not_found('title')
 
     if isarticle:
         if publicationDate:
@@ -291,7 +298,8 @@ def get_full_citation(PMID):
             result.append(date)
             print(date)
         else:
-            result.append('Publication Date Not Found')
+            result.append('')
+            field_not_found('date')
     else:
         if publicationDate:
             date = (publicationDate['Month'] + '-' + publicationDate['Day']
@@ -299,12 +307,14 @@ def get_full_citation(PMID):
             result.append(date)
             print(date)
         else:
-            result.append('Publication Date Not Found')
+            result.append('')
+            field_not_found('date (non-article entry)')
     if authors:
         result.append("{0}, {1}, et al.".format(authors[0]['LastName'].encode("utf-8"),
                                               authors[0]['Initials'].encode("utf-8")))
     else:
-        result.append('Authors Not Found')
+        result.append('')
+        field_not_found('author(s)')
 
     return result
 
@@ -431,6 +441,7 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
 
                     sql_conn_cursor.execute("UPDATE citations SET title=?, pubdate=?, authors=? WHERE citationid=?",(citationinfo_uni[0], citationinfo_uni[1], citationinfo_uni[2], citation))
                     conn.commit()
+                    
                     sql_conn_cursor.execute("INSERT OR IGNORE INTO citations VALUES(?,?,?,?)",
                               (citation, citationinfo_uni[0], citationinfo_uni[1],
                                citationinfo_uni[2]))

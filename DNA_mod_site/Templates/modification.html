@@ -129,7 +129,7 @@
                 <ul id="Citations">
                     {% if Citations|length %}
                         {% for Citation in Citations %}
-                            <li>{{ Citation["author"] }} <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation["pmid"] }}' > {{ Citation["title"] }} </a> {{ Citation["date"] }}. </li>
+                        <li>{{ Citation["author"] }} <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation["pmid"] }}' > {{ Citation["title"] }} </a> {% if Citation["date"] %} {{ Citation["date"] }}. {% endif %}  </li>
                         {% endfor %}
                     {% else %}
                         <li> No Citations </li>

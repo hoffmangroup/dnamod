@@ -106,7 +106,7 @@ def get_sequencing(id, cursor):
 
     c.execute("SELECT * from sequencing_citations WHERE nameid = ?", (id,))
     results = c.fetchall()
-    
+
     for row in results:
         referenceList = row[1].split(",")
         for reference in referenceList:
