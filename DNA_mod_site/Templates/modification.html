@@ -38,32 +38,27 @@
                     <td> {{ AverageMass }} </td>
                 </tr>
             </table>
-	    
-            {% if ExpandedAlpha is not none %}
-                {% set hasComplementSymbol = false %}
-                {% if ( (ExpandedAlpha["complement symbol"] is defined) and (ExpandedAlpha["complement symbol"] is not equalto 'NA') ) %}
-                    {% set hasComplementSymbol = true %}
-                {% endif %}
 
+            {% if ExpandedAlpha is defined %}
                 <table id="ExpandedAlpha" cellpadding="5">
                     <tr>
                         <th> Abbreviation </th>
-                        <th> Name </th>
-                        <th> Symbol </th>
-                        {% if hasComplementSymbol %}
-                            <th> Complement </th>
-                            <th> Complement Symbol </th>
-                        {% endif %}
+                        <td> {{ ExpandedAlpha["abbreviation"] }} </td>
                     </tr>
                     <tr>
-                        <td> {{ ExpandedAlpha["abbreviation"] }} </td>
-                        <td> {{ ExpandedAlpha["name"] }} </td>
+                        <th> Symbol </th>
                         <td> {{ ExpandedAlpha["symbol"] }} </td>
-                        {% if hasComplementSymbol %}
-                            <td> {{ ExpandedAlpha["complement"] }} </td>
-                            <td> {{ ExpandedAlpha["complement symbol"] }} </td>
-                        {% endif %}
                     </tr>
+                    {% if ( (ExpandedAlpha["complement symbol"] is defined) and (ExpandedAlpha["complement symbol"] is not equalto 'NA') ) %}
+                        <tr>
+                            <th> Complement </th>
+                            <td> {{ ExpandedAlpha["complement"] }} </td>
+                        </tr>
+                        <tr>
+                            <th> Symbol </th>
+                            <td> {{ ExpandedAlpha["complement symbol"] }} </td>
+                        </tr>
+                    {% endif %}
                 </table>
             {% endif %}
         </div>
