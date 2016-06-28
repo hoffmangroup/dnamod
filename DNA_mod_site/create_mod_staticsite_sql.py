@@ -74,22 +74,24 @@ def get_citations(lookup_key, cursor):
 
 
 def get_expanded_alphabet(lookup_key, alpha_file):
+    exp_alph_dict = {}
+
     with open(alpha_file, 'rb') as file:
         reader = csv.reader((row for row in file if not row.startswith('#')),
                             delimiter="\t")
-        expandedList = []
-        for line in reader:
+        for num, line in enumerate(reader):
             if lookup_key == line[1].lower():
                 abbreviation = line[0]
                 alphaname = line[1]
                 alphasymbol = line[2]
                 alphacomp = line[3]
                 compsymbol = line[4]
+
                 result = [abbreviation, alphaname, alphasymbol,
                           alphacomp, compsymbol]
-                expandedList.append(dict(izip(EXPANDED_ALPHABET_ORDERED_KEYS,
-                                              result)))
-        return expandedList
+                exp_alph_dict.update(dict(izip(EXPANDED_ALPHABET_ORDERED_KEYS,
+                                               result)))
+    return exp_alph_dict
 
 
 # XXX TODO refactor
