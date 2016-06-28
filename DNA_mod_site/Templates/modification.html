@@ -18,70 +18,86 @@
         <h2> A modification of </h2>
     </div>
 
-    <img id="chemicalStructureImage" src="images/{{ ChebiName }}.svg" alt="{{ ChebiName }} Image Not Availabe" height='500' width='500'>
+        <div class="Alphabet">
+            <img id="chemicalStructureImage" src="images/{{ ChebiName }}.svg" alt="{{ ChebiName }} Image Not Availabe" height='500' width='500'>
+            {% if ExpandedAlpha["abbreviation"] is defined %}
+                <div class = "ExpandedAlpha">
+                    <table cellpadding="5">
+                        <tr>
+                            <th> Abbreviation </th>
+                            <td> {{ ExpandedAlpha["abbreviation"] }} </td>
+                        </tr>
+                        <tr>
+                            <th> Symbol </th>
+                            <td> {{ ExpandedAlpha["symbol"] }} </td>
+                        </tr>
+                        {% if ( (ExpandedAlpha["complement symbol"] is defined) and (ExpandedAlpha["complement symbol"] is not equalto 'NA') ) %}
+                            <tr>
+                                <th> Complement </th>
+                                <td> {{ ExpandedAlpha["complement"] }} </td>
+                            </tr>
+                            <tr>
+                                <th> Symbol </th>
+                                <td> {{ ExpandedAlpha["complement symbol"] }} </td>
+                            </tr>
+                        {% endif %}
+                    </table>
+                </div>
+            {% endif %}
+        </div>
 
     <div class="ContentLayout">
+    
         <div class="BasicInfo">
-            <h2> Description: </h2>
-            <p> {{ Definition }} </p>
+            {% if Definition %}
+                <h2> Description: </h2>
+                <p> {{ Definition }} </p>
+            {% endif %}
 
-            <h2> Chemical Properties: </h2>
-            <table id="ChemProps" cellpadding="5">
-                <tr>
-                    <th> Chemical Formula </th>
-                    <th> Net Charge </th>
-                    <th> Average Mass </th>
-                </tr>
-                <tr>
-                    <td> {{ Formula }} </td>
-                    <td> {{ NetCharge }} </td>
-                    <td> {{ AverageMass }} </td>
-                </tr>
-            </table>
-	    
-            {% if ExpandedAlpha is not none %}
-                <table id="ExpandedAlpha" cellpadding="5">
+            {% if Formula or NetCharge or AverageMass %}
+                <h2> Chemical Properties: </h2>
+                <table id="ChemProps" cellpadding="5">
                     <tr>
-                        <th> Abbreviation </th>
-                        <th> Name </th>
-                        <th> Symbol </th>
-                        <th> Complement </th>
-                        <th> Complement Symbol </th>
+                        <th> Chemical Formula </th>
+                        <th> Net Charge </th>
+                        <th> Average Mass </th>
                     </tr>
                     <tr>
-                        <td> {{ ExpandedAlpha["abbreviation"] }} </td>
-                        <td> {{ ExpandedAlpha["name"] }} </td>
-                        <td> {{ ExpandedAlpha["symbol"] }} </td>
-                        <td> {{ ExpandedAlpha["complement"] }} </td>
-                        <td> {{ ExpandedAlpha["complement symbol"] }} </td>
+                        <td> {% if Formula %}{{ Formula }}{% endif %} </td>
+                        <td> {% if NetCharge %}{{ NetCharge }}{% endif %} </td>
+                        <td> {% if AverageMass %}{{ AverageMass }}{% endif %} </td>
                     </tr>
                 </table>
             {% endif %}
         </div>
+        
+
 
         <div class="Names">
-            <h2 id="Inline"> Names: </h2>
-            <table id="Names" cellpadding="5">
-                <tr>
-                    <th> IUPAC </th>
-                    <th> SMILES </th>
-                    {% if Synonyms|length %}
-                        <th> Synonyms </th>
-                    {% endif %}
-                </tr>
-                <tr>
-                    <td> {{ IupacName }} </td>
-                    <td> {{ Smiles }} </td>
-                    {% if Synonyms|length %}
-                        <td>
-                            <ul id="Synonyms">
-                            {% for Synonym in Synonyms %}
-                                <li> {{ Synonym }} </li>
-                            {% endfor %}
-                        </td>
-                    {% endif %}
-                </tr>
-            </table>
+            {% if IupacName or Smiles or Synonyms %}
+                <h2 id="Inline"> Names: </h2>
+                <table id="Names" cellpadding="5">
+                    <tr>
+                        {% if IupacName %}<th> IUPAC </th>{% endif %}
+                        {% if Smiles %}<th> SMILES </th>{% endif %}
+                        {% if Synonyms|length %}
+                            <th> Synonyms </th>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        {% if IupacName %}<td> {{ IupacName }} </td>{% endif %}
+                        {% if Smiles %}<td> {{ Smiles }} </td>{% endif %}
+                        {% if Synonyms|length %}
+                            <td>
+                                <ul id="Synonyms">
+                                {% for Synonym in Synonyms %}
+                                    <li> {{ Synonym }} </li>
+                                {% endfor %}
+                            </td>
+                        {% endif %}
+                    </tr>
+                </table>
+            {% endif %}
         </div>
 
     <!--

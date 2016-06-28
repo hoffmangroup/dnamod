@@ -74,22 +74,24 @@ def get_citations(lookup_key, cursor):
 
 
 def get_expanded_alphabet(lookup_key, alpha_file):
+    exp_alph_dict = {}
+
     with open(alpha_file, 'rb') as file:
         reader = csv.reader((row for row in file if not row.startswith('#')),
                             delimiter="\t")
-        expandedList = []
-        for line in reader:
-            if lookup_key == line[1].lower():
-                abbreviation = line[0]
-                alphaname = line[1]
-                alphasymbol = line[2]
-                alphacomp = line[3]
-                compsymbol = line[4]
+        for num, line in enumerate(reader):
+            if lookup_key == line[0]:
+                abbreviation = line[1]
+                alphaname = line[2]
+                alphasymbol = line[3]
+                alphacomp = line[4]
+                compsymbol = line[5]
+
                 result = [abbreviation, alphaname, alphasymbol,
                           alphacomp, compsymbol]
-                expandedList.append(dict(izip(EXPANDED_ALPHABET_ORDERED_KEYS,
-                                              result)))
-        return expandedList
+                exp_alph_dict.update(dict(izip(EXPANDED_ALPHABET_ORDERED_KEYS,
+                                               result)))
+    return exp_alph_dict
 
 
 # XXX TODO refactor
@@ -119,13 +121,14 @@ def get_sequencing(id, cursor, seq_headers):
                  JOIN citations AS ref ON seq_c.{1}
                     LIKE '%' || ref.citationid || '%'
                  WHERE nameid = ?
-                 ORDER BY COALESCE(seq_c.{2}, date(ref.pubdate), ref.authors, 1)
+                 ORDER BY COALESCE(seq_c.{2}
+                                   date(ref.pubdate),
+                                   ref.authors, 1)
                  '''.format(*seq_headers),
               (id,))
     results = c.fetchall()
 
     for row in results:
-        print(*row) #XXX
         sequenceList.append(dict(izip(SEQUENCING_ORDERED_KEYS, row)))
     return sequenceList
 
@@ -232,7 +235,8 @@ def create_html_pages():
                 for citation in citations:
                     citation[key] = citation[key].decode(ENCODING)
 
-            sequences = get_sequencing(citation_lookup, conn, sequencing_headers)
+            sequences = get_sequencing(citation_lookup, conn,
+                                       sequencing_headers)
 
             expandedalpha = get_expanded_alphabet(chebiname, ALPHABET_FILE)
 
@@ -255,9 +259,8 @@ def create_html_pages():
                                           MappingTitle=mappingmethod_title,
                                           ResolutionTitle=resolution_title,
                                           EnrichmentTitle=enrichment_title,
-                                          # NB: can pass ExpandedAlpha=None to disable
-                                          ExpandedAlpha=None)
-                                          #ExpandedAlpha=expandedalpha)
+                                          # pass ExpandedAlpha=None to disable
+                                          ExpandedAlpha=expandedalpha)
             f.write(render)
             f.close()
 
