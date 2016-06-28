@@ -238,7 +238,7 @@ def create_html_pages():
             sequences = get_sequencing(citation_lookup, conn,
                                        sequencing_headers)
 
-            expandedalpha = get_expanded_alphabet(chebiname, ALPHABET_FILE)
+            expandedalpha = get_expanded_alphabet(chebiid, ALPHABET_FILE)
 
             render = page_template.render(ChebiName=chebiname,
                                           Definition=definition,

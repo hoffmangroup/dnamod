@@ -17,6 +17,8 @@ TESTING_MODE=false
 
 MAIN_SITE_DIR="$SOURCE_DIR/static"
 
+# push to the internal www directory, to copy over to the external
+
 # Path variables for testing mode and real mode
 TEST_PATH="$SOURCE_DIR/sync_test"
 REAL_PATH='/mnt/work1/users/hoffmangroup/www/proj/dnamod'
@@ -29,6 +31,21 @@ else
     COPY_PATH="$REAL_PATH"
 fi
 
+>&2 echo "Fixing permissions and copying to www directory."
+
 chmod -Rv a+rX "$MAIN_SITE_DIR/.."
 rsync --progress -av "$MAIN_SITE_DIR"/* "$COPY_PATH"
+
+# push the actual site to the external directory
+if [[ "$TESTING_MODE" == false ]]; then
+    # commit the changes to the lab Bitbucket
+    >&2 echo "Committing changes."
+    hg commit --config extensions.hgspellcheck=! -m "Updated DNAmod. Consult its repository ($($(hg paths default) | sed -r 's|ssh://.*?@|https://|')) for details." proj/dnamod
+
+    >&2 echo "Pushing to www-external."
+    EXTERNAL_DIR='/mnt/work1/users/hoffmangroup/www-external/proj/dnamod'
+    rsync --progress -av "$REAL_PATH"/* "$EXTERNAL_DIR"
+
+    >&2 echo -e "\n\nEmail Qun Jin <qjin@uhnresearch.ca> to push the public webpage.\n"
+fi
 

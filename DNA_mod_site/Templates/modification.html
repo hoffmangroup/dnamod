@@ -22,14 +22,14 @@
             <img id="chemicalStructureImage" src="images/{{ ChebiName }}.svg" alt="{{ ChebiName }} Image Not Availabe" height='500' width='500'>
             {% if ExpandedAlpha["abbreviation"] is defined %}
                 <div class = "ExpandedAlpha">
-                    <table cellpadding="5">
+                    <table class = "table" cellpadding="5">
                         <tr>
                             <th> Abbreviation </th>
                             <td> {{ ExpandedAlpha["abbreviation"] }} </td>
                         </tr>
                         <tr>
                             <th> Symbol </th>
-                            <td> {{ ExpandedAlpha["symbol"] }} </td>
+                            <td class="nucleobase"> {{ ExpandedAlpha["symbol"] }} </td>
                         </tr>
                         {% if ( (ExpandedAlpha["complement symbol"] is defined) and (ExpandedAlpha["complement symbol"] is not equalto 'NA') ) %}
                             <tr>
@@ -38,7 +38,7 @@
                             </tr>
                             <tr>
                                 <th> Symbol </th>
-                                <td> {{ ExpandedAlpha["complement symbol"] }} </td>
+                                <td class="nucleobase"> {{ ExpandedAlpha["complement symbol"] }} </td>
                             </tr>
                         {% endif %}
                     </table>
