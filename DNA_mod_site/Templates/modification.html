@@ -49,8 +49,10 @@
     <div class="ContentLayout">
     
         <div class="BasicInfo">
-            <h2> Description: </h2>
-            <p> {{ Definition }} </p>
+            {% if Definition %}
+                <h2> Description: </h2>
+                <p> {{ Definition }} </p>
+            {% endif %}
 
             <h2> Chemical Properties: </h2>
             <table id="ChemProps" cellpadding="5">

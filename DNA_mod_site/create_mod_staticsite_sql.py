@@ -80,12 +80,12 @@ def get_expanded_alphabet(lookup_key, alpha_file):
         reader = csv.reader((row for row in file if not row.startswith('#')),
                             delimiter="\t")
         for num, line in enumerate(reader):
-            if lookup_key == line[1].lower():
-                abbreviation = line[0]
-                alphaname = line[1]
-                alphasymbol = line[2]
-                alphacomp = line[3]
-                compsymbol = line[4]
+            if lookup_key == line[0]:
+                abbreviation = line[1]
+                alphaname = line[2]
+                alphasymbol = line[3]
+                alphacomp = line[4]
+                compsymbol = line[5]
 
                 result = [abbreviation, alphaname, alphasymbol,
                           alphacomp, compsymbol]
@@ -171,6 +171,8 @@ def create_html_pages():
             netcharge = mod[8]
             avgmass = mod[6]
             definition = mod[9]
+            if not definition:
+                print(definition)
             chebiname = mod[10].encode('ascii')
             chebiid = mod[0]
             iupacname = mod[11]
@@ -223,7 +225,7 @@ def create_html_pages():
                 for citation in citations:
                     citation[key] = citation[key].decode(ENCODING)
             sequences = get_sequencing(citation_lookup, conn)
-            expandedalpha = get_expanded_alphabet(chebiname, ALPHABET_FILE)
+            expandedalpha = get_expanded_alphabet(chebiid, ALPHABET_FILE)
 
             render = page_template.render(ChebiName=chebiname,
                                           Definition=definition,

@@ -62,7 +62,9 @@ body {
 }
 
 .ExpandedAlpha {
-    padding-left: 50px;
+    padding-top: 50px;
+    display: table;
+    margin: 0 auto;
 }
 
 .BasicInfo {
