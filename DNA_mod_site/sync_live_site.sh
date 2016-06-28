@@ -33,18 +33,18 @@ fi
 
 >&2 echo "Fixing permissions and copying to www directory."
 
-chmod -Rv a+rX "$MAIN_SITE_DIR/.."
-rsync --progress -av "$MAIN_SITE_DIR"/* "$COPY_PATH"
+chmod -Rv g+rwX,a+rX "$MAIN_SITE_DIR/.."
+rsync --progress -av --delete "$MAIN_SITE_DIR"/* "$COPY_PATH" || true
 
 # push the actual site to the external directory
 if [[ "$TESTING_MODE" == false ]]; then
     # commit the changes to the lab Bitbucket
     >&2 echo "Committing changes."
-    hg commit --config extensions.hgspellcheck=! -m "Updated DNAmod. Consult its repository ($($(hg paths default) | sed -r 's|ssh://.*?@|https://|')) for details." proj/dnamod
+    (cd "$REAL_PATH" && hg commit --config extensions.hgspellcheck=! -m "Updated DNAmod. Consult its repository ($(echo $(hg paths default) | sed -r 's|ssh://.*?@|https://|')) for details." proj/dnamod)
 
     >&2 echo "Pushing to www-external."
     EXTERNAL_DIR='/mnt/work1/users/hoffmangroup/www-external/proj/dnamod'
-    rsync --progress -av "$REAL_PATH"/* "$EXTERNAL_DIR"
+    rsync --progress -av --delete "$REAL_PATH"/* "$EXTERNAL_DIR" || true
 
     >&2 echo -e "\n\nEmail Qun Jin <qjin@uhnresearch.ca> to push the public webpage.\n"
 fi
