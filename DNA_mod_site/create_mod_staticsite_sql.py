@@ -112,7 +112,8 @@ def get_sequencing(id, cursor):
     # TODO consider input from string interpolation here...
     c.execute('''SELECT *
                  FROM sequencing_citations AS seq_c
-                 JOIN citations AS ref ON ref.citationid = seq_c.{}
+                 JOIN citations AS ref ON ref.citationid
+                    LIKE '%' + seq_c.{} + '%'
                  WHERE nameid = ?
                  ORDER BY date(ref.pubdate)'''.format(ref_col_name),
               (id,))
