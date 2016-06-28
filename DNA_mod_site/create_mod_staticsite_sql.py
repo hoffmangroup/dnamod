@@ -74,22 +74,24 @@ def get_citations(lookup_key, cursor):
 
 
 def get_expanded_alphabet(lookup_key, alpha_file):
+    exp_alph_dict = {}
+
     with open(alpha_file, 'rb') as file:
         reader = csv.reader((row for row in file if not row.startswith('#')),
                             delimiter="\t")
-        expandedList = []
-        for line in reader:
-            if lookup_key == line[1].lower():
-                abbreviation = line[0]
-                alphaname = line[1]
-                alphasymbol = line[2]
-                alphacomp = line[3]
-                compsymbol = line[4]
+        for num, line in enumerate(reader):
+            if lookup_key == line[0]:
+                abbreviation = line[1]
+                alphaname = line[2]
+                alphasymbol = line[3]
+                alphacomp = line[4]
+                compsymbol = line[5]
+
                 result = [abbreviation, alphaname, alphasymbol,
                           alphacomp, compsymbol]
-                expandedList.append(dict(izip(EXPANDED_ALPHABET_ORDERED_KEYS,
-                                              result)))
-        return expandedList
+                exp_alph_dict.update(dict(izip(EXPANDED_ALPHABET_ORDERED_KEYS,
+                                               result)))
+    return exp_alph_dict
 
 
 # XXX TODO refactor
@@ -100,34 +102,34 @@ def get_sequencing_headers(cursor):
     return tuple(header)
 
 
-def get_sequencing(id, cursor):
+def get_sequencing(id, cursor, seq_headers):
     c = cursor.cursor()
     sequenceList = []
 
     c.execute("PRAGMA table_info(sequencing_citations)")
     # XXX TODO build-in some defensive checks for this...
-    # the reference column is always the first
-    ref_col_name = [result[1] for result in c.fetchall()][1]
+    #          the reference column is always the first
 
     # TODO consider input from string interpolation here...
-    c.execute('''SELECT *
+
+    # seq_headers contains the header for this table
+    # overall orders first by date, but still grouped by method
+    c.execute('''SELECT DISTINCT seq_c.nameid, ref.citationid,
+                     ref.authors, ref.pubdate,
+                     seq_c.{2}, seq_c.{3}, seq_c.{4}
                  FROM sequencing_citations AS seq_c
-                 JOIN citations AS ref ON ref.citationid = seq_c.{}
+                 JOIN citations AS ref ON seq_c.{1}
+                    LIKE '%' || ref.citationid || '%'
                  WHERE nameid = ?
-                 ORDER BY date(ref.pubdate)'''.format(ref_col_name),
+                 ORDER BY COALESCE(seq_c.{2}
+                                   date(ref.pubdate),
+                                   ref.authors, 1)
+                 '''.format(*seq_headers),
               (id,))
     results = c.fetchall()
 
     for row in results:
-        referenceList = row[1].split(",")
-        for reference in referenceList:
-            c.execute("SELECT * FROM citations WHERE citationid = ?",
-                      (reference,))
-            query = c.fetchone()
-            author = query[3]
-            date = query[2]
-            newrow = (row[0], reference, author, date, row[2], row[3], row[4])
-            sequenceList.append(dict(izip(SEQUENCING_ORDERED_KEYS, newrow)))
+        sequenceList.append(dict(izip(SEQUENCING_ORDERED_KEYS, row)))
     return sequenceList
 
 
@@ -143,8 +145,9 @@ def create_html_pages():
     page_template = env.get_template('modification.html')
 
     # XXX TODO refactor
+    sequencing_headers = get_sequencing_headers(conn)
     _, reference_title, mappingmethod_title, resolution_title, enrichment_title = \
-        get_sequencing_headers(conn)
+        sequencing_headers
 
     # Dictionary to store links for hompage
     homepageLinks = {}
@@ -231,7 +234,10 @@ def create_html_pages():
             for key in CITATION_ORDERED_KEYS_ENCODED:  # decode encoded values
                 for citation in citations:
                     citation[key] = citation[key].decode(ENCODING)
-            sequences = get_sequencing(citation_lookup, conn)
+
+            sequences = get_sequencing(citation_lookup, conn,
+                                       sequencing_headers)
+
             expandedalpha = get_expanded_alphabet(chebiname, ALPHABET_FILE)
 
             render = page_template.render(ChebiName=chebiname,
@@ -253,9 +259,8 @@ def create_html_pages():
                                           MappingTitle=mappingmethod_title,
                                           ResolutionTitle=resolution_title,
                                           EnrichmentTitle=enrichment_title,
-                                          # NB: can pass ExpandedAlpha=None to disable
-                                          ExpandedAlpha=None)
-                                          #ExpandedAlpha=expandedalpha)
+                                          # pass ExpandedAlpha=None to disable
+                                          ExpandedAlpha=expandedalpha)
             f.write(render)
             f.close()
 

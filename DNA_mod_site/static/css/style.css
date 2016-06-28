@@ -47,9 +47,7 @@ body {
     width: 100%;
 }
 
-#chemicalStructureImage {
-    border: 3px solid black;
-    height: 500px;
+.Alphabet {
     width: 500px;
     margin-right: 100px;
     margin-left: 20px;
@@ -57,6 +55,16 @@ body {
     display: block;
     float: right;
     top: 50%;
+}
+
+#chemicalStructureImage{
+    border: 3px solid black;
+}
+
+.ExpandedAlpha {
+    padding-top: 50px;
+    display: table;
+    margin: 0 auto;
 }
 
 .BasicInfo {

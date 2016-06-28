@@ -1,10 +1,10 @@
-# Abbreviation	Name	Symbol	Complement	Symbol
-5mC	5-Methylcytosine	m	Guanine:5-Methylcytosine	1
-5hmC	5-Hydroxymethylcytosine	h	Guanine:5-Hydroxymethylcytosine	2
-5fC	5-Formylcytosine	f	Guanine:5-Formylcytosine	3
-5caC	5-Carboxylcytosine	c	Guanine:5-Carboxylcytosine	4
-5hmU	5-Hydroxymethyluracil	g	Adenine:5-Hydroxymethyluracil	NA
-5fU	5-Formyluracil	e	Adenine:5-Formyluracil	NA
-5caU	5-Carboxyluracil	b	Adenine:5-Carboxyluracil	NA
-6mA	6-Methyladenine	a	Thymine:6-Methyladenine	NA
-8oxoG	8-Oxoguanine	o	Adenine:8-Oxoguanine	NA
+#CHEBI  Abbreviation	Name	Symbol	Complement	Symbol
+CHEBI:27551	5mC	5-Methylcytosine	m	Guanine:5-Methylcytosine	1
+CHEBI:76792	5hmC	5-Hydroxymethylcytosine	h	Guanine:5-Hydroxymethylcytosine	2
+CHEBI:76794	5fC	5-Formylcytosine	f	Guanine:5-Formylcytosine	3
+CHEBI:76793	5caC	5-Carboxylcytosine	c	Guanine:5-Carboxylcytosine	4
+CHEBI:16964	5hmU	5-Hydroxymethyluracil	g	Adenine:5-Hydroxymethyluracil	NA
+CHEBI:80961	5fU	5-Formyluracil	e	Adenine:5-Formyluracil	NA
+CHEBI:17477	5caU	5-Carboxyluracil	b	Adenine:5-Carboxyluracil	NA
+CHEBI:28871	6mA	6-Methyladenine	a	Thymine:6-Methyladenine	NA
+CHEBI:44605	8oxoG	8-Oxoguanine	o	Adenine:8-Oxoguanine	NA
