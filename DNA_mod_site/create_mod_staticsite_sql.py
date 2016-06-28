@@ -106,10 +106,6 @@ def get_sequencing(id, cursor, seq_headers):
     c = cursor.cursor()
     sequenceList = []
 
-    c.execute("PRAGMA table_info(sequencing_citations)")
-    # XXX TODO build-in some defensive checks for this...
-    #          the reference column is always the first
-
     # TODO consider input from string interpolation here...
 
     # seq_headers contains the header for this table
