@@ -1,34 +1,36 @@
-ChEBI	Origin	Organism(s)	Reference(s)
+ChEBI	Origin	Function	Functional info.	Organism(s)	Reference(s)
 #
 # adenine
 #
 # 1-methyladenine
-18083	
+18083	endogenous	damage	mutagenic	Escherichia coli,Rattus norvegicus	24810496,5921185
 # 2-amino-6-hydroxyaminopurine
 78685	
 # 3-methyladenine
-38635	
+38635	endogenous	damage	highly cytotoxic	Escherichia coili,Rattus norvegicus	24810496,2702723
 # 7-methyladenine
-28921	
+28921	endogenous	damage	mutagenic	Escherichia coili,Rattus norvegicus	24810496,2702723,764991
 # 9-methyladenine
-40526	
-# methyladenine
-25272	
+40526	synthetic				
+# 6-methylaminopurine (6mA)
+28871	endogenous	epigenetic mark	Escherichia coili,Caenorhabditis elegans,Chlamydomonas reinhardtii,Drosophila melanogaster	25936836,25936839,25936839,25936838
+# methyladenine - category, create merge of containing members
+# 25272	not directly annotated
 # N(6),N(6)-dimethyladenine
 60281	
 # N(6)-hydroxyadenine
-78235	
+78235	synthetic		mutagenic		3944125
 #
 # cytosine
 #
 # 1-methylcytosine
 39624	
 # 2-O-methylcytosine
-70854	
+70854	endogenous	damage		Escherichia coli	24810496
 # 3-ethylcytosine
 74029	
 # 3-methylcytosine
-39992	
+39992	endogenous	damage	mutagenic	Escherichia coli	24810496
 # 5-(beta-D-glucosylmethyl)cytosine
 131616	
 # 5-(hydroxymethyl)cytosine
@@ -40,7 +42,7 @@ ChEBI	Origin	Organism(s)	Reference(s)
 # 5-methylcytosine
 27551	
 # N(4)-methylcytosine
-21839	
+21839	endogenous	restriction-modification		Bacillus cenirosporus	6884523
 #
 # guanine
 #
@@ -59,15 +61,14 @@ ChEBI	Origin	Organism(s)	Reference(s)
 # 2-imino-7-methyl-1,2,3,7-tetrahydro-6H-purin-6-one
 46894	
 # 3-methylguanine
-1604	
+1604	endogenous	damage	mutagenic	Escherichia coili	764991,24810496
 # 6-O-methylguanine
-20689	
-# 7,8-dihydro-8-oxoguanine
-52617	
+20689	endogenous	damage	highly cytotoxic	Escherichia coli	24810496
 # 7-methylguanine
-2274	
+2274	endogenous	damage	cytotoxic	Escherichia coli	24810496
 # 8-oxoguanine
-44605	
+# 7,8-dihydro-8-oxoguanine -- same as above, using above ChEBI ID only
+44605	endogenous	damage	ROS	Homo sapiens	2602371
 # methylguanine
 25305	
 # N(2)-carboxyethylguanine
