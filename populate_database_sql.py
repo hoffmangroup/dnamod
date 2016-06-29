@@ -16,15 +16,14 @@ Function:
 4. Using above results, populates DNA post-transciptional modification table
 '''
 
-import datetime
 import os
-import pprint
 import sqlite3
-import sys
-import unicodecsv as csv
+import pprint
 
 from Bio import Entrez
 from suds.client import Client  # Using Suds web services client for soap
+import sys
+import unicodecsv as csv
 
 import dnamod_utils
 
@@ -249,7 +248,7 @@ def get_full_citation(PMID):
         if 'MedlineCitation' in record.keys():
             isarticle = True
             article = record['MedlineCitation']['Article']
-            #print(article)
+            daterecord = record['PubmedData']['History'];
             if'ArticleTitle' in article.keys():
                 articleTitle = article['ArticleTitle']
             else:
@@ -258,10 +257,15 @@ def get_full_citation(PMID):
                 authors = article['AuthorList']
             else:
                 authors = None
-            if'PubDate' in article.keys():
+            '''if'PubDate' in article.keys():
                 publicationDate = article['PubDate']
             elif'ArticleDate' in article.keys():
-                publicationDate = article['ArticleDate']
+                publicationDate = article['ArticleDate']'''
+                
+            # FOR DEBUGGING REMEMBER TO REMOVE
+            publicationDate = [date for date in daterecord if date.attributes['PubStatus'] == "pubmed"]
+            #print(publicationDate)
+            
         else:
             # isbook = True # Unused at the moment
             article = record['BookDocument']['Book']
@@ -281,9 +285,7 @@ def get_full_citation(PMID):
 
     handle.close()
     
-    # XXX TODO refactor not found instances
-
-    print(publicationDate)
+    # XXX TODO refactor not found instances and overall control flow
     
     if articleTitle:
         result.append(articleTitle.encode('utf-8'))
@@ -291,21 +293,28 @@ def get_full_citation(PMID):
         result.append('')
         field_not_found('title')
 
-    if publicationDate:
-        if isarticle:
-            publicationDate = publicationDate[0]
-
-        date = datetime.date(int(publicationDate['Year']),
-                             int(publicationDate['Month']),
-                             int(publicationDate['Day']))
-
-        result.append(date.isoformat())
+    if isarticle:
+        if publicationDate:
+            date = (publicationDate[0]['Month'] + '-' +
+                    publicationDate[0]['Day'] + '-' +
+                    publicationDate[0]['Year'])
+            result.append(date)
+            print(date)
+        else:
+            result.append('')
+            field_not_found('date')
     else:
-        result.append('')
-        field_not_found('date')
+        if publicationDate:
+            date = (publicationDate['Month'] + '-' + publicationDate['Day']
+                    + '-' + publicationDate['Year'])
+            result.append(date)
+            #print(date)
+        else:
+            result.append('')
+            field_not_found('date (non-article entry)')
     if authors:
         result.append("{0}, {1}, et al.".format(authors[0]['LastName'].encode("utf-8"),
-                                                authors[0]['Initials'].encode("utf-8")))
+                                              authors[0]['Initials'].encode("utf-8")))
     else:
         result.append('')
         field_not_found('author(s)')
@@ -487,10 +496,10 @@ def create_custom_citations(conn, sql_conn_cursor, ref_annots_file_name):
                 # maybe ignore, since never "user" sourced (since this is static)
                 sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS sequencing_citations
                                         (nameid text,
-                                         [{}] text,
-                                         [{}] text,
-                                         [{}] text,
-                                         [{}] text,
+                                         {} text,
+                                         {} text,
+                                         {} text,
+                                         {} text,
                                          FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE)
                                          '''.format(*line))
                 conn.commit()
@@ -501,11 +510,8 @@ def create_custom_citations(conn, sql_conn_cursor, ref_annots_file_name):
                     citationinfo = get_full_citation(reference)
                     citationinfo_uni = [info.decode('utf-8') for info in citationinfo]
 
-                    sql_conn_cursor.execute("UPDATE citations SET title=?, pubdate=?, authors=? WHERE citationid=?",
-                                            (citationinfo_uni[0], citationinfo_uni[1],
-                                             citationinfo_uni[2], reference))
+                    sql_conn_cursor.execute("UPDATE citations SET title=?, pubdate=?, authors=? WHERE citationid=?",(citationinfo_uni[0], citationinfo_uni[1], citationinfo_uni[2], reference))
                     conn.commit()
-
                     sql_conn_cursor.execute("INSERT OR IGNORE INTO citations VALUES(?,?,?,?)",
                                            (reference, citationinfo_uni[0], citationinfo_uni[1],
                                              citationinfo_uni[2]))
