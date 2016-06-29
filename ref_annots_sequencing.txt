@@ -25,6 +25,9 @@ ChEBI	Reference	Mapping method	Method detail	Resolution	Enrichment
 # 5mC, 5hmC, 6mA
 27551,76792,28871	20453866	SMRT	direct detection	single-base	target sequences
 # ------------------------------------------------
+# 6mA - also applies to: 4mA
+28871	23034806	SMRT	direct detection	single-base	target sequences
+# ------------------------------------------------
 # 8oxoG, 1mA, 5hmU - also applies to: 8oxoA, O4-MedT, 5hC, 5hU
 16964,44605,18083,20689	22185597	SMRT	direct detection	single-base	target sequences
 # ------------------------------------------------
