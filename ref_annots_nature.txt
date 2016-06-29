@@ -1,0 +1,96 @@
+ChEBI	Origin	Organism(s)	Reference(s)
+#
+# adenine
+#
+# 1-methyladenine
+18083	
+# 2-amino-6-hydroxyaminopurine
+78685	
+# 3-methyladenine
+38635	
+# 7-methyladenine
+28921	
+# 9-methyladenine
+40526	
+# methyladenine
+25272	
+# N(6),N(6)-dimethyladenine
+60281	
+# N(6)-hydroxyadenine
+78235	
+#
+# cytosine
+#
+# 1-methylcytosine
+39624	
+# 2-O-methylcytosine
+70854	
+# 3-ethylcytosine
+74029	
+# 3-methylcytosine
+39992	
+# 5-(beta-D-glucosylmethyl)cytosine
+131616	
+# 5-(hydroxymethyl)cytosine
+76792	
+# 5-carboxycytosine
+76793	
+# 5-formylcytosine
+76794	
+# 5-methylcytosine
+27551	
+# N(4)-methylcytosine
+21839	
+#
+# guanine
+#
+# 1-methylguanine
+21803	
+# 2-amino-3-methyl-3,7-dihydro-6H-purin-6-one
+27564	
+# 2-amino-3-methyl-3,9-dihydro-6H-purin-6-one
+46892	
+# 2-amino-7-methyl-1,7-dihydro-6H-purin-6-one
+28664	
+# 2-amino-7-methyl-7H-purin-6-ol
+46897	
+# 2-imino-3-methyl-1,2,3,9-tetrahydro-6H-purin-6-one
+46893	
+# 2-imino-7-methyl-1,2,3,7-tetrahydro-6H-purin-6-one
+46894	
+# 3-methylguanine
+1604	
+# 6-O-methylguanine
+20689	
+# 7,8-dihydro-8-oxoguanine
+52617	
+# 7-methylguanine
+2274	
+# 8-oxoguanine
+44605	
+# methylguanine
+25305	
+# N(2)-carboxyethylguanine
+62032	
+#
+# thymine
+#
+# (beta-D-glucopyranosyloxymethyl)deoxyuridine
+111513	
+# (beta-D-glucopyranosyloxymethyl)deoxyuridine 5'-monophosphate
+111511	
+# 5,6-dihydrothymine
+27468	
+# 5-hydroxymethyluracil
+16964	
+#
+# uracil
+#
+# 1,5-dimethyluracil
+74765	
+# 3,5-dimethyluracil
+74766	
+# uracil-5-carboxylic acid
+17477	
+# uracil-6-ylacetic acid
+46371	
