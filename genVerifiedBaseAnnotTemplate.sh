@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 set -o nounset -o pipefail -o errexit
 
-DB_NAME='DNA_mod_database.db'
+SOURCE_DIR="$(dirname $(readlink -f $0))" # From: https://gist.github.com/tvlooy/cbfbdb111a4ebad8b93e
+
+DB_NAME="$SOURCE_DIR/DNA_mod_database.db"
 
 q_result=$(sqlite3 $DB_NAME <<EOF
 
