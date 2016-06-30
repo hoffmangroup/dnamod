@@ -37,3 +37,5 @@ ChEBI	Reference	Mapping method	Method detail	Resolution	Enrichment
 # 5hmU
 16964	25462560	Yu-labelling	chemical tagging	single-base	5hmU:G mismatch only
 # ------------------------------------------------
+# base J
+111513	25662217	SMRT	direct detection	single-base	target sequences
