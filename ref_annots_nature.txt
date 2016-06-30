@@ -1,17 +1,17 @@
-ChEBI	Origin	Function	Functional info.	Organism(s)	Reference(s)
+ChEBI	Origin	Function	Functional info.	Organism(s)	Reference(s)	Comments
 #
 # adenine
 #
 # 1-methyladenine
-18083	endogenous	damage	mutagenic	Escherichia coli,Rattus norvegicus	24810496,5921185
+18083	endogenous	damage	cytotoxic	Escherichia coli,Rattus norvegicus,Mesocricetus auratus,Mus musculus	24810496,5921185,12226667,985411,728073,6704174
 # 2-amino-6-hydroxyaminopurine
 78685	
 # 3-methyladenine
-38635	endogenous	damage	highly cytotoxic	Escherichia coili,Rattus norvegicus	24810496,2702723
+38635	endogenous	damage	highly cytotoxic	Escherichia coili,Rattus norvegicus,Mesocricetus auratus,Mus musculus	24810496,2702723,985411,728073,6704174
 # 6-methylaminopurine (6mA)
 28871	endogenous	epigenetic mark	Escherichia coili,Caenorhabditis elegans,Chlamydomonas reinhardtii,Drosophila melanogaster	25936836,25936839,25936839,25936838
 # 7-methyladenine
-28921	endogenous	damage	mutagenic	Escherichia coili,Rattus norvegicus	24810496,2702723,764991
+28921	endogenous	damage	mutagenic	Escherichia coili,Rattus norvegicus,Mesocricetus auratus,Mus musculus	24810496,2702723,764991,985411,728073
 # 9-methyladenine
 40526	synthetic				
 # methyladenine - category, create merge of containing members
@@ -24,74 +24,70 @@ ChEBI	Origin	Function	Functional info.	Organism(s)	Reference(s)
 # cytosine
 #
 # 1-methylcytosine
-39624	
+39624	synthetic				 14118268
 # 2-O-methylcytosine
-70854	endogenous	damage		Escherichia coli	24810496
+70854	synthetic/RNA	damage		Escherichia coli	
 # 3-ethylcytosine
-74029	
+74029	potentially endogenous	damage	mutagenic	Escherichia coli	15381779	no direct evidence
 # 3-methylcytosine
-39992	endogenous	damage	mutagenic	Escherichia coli	24810496
+39992	endogenous	damage	cytotoxic	Escherichia coli,Homo sapiens,Rattus norvegicus	24810496,5417622,12226667,4028298
+# 3,N(4)-ethenocytosine (epsilonC)
+29147	endogenous	damage	mutagenic	Escherichia coli,Homo sapiens	9671708,8117915
 # 5-(beta-D-glucosylmethyl)cytosine
 131616	
 # 5-(hydroxymethyl)cytosine
-76792	
+76792	endogenous	demethylation intermediate and epigenetic mark		Homo sapiens,Mus musculus	23932479,25411882
 # 5-carboxycytosine
-76793	
+76793	endogenous	demethylation intermediate and possible epigenetic mark		Homo sapiens,Mus musculus	23932479,25591929
 # 5-formylcytosine
-76794	
+76794	endogenous	demethylation intermediate and epigenetic mark		Homo sapiens,Mus musculus	23932479,24755596,25591929,26098680
 # 5-methylcytosine
-27551	
+27551	endogenous	epigenetic mark		Escherichia coli,Chlamydomonas reinhardtii,Homo sapiens,Mus musculus,Locusta migratoria,Ovis aries,Bos taurus,Drosophila melanogaster	5417622,15439258,24640988,6262918,20395551
 # N(4)-methylcytosine
 21839	endogenous	restriction-modification		Bacillus cenirosporus	6884523
 #
 # guanine
 #
 # 1-methylguanine
-21803	
-# 2-amino-3-methyl-3,7-dihydro-6H-purin-6-one
-27564	
-# 2-amino-3-methyl-3,9-dihydro-6H-purin-6-one
-46892	
-# 2-amino-7-methyl-1,7-dihydro-6H-purin-6-one
-28664	
-# 2-amino-7-methyl-7H-purin-6-ol
-46897	
-# 2-imino-3-methyl-1,2,3,9-tetrahydro-6H-purin-6-one
-46893	
-# 2-imino-7-methyl-1,2,3,7-tetrahydro-6H-purin-6-one
-46894	
+21803	endogenous	damage	mutagenic	Homo sapiens	5417622
+# 2-amino-3-methyl-3,7-dihydro-6H-purin-6-one (27564) -- similar to 3-methylguanine, omitted
+# 2-amino-3-methyl-3,9-dihydro-6H-purin-6-one (46892) -- similar to 3-methylguanine, omitted
+# 2-amino-7-methyl-1,7-dihydro-6H-purin-6-one (28664) -- same as 7-methylguanine, omitted
+# 2-amino-7-methyl-7H-purin-6-ol (46897) -- similar to 7-methylguanine, omitted
+# 2-imino-3-methyl-1,2,3,9-tetrahydro-6H-purin-6-one (46893) -- similar to 3-methylguanine, omitted
+# 2-imino-7-methyl-1,2,3,7-tetrahydro-6H-purin-6-one (46894) -- similar to 7-methylguanine, omitted
 # 3-methylguanine
-1604	endogenous	damage	mutagenic	Escherichia coili	764991,24810496
+1604	endogenous	damage	mutagenic	Escherichia coili,Mesocricetus auratus,Mus musculus	764991,24810496,985411,728073
 # 6-O-methylguanine
-20689	endogenous	damage	highly cytotoxic	Escherichia coli	24810496
+20689	endogenous	damage	highly cytotoxic	Escherichia colii,Mesocricetus auratus,Mus musculus,Rattus norvegicus	24810496,985411,728073,6704174
 # 7-methylguanine
-2274	endogenous	damage	cytotoxic	Escherichia coli	24810496
+2274	endogenous	damage	cytotoxic	Escherichia coli,Homo sapiens,Mesocricetus auratus,Mus musculus,Rattus norvegicus	24810496,5417622,985411,728073,6704174
 # 8-oxoguanine
 # 7,8-dihydro-8-oxoguanine -- same as above, using above ChEBI ID only
-44605	endogenous	damage	ROS	Homo sapiens	2602371
-# methylguanine
-25305	
+44605	endogenous	damage and possible epigenetic mark	ROS	Homo sapiens	2602371,10490501
+# methylguanine (25305) -- category, not annotated
 # N(2)-carboxyethylguanine
-62032	
+62032	endogenous	damage	mutagenic	Homo sapiens	15487900
+# N(2),N(2)-dimethylguanosine
+19289	endogenous			Homo sapiens	5417622
 #
 # thymine
 #
-# (beta-D-glucopyranosyloxymethyl)deoxyuridine
-111513	
-# (beta-D-glucopyranosyloxymethyl)deoxyuridine 5'-monophosphate
-111511	
+# (beta-D-glucopyranosyloxymethyl)deoxyuridine (nucleobase: base J)
+111513	endogenous	hypermodified nucleobase	transcription terminator	Trypanosoma cruzi,Trypanosoma brucei,Leishmania tarentolae,Leishmania donovani,Crithidia fasciculata,Trypanosoma equiperdum,Trypanoplasma borreli,Euglena gracilis	21321080,8261512,17329373,10931915
+# (beta-D-glucopyranosyloxymethyl)deoxyuridine 5'-monophosphate (111511) -- same as above with phosphate, omitted
 # 5,6-dihydrothymine
-27468	
+27468	endogenous	damage	mutagenic	Escherichia coili,Homo sapiens	4860750,889777
 # 5-hydroxymethyluracil
-16964	
+16964	endogenous	damage, demethylation intermediate, and possible epigenetic mark		Homo sapiens,Gyrodinium cohnii,Rattus norvegicus,Mus musculus	10490501,4515611,6592579,24838012
 #
 # uracil
 #
-# 1,5-dimethyluracil
-74765	
-# 3,5-dimethyluracil
-74766	
-# uracil-5-carboxylic acid
-17477	
-# uracil-6-ylacetic acid
-46371	
+# 1,5-dimethyluracil (1-methylthymine)
+74765	synthetic				
+# 3,5-dimethyluracil (3-methylthymine)
+74766	endogenous	damage	mutagenic	Rattus norvegicus	3948325
+# uracil-5-carboxylic acid (5-carboxyuracil)
+17477	endogenous	demethylation intermediate		Rattus norvegicus	26447562
+# uracil-6-ylacetic acid (6-carboxymethyluracil)
+46371	synthetic
