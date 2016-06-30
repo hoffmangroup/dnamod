@@ -27,12 +27,12 @@ ChEBI	Origin	Function	Functional info.	Organism(s)	Reference(s)	Comments
 39624	synthetic				 14118268
 # 2-O-methylcytosine
 70854	synthetic/RNA	damage		Escherichia coli	
+# 3,N(4)-ethenocytosine (epsilonC)
+29147	endogenous	damage	mutagenic	Escherichia coli,Homo sapiens	9671708,8117915
 # 3-ethylcytosine
 74029	potentially endogenous	damage	mutagenic	Escherichia coli	15381779	no direct evidence
 # 3-methylcytosine
 39992	endogenous	damage	cytotoxic	Escherichia coli,Homo sapiens,Rattus norvegicus	24810496,5417622,12226667,4028298
-# 3,N(4)-ethenocytosine (epsilonC)
-29147	endogenous	damage	mutagenic	Escherichia coli,Homo sapiens	9671708,8117915
 # 5-(beta-D-glucosylmethyl)cytosine
 131616	
 # 5-(hydroxymethyl)cytosine
