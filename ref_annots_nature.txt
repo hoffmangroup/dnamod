@@ -8,12 +8,12 @@ ChEBI	Origin	Function	Functional info.	Organism(s)	Reference(s)
 78685	
 # 3-methyladenine
 38635	endogenous	damage	highly cytotoxic	Escherichia coili,Rattus norvegicus	24810496,2702723
+# 6-methylaminopurine (6mA)
+28871	endogenous	epigenetic mark	Escherichia coili,Caenorhabditis elegans,Chlamydomonas reinhardtii,Drosophila melanogaster	25936836,25936839,25936839,25936838
 # 7-methyladenine
 28921	endogenous	damage	mutagenic	Escherichia coili,Rattus norvegicus	24810496,2702723,764991
 # 9-methyladenine
 40526	synthetic				
-# 6-methylaminopurine (6mA)
-28871	endogenous	epigenetic mark	Escherichia coili,Caenorhabditis elegans,Chlamydomonas reinhardtii,Drosophila melanogaster	25936836,25936839,25936839,25936838
 # methyladenine - category, create merge of containing members
 # 25272	not directly annotated
 # N(6),N(6)-dimethyladenine
