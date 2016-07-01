@@ -4,14 +4,23 @@ from __future__ import with_statement, division, print_function
 
 import csv
 import os
+import subprocess
 
-FILE_PATH = os.path.dirname(os.path.abspath(__file__))
+SOURCE_DIR = os.path.dirname(os.path.realpath(__file__))
 
 
-def get_list(listname):
-    returnlist = []
-    with open(FILE_PATH + '/DNA_mod_site/static/whitelist/'+listname,
-              'r') as targetlist:
+def get_constant(constant_name):
+    CONSTANTS_SCRIPT = os.path.join(SOURCE_DIR, 'constants.sh')
+
+    process = subprocess.Popen([CONSTANTS_SCRIPT, constant_name],
+                               stdout=subprocess.PIPE)
+    return process.communicate()[0]
+
+
+def _get_list_data(list_name):
+    result = []
+
+    with open(get_constant(list_name), 'rb') as targetlist:
         reader = csv.reader(targetlist, dialect='excel-tab')
         for line in reader:
             if line == []:
@@ -19,5 +28,13 @@ def get_list(listname):
             if len(line) > 1:
                 stringline = line[1]
                 stringline = stringline.strip()
-                returnlist.append(stringline)
-    return returnlist
+                result.append(stringline)
+    return result
+
+
+def get_whitelist():
+    return _get_list_data('whitelist')
+
+
+def get_blacklist():
+    return _get_list_data('blacklist')

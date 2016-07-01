@@ -17,7 +17,6 @@ Function:
 '''
 
 import datetime
-import os
 import pprint
 import sqlite3
 import sys
@@ -53,13 +52,9 @@ WHITE_LIST = []
 
 DNA_BASES = ['cytosine', 'thymine', 'adenine', 'guanine', 'uracil']
 
-FILE_PATH = os.path.dirname(os.path.abspath(__file__))
+DATABASE_FILE_FULLPATH = dnamod_utils.get_constant('database')
 
-print("Operating from: {}".format(FILE_PATH))
-
-DATABASE_FILE_FULLPATH = os.path.join(FILE_PATH, "DNA_mod_database.db")
-
-REF_ANNOTS_FULLPATH = os.path.join(FILE_PATH, "ref_annots_sequencing.txt")
+REF_ANNOTS_FULLPATH = dnamod_utils.get_constant('annot_seq')
 
 url = 'http://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
 client = Client(url)
@@ -545,8 +540,8 @@ def check_for_duplicates(sql_conn_cursor):
                 print("Match!")
 
 
-WHITE_LIST = dnamod_utils.get_list('whitelist')
-BLACK_LIST = dnamod_utils.get_list('blacklist')
+WHITE_LIST = dnamod_utils.get_whitelist()
+BLACK_LIST = dnamod_utils.get_blacklist()
 
 print("1/4 Searching for bases...")
 bases = search_for_bases(client)

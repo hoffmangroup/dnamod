@@ -2,10 +2,9 @@
 set -o nounset -o pipefail -o errexit
 
 SOURCE_DIR="$(dirname $(readlink -f $0))" # From: https://gist.github.com/tvlooy/cbfbdb111a4ebad8b93e
+CONSTANTS_SCRIPT="$SOURCE_DIR/constants.sh"
 
-DB_NAME="$SOURCE_DIR/DNA_mod_database.db"
-
-q_result=$(sqlite3 $DB_NAME <<EOF
+q_result=$(sqlite3 $("$CONSTANTS_SCRIPT" 'database') <<EOF
 
 SELECT names.nameid, names.chebiname, base.commonname
 FROM modbase

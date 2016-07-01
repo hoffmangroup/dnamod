@@ -19,11 +19,16 @@ from itertools import izip
 import os
 import pybel
 import sqlite3
+import sys
 import unicodecsv as csv
 
 # Using Jinja2 as templating engine
 from jinja2 import Environment
 from jinja2 import FileSystemLoader
+
+# permit import from parent directory
+sys.path.append(os.path.join(sys.path[0], '..'))
+import dnamod_utils
 
 # Program Constants
 ENCODING = 'utf8'
@@ -35,26 +40,32 @@ UNVERIFIED_BASES = ('UnverifiedAdenine', 'UnverifiedThymine',
 BASE_DICT = {'adenine': 'CHEBI:16708', 'thymine': 'CHEBI:17821',
              'cytosine': 'CHEBI:16040', 'guanine': 'CHEBI:16235',
              'uracil': 'CHEBI:17568'}
-FILE_PATH = os.path.dirname(os.path.abspath(__file__))
-FILE_PATH_UP = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 CITATION_ORDERED_KEYS_ENCODED = ['pmid', 'title', 'date', 'author']
 SEQUENCING_ORDERED_KEYS = ['chebiid', 'pmid', 'author', 'date',
                            'seqtech', 'res', 'enrich']
 EXPANDED_ALPHABET_ORDERED_KEYS = ['abbreviation', 'name', 'symbol',
                                   'complement', 'complement symbol']
 
-ALPHABET_FILE = 'expanded_alphabet.txt'
+ALPHABET_FILE = dnamod_utils.get_constant('annot_exp_alph')
+
+HTML_FILES_DIR = dnamod_utils.get_constant('site_html_dir')
+TEMPLATE_DIR = dnamod_utils.get_constant('site_template_dir')
 
 
 def render_image(smiles, name):
-    pwd = FILE_PATH + '/static/images'
-    if not os.path.exists(pwd):
-        os.makedirs(pwd)
+    FILE_TYPE = 'svg'
+
+    img_dir = dnamod_utils.get_constant('site_image_dir')
+
+    if not os.path.exists(img_dir):
+        os.makedirs(img_dir)
     if not smiles:
         return
-    path = pwd + '/' + name + '.svg'
+
+    svg_path = os.path.join(img_dir, "{}.{}".format(name, FILE_TYPE))
+
     mol = pybel.readstring('smi', smiles)
-    mol.write('svg', path, overwrite=True)
+    mol.write(FILE_TYPE, svg_path, overwrite=True)
 
 
 def get_citations(lookup_key, cursor):
@@ -131,12 +142,12 @@ def get_sequencing(id, cursor, seq_headers):
 
 def create_html_pages():
     # Load in SQLite database
-    conn = sqlite3.connect(FILE_PATH_UP + '/DNA_mod_database.db')
+    conn = sqlite3.connect(dnamod_utils.get_constant('database'))
     c = conn.cursor()
 
     # Create a Jinja 2 environment object and load in templates
     env = Environment()
-    env.loader = FileSystemLoader(FILE_PATH + '/Templates')
+    env.loader = FileSystemLoader(TEMPLATE_DIR)
 
     page_template = env.get_template('modification.html')
 
@@ -161,11 +172,10 @@ def create_html_pages():
                 AS MB_B NATURAL JOIN base''')
     conn.commit()
 
-    for BASE in BASES:
-        pwd = FILE_PATH + '/static/'
-        if not os.path.exists(pwd):
-            os.makedirs(pwd)
+    if not os.path.exists(HTML_FILES_DIR):
+        os.makedirs(HTML_FILES_DIR)
 
+    for BASE in BASES:
         links = []
         blacklist = []
 
@@ -224,7 +234,7 @@ def create_html_pages():
             avgmass = avgmass[1:-1]
 
             # Write html page
-            writefile = pwd + chebiname + '.html'
+            writefile = HTML_FILES_DIR + chebiname + '.html'
             f = codecs.open(writefile, 'w+', encoding=ENCODING)
 
             for key in CITATION_ORDERED_KEYS_ENCODED:  # decode encoded values
@@ -288,11 +298,12 @@ def create_homepage(homepageLinks):
     del(verifiedBases['Uracil'])
 
     env = Environment()
-    env.loader = FileSystemLoader(FILE_PATH + '/Templates')
+    env.loader = FileSystemLoader(TEMPLATE_DIR)
 
     home_template = env.get_template('homepage.html')
 
-    writefile = FILE_PATH + '/static/index.html'
+    writefile = os.path.join(HTML_FILES_DIR, 'index.html')
+
     f = codecs.open(writefile, 'w+', encoding=ENCODING)
 
     render = home_template.render(bases=VERIFIED_BASES,
