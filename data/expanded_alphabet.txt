@@ -1,4 +1,4 @@
-#CHEBI  Abbreviation	Name	Symbol	Complement	Symbol
+CHEBI	Abbreviation	Name	Symbol	Complement	Complement Symbol
 CHEBI:27551	5mC	5-Methylcytosine	m	Guanine:5-Methylcytosine	1
 CHEBI:76792	5hmC	5-Hydroxymethylcytosine	h	Guanine:5-Hydroxymethylcytosine	2
 CHEBI:76794	5fC	5-Formylcytosine	f	Guanine:5-Formylcytosine	3

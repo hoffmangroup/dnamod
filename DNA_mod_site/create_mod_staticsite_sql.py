@@ -20,7 +20,6 @@ import os
 import pybel
 import sqlite3
 import sys
-import unicodecsv as csv
 
 # Using Jinja2 as templating engine
 from jinja2 import Environment
@@ -43,10 +42,6 @@ BASE_DICT = {'adenine': 'CHEBI:16708', 'thymine': 'CHEBI:17821',
 CITATION_ORDERED_KEYS_ENCODED = ['pmid', 'title', 'date', 'author']
 SEQUENCING_ORDERED_KEYS = ['chebiid', 'pmid', 'author', 'date',
                            'seqtech', 'res', 'enrich']
-EXPANDED_ALPHABET_ORDERED_KEYS = ['abbreviation', 'name', 'symbol',
-                                  'complement', 'complement symbol']
-
-ALPHABET_FILE = dnamod_utils.get_constant('annot_exp_alph')
 
 HTML_FILES_DIR = dnamod_utils.get_constant('site_html_dir')
 TEMPLATE_DIR = dnamod_utils.get_constant('site_template_dir')
@@ -84,40 +79,39 @@ def get_citations(lookup_key, cursor):
     return citationList
 
 
-def get_expanded_alphabet(lookup_key, alpha_file):
-    exp_alph_dict = {}
-
-    with open(alpha_file, 'rb') as file:
-        reader = csv.reader((row for row in file if not row.startswith('#')),
-                            delimiter="\t")
-        for num, line in enumerate(reader):
-            if lookup_key == line[0]:
-                abbreviation = line[1]
-                alphaname = line[2]
-                alphasymbol = line[3]
-                alphacomp = line[4]
-                compsymbol = line[5]
-
-                result = [abbreviation, alphaname, alphasymbol,
-                          alphacomp, compsymbol]
-                exp_alph_dict.update(dict(izip(EXPANDED_ALPHABET_ORDERED_KEYS,
-                                               result)))
-    return exp_alph_dict
-
-
-# XXX TODO refactor
-def get_sequencing_headers(cursor):
+def get_table_headers(cursor, table_name):
     c = cursor.cursor()
-    c.execute("PRAGMA table_info(sequencing_citations)")
+    c.execute("PRAGMA table_info({}".format(table_name))
     header = [result[1] for result in c.fetchall()]
     return tuple(header)
+
+
+def get_expanded_alphabet(id, cursor, exp_alph_headers):
+    c = cursor.cursor()
+
+    exp_alph_dict = {}
+
+    exp_alph_headers = get_table_headers(cursor, 'expanded_alphabet')
+
+    # seq_headers contains the header for this table
+    # overall orders first by date, but still grouped by method
+    c.execute('''SELECT DISTINCT seq_c.nameid,
+                 [{2}], [{3}], [{4}], [{5}]
+                 FROM expanded_alphabet AS e_alph
+                 WHERE nameid = ?
+                 '''.format(*exp_alph_headers),
+              (id,))
+    results = c.fetchall()
+
+    for result in results:
+        exp_alph_dict.update(dict(izip(exp_alph_headers, result)))
+
+    return exp_alph_dict
 
 
 def get_sequencing(id, cursor, seq_headers):
     c = cursor.cursor()
     sequenceList = []
-
-    # TODO consider input from string interpolation here...
 
     # seq_headers contains the header for this table
     # overall orders first by date, but still grouped by method
@@ -152,7 +146,7 @@ def create_html_pages():
     page_template = env.get_template('modification.html')
 
     # XXX TODO refactor
-    sequencing_headers = get_sequencing_headers(conn)
+    sequencing_headers = get_table_headers(conn, 'sequencing_citations')
     _, reference_title, mappingmethod_title, resolution_title, enrichment_title = \
         sequencing_headers
 
@@ -244,7 +238,7 @@ def create_html_pages():
             sequences = get_sequencing(citation_lookup, conn,
                                        sequencing_headers)
 
-            expandedalpha = get_expanded_alphabet(chebiid, ALPHABET_FILE)
+            expandedalpha = get_expanded_alphabet(chebiid, conn)
 
             render = page_template.render(ChebiName=chebiname,
                                           Definition=definition,

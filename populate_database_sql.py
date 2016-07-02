@@ -16,6 +16,7 @@ Function:
 4. Using above results, populates DNA post-transciptional modification table
 '''
 
+from contextlib import contextmanager
 import datetime
 import pprint
 import sqlite3
@@ -30,6 +31,9 @@ import dnamod_utils
 # XXX register this with NCBI
 Entrez.email = "jai.sood@hotmail.com"  # XXX come up with an alternative for this... (perhaps a DNAmod address)
 Entrez.tool = "DNAmod"
+
+EXP_ALPH_TABLE_NAME = 'expanded_alphabet'
+SEQ_TABLE_NAME = 'sequencing_citations'
 
 # Search Variables made up of CHEBI object attributes
 SYNONYM_SEARCH_STR = 'Synonyms'
@@ -53,7 +57,7 @@ WHITE_LIST = []
 DNA_BASES = ['cytosine', 'thymine', 'adenine', 'guanine', 'uracil']
 
 DATABASE_FILE_FULLPATH = dnamod_utils.get_constant('database')
-
+ALPHABET_FILE_FULLPATH = dnamod_utils.get_constant('annot_exp_alph')
 REF_ANNOTS_FULLPATH = dnamod_utils.get_constant('annot_seq')
 
 url = 'http://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
@@ -462,10 +466,72 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
             conn.commit()
 
 
+@contextmanager
+def _read_csv_ignore_comments(file_name):
+    try:
+        with open(file_name, 'rb') as file:
+            # use a generator expression to ignore comments
+            reader = csv.reader((row for row in file if not row.startswith('#')),
+                                delimiter="\t")
+            yield reader
+    finally:
+        pass
+
+def _create_modbase_annot_table(conn, sql_conn_cursor, header, table_name):
+    col_names_create_spec = ''
+    for num, col in enumerate(header):
+        col_names_create_spec += '[{}] text'.format(col)
+        if (num < len(header)):
+            col_names_create_spec += ','
+
+    # TODO fix below to perform stringent validation
+    # (see: http://stackoverflow.com/questions/25387537/sqlite3-operationalerror-near-syntax-error)
+    # maybe ignore, since never "user" sourced (since this is static)
+    sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS {}
+                            (nameid text,
+                             {}
+                             FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE)
+                             '''.format(table_name, col_names_create_spec))
+    conn.commit()
+
+
+def _add_annots_for_id(id, sql_conn_cursor, line, last_col_num, table_name):
+    # add ID prefix, if missing
+    if not id.startswith(ChEBI_ID_PREFIX):
+        id = ChEBI_ID_PREFIX + id
+    
+    # allow for one column per column in the header, plus the ID column
+    col_names_wildcards = '?,' * (1 + len(line[:last_col_num]))
+    col_names_wildcards = col_names_wildcards[:-1]  # remove final comma
+
+    sql_conn_cursor.execute("INSERT OR IGNORE INTO {} VALUES({})"
+                            "".format(table_name, col_names_wildcards),
+                            tuple([id] + line[:last_col_num]))
+
+
+def create_exp_alph_table(conn, sql_conn_cursor, exp_alph_file_name):
+    print("---------- Adding Expanded Alphabet ----------")
+
+    with _read_csv_ignore_comments(exp_alph_file_name) as reader:
+        for num, line in enumerate(reader):
+            assert len(line) > 2  # min. of three columns
+
+            if num == 0:  # header
+                line.pop(0)  # remove the first column, since it is our foreign key and not displayed
+                _create_modbase_annot_table(conn, sql_conn_cursor, line, EXP_ALPH_TABLE_NAME)
+            else:
+                ids = line[0].split(",")
+                line.pop(0)  # remove the ID, since it is processed above
+                for id in ids:
+                    _add_annots_for_id(id, sql_conn_cursor,
+                                       line, len(line), EXP_ALPH_TABLE_NAME)
+    conn.commit()
+
+
 def create_custom_citations(conn, sql_conn_cursor, ref_annots_file_name):
     print("---------- Adding Custom Annotations ----------")
     
-    with open(ref_annots_file_name, 'rb') as file:
+    with _read_csv_ignore_comments(ref_annots_file_name) as file:
         # use a generator expression to ignore comments
         reader = csv.reader((row for row in file if not row.startswith('#')),
                             delimiter="\t")
@@ -477,18 +543,7 @@ def create_custom_citations(conn, sql_conn_cursor, ref_annots_file_name):
 
             if num == 0:  # header
                 line.pop(0)  # remove the first column, since it is our foreign key and not displayed
-                # TODO fix below to perform stringent validation
-                # (see: http://stackoverflow.com/questions/25387537/sqlite3-operationalerror-near-syntax-error)
-                # maybe ignore, since never "user" sourced (since this is static)
-                sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS sequencing_citations
-                                        (nameid text,
-                                         [{}] text,
-                                         [{}] text,
-                                         [{}] text,
-                                         [{}] text,
-                                         FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE)
-                                         '''.format(*line))
-                conn.commit()
+                _create_modbase_annot_table(conn, sql_conn_cursor, line, SEQ_TABLE_NAME)
             else:
                 references = line[1].split(",")
 
@@ -504,28 +559,22 @@ def create_custom_citations(conn, sql_conn_cursor, ref_annots_file_name):
                     sql_conn_cursor.execute("INSERT OR IGNORE INTO citations VALUES(?,?,?,?)",
                                            (reference, citationinfo_uni[0], citationinfo_uni[1],
                                              citationinfo_uni[2]))
-                
+
                 ids = line[0].split(",")
                 for id in ids:
-                    # add ID prefix, if missing
-                    if not id.startswith(ChEBI_ID_PREFIX):
-                        id = ChEBI_ID_PREFIX + id
-                
-                    print("Adding " + line[2] + " citation for " + id)
-                    sql_conn_cursor.execute("INSERT OR IGNORE INTO sequencing_citations VALUES(?,?,?,?,?)",
-                                           (id, line[1], line[2],
-                                             line[3], line[4]))
-                                             
+                    _add_annots_for_id(id, sql_conn_cursor, line, 4, SEQ_TABLE_NAME)
+ 
                     for reference in references:
                         sql_conn_cursor.execute("INSERT OR IGNORE INTO citation_lookup VALUES(?,?)",
                                                (id, reference))
                         
-    conn.commit()
+        conn.commit()
 
 
 def populate_tables(conn, sql_conn_cursor, bases, children, client):
     create_base_table(conn, sql_conn_cursor, bases)
     create_other_tables(conn, sql_conn_cursor, children, bases)
+    create_exp_alph_table(conn, sql_conn_cursor, ALPHABET_FILE_FULLPATH)
     create_custom_citations(conn, sql_conn_cursor, REF_ANNOTS_FULLPATH)
 
 
