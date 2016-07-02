@@ -32,8 +32,11 @@ import dnamod_utils
 Entrez.email = "jai.sood@hotmail.com"  # XXX come up with an alternative for this... (perhaps a DNAmod address)
 Entrez.tool = "DNAmod"
 
+# TODO externalize these to dnamod_utils from constants.sh and refactor Python code to use from there
+
 EXP_ALPH_TABLE_NAME = 'expanded_alphabet'
 SEQ_TABLE_NAME = 'sequencing_citations'
+NATURE_TABLE_NAME = 'nucleobase_nature_info'
 
 # Search Variables made up of CHEBI object attributes
 SYNONYM_SEARCH_STR = 'Synonyms'
@@ -49,8 +52,6 @@ RESET_TABLES = False
 
 ChEBI_ID_PREFIX = "CHEBI:"
 
-NO_ENRICHMENT_STRING = "None"
-
 BLACK_LIST = []
 WHITE_LIST = []
 
@@ -58,7 +59,8 @@ DNA_BASES = ['cytosine', 'thymine', 'adenine', 'guanine', 'uracil']
 
 DATABASE_FILE_FULLPATH = dnamod_utils.get_constant('database')
 ALPHABET_FILE_FULLPATH = dnamod_utils.get_constant('annot_exp_alph')
-REF_ANNOTS_FULLPATH = dnamod_utils.get_constant('annot_seq')
+SEQ_REF_ANNOTS_FULLPATH = dnamod_utils.get_constant('annot_seq')
+NATURE_REF_ANNOTS_FULLPATH = dnamod_utils.get_constant('annot_nature')
 
 url = 'http://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
 client = Client(url)
@@ -528,23 +530,22 @@ def create_exp_alph_table(conn, sql_conn_cursor, exp_alph_file_name):
     conn.commit()
 
 
-def create_custom_citations(conn, sql_conn_cursor, ref_annots_file_name):
+def create_annot_citation_tables(conn, sql_conn_cursor, ref_annots_file_name, table_name):
     print("---------- Adding Custom Annotations ----------")
-    
+
     with _read_csv_ignore_comments(ref_annots_file_name) as reader:
         for num, line in enumerate(reader):
-            assert len(line) > 3  # min. of four columns
-            
-            if len(line) < 5:  # no enrichment
-                line.append(NO_ENRICHMENT_STRING)
-
             if num == 0:  # header
                 line.pop(0)  # remove the first column, since it is our foreign key and not displayed
-                _create_modbase_annot_table(conn, sql_conn_cursor, line, SEQ_TABLE_NAME)
+                _create_modbase_annot_table(conn, sql_conn_cursor, line, table_name)
             else:
-                references = line[1].split(",")
+                # TODO refactor to check or at least output a descriptive error if PMID is not last col
+                references = line[-1].split(",")
 
                 for reference in references:
+                    if not reference:
+                        continue
+
                     citationinfo = get_full_citation(reference)
                     citationinfo_uni = [info.decode('utf-8') for info in citationinfo]
 
@@ -558,8 +559,9 @@ def create_custom_citations(conn, sql_conn_cursor, ref_annots_file_name):
                                              citationinfo_uni[2]))
 
                 ids = line[0].split(",")
+                line.pop(0)  # remove the ID, since it is processed above
                 for id in ids:
-                    _add_annots_for_id(id, sql_conn_cursor, line, 4, SEQ_TABLE_NAME)
+                    _add_annots_for_id(id, sql_conn_cursor, line, len(line), table_name)
  
                     for reference in references:
                         sql_conn_cursor.execute("INSERT OR IGNORE INTO citation_lookup VALUES(?,?)",
@@ -572,7 +574,10 @@ def populate_tables(conn, sql_conn_cursor, bases, children, client):
     create_base_table(conn, sql_conn_cursor, bases)
     create_other_tables(conn, sql_conn_cursor, children, bases)
     create_exp_alph_table(conn, sql_conn_cursor, ALPHABET_FILE_FULLPATH)
-    create_custom_citations(conn, sql_conn_cursor, REF_ANNOTS_FULLPATH)
+    create_annot_citation_tables(conn, sql_conn_cursor,
+                            SEQ_REF_ANNOTS_FULLPATH, SEQ_TABLE_NAME)
+    create_annot_citation_tables(conn, sql_conn_cursor,
+                            NATURE_REF_ANNOTS_FULLPATH, NATURE_TABLE_NAME)
 
 
 def check_for_duplicates(sql_conn_cursor):

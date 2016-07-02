@@ -1,41 +1,41 @@
-ChEBI	Reference	Mapping method	Method detail	Resolution	Enrichment
+ChEBI	Mapping method	Method detail	Resolution	Enrichment	Reference
 # ------------------------------------------------
 # 5mC
-27551	16809668	HELP assay	restriction endonuclease	low	microarray probes
-27551	19273619	Methyl-Seq	restriction endonuclease	low
-27551	18950712	MeDIP-Seq	affinity-based	low
-27551	19906696	MBD-Seq	affinity-based	low
-27551	23443545	TAmC-Seq	chemical tagging	high
-27551	265521,23301810,24209366,20813757	Maxam–Gilbert sequencing		single-base
-27551	1542678	BS-Seq		single-base
-27551	19829295	BS-Seq	chemical conversion	single-base
-27551	19442738	RRBS	chemical conversion	single-base	methylation-insensitive restriction digestion
-27551	25943404	SMRT-BS		chemical conversion	single-base	target sequences
+27551	HELP assay	restriction endonuclease	low	microarray probes	16809668
+27551	Methyl-Seq	restriction endonuclease	low		19273619
+27551	MeDIP-Seq	affinity-based	low		18950712
+27551	MBD-Seq	affinity-based	low		19906696
+27551	TAmC-Seq	chemical tagging	high		23443545
+27551	Maxam–Gilbert sequencing		single-base 		265521,23301810,24209366,20813757
+27551	BS-Seq		single-base		1542678
+27551	BS-Seq	chemical conversion	single-base		19829295
+27551	RRBS	chemical conversion	single-base	methylation-insensitive restriction digestion	19442738
+27551	SMRT-BS	chemical conversion	single-base	target sequences	25943404
 # ------------------------------------------------
 # 5fC
-76794	24755596	redBS-Seq	chemical conversion	single-base
-76794	23602153	fCAB-seq	chemical conversion	single-base
-76794	26344045	fC-CET		chemical conversion	single-base
-76794	27172168	MAB-seq		chemical conversion	single-base
+76794	redBS-Seq	chemical conversion	single-base		24755596
+76794	fCAB-seq	chemical conversion	single-base		23602153
+76794	fC-CET	chemical conversion	single-base		26344045
+76794	MAB-seq	chemical conversion	single-base		27172168
 # ------------------------------------------------
 # 5caC
-76793	23758547	CAB-Seq		chemical conversion	single-base
-76793	27172168	caMAB-seq	chemical conversion	single-base
+76793	CAB-Seq	chemical conversion	single-base		23758547
+76793	caMAB-seq	chemical conversion	single-base		27172168
 # ------------------------------------------------
 # 5mC, 5hmC, 6mA
-27551,76792,28871	20453866	SMRT	direct detection	single-base	target sequences
+27551,76792,28871	SMRT	direct detection	single-base	target sequences	20453866
 # ------------------------------------------------
 # 6mA - also applies to: 4mA
-28871	23034806	SMRT	direct detection	single-base	target sequences
+28871	SMRT	direct detection	single-base	target sequences	23034806
 # ------------------------------------------------
 # 8oxoG, 1mA, 5hmU - also applies to: 8oxoA, O4-MedT, 5hC, 5hU
-16964,44605,18083,20689	22185597	SMRT	direct detection	single-base	target sequences
+16964,44605,18083,20689	SMRT	direct detection	single-base	target sequences	22185597
 # ------------------------------------------------
 # 5hmU, 5fU
-16964,80961	25946119	Hardisty-labelling	chemical tagging	single-base	target sequences
+16964,80961	Hardisty-labelling	chemical tagging	single-base	target sequences	25946119
 # ------------------------------------------------
 # 5hmU
-16964	25462560	Yu-labelling	chemical tagging	single-base	5hmU:G mismatch only
+16964	Yu-labelling	chemical tagging	single-base	5hmU:G mismatch only	25462560
 # ------------------------------------------------
 # base J
-111513	25662217	SMRT	direct detection	single-base	target sequences
+111513	SMRT	direct detection	single-base	target sequences	25662217
