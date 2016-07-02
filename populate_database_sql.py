@@ -531,10 +531,7 @@ def create_exp_alph_table(conn, sql_conn_cursor, exp_alph_file_name):
 def create_custom_citations(conn, sql_conn_cursor, ref_annots_file_name):
     print("---------- Adding Custom Annotations ----------")
     
-    with _read_csv_ignore_comments(ref_annots_file_name) as file:
-        # use a generator expression to ignore comments
-        reader = csv.reader((row for row in file if not row.startswith('#')),
-                            delimiter="\t")
+    with _read_csv_ignore_comments(ref_annots_file_name) as reader:
         for num, line in enumerate(reader):
             assert len(line) > 3  # min. of four columns
             
