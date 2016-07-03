@@ -250,7 +250,7 @@ def get_full_citation(PMID):
         if 'MedlineCitation' in record.keys():
             isarticle = True
             article = record['MedlineCitation']['Article']
-            #print(article)
+
             if'ArticleTitle' in article.keys():
                 articleTitle = article['ArticleTitle']
             else:
@@ -264,9 +264,10 @@ def get_full_citation(PMID):
             elif'ArticleDate' in article.keys():
                 publicationDate = article['ArticleDate']
         else:
+            # XXX TODO refactor
             # isbook = True # Unused at the moment
             article = record['BookDocument']['Book']
-            #print(article)
+
             if'BookTitle' in article.keys():
                 articleTitle = article['BookTitle']
             else:
@@ -284,8 +285,6 @@ def get_full_citation(PMID):
     
     # XXX TODO refactor not found instances
 
-    print(publicationDate)
-    
     if articleTitle:
         result.append(articleTitle.encode('utf-8'))
     else:
@@ -575,9 +574,9 @@ def populate_tables(conn, sql_conn_cursor, bases, children, client):
     create_other_tables(conn, sql_conn_cursor, children, bases)
     create_exp_alph_table(conn, sql_conn_cursor, ALPHABET_FILE_FULLPATH)
     create_annot_citation_tables(conn, sql_conn_cursor,
-                            SEQ_REF_ANNOTS_FULLPATH, SEQ_TABLE_NAME)
+                                 SEQ_REF_ANNOTS_FULLPATH, SEQ_TABLE_NAME)
     create_annot_citation_tables(conn, sql_conn_cursor,
-                            NATURE_REF_ANNOTS_FULLPATH, NATURE_TABLE_NAME)
+                                 NATURE_REF_ANNOTS_FULLPATH, NATURE_TABLE_NAME)
 
 
 def check_for_duplicates(sql_conn_cursor):
@@ -586,9 +585,9 @@ def check_for_duplicates(sql_conn_cursor):
         for name in synonyms:
             sql_conn_cursor.execute('''SELECT nameid FROM names WHERE chebiname = ?''', name)
             matchname = sql_conn_cursor.fetchone()
-            #print(name, matchname)
+
             if name == matchname:
-                print("Match!")
+                print("Match!")  # XXX TODO improve message
 
 
 WHITE_LIST = dnamod_utils.get_whitelist()
