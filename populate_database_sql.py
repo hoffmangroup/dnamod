@@ -496,18 +496,28 @@ def _create_modbase_annot_table(conn, sql_conn_cursor, header, table_name):
     conn.commit()
 
 
+# Returns the id actually used, since it may be modified (i.e. prefix added)
+# The id returned may be None, if it did not exist in the database
 def _add_annots_for_id(id, sql_conn_cursor, line, last_col_num, table_name):
     # add ID prefix, if missing
     if not id.startswith(ChEBI_ID_PREFIX):
         id = ChEBI_ID_PREFIX + id
-    
-    # allow for one column per column in the header, plus the ID column
-    col_names_wildcards = '?,' * (1 + len(line[:last_col_num]))
-    col_names_wildcards = col_names_wildcards[:-1]  # remove final comma
 
-    sql_conn_cursor.execute("INSERT OR IGNORE INTO {} VALUES({})"
-                            "".format(table_name, col_names_wildcards),
-                            tuple([id] + line[:last_col_num]))
+    if (sql_conn_cursor.execute("SELECT * FROM modbase WHERE nameid=?",
+                                (id,)).fetchone()):
+        # allow for one column per column in the header, plus the ID column
+        col_names_wildcards = '?,' * (1 + len(line[:last_col_num]))
+        col_names_wildcards = col_names_wildcards[:-1]  # remove final comma
+
+        sql_conn_cursor.execute("INSERT OR IGNORE INTO {} VALUES({})"
+                                "".format(table_name, col_names_wildcards),
+                                tuple([id] + line[:last_col_num]))
+
+        return id  # id exists and is now valid
+    else:
+        print("WARNING: an annotation for {} was skipped, "
+              "since it is not in the database.".format(id), file=sys.stderr)
+        return None  # indicate that id does not exist
 
 
 def create_exp_alph_table(conn, sql_conn_cursor, exp_alph_file_name):
@@ -524,8 +534,8 @@ def create_exp_alph_table(conn, sql_conn_cursor, exp_alph_file_name):
                 ids = line[0].split(",")
                 line.pop(0)  # remove the ID, since it is processed above
                 for id in ids:
-                    _add_annots_for_id(id, sql_conn_cursor,
-                                       line, len(line), EXP_ALPH_TABLE_NAME)
+                    id = _add_annots_for_id(id, sql_conn_cursor,
+                                            line, len(line), EXP_ALPH_TABLE_NAME)
     conn.commit()
 
 
@@ -560,11 +570,15 @@ def create_annot_citation_tables(conn, sql_conn_cursor, ref_annots_file_name, ta
                 ids = line[0].split(",")
                 line.pop(0)  # remove the ID, since it is processed above
                 for id in ids:
-                    _add_annots_for_id(id, sql_conn_cursor, line, len(line), table_name)
+                    id = _add_annots_for_id(id, sql_conn_cursor, line, len(line), table_name)
  
-                    for reference in references:
-                        sql_conn_cursor.execute("INSERT OR IGNORE INTO citation_lookup VALUES(?,?)",
-                                               (id, reference))
+                    if id:  # id may now be None, if it is not (yet) in the database
+                        for reference in references:
+                            if not reference:  # some annotations may lack a reference
+                                continue
+
+                            sql_conn_cursor.execute("INSERT OR IGNORE INTO citation_lookup VALUES(?,?)",
+                                                   (id, reference))
                         
         conn.commit()
 
@@ -587,7 +601,7 @@ def check_for_duplicates(sql_conn_cursor):
             matchname = sql_conn_cursor.fetchone()
 
             if name == matchname:
-                print("Match!")  # XXX TODO improve message
+                print("Match!")  # TODO improve message
 
 
 WHITE_LIST = dnamod_utils.get_whitelist()
