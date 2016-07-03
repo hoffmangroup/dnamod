@@ -81,12 +81,12 @@ def get_citations(lookup_key, cursor):
 
 def get_table_headers(cursor, table_name):
     c = cursor.cursor()
-    c.execute("PRAGMA table_info({}".format(table_name))
+    c.execute("PRAGMA table_info({})".format(table_name))
     header = [result[1] for result in c.fetchall()]
     return tuple(header)
 
 
-def get_expanded_alphabet(id, cursor, exp_alph_headers):
+def get_expanded_alphabet(id, cursor):
     c = cursor.cursor()
 
     exp_alph_dict = {}
@@ -95,9 +95,9 @@ def get_expanded_alphabet(id, cursor, exp_alph_headers):
 
     # seq_headers contains the header for this table
     # overall orders first by date, but still grouped by method
-    c.execute('''SELECT DISTINCT seq_c.nameid,
+    c.execute('''SELECT DISTINCT nameid,
                  [{2}], [{3}], [{4}], [{5}]
-                 FROM expanded_alphabet AS e_alph
+                 FROM expanded_alphabet
                  WHERE nameid = ?
                  '''.format(*exp_alph_headers),
               (id,))
@@ -145,10 +145,7 @@ def create_html_pages():
 
     page_template = env.get_template('modification.html')
 
-    # XXX TODO refactor
     sequencing_headers = get_table_headers(conn, 'sequencing_citations')
-    _, reference_title, mappingmethod_title, resolution_title, enrichment_title = \
-        sequencing_headers
 
     # Dictionary to store links for hompage
     homepageLinks = {}
@@ -196,8 +193,6 @@ def create_html_pages():
             # roles_lookup = mod[7] # unused as roles are not on site
 
             citations = get_citations(citation_lookup, conn)
-            # print citations
-            # citations = []
 
             roles = []
             roles_ids = []
@@ -254,11 +249,8 @@ def create_html_pages():
                                           ParentLink=BASE_DICT[commonname],
                                           Roles=roles,
                                           RolesChebi=roles_ids,
+                                          SequencingHeader=sequencing_headers,
                                           Sequences=sequences,
-                                          ReferenceTitle=reference_title,
-                                          MappingTitle=mappingmethod_title,
-                                          ResolutionTitle=resolution_title,
-                                          EnrichmentTitle=enrichment_title,
                                           # pass ExpandedAlpha=None to disable
                                           ExpandedAlpha=expandedalpha)
             f.write(render)

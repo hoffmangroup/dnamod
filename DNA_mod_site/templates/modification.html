@@ -119,10 +119,9 @@
                 <h2 id="Inline"> Mapping Techniques: </h2>
                 <table id="Sequences" cellpadding="5">
                     <tr>
-                        <th> {{ ReferenceTitle }} </th>
-                        <th> {{ MappingTitle }} </th>
-                        <th> {{ ResolutionTitle }} </th>
-                        <th> {{ EnrichmentTitle }} </th>
+                        {% for HeaderElement in SequencingHeader %}
+                            <th> {{ HeaderElement }} </th>
+                        {% endfor %}
                     </tr>
                     {% for Sequence in Sequences %}
                         <tr>
