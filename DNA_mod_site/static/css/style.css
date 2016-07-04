@@ -67,13 +67,17 @@ body {
     margin: 0 auto;
 }
 
-.ExpandedAlpha .table th {
+.ExpandedAlpha table th {
     text-align: left;
 }
 
-.ExpandedAlpha .table tr td.nucleobase {
+table tr td.nucleobase {
     /* Adapted from: http://crafted-software.blogspot.ca/2010/07/css-for-tag-list-of-best-monospaced.html */
     font-family: 'DejaVu LGC Sans Mono', 'DejaVu Sans Mono', Consolas, 'Everson Mono', 'Lucida Console', 'Andale Mono', 'Nimbus Mono L', 'Liberation Mono', FreeMono, 'Osaka Monospaced', Courier, 'New Courier', monospace;
+}
+
+table tr td.species {
+    font-style:italic;
 }
 
 .BasicInfo {

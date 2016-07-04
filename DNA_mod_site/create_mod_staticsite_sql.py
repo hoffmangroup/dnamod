@@ -15,6 +15,7 @@ Function:
 4. Creates a home page with links to html modification pages
 '''
 import codecs
+from collections import OrderedDict
 from itertools import izip
 import os
 import pybel
@@ -39,12 +40,15 @@ UNVERIFIED_BASES = ('UnverifiedAdenine', 'UnverifiedThymine',
 BASE_DICT = {'adenine': 'CHEBI:16708', 'thymine': 'CHEBI:17821',
              'cytosine': 'CHEBI:16040', 'guanine': 'CHEBI:16235',
              'uracil': 'CHEBI:17568'}
-CITATION_ORDERED_KEYS_ENCODED = ['pmid', 'title', 'date', 'author']
-SEQUENCING_ORDERED_KEYS = ['chebiid', 'pmid', 'author', 'date',
-                           'seqtech', 'res', 'enrich']
+REF_COL_NAMES = ['citationid', 'title', 'pubdate', 'authors']
 
 HTML_FILES_DIR = dnamod_utils.get_constant('site_html_dir')
 TEMPLATE_DIR = dnamod_utils.get_constant('site_template_dir')
+
+# TODO move to constants.sh ...
+SEQ_ANNOT_TABLE = 'sequencing_citations'
+NATURE_ANNOT_TABLE = 'nucleobase_nature_info'
+REFERENCES_TABLE = 'citations'
 
 
 def render_image(smiles, name):
@@ -74,7 +78,7 @@ def get_citations(lookup_key, cursor):
                   (citationid,))
         query = c.fetchone()
 
-        citationList.append(dict(izip(CITATION_ORDERED_KEYS_ENCODED,
+        citationList.append(dict(izip(REF_COL_NAMES,
                             [item.encode(ENCODING) for item in query])))
     return citationList
 
@@ -83,7 +87,7 @@ def get_table_headers(cursor, table_name):
     c = cursor.cursor()
     c.execute("PRAGMA table_info({})".format(table_name))
     header = [result[1] for result in c.fetchall()]
-    return tuple(header)
+    return list(header)
 
 
 def get_expanded_alphabet(id, cursor):
@@ -93,10 +97,11 @@ def get_expanded_alphabet(id, cursor):
 
     exp_alph_headers = get_table_headers(cursor, 'expanded_alphabet')
 
+    # TODO refactor to dynamically select columns from header length
     # seq_headers contains the header for this table
     # overall orders first by date, but still grouped by method
     c.execute('''SELECT DISTINCT nameid,
-                 [{2}], [{3}], [{4}], [{5}]
+                 [{1}], [{2}], [{3}], [{4}], [{5}]
                  FROM expanded_alphabet
                  WHERE nameid = ?
                  '''.format(*exp_alph_headers),
@@ -109,29 +114,65 @@ def get_expanded_alphabet(id, cursor):
     return exp_alph_dict
 
 
-def get_sequencing(id, cursor, seq_headers):
-    c = cursor.cursor()
-    sequenceList = []
+def get_mod_base_ref_annot_data(id, cursor, table):
+    """Get data for mod. base annotations with references.
 
-    # seq_headers contains the header for this table
-    # overall orders first by date, but still grouped by method
-    c.execute('''SELECT DISTINCT seq_c.nameid, ref.citationid,
-                     ref.authors, ref.pubdate,
-                     seq_c.[{2}], seq_c.[{3}], seq_c.[{4}]
-                 FROM sequencing_citations AS seq_c
-                 JOIN citations AS ref ON seq_c.[{1}]
+    Keyword arguments:
+    id -- the entries ChEBI ID
+    cursor -- the SQLite cursor
+    table -- the table containing the annotations
+
+    Returns:
+    A dictionary containing the headers as keys and
+    a list of each data row per header as values.
+    """
+
+    c = cursor.cursor()
+
+    annot_dict_list = []
+
+    table_header = get_table_headers(cursor, table)
+
+    # use all columns except first (id) and last (ref.)
+    table_header.pop(0)
+    reference_col_name = table_header.pop(-1)
+
+    sel_cols_str = ''
+    for num, col in enumerate(table_header, 1):
+        sel_cols_str += "{}.[{}]".format(table, col)
+
+        if num < len(table_header):
+            sel_cols_str += ", "
+        else:
+            break
+
+    # overall orders first by reference's date,
+    # but still grouped by the second column of data
+    # XXX TODO fix ordering as above... check/close branch...
+    # TODO refactor citation format...
+    c.execute('''SELECT DISTINCT GROUP_CONCAT(ref.citationid, ';'),
+                     GROUP_CONCAT(ref.title, ';'),
+                     GROUP_CONCAT(ref.pubdate, ';'),
+                     GROUP_CONCAT(ref.authors, ';'),
+                     {2}
+                 FROM {0}
+                 JOIN {1} AS ref ON {0}.[{3}]
                     LIKE '%' || ref.citationid || '%'
                  WHERE nameid = ?
-                 ORDER BY COALESCE(seq_c.[{2}],
+                 GROUP BY {2}
+                 ORDER BY COALESCE({0}.[{4}],
                                    date(ref.pubdate),
                                    ref.authors, 1)
-                 '''.format(*seq_headers),
+                 '''.format(table, REFERENCES_TABLE, sel_cols_str,
+                            reference_col_name, table_header[0]),
               (id,))
+
     results = c.fetchall()
 
-    for row in results:
-        sequenceList.append(dict(izip(SEQUENCING_ORDERED_KEYS, row)))
-    return sequenceList
+    for result in results:
+        annot_dict_list += [OrderedDict(izip(REF_COL_NAMES +
+                                        table_header, result))]
+    return annot_dict_list
 
 
 def create_html_pages():
@@ -144,8 +185,6 @@ def create_html_pages():
     env.loader = FileSystemLoader(TEMPLATE_DIR)
 
     page_template = env.get_template('modification.html')
-
-    sequencing_headers = get_table_headers(conn, 'sequencing_citations')
 
     # Dictionary to store links for hompage
     homepageLinks = {}
@@ -226,12 +265,21 @@ def create_html_pages():
             writefile = os.path.join(HTML_FILES_DIR, chebiname + '.html')
             f = codecs.open(writefile, 'w+', encoding=ENCODING)
 
-            for key in CITATION_ORDERED_KEYS_ENCODED:  # decode encoded values
+            for key in REF_COL_NAMES:  # decode encoded values
                 for citation in citations:
                     citation[key] = citation[key].decode(ENCODING)
 
-            sequences = get_sequencing(citation_lookup, conn,
-                                       sequencing_headers)
+            seq_annot = get_mod_base_ref_annot_data(citation_lookup,
+                                                    conn, SEQ_ANNOT_TABLE)
+
+            nature_annot = get_mod_base_ref_annot_data(citation_lookup,
+                                                       conn,
+                                                       NATURE_ANNOT_TABLE)
+
+            # TODO revise second name
+            ref_annot_tab_names = ['Mapping Techniques', 'Nature']
+
+            ref_annots = [seq_annot, nature_annot]
 
             expandedalpha = get_expanded_alphabet(chebiid, conn)
 
@@ -249,8 +297,9 @@ def create_html_pages():
                                           ParentLink=BASE_DICT[commonname],
                                           Roles=roles,
                                           RolesChebi=roles_ids,
-                                          SequencingHeader=sequencing_headers,
-                                          Sequences=sequences,
+                                          RefAnnotTabNames=ref_annot_tab_names,
+                                          RefAnnots=ref_annots,
+                                          RefAnnotsRefColNames=REF_COL_NAMES,
                                           # pass ExpandedAlpha=None to disable
                                           ExpandedAlpha=expandedalpha)
             f.write(render)
