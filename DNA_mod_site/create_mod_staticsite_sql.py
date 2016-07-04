@@ -223,7 +223,7 @@ def create_html_pages():
             avgmass = avgmass[1:-1]
 
             # Write html page
-            writefile = HTML_FILES_DIR + chebiname + '.html'
+            writefile = os.path.join(HTML_FILES_DIR, chebiname + '.html')
             f = codecs.open(writefile, 'w+', encoding=ENCODING)
 
             for key in CITATION_ORDERED_KEYS_ENCODED:  # decode encoded values
