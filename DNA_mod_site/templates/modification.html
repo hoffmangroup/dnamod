@@ -130,15 +130,17 @@
                             {% for RefAnnotEntry in RefAnnot %}
                                 {% for _, Data in RefAnnotEntry.iteritems() if _ not in RefAnnotsRefColNames %}
                                     <td 
+                                        {% set ListDataToUse = Data.split(',') %}    
                                     {% if 'organism' in _.lower() or 'species' in _.lower() %}
                                         class="species"
+                                        {% set ListDataToUse = ListDataToUse | sort %}
                                     {% endif %}
                                     >
                                     {% if ',' in Data and 'and' not in Data %} <!-- -->
                                             <ul>
-                                                {% for Datum in Data.split(',') %}
+                                                {% for Datum in ListDataToUse %}
                                                     <li> {{ Datum }} </li>
-                                                    {% endfor %}
+                                                {% endfor %}
                                             </ul>
                                         {% else %}
                                             {{ Data }}
