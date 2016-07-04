@@ -151,7 +151,6 @@ def get_mod_base_ref_annot_data(id, cursor, table):
     # Overall orders first by reference's date,
     # both within groups and to determine group order,
     # but still grouped by the second column of data.
-    # TODO refactor citation format...
     c.execute('''SELECT DISTINCT
                      GROUP_CONCAT({5}.citationid, ';'),
                      GROUP_CONCAT({5}.title, ';'),
