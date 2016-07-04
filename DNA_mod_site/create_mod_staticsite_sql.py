@@ -137,34 +137,41 @@ def get_mod_base_ref_annot_data(id, cursor, table):
     table_header.pop(0)
     reference_col_name = table_header.pop(-1)
 
+    subquery_alias = 'modbase_refs_ord'
+
     sel_cols_str = ''
     for num, col in enumerate(table_header, 1):
-        sel_cols_str += "{}.[{}]".format(table, col)
+        sel_cols_str += "{}.[{}]".format(subquery_alias, col)
 
         if num < len(table_header):
             sel_cols_str += ", "
         else:
             break
 
-    # overall orders first by reference's date,
-    # but still grouped by the second column of data
-    # XXX TODO fix ordering as above... check/close branch...
+    # Overall orders first by reference's date,
+    # both within groups and to determine group order,
+    # but still grouped by the second column of data.
     # TODO refactor citation format...
-    c.execute('''SELECT DISTINCT GROUP_CONCAT(ref.citationid, ';'),
-                     GROUP_CONCAT(ref.title, ';'),
-                     GROUP_CONCAT(ref.pubdate, ';'),
-                     GROUP_CONCAT(ref.authors, ';'),
+    c.execute('''SELECT DISTINCT
+                     GROUP_CONCAT({5}.citationid, ';'),
+                     GROUP_CONCAT({5}.title, ';'),
+                     GROUP_CONCAT({5}.pubdate, ';'),
+                     GROUP_CONCAT({5}.authors, ';'),
                      {2}
-                 FROM {0}
-                 JOIN {1} AS ref ON {0}.[{3}]
-                    LIKE '%' || ref.citationid || '%'
-                 WHERE nameid = ?
+                 FROM (
+                        SELECT * FROM {0}
+                        JOIN {1} AS ref ON {0}.[{3}]
+                            LIKE '%' || ref.citationid || '%'
+                        WHERE nameid = ?
+                        ORDER BY COALESCE(date(ref.pubdate), 1)
+                 ) {5}
                  GROUP BY {2}
-                 ORDER BY COALESCE({0}.[{4}],
-                                   date(ref.pubdate),
-                                   ref.authors, 1)
+                 ORDER BY COALESCE({5}.[{4}],
+                                   date({5}.pubdate),
+                                   {5}.authors, 1)
                  '''.format(table, REFERENCES_TABLE, sel_cols_str,
-                            reference_col_name, table_header[0]),
+                            reference_col_name, table_header[0],
+                            subquery_alias),
               (id,))
 
     results = c.fetchall()
