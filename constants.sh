@@ -96,7 +96,7 @@ case ${1:-} in
     site_image_dir)
         echo -n "$SITE_IMAGE_DIR"
         ;;
-    site_csv_dir)
+    site_css_dir)
         echo -n "$SITE_CSS_DIR"
         ;;
     site_template_dir)
