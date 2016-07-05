@@ -76,6 +76,11 @@ table tr td.nucleobase {
     font-family: 'DejaVu LGC Sans Mono', 'DejaVu Sans Mono', Consolas, 'Everson Mono', 'Lucida Console', 'Andale Mono', 'Nimbus Mono L', 'Liberation Mono', FreeMono, 'Osaka Monospaced', Courier, 'New Courier', monospace;
 }
 
+.RefAnnotTable {
+      margin-top: 20px;
+      margin-bottom: 10px;
+}
+
 table tr td.species {
     font-style:italic;
 }
@@ -225,5 +230,6 @@ a:active {
 }
 
 table, th, td {
+    padding: 5px;
     border: 1px solid black;
 }

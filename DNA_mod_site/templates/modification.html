@@ -23,7 +23,7 @@
             <img id="chemicalStructureImage" src="images/{{ ChebiName }}.svg" alt="{{ ChebiName }} Image Not Availabe" height='500' width='500'>
             {% if ExpandedAlpha["Abbreviation"] is defined %}
                 <div class="ExpandedAlpha">
-                    <table cellpadding="5">
+                    <table>
                         <tr>
                             <th> Abbreviation </th>
                             <td> {{ ExpandedAlpha["Abbreviation"] }} </td>
@@ -57,7 +57,7 @@
 
             {% if Formula or NetCharge or AverageMass %}
                 <h2> Chemical Properties: </h2>
-                <table id="ChemProps" cellpadding="5">
+                <table id="ChemProps">
                     <tr>
                         <th> Chemical Formula </th>
                         <th> Net Charge </th>
@@ -77,7 +77,7 @@
         <div class="Names">
             {% if IupacName or Smiles or Synonyms %}
                 <h2 id="Inline"> Names: </h2>
-                <table id="Names" cellpadding="5">
+                <table id="Names">
                     <tr>
                         {% if IupacName %}<th> IUPAC </th>{% endif %}
                         {% if Smiles %}<th> SMILES </th>{% endif %}
@@ -116,9 +116,9 @@
         </div>
         -->
         {% for RefAnnot in RefAnnots if RefAnnot|length %}
-            <div class={{ RefAnnotTabNames[loop.index0] }}>
+            <div class="RefAnnotTable" {{ RefAnnotTabNames[loop.index0] }}>
                     <h2 id="Inline"> {{ RefAnnotTabNames[loop.index0] }}: </h2>
-                    <table id={{ RefAnnotTabNames[loop.index0] }} cellpadding="5">
+                    <table id={{ RefAnnotTabNames[loop.index0] }}>
                         <tr>
                             {% for Header, _ in RefAnnot[0].iteritems() if Header not in RefAnnotsRefColNames %}
                                 <th> {{ Header }} </th>
