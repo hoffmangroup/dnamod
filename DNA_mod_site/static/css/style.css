@@ -9,7 +9,7 @@ html {
 
 .TitleBlock {
     z-index: 1;
-    background-color: rgba(135,206,250,0.9);
+    background-color: rgb(135, 206, 250);
     border-bottom: 3px solid black;
     width: 100%;
     display: inline-block;
@@ -133,7 +133,7 @@ table tr td.species {
 }
 
 footer {
-    background-color: rgba(135,206,250,0.9);
+    background-color: rgb(135, 206, 250);
     border-top: 3px solid black;
     width: 100%;
     bottom: 0;
@@ -234,7 +234,7 @@ a:active {
 }
 
 .ui-accordion .ui-accordion-header-active {
-    background: rgba(135,206,250,0.9);
+    background: rgb(135, 206, 250);
     color: rgb(119, 43, 201);
 }
 
