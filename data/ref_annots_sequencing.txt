@@ -7,8 +7,7 @@ ChEBI	Mapping method	Method detail	Resolution	Enrichment	Reference
 27551	MBD-Seq	affinity-based	low		19906696
 27551	TAmC-Seq	chemical tagging	high		23443545
 27551	Maxam–Gilbert sequencing		single-base 		265521,23301810,24209366,20813757
-27551	BS-Seq		single-base		1542678
-27551	BS-Seq	chemical conversion	single-base		19829295
+27551	BS-Seq	chemical conversion	single-base		1542678,19829295
 27551	RRBS	chemical conversion	single-base	methylation-insensitive restriction digestion	19442738
 27551	SMRT-BS	chemical conversion	single-base	target sequences	25943404
 # ------------------------------------------------
