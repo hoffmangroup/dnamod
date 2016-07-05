@@ -115,8 +115,9 @@
             </ul>
         </div>
         -->
-        {% for RefAnnot in RefAnnots if RefAnnot|length %}
-            <div class="RefAnnotTable" {{ RefAnnotTabNames[loop.index0] }}>
+        {% for RefAnnot in RefAnnots %}
+            {% if RefAnnot|length %}  <!-- not in for to ensure counter still increments -->
+                <div class="RefAnnotTable" {{ RefAnnotTabNames[loop.index0] }}>
                     <h2 id="Inline"> {{ RefAnnotTabNames[loop.index0] }}: </h2>
                     <table id={{ RefAnnotTabNames[loop.index0] }}>
                         <tr>
@@ -168,6 +169,7 @@
                         {% endfor %}
                     </table>
                 </div>
+            {%endif %}
         {% endfor %}
             
         <div class="Links">
