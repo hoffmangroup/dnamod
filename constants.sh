@@ -11,6 +11,7 @@ set -o nounset -o pipefail -o errexit
 # "site_html_dir"       The subdirectory containing the website's static HTML files
 # "site_image_dir"     The subdirectory containing the website's images
 # "site_css_dir"        The subdirectory containing the website's CSS files
+# "site_js_dir"        The subdirectory containing the website's Javascript files
 # "site_template_dir"   The subdirectory containing the Jinja2 template files
 # "data_dir"		The subdirectory containing associated data files or databases
 # "database"		The SQLite database file
@@ -50,9 +51,10 @@ SITE_TEMPLATE_DIR="$SITE_DIR/templates"
 SITE_HTML_DIR="$SITE_DIR/static"
 SITE_IMAGE_DIR="$SITE_HTML_DIR/images"
 SITE_CSS_DIR="$SITE_HTML_DIR/css"
+SITE_JS_DIR="$SITE_HTML_DIR/js"
 DATA_DIR="$SOURCE_DIR/data"
 
-if [[ ! ( -d "$ROOT_DIR" && -d "$SITE_DIR" && -d "$SITE_TEMPLATE_DIR" && -d "$SITE_HTML_DIR" && -d "$SITE_IMAGE_DIR" && -d "$SITE_CSS_DIR" && -d "$DATA_DIR" ) ]]; then
+if [[ ! ( -d "$ROOT_DIR" && -d "$SITE_DIR" && -d "$SITE_TEMPLATE_DIR" && -d "$SITE_HTML_DIR" && -d "$SITE_IMAGE_DIR" && -d "$SITE_CSS_DIR" && -d "$SITE_JS_DIR" && -d "$DATA_DIR" ) ]]; then
     not_found 'directories'
 fi
 
@@ -98,6 +100,9 @@ case ${1:-} in
         ;;
     site_csv_dir)
         echo -n "$SITE_CSS_DIR"
+        ;;
+    site_js_dir)
+        echo -n "$SITE_JS_DIR"
         ;;
     site_template_dir)
         echo -n "$SITE_TEMPLATE_DIR"
