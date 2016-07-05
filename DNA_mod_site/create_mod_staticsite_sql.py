@@ -162,7 +162,8 @@ def get_mod_base_ref_annot_data(id, cursor, table):
                         JOIN {1} AS ref ON {0}.[{3}]
                             LIKE '%' || ref.citationid || '%'
                         WHERE nameid = ?
-                        ORDER BY COALESCE(date(ref.pubdate), 1)
+                        ORDER BY COALESCE(date(ref.pubdate),
+                                         ref.authors, 1)
                  ) {5}
                  GROUP BY {2}
                  ORDER BY COALESCE({5}.[{4}],
