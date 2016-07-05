@@ -8,11 +8,17 @@
     <!-- <link href="netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"> -->
     <!-- <link href="css/style.css" rel="stylesheet" type='text/css'> -->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
-    <script type='text/javascript' src='scripts/script.js'></script>
+    <script type='text/javascript' src='scripts/script.js'>
+        <script type="text/javascript" src=".https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+        <script type="text/javascript" src="js/psd3.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/psd3.css" /> 
+    </script>
 
     <link href="css/style.css" rel="stylesheet" type='text/css'>
 </head>
@@ -47,23 +53,33 @@
         </div>
 
         <div id="tabs-2">
-            <div class= "IndexLayout" >
-                <div id="accordion2">
-                {% for base in unverifiedbases %}
-                    <h2> {{ base }} </h2>
-                    <div>
-                        {% set baseloop = loop %}
-                        <ul>
-                        {% for modification in unverifiedmodifications[base] %}
-                            <li> <a href= "{{ modification }}.html" > {{ modification }}</a> </li>
-                        {% endfor %}
-                        </ul> <br>
+            <div class="container">
+                <div class="well">
+                    <h2> Unverified entries </h2>
+                    <ul>
+                        <li>The entries listed on this page are chemicals associated with a particular unmodified nucleobase,
+                            but have not been manually verified as DNA modifications.</li>
+                        <li>Expand a section and click on a link to view information on the entity.</li>
+                    </ul>
+                </div>
+
+                <div class= "IndexLayout" >
+                    <div id="accordion2">
+                    {% for base in unverifiedbases %}
+                        <h2> {{ base }} </h2>
+                        <div>
+                            {% set baseloop = loop %}
+                            <ul>
+                            {% for modification in unverifiedmodifications[base] %}
+                                <li> <a href= "{{ modification }}.html" > {{ modification }}</a> </li>
+                            {% endfor %}
+                            </ul> <br>
+                        </div>
+                    {% endfor %}
                     </div>
-                {% endfor %}
                 </div>
             </div>
         </div>
-
     </div>
 
     <footer>
