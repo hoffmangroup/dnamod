@@ -47,6 +47,15 @@ body {
     width: 100%;
 }
 
+table, th, td {
+    margin-top: 6px;
+    padding: 5px;
+    border: 0px;
+    border-collapse: collapse;
+    border-top: 2px solid;
+    border-bottom: 2px solid;
+}
+
 .Alphabet {
     width: 500px;
     margin-right: 100px;
@@ -69,6 +78,13 @@ body {
 
 .ExpandedAlpha table th {
     text-align: left;
+}
+
+.ExpandedAlpha table, .ExpandedAlpha table tr td, .ExpandedAlpha table tr th {
+    border: 0px;
+    border-collapse: collapse;
+    border-left: 2px solid;
+    border-right: 2px solid;
 }
 
 table tr td.nucleobase {
@@ -227,9 +243,4 @@ a:active {
     padding: 0px;
     margin-top: 0px;
     margin-bottom: 0px;
-}
-
-table, th, td {
-    padding: 5px;
-    border: 1px solid black;
 }
