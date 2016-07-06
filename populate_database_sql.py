@@ -111,23 +111,20 @@ def search_for_bases(client):
     return result
 
 
-def filter_stars(content, stars, client):
+def filter_and_build_from_ontology(content, stars, client):
     result = []
+
     for entity in content:
-        # print content[elements] # For Debugging
-        # content[elements] = search_exact_match(content[elements].chebiName,
-        #                                        client)
         temphold = entity
-        # print temphold # For debugging
-        #time.sleep(1)
         entity = get_complete_entity(entity.chebiId, client)
-        # print content[elements] # For Debugging
+
         if entity == 'Invalid Input' or entity == 'DNE':
             continue
         elif (entity.entityStar == stars and
               (temphold.type == 'has functional parent' 
                or temphold.type == 'is a')):
             result.append(entity)
+
     return result
 
 
@@ -137,7 +134,7 @@ def get_children(bases, client):
         result = client.service.getOntologyChildren(base.chebiId)
         print("----- BASE: {}".format(base.chebiAsciiName))
         result = result.ListElement
-        result = filter_stars(result, 3, client)
+        result = filter_and_build_from_ontology(result, 3, client)
         additionalChildren = get_further_children(result, client)
 
         for child in additionalChildren:
@@ -161,7 +158,7 @@ def get_recursive_children(entity, client, childrenverified, additionalChildren)
         result = client.service.getOntologyChildren(entity.chebiId)
         if result:
             result = result.ListElement
-            result = filter_stars(result, 3, client)
+            result = filter_and_build_from_ontology(result, 3, client)
             for child in result:
                 recursivestep = get_recursive_children(child, client, childrenverified, additionalChildren)
                 result = result + recursivestep
