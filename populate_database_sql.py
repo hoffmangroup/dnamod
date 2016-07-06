@@ -154,22 +154,34 @@ def get_recursive_children(entity, client, childrenverified, additionalChildren)
             entity['verifiedstatus'] = 1;
         else:
             entity['verifiedstatus'] = 0;
-        print("---------- CHILD of BASE: {0:100} Verified: {1} ".format(entity.chebiAsciiName, childrenverified))
+
+        print("---------- CHILD of BASE: {0:100} Verified: {1} "
+              "".format(entity.chebiAsciiName, childrenverified))
+
         result = client.service.getOntologyChildren(entity.chebiId)
+
         if result:
             result = result.ListElement
             result = filter_and_build_from_ontology(result, 3, client)
+
             for child in result:
-                recursivestep = get_recursive_children(child, client, childrenverified, additionalChildren)
+                recursivestep = get_recursive_children(child, client,
+                                                       childrenverified,
+                                                       additionalChildren)
                 result = result + recursivestep
+
             result = set(result)
             result = list(result)
+
             additionalChildren.extend(result)
+
     return additionalChildren
+
 
 def get_further_children(entities, client):
     childrenverified = False;
     additionalChildren = []
+
     for entity in entities:
         if entity.chebiAsciiName in WHITE_LIST:
             entity['verifiedstatus'] = 1;
@@ -177,7 +189,11 @@ def get_further_children(entities, client):
         else:
             entity['verifiedstatus'] = 0;
             childrenverified = False;
-        additionalChildren = get_recursive_children(entity, client, childrenverified, additionalChildren)
+
+        additionalChildren = get_recursive_children(entity, client,
+                                                    childrenverified,
+                                                    additionalChildren)
+
     return additionalChildren
 
 
