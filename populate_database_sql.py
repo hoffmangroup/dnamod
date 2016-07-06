@@ -46,10 +46,13 @@ FORMULA_SEARCH_STR = 'Formulae'
 CHARGE_SEARCH_STR = 'charge'
 MASS_SEARCH_STR = 'mass'
 CITATION_SEARCH_STR = 'Citations'
+
 ONTOLOGY_SEARCH_STR = "OntologyParents"
 ONTOLOGY_HAS_ROLE = "has role"
-RESET_TABLES = False
+ONTOLOGY_FP = "has functional parent"
+ONTOLOGY_IS_A = "is a"
 
+RESET_TABLES = False
 ChEBI_ID_PREFIX = "CHEBI:"
 
 BLACK_LIST = []
@@ -111,23 +114,20 @@ def search_for_bases(client):
     return result
 
 
-def filter_stars(content, stars, client):
+def filter_and_build_from_ontology(content, stars, client):
     result = []
+
     for entity in content:
-        # print content[elements] # For Debugging
-        # content[elements] = search_exact_match(content[elements].chebiName,
-        #                                        client)
         temphold = entity
-        # print temphold # For debugging
-        #time.sleep(1)
         entity = get_complete_entity(entity.chebiId, client)
-        # print content[elements] # For Debugging
+
         if entity == 'Invalid Input' or entity == 'DNE':
             continue
         elif (entity.entityStar == stars and
-              (temphold.type == 'has functional parent' 
-               or temphold.type == 'is a')):
+              (temphold.type == ONTOLOGY_FP 
+               or temphold.type == ONTOLOGY_IS_A)):
             result.append(entity)
+
     return result
 
 
@@ -137,7 +137,7 @@ def get_children(bases, client):
         result = client.service.getOntologyChildren(base.chebiId)
         print("----- BASE: {}".format(base.chebiAsciiName))
         result = result.ListElement
-        result = filter_stars(result, 3, client)
+        result = filter_and_build_from_ontology(result, 3, client)
         additionalChildren = get_further_children(result, client)
 
         for child in additionalChildren:
@@ -157,22 +157,34 @@ def get_recursive_children(entity, client, childrenverified, additionalChildren)
             entity['verifiedstatus'] = 1;
         else:
             entity['verifiedstatus'] = 0;
-        print("---------- CHILD of BASE: {0:100} Verified: {1} ".format(entity.chebiAsciiName, childrenverified))
+
+        print("---------- CHILD of BASE: {0:100} Verified: {1} "
+              "".format(entity.chebiAsciiName, childrenverified))
+
         result = client.service.getOntologyChildren(entity.chebiId)
+
         if result:
             result = result.ListElement
-            result = filter_stars(result, 3, client)
+            result = filter_and_build_from_ontology(result, 3, client)
+
             for child in result:
-                recursivestep = get_recursive_children(child, client, childrenverified, additionalChildren)
+                recursivestep = get_recursive_children(child, client,
+                                                       childrenverified,
+                                                       additionalChildren)
                 result = result + recursivestep
+
             result = set(result)
             result = list(result)
+
             additionalChildren.extend(result)
+
     return additionalChildren
+
 
 def get_further_children(entities, client):
     childrenverified = False;
     additionalChildren = []
+
     for entity in entities:
         if entity.chebiAsciiName in WHITE_LIST:
             entity['verifiedstatus'] = 1;
@@ -180,7 +192,11 @@ def get_further_children(entities, client):
         else:
             entity['verifiedstatus'] = 0;
             childrenverified = False;
-        additionalChildren = get_recursive_children(entity, client, childrenverified, additionalChildren)
+
+        additionalChildren = get_recursive_children(entity, client,
+                                                    childrenverified,
+                                                    additionalChildren)
+
     return additionalChildren
 
 
@@ -228,9 +244,10 @@ def get_entity(child, attribute):
     else:
         return []
 
-def get_roles(child, attribute, selector):
+
+def get_ontology_data(child, attribute, selectors):
     return [ontologyitem for ontologyitem in
-            getattr(child, attribute) if ontologyitem.type == selector] 
+            getattr(child, attribute) if ontologyitem.type in selectors]
 
 
 def get_full_citation(PMID):
@@ -380,14 +397,24 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
                              FOREIGN KEY(roleid) REFERENCES roles(roleid) ON DELETE CASCADE ON UPDATE CASCADE,
                              PRIMARY KEY(nameid, roleid))''')
     
+    sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS modbase_parents
+                            (nameid text,
+                             parentid text,
+                             UNIQUE (nameid, parentid) ON CONFLICT IGNORE,
+                             FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE,
+                             FOREIGN KEY(parentid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE)''')
+
     conn.commit()
 
     # Populate Tables
-    formulafill = 0;
+    added_entry_IDs = []
+    formulafill = 0
+
     for base in bases:
-        childlist = children[base.chebiAsciiName]
-        # Retreive childlist of current base
-        for child in childlist:
+        # Retreive and process list of childs of current base
+        for child in children[base.chebiAsciiName]:
+            added_entry_IDs.append(child.chebiId)
+
             # Parse CHEBI datastructure for relevant info
             synonyms = concatenate_list(child, SYNONYM_SEARCH_STR)
             newnames = []
@@ -409,7 +436,7 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
             mass = get_entity(child, MASS_SEARCH_STR)
             citations = concatenate_list(child, CITATION_SEARCH_STR)
 
-            roles = get_roles(child, ONTOLOGY_SEARCH_STR, ONTOLOGY_HAS_ROLE)
+            roles = get_ontology_data(child, ONTOLOGY_SEARCH_STR, [ONTOLOGY_HAS_ROLE])
             role_names = [role.chebiName for role in roles]
             role_ids = [role.chebiId for role in roles]
 
@@ -464,6 +491,21 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
             for citation in citations:
                 sql_conn_cursor.execute("INSERT OR IGNORE INTO citation_lookup VALUES(?,?)",
                           (child.chebiId, citation))
+            conn.commit()
+
+        # for each base, go through children again and annotate parents within database
+        # NB: only bases with other modified bases are annotated as parents
+        #     the non-modified (A/C/G/T/U) base is annotated elsewhere
+        for child in children[base.chebiAsciiName]:
+            parent_entires = get_ontology_data(child, ONTOLOGY_SEARCH_STR,
+                                               [ONTOLOGY_FP, ONTOLOGY_IS_A])
+
+            parents_to_annot = [parent.chebiId for parent in parent_entires
+                                if parent.chebiId in added_entry_IDs]
+
+            for parent_to_annot in parents_to_annot:
+                sql_conn_cursor.execute("INSERT OR IGNORE INTO modbase_parents VALUES(?,?)",
+                                        (child.chebiId, parent_to_annot))
             conn.commit()
 
 
