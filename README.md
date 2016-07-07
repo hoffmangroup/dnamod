@@ -36,7 +36,7 @@ The following dependencies, in addition to Python, are needed to build DNAmod.
 
 1. [OpenBabel](http://openbabel.org/wiki/Category:Installation)
 
-2. [SQLite](https://www.sqlite.org/)
+2. [SQLite](https://www.sqlite.org/) ≥ version 3.8.3
 
 #### PyPI packages ####
 
