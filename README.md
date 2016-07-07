@@ -32,7 +32,7 @@ To update and recreate the database one would usually run ```populate_database_s
 
 ### Dependencies ###
 
-The following dependencies, in addition to Python, are needed to build DNAmod.
+The following dependencies, in addition to Python (≥ version 2.7.6 necessary for some systems), are needed to build DNAmod.
 
 1. [OpenBabel](http://openbabel.org/wiki/Category:Installation)
 
