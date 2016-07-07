@@ -18,8 +18,7 @@ Function:
 
 from contextlib import contextmanager
 import datetime
-import pprint
-import sqlite3
+from pysqlite2 import dbapi2 as sqlite3  # needed for latest SQLite
 import sys
 import unicodecsv as csv
 

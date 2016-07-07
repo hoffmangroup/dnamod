@@ -19,7 +19,7 @@ from collections import OrderedDict
 from itertools import izip
 import os
 import pybel
-import sqlite3
+from pysqlite2 import dbapi2 as sqlite3  # needed for latest SQLite
 import sys
 
 # Using Jinja2 as templating engine
@@ -327,7 +327,39 @@ def create_html_pages():
     return homepageLinks
 
 
+def get_modbase_children(cursor, base_id):
+    """ Get all modified base children ChEBI IDs for
+        the provided modified base ChEBI ID.
+    """
+    # use a recursive common table expression to get all children
+    children = cursor.execute("""WITH RECURSIVE base_children AS (
+                                     SELECT nameid, parentid
+                                     FROM modbase_parents
+                                     WHERE nameid=:bID
+                                     UNION ALL
+                                     SELECT b.nameid, b.parentid
+                                     FROM modbase_parents AS b
+                                     JOIN base_children modbase_parents ON
+                                         b.parentid=modbase_parents.nameid
+                                 )
+                                 SELECT nameid
+                                 FROM base_children
+                                 WHERE nameid <> :bID""", {"bID": base_id})
+
+    return [result[0] for result in children.fetchall()]
+
+
+def cons_v_base_hierarchy(cursor, verified_base_IDs, mod_base):
+    return ([mod_base] +
+            [[cons_v_base_hierarchy(cursor, verified_base_IDs, child)
+              for child in get_modbase_children(cursor, mod_base)
+              if child in verified_base_IDs]])
+
+
 def create_homepage(homepageLinks):
+    conn = sqlite3.connect(dnamod_utils.get_constant('database'))
+    cursor = conn.cursor()
+
     verifiedBases = {}
     unverifiedBases = {}
     for base in BASES:
@@ -338,6 +370,22 @@ def create_homepage(homepageLinks):
     verifiedBases['Thymine'] = (verifiedBases['Thymine'] +
                                 verifiedBases['Uracil'])
     del(verifiedBases['Uracil'])
+
+    verified_base_IDs_Q = cursor.execute("""SELECT nameid
+                                           FROM modbase
+                                           WHERE verifiedstatus=1""")
+
+    verified_base_IDs = [result[0] for result in
+                         verified_base_IDs_Q.fetchall()]
+
+    for mod_base in verified_base_IDs:
+        verified_children = cons_v_base_hierarchy(cursor,
+                                                  verified_base_IDs,
+                                                  mod_base)
+        print(verified_children)  # XXX
+
+        # TODO construct HTML from the hierarchy, starting from
+        # the lists of maximal elements, rec. & ignoring any previous...
 
     env = Environment()
     env.loader = FileSystemLoader(TEMPLATE_DIR)
@@ -354,6 +402,7 @@ def create_homepage(homepageLinks):
                                   unverifiedmodifications=unverifiedBases)
     f.write(render)
     f.close()
+
 
 print("Generating Static Site....")
 links = create_html_pages()
