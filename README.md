@@ -16,23 +16,21 @@ This project is open source and updated regularly. We also manually curate the m
 
 ## Installation ##
 
-To set up ensure that Python is installed on your machine along with the dependencies listed below.
+### Key files within this distribution ###
 
-```DNA_mod_database.db``` contains the SQLite database for DNAmod.
+```constants.sh``` stores all constants associated with this project, including all directory and file paths used. It contains descriptions of each constant.
 
 ```populate_database_sql.py``` pulls data from ChEBI and imports the data into the SQLite database.
 
 ```create_mod_staticsite_sql.py``` takes the SQLite database and pushes it through the Jinja2 templates located in the templates folder to create the static site. The location of the static site is the ```static``` folder.
 
-The whitelist and blacklist located in the ```whitelist``` folder control the modifications which show up as verified on the finished site. These can be reconfigured depending on your preferences.
+Data, including whitelisted and blacklisted bases, which control the modifications which show up as verified and annotations with references are located within the ```data``` sub-directory. This is also where the SQLite databse is created, by ```populate_database_sql.py```.
 
-The ```sequencing``` file allows the user to add custom citations to the database and associate these citations to particular modifications. Changing the format of this file may also warrant modification of the Jinja2 template ```modification.html```.
-
-To update and recreate the database one would usually run ```populate_database_sql.py``` followed by ```create_mod_staticsite_sql.py``` however running the shell script ```update_dnamod.sh``` will complete those steps. The shell script ```sync_live_site.sh``` can be reconfigured to allow you to quickly update your live site location for DNAmod. 
+To update and recreate the database and website run ```update_dnamod.sh```. We use ```sync_live_site.sh``` to deploy our live site for DNAmod.
 
 ### Dependencies ###
 
-The following dependencies, in addition to Python, are needed to build DNAmod.
+The following dependencies, in addition to Python (≥ version 2.7.6 necessary for some systems), are needed to build DNAmod.
 
 1. [OpenBabel](http://openbabel.org/wiki/Category:Installation)
 
@@ -51,6 +49,8 @@ The following packages can be obtained from [The Python Package Index, PyPI](htt
 4. [```suds```](https://fedorahosted.org/suds/) (a Python SOAP client)
 
 5. [```unicodecsv```](https://pypi.python.org/pypi/unicodecsv)
+
+6. [```pysqlite2```](https://pypi.python.org/pypi/pysqlite)
 
 ## License ##
 
