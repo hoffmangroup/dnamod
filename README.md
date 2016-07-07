@@ -52,6 +52,8 @@ The following packages can be obtained from [The Python Package Index, PyPI](htt
 
 5. [```unicodecsv```](https://pypi.python.org/pypi/unicodecsv)
 
+6. [```pysqlite2```](https://pypi.python.org/pypi/pysqlite)
+
 ## License ##
 
 Released under the [GNU General Purpose License, version 2 (GPLv2)](http://www.gnu.org/licenses/gpl-2.0-standalone.html).
