@@ -327,33 +327,47 @@ def create_html_pages():
     return homepageLinks
 
 
-def get_modbase_children(cursor, base_id):
-    """ Get all modified base children ChEBI IDs for
+def get_modbase_hierarchy(cursor, base_id):
+    """ Recursively find all modified base children ChEBI IDs for
         the provided modified base ChEBI ID.
+        Output is ordered by descending depth, s.t. one can add
+        the entires of greatest depth first and work outwards.
     """
     # use a recursive common table expression to get all children
-    children = cursor.execute("""WITH RECURSIVE base_children AS (
-                                     SELECT nameid, parentid
-                                     FROM modbase_parents
-                                     WHERE nameid=:bID
-                                     UNION ALL
-                                     SELECT b.nameid, b.parentid
-                                     FROM modbase_parents AS b
-                                     JOIN base_children modbase_parents ON
-                                         b.parentid=modbase_parents.nameid
-                                 )
-                                 SELECT nameid
-                                 FROM base_children
-                                 WHERE nameid <> :bID""", {"bID": base_id})
+    # and then group these by their root base, creating a hierarchy,
+    # ordered by the depth within the ontology.
+    hierarchy = cursor.execute("""WITH hierarchy AS (
+                                     -- Rec. Q to find children ad infinitum
+                                     WITH RECURSIVE base_children AS (
+                                         SELECT nameid, parentid,
+                                             '' AS prevpar, 0 AS depth
+                                         FROM modbase_parents
+                                         WHERE parentid=:bID
+                                         UNION ALL
+                                         -- The second parentid is used to
+                                         -- recursively record previous parents
+                                         -- The depth in the tree is also rec.
+                                         SELECT b.nameid, b.parentid,
+                                             b.parentid, depth + 1
+                                         FROM modbase_parents AS b
+                                         JOIN base_children modbase_parents ON
+                                             b.parentid=modbase_parents.nameid
+                                     )
+                                     SELECT depth, prevpar, nameid
+                                     FROM base_children
+                                     -- Could add below WHERE to remove
+                                     -- those at depth 0, but want these
+                                     -- WHERE parentid <> :bID
+                                ) SELECT depth, prevpar, GROUP_CONCAT(nameid)
+                                  FROM hierarchy
+                                  -- Could add below WHERE to remove seen items
+                                  -- WHERE nameid
+                                  --     NOT IN (select prevpar FROM hierarchy)
+                                  GROUP BY prevpar
+                                  ORDER BY depth DESC
+                             """, {"bID": base_id})
 
-    return [result[0] for result in children.fetchall()]
-
-
-def cons_v_base_hierarchy(cursor, verified_base_IDs, mod_base):
-    return ([mod_base] +
-            [[cons_v_base_hierarchy(cursor, verified_base_IDs, child)
-              for child in get_modbase_children(cursor, mod_base)
-              if child in verified_base_IDs]])
+    return [list(result) for result in hierarchy.fetchall()]
 
 
 def create_homepage(homepageLinks):
@@ -371,21 +385,25 @@ def create_homepage(homepageLinks):
                                 verifiedBases['Uracil'])
     del(verifiedBases['Uracil'])
 
-    verified_base_IDs_Q = cursor.execute("""SELECT nameid
-                                           FROM modbase
-                                           WHERE verifiedstatus=1""")
+    # get all root verified bases (i.e. those without parents)
+    # since we will be recursively computing their children
+    verified_root_base_IDs_Q = cursor.execute("""SELECT DISTINCT nameid
+                                                 FROM modbase
+                                                 WHERE verifiedstatus=1
+                                                     AND nameid NOT IN
+                                                     -- s.t. it has no parents
+                                                    (SELECT DISTINCT nameid
+                                                     FROM modbase_parents)""")
+    verified_root_base_IDs = [result[0] for result in
+                              verified_root_base_IDs_Q.fetchall()]
 
-    verified_base_IDs = [result[0] for result in
-                         verified_base_IDs_Q.fetchall()]
+    # NB: all children of verified bases are also verified, so we
+    #     do not check this
+    verified_base_hierarchy = [get_modbase_hierarchy(cursor, mod_base)
+                               for mod_base in verified_root_base_IDs]
 
-    for mod_base in verified_base_IDs:
-        verified_children = cons_v_base_hierarchy(cursor,
-                                                  verified_base_IDs,
-                                                  mod_base)
-        print(verified_children)  # XXX
-
-        # TODO construct HTML from the hierarchy, starting from
-        # the lists of maximal elements, rec. & ignoring any previous...
+    # TODO construct HTML from the hierarchy, starting from
+    # the lists of maximal elements, rec. & ignoring any previous...
 
     env = Environment()
     env.loader = FileSystemLoader(TEMPLATE_DIR)
