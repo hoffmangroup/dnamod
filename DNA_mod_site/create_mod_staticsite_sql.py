@@ -15,7 +15,7 @@ Function:
 4. Creates a home page with links to html modification pages
 '''
 import codecs
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 from itertools import izip
 import os
 import pybel
@@ -330,12 +330,11 @@ def create_html_pages():
 def get_modbase_hierarchy(cursor, base_id):
     """ Recursively find all modified base children ChEBI IDs for
         the provided modified base ChEBI ID.
-        Output is ordered by descending depth, s.t. one can add
-        the entires of greatest depth first and work outwards.
+        Output is ordered by increasing depth.
     """
     # use a recursive common table expression to get all children
     # and then group these by their root base, creating a hierarchy,
-    # ordered by the depth within the ontology.
+    # ordered by descending depth within the ontology.
     hierarchy = cursor.execute("""WITH hierarchy AS (
                                      -- Rec. Q to find children ad infinitum
                                      WITH RECURSIVE base_children AS (
@@ -370,6 +369,72 @@ def get_modbase_hierarchy(cursor, base_id):
     return [list(result) for result in hierarchy.fetchall()]
 
 
+def cons_nested_verified_depth_dict_modbase_hierarchy(cursor):
+    """Returns a dictionary, keyed by the hierarchy depth,
+       of the hierarchy of verified modified bases, as values,
+       containing nested lists."""
+    # get all root verified bases (i.e. those without parents)
+    # since we will be recursively computing their children
+    verified_root_base_IDs_Q = cursor.execute("""SELECT DISTINCT nameid
+                                                 FROM modbase
+                                                 WHERE verifiedstatus=1
+                                                     AND nameid NOT IN
+                                                     -- s.t. it has no parents
+                                                    (SELECT DISTINCT nameid
+                                                     FROM modbase_parents)""")
+    verified_root_base_IDs = [result[0] for result in
+                              verified_root_base_IDs_Q.fetchall()]
+
+    # NB: all children of verified bases are also verified, so we
+    #     do not check this
+    verified_full_hierarchy_depth_dict = defaultdict(list)
+    seen_children = {}
+
+    for mod_base in verified_root_base_IDs:
+        modbase_hierarchy = get_modbase_hierarchy(cursor, mod_base)
+
+        depth = 0
+
+        for relation_idx, modbase_relation in enumerate(modbase_hierarchy):
+            _ = modbase_relation.pop(0)
+            if relation_idx == 0:  # only store if deepest
+                # add one to depth, since 0 is for root bases
+                depth = _ + 1
+
+            parent = modbase_relation[0]
+
+            # children
+            modbase_relation[1] = modbase_relation[1].split(',')
+
+            # create a valid nesting by embedding previous
+            # children within their later referring element
+            for idx, child in enumerate(modbase_relation[1]):
+                if seen_children.get(child):
+                    modbase_relation[1][idx] = [child, seen_children[child]]
+
+            # record currently encountered relation
+            seen_children[parent] = modbase_relation[1]
+
+            # replace the current list with its nested version
+            modbase_hierarchy[relation_idx] = modbase_relation
+
+        # add the root to its correct pos. in the hierarchy
+        if modbase_hierarchy:
+            # discard previous nested lists, since the
+            # last element now contains the valid nesting
+            modbase_hierarchy = modbase_hierarchy[-1]
+
+            # add the modified base as the parent, taking
+            # the position of the empty string from the query
+            modbase_hierarchy = [mod_base] + modbase_hierarchy[1:]
+
+            verified_full_hierarchy_depth_dict[depth] += [modbase_hierarchy]
+        else:
+            verified_full_hierarchy_depth_dict[depth] += [mod_base]
+
+    return verified_full_hierarchy_depth_dict
+
+
 def create_homepage(homepageLinks):
     conn = sqlite3.connect(dnamod_utils.get_constant('database'))
     cursor = conn.cursor()
@@ -385,22 +450,8 @@ def create_homepage(homepageLinks):
                                 verifiedBases['Uracil'])
     del(verifiedBases['Uracil'])
 
-    # get all root verified bases (i.e. those without parents)
-    # since we will be recursively computing their children
-    verified_root_base_IDs_Q = cursor.execute("""SELECT DISTINCT nameid
-                                                 FROM modbase
-                                                 WHERE verifiedstatus=1
-                                                     AND nameid NOT IN
-                                                     -- s.t. it has no parents
-                                                    (SELECT DISTINCT nameid
-                                                     FROM modbase_parents)""")
-    verified_root_base_IDs = [result[0] for result in
-                              verified_root_base_IDs_Q.fetchall()]
-
-    # NB: all children of verified bases are also verified, so we
-    #     do not check this
-    verified_base_hierarchy = [get_modbase_hierarchy(cursor, mod_base)
-                               for mod_base in verified_root_base_IDs]
+    verified_full_hierarchy_depth_dict = \
+        cons_nested_verified_depth_dict_modbase_hierarchy(cursor)
 
     # TODO construct HTML from the hierarchy, starting from
     # the lists of maximal elements, rec. & ignoring any previous...
