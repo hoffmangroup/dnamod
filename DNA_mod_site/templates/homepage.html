@@ -35,21 +35,25 @@
         </ul>
 
         <div id="tabs-1">
-            <div class= "IndexLayout" >
-                <div id="accordion">
-                    {% for base in bases %}
-                        <h2> {{ base }} </h2>
-                        <div>
-                            {% set baseloop = loop %}
-                            <ul>
-                            {% for modification in modifications[base] %}
-                                <li> <a href= "{{ modification }}.html" > {{ modification }}</a> </li>
-                            {% endfor %}
-                            </ul> <br>
-                        </div>
-                    {% endfor %}
+            
+            <noscript>
+                <div class= "IndexLayout" >
+                    <div id="accordion">
+                        {% for base in bases %}
+                            <h2> {{ base }} </h2>
+                            <div>
+                                {% set baseloop = loop %}
+                                <ul>
+                                    {% for modification in modifications[base] %}
+                                        <li> <a href= "{{ modification }}.html" > {{ modification }}</a>
+                                    {% endfor %}
+                                </ul>
+                                <br>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
+            </noscript>
         </div>
 
         <div id="tabs-2">
