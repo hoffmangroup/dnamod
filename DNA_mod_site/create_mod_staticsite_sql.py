@@ -358,7 +358,7 @@ def get_modbase_hierarchy(cursor, base_id):
                                      -- Could add below WHERE to remove
                                      -- those at depth 0, but want these
                                      -- WHERE parentid <> :bID
-                                ) SELECT depth, prevpar, GROUP_CONCAT(nameid)
+                                ) SELECT prevpar, GROUP_CONCAT(nameid)
                                   FROM hierarchy
                                   -- Could add below WHERE to remove seen items
                                   -- WHERE nameid
@@ -370,7 +370,7 @@ def get_modbase_hierarchy(cursor, base_id):
     return [list(result) for result in hierarchy.fetchall()]
 
 
-def cons_nested_verified_depth_dict_modbase_hierarchy(conn, cursor):
+def cons_nested_verified_dict_modbase_hierarchy(conn, cursor):
     """Returns a dictionary, keyed by the hierarchy depth,
        of the hierarchy of verified modified bases, as values,
        containing nested lists."""
@@ -401,7 +401,7 @@ def cons_nested_verified_depth_dict_modbase_hierarchy(conn, cursor):
 
     # NB: all children of verified bases are also verified, so we
     #     do not check this
-    verified_full_hierarchy_depth_dict = defaultdict(list)
+    verified_full_hierarchy_dict = defaultdict(list)
     seen_children = {}
 
     for (unmod_parent,
@@ -422,14 +422,7 @@ def cons_nested_verified_depth_dict_modbase_hierarchy(conn, cursor):
                            (mod_base, unmod_parent))
             conn.commit()
 
-            depth = 0
-
             for relation_idx, modbase_relation in enumerate(modbase_hierarchy):
-                _ = modbase_relation.pop(0)
-                if relation_idx == 0:  # only store if deepest
-                    # add one to depth, since 0 is for root bases
-                    depth = _ + 1
-
                 parent = modbase_relation[0]
 
                 # children
@@ -454,15 +447,13 @@ def cons_nested_verified_depth_dict_modbase_hierarchy(conn, cursor):
             # last element now contains the valid nesting
             modbase_hierarchy = modbase_hierarchy[-1]
 
-            # add the modified base as the parent, taking
+            # key by the input base of the hierarchical construction,
+            # i.e. the unmodfied parent base, taking
             # the position of the empty string from the query
-            modbase_hierarchy = ([hier_query_base] +
-                                 modbase_hierarchy[1:])
+            verified_full_hierarchy_dict[hier_query_base] += \
+                modbase_hierarchy[1:]
 
-            verified_full_hierarchy_depth_dict[depth] += \
-                [modbase_hierarchy]
-
-    return verified_full_hierarchy_depth_dict
+    return verified_full_hierarchy_dict
 
 
 def create_homepage(homepageLinks):
@@ -480,10 +471,10 @@ def create_homepage(homepageLinks):
                                 verifiedBases['Uracil'])
     del(verifiedBases['Uracil'])
 
-    verified_full_hierarchy_depth_dict = \
-        cons_nested_verified_depth_dict_modbase_hierarchy(conn, cursor)
+    verified_full_hierarchy_dict = \
+        cons_nested_verified_dict_modbase_hierarchy(conn, cursor)
 
-    print(verified_full_hierarchy_depth_dict)  # XXX
+    print(verified_full_hierarchy_dict)  # XXX
     # TODO construct HTML from the hierarchy, starting from
     # the lists of maximal elements, rec. & ignoring any previous...
 
