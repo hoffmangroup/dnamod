@@ -471,10 +471,9 @@ def create_homepage(homepageLinks):
                                 verifiedBases['Uracil'])
     del(verifiedBases['Uracil'])
 
-    verified_full_hierarchy_dict = \
+    verified_hierarchy_dict = \
         cons_nested_verified_dict_modbase_hierarchy(conn, cursor)
 
-    print(verified_full_hierarchy_dict)  # XXX
     # TODO construct HTML from the hierarchy, starting from
     # the lists of maximal elements, rec. & ignoring any previous...
 
@@ -489,6 +488,7 @@ def create_homepage(homepageLinks):
 
     render = home_template.render(bases=VERIFIED_BASES,
                                   modifications=verifiedBases,
+                                  verifiedHierarchy=verified_hierarchy_dict,
                                   unverifiedbases=BASES,
                                   unverifiedmodifications=unverifiedBases)
     f.write(render)
