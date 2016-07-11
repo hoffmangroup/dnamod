@@ -20,6 +20,7 @@ from itertools import izip
 import os
 import pybel
 from pysqlite2 import dbapi2 as sqlite3  # needed for latest SQLite
+from string import maketrans
 import sys
 
 # Using Jinja2 as templating engine
@@ -369,68 +370,97 @@ def get_modbase_hierarchy(cursor, base_id):
     return [list(result) for result in hierarchy.fetchall()]
 
 
-def cons_nested_verified_depth_dict_modbase_hierarchy(cursor):
+def cons_nested_verified_depth_dict_modbase_hierarchy(conn, cursor):
     """Returns a dictionary, keyed by the hierarchy depth,
        of the hierarchy of verified modified bases, as values,
        containing nested lists."""
+    # NB: this is a highly inefficient way of doing things, from
+    # the non-batch insertions and deletions to the lack of SQL
+    # query optimization. This only applies, however, for a
+    # small subset of bases (those that are verified), which is
+    # always going to be a fairly small set.
+
     # get all root verified bases (i.e. those without parents)
     # since we will be recursively computing their children
-    verified_root_base_IDs_Q = cursor.execute("""SELECT DISTINCT nameid
+    verified_root_base_IDs_Q = cursor.execute("""SELECT DISTINCT baseid, nameid
                                                  FROM modbase
                                                  WHERE verifiedstatus=1
                                                      AND nameid NOT IN
                                                      -- s.t. it has no parents
                                                     (SELECT DISTINCT nameid
                                                      FROM modbase_parents)""")
-    verified_root_base_IDs = [result[0] for result in
-                              verified_root_base_IDs_Q.fetchall()]
+
+    verified_root_base_IDs_by_unmod_base = defaultdict(list)
+    for unmod_key, result in verified_root_base_IDs_Q.fetchall():
+        unmod_key = str(unmod_key)  # no need for Unicode
+        # uracil -> thymine, since verified
+        unmod_key = unmod_key.translate(maketrans('Uu', 'Tt'))
+        assert unmod_key.upper() in dnamod_utils.UNMOD_ALPH
+
+        verified_root_base_IDs_by_unmod_base[unmod_key].append(result)
 
     # NB: all children of verified bases are also verified, so we
     #     do not check this
     verified_full_hierarchy_depth_dict = defaultdict(list)
     seen_children = {}
 
-    for mod_base in verified_root_base_IDs:
-        modbase_hierarchy = get_modbase_hierarchy(cursor, mod_base)
+    for (unmod_parent,
+         mod_base_children) in (verified_root_base_IDs_by_unmod_base.
+                                iteritems()):
+        for mod_base in mod_base_children:
+            #  INSERT INTO modbase_parents VALUES(mod_base, unmod_parent)
+            #  then query for unmod_parent and not mod_base...
+            cursor.execute("""INSERT INTO modbase_parents
+                              VALUES(?, ?)""", (mod_base, unmod_parent))
+            conn.commit()
 
-        depth = 0
+            hier_query_base = unmod_parent
+            modbase_hierarchy = get_modbase_hierarchy(cursor, hier_query_base,)
 
-        for relation_idx, modbase_relation in enumerate(modbase_hierarchy):
-            _ = modbase_relation.pop(0)
-            if relation_idx == 0:  # only store if deepest
-                # add one to depth, since 0 is for root bases
-                depth = _ + 1
+            cursor.execute("""DELETE FROM modbase_parents
+                              WHERE nameid=? AND parentid=?""",
+                           (mod_base, unmod_parent))
+            conn.commit()
 
-            parent = modbase_relation[0]
+            depth = 0
 
-            # children
-            modbase_relation[1] = modbase_relation[1].split(',')
+            for relation_idx, modbase_relation in enumerate(modbase_hierarchy):
+                _ = modbase_relation.pop(0)
+                if relation_idx == 0:  # only store if deepest
+                    # add one to depth, since 0 is for root bases
+                    depth = _ + 1
 
-            # create a valid nesting by embedding previous
-            # children within their later referring element
-            for idx, child in enumerate(modbase_relation[1]):
-                if seen_children.get(child):
-                    modbase_relation[1][idx] = [child, seen_children[child]]
+                parent = modbase_relation[0]
 
-            # record currently encountered relation
-            seen_children[parent] = modbase_relation[1]
+                # children
+                modbase_relation[1] = modbase_relation[1].split(',')
 
-            # replace the current list with its nested version
-            modbase_hierarchy[relation_idx] = modbase_relation
+                # create a valid nesting by embedding previous
+                # children within their later referring element
+                for idx, child in enumerate(modbase_relation[1]):
+                    if seen_children.get(child):
+                        modbase_relation[1][idx] = [child,
+                                                    seen_children[child]]
 
-        # add the root to its correct pos. in the hierarchy
-        if modbase_hierarchy:
+                # record currently encountered relation
+                seen_children[parent] = modbase_relation[1]
+
+                # replace the current list with its nested version
+                modbase_hierarchy[relation_idx] = modbase_relation
+
+            # add the root to its correct pos. in the hierarchy
+
             # discard previous nested lists, since the
             # last element now contains the valid nesting
             modbase_hierarchy = modbase_hierarchy[-1]
 
             # add the modified base as the parent, taking
             # the position of the empty string from the query
-            modbase_hierarchy = [mod_base] + modbase_hierarchy[1:]
+            modbase_hierarchy = ([hier_query_base] +
+                                 modbase_hierarchy[1:])
 
-            verified_full_hierarchy_depth_dict[depth] += [modbase_hierarchy]
-        else:
-            verified_full_hierarchy_depth_dict[depth] += [mod_base]
+            verified_full_hierarchy_depth_dict[depth] += \
+                [modbase_hierarchy]
 
     return verified_full_hierarchy_depth_dict
 
@@ -451,8 +481,9 @@ def create_homepage(homepageLinks):
     del(verifiedBases['Uracil'])
 
     verified_full_hierarchy_depth_dict = \
-        cons_nested_verified_depth_dict_modbase_hierarchy(cursor)
+        cons_nested_verified_depth_dict_modbase_hierarchy(conn, cursor)
 
+    print(verified_full_hierarchy_depth_dict)  # XXX
     # TODO construct HTML from the hierarchy, starting from
     # the lists of maximal elements, rec. & ignoring any previous...
 
