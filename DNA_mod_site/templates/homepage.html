@@ -15,7 +15,6 @@
     <script type='text/javascript' src='scripts/script.js'>
         <script type="text/javascript" src=".https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
         <script type="text/javascript" src="js/psd3.js"></script>
         <link rel="stylesheet" type="text/css" href="css/psd3.css" /> 
@@ -61,22 +60,22 @@
 
     <div id="tabs">
         <ul>
-            <li> <a href="#tabs-1"> Verified </a>
-            <li> <a href="#tabs-2"> Unverified </a>
+            <li class="ui-tabs-selected"> <a href="#tabs-1">Verified</a>
+            <li> <a href="#tabs-2">Unverified</a>
         </ul>
 
         <div id="tabs-1">
-        <div class="container">
+            <div class="container">
                 <div class="well">
                     <h2> Verified DNA nucleobases  </h2>
                     <ul>
-                        <li><a href="https://bitbucket.org/hoffmanlab/dnamod">View source on Bitbucket</a></li>
-                        <li>View the organization of modified nucleobases by their properties.</li>
-                        <li>Click a terminal section to view information on that nucleobase. </li>
+                        <li>View the organization of modified nucleobases by their chemical hierarchies.</li>
+                        <li>Click any modified base to view its information. </li>
                     </ul>
                 </div>
 
-            <div id="chartContainer" class="well"></div>
+                <div id="chartContainer" class="well"></div>
+            </div>
 
             <script type="text/javascript">
                 var DNA_bases = [
@@ -132,6 +131,7 @@
 
                 var samplePie = new psd3.Pie(config);
             </script>
+
             <noscript>
                 <div class= "IndexLayout" >
                     <div id="accordion">
