@@ -202,6 +202,7 @@ def create_html_pages(env):
     links = []
     blacklist = []
 
+    # XXX TODO refactor to use tables and not dump and manually parse
     c.execute('''DROP TABLE IF EXISTS temp''')
     c.execute('''CREATE TABLE temp AS SELECT * FROM
                     (SELECT * from
@@ -407,6 +408,9 @@ def cons_nested_verified_dict_modbase_hierarchy(conn, cursor):
     verified_full_hierarchy_dict = defaultdict(list)
     seen_children = {}
 
+    name_ID_map = dict(cursor.execute("""SELECT nameid,
+                                         chebiname FROM names""").fetchall())
+
     for (unmod_parent,
          mod_base_children) in (verified_root_base_IDs_by_unmod_base.
                                 iteritems()):
@@ -426,10 +430,11 @@ def cons_nested_verified_dict_modbase_hierarchy(conn, cursor):
             conn.commit()
 
             for relation_idx, modbase_relation in enumerate(modbase_hierarchy):
-                parent = modbase_relation[0]
+                parent = name_ID_map.get(modbase_relation[0], '')
 
                 # children
-                modbase_relation[1] = modbase_relation[1].split(',')
+                modbase_relation[1] = [name_ID_map[id] for id in
+                                       modbase_relation[1].split(',')]
 
                 # create a valid nesting by embedding previous
                 # children within their later referring element
@@ -496,9 +501,6 @@ def create_homepage(env, homepage_links):
 
     verified_hierarchy_dict = \
         cons_nested_verified_dict_modbase_hierarchy(conn, cursor)
-
-    # TODO construct HTML from the hierarchy, starting from
-    # the lists of maximal elements, rec. & ignoring any previous...
 
     home_template = env.get_template('homepage.html')
 

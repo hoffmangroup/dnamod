@@ -15,6 +15,7 @@
     <script type='text/javascript' src='scripts/script.js'>
         <script type="text/javascript" src=".https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 
         <script type="text/javascript" src="js/psd3.js"></script>
         <link rel="stylesheet" type="text/css" href="css/psd3.css" /> 
@@ -24,24 +25,31 @@
 </head>
 
 
-{#  XXX TODO complete/fix and compute/fix value #}
-{% macro _consRecTree(mod_children_L, subpie_frac=10) -%}
-    {% set mod_children = mod_children_L.pop(0) %}
-    {% if not mod_children|is_list %}
-        {% set mod_children = [mod_children] %}
+{#  XXX TODO complete/fix and fix value #}
+{% macro _consRecTree(mod_children_L, subpie_frac=0) -%}
+    {% if not mod_children_L|is_list %}
+        {% set mod_children_L = [mod_children_L] %}
+    {% elif subpie_frac == 0 %}
+        {% set subpie_frac = 100/(mod_children_L|length) %}
     {% endif %}
 
-    {% for mod_baseid in mod_children %}
-        name: "{{ mod_baseid }}",
-        value: "{{ subpie_frac }}",
-        drilldown: [
-            {% if not loop.last and mod_children[loop.index0 + 1]|is_list %}
-                {#  next element is a list -> proceed with the recursive step #}
-                {{ '{' }}
-                {{ _consRecTree(mod_children[loop.index0 + 1], subpie_frac) }}  {# XXX TODO consider adjusting the value #}
-                {{ '}' }}
+    {% for mod_baseid in mod_children_L %}
+        {% if not mod_baseid|is_list %}
+            name: "{{ mod_baseid }}",
+            value: {{ subpie_frac }},
+            drilldown: [
+                {% if not loop.last and mod_children_L[loop.index0 + 1]|is_list %}
+                    {#  next element is a list -> proceed with the recursive step #}
+                    {{ '{' }}
+                    {{ _consRecTree(mod_children_L[loop.index0 + 1],
+                                    100/(mod_children_L[loop.index0 + 1]|length))
+                    }}
+                    {{ '}' }}
+                {% endif %}
+            ]{% if not loop.last -%}
+                ,
             {% endif %}
-        ]
+        {% endif %}
     {% endfor %}
 {%- endmacro %}
 
@@ -53,11 +61,23 @@
 
     <div id="tabs">
         <ul>
-            <li> <a href="#tabs-1"> Verified </a></li>
-            <li> <a href="#tabs-2"> Unverified </a></li>
+            <li> <a href="#tabs-1"> Verified </a>
+            <li> <a href="#tabs-2"> Unverified </a>
         </ul>
 
         <div id="tabs-1">
+        <div class="container">
+                <div class="well">
+                    <h2> Verified DNA nucleobases  </h2>
+                    <ul>
+                        <li><a href="https://bitbucket.org/hoffmanlab/dnamod">View source on Bitbucket</a></li>
+                        <li>View the organization of modified nucleobases by their properties.</li>
+                        <li>Click a terminal section to view information on that nucleobase. </li>
+                    </ul>
+                </div>
+
+            <div id="chartContainer" class="well"></div>
+
             <script type="text/javascript">
                 var DNA_bases = [
                     {% for unmod_base, mod_children in verifiedHierarchy|dictsort %}
@@ -65,9 +85,9 @@
                             name: "{{ unmod_base }}",
                             value: 25,
                             drilldown: [{{ '{' }}
-                                {{ _consRecTree(mod_children, 10) }} {# XXX TODO compute and fix value #}
+                                {{ _consRecTree(mod_children) }}
                             {{ '}' }}]
-                        {{ '}' }}{% if loop.last %}, 
+                        {{ '}' }}{% if not loop.last %}, 
                         {% endif %}
                     {% endfor %}
                 ];
@@ -77,10 +97,6 @@
                     width: 500,
                     height: 500,
                     data: DNA_bases,
-                    heading: {
-                        text: "DNA bases",
-                        pos: "top"
-                    },
                     label: function(d) {
                         return d.data.name;
                     },
@@ -88,7 +104,19 @@
                     tooltip: function(d) {
                         return "<div style='background-color: #4a4; color: white; padding: 15px; text-align: middle; border: dotted 1px black;'>" + d.name + "<span class='nucleobase'> ()</span>"  + "</div>";
                     },
-                    redirOnClick: "http://dnamod.hoffmanlab.org",
+                    dblclick: function(d) {
+                        var url = d.data.name.concat(".html");
+                        $.ajax({
+                            type: 'HEAD',
+                            url: url,
+                            success: function() {
+                                return window.location.href = url;
+                            },
+                        error: function() {
+                            return;
+                        }
+                        });
+                    },
                     transition: "linear",
                     transitionDuration: 500,
                     donutRadius: 50,
@@ -113,7 +141,7 @@
                                 {% set baseloop = loop %}
                                 <ul>
                                     {% for modification in modifications[base] %}
-                                        <li> <a href= "{{ modification }}.html" > {{ modification }}</a>
+                                        <li> <a href= "{{ modification }}.html"> {{ modification }}</a>
                                     {% endfor %}
                                 </ul>
                                 <br>
@@ -130,8 +158,8 @@
                     <h2> Unverified entries </h2>
                     <ul>
                         <li>The entries listed on this page are chemicals associated with a particular unmodified nucleobase,
-                            but have not been manually verified as DNA modifications.</li>
-                        <li>Expand a section and click on a link to view information on the entity.</li>
+                            but have not been manually verified as DNA modifications.
+                        <li>Expand a section and click on a link to view information on the entity.
                     </ul>
                 </div>
 
@@ -143,7 +171,7 @@
                             {% set baseloop = loop %}
                             <ul>
                             {% for modification in unverifiedmodifications[base] %}
-                                <li> <a href= "{{ modification }}.html" > {{ modification }}</a> </li>
+                                <li> <a href= "{{ modification }}.html"> {{ modification }}</a>
                             {% endfor %}
                             </ul> <br>
                         </div>
@@ -155,8 +183,8 @@
     </div>
 
     <footer>
-        <a href= "about.html" > About</a>
-        <a href= "contact.html" > Contact</a>
+        <a href= "about.html"> About</a>
+        <a href= "contact.html"> Contact</a>
     </footer>
 
 </body>

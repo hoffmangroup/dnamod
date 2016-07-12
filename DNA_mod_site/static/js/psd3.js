@@ -123,15 +123,18 @@ psd3.Pie.prototype.drawPie = function(dataset) {
     }
     _this = this;
     _this.arcIndex = 0;
+
     var svg = d3.select("#" + _this.config.containerId)
         .append("svg")
         .attr("id", _this.config.containerId + "_svg")
         .attr("width", _this.config.width)
         .attr("height", _this.config.height);
     _this.tooltipId = _this.config.containerId + "_tooltip";
+
     var tooltipDiv = d3.select("#" + _this.config.containerId).append("div")
         .attr("id", _this.tooltipId)
         .attr("class", "psd3Hidden psd3Tooltip");
+
     tooltipDiv.append("p")
         .append("span")
         .attr("id", "value")
@@ -203,11 +206,6 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
     for (var i = 0; i < dataset.length; i++) {
         values.push(dataset[i][_this.config.value]);
     }
-    //console.log(values);
-
-    var dblclick = function(d) {
-        window.location.href = _this.config.redirOnClick;
-    };
 
     var arc = d3.svg.arc().innerRadius(innerRadius)
         .outerRadius(outerRadius);
@@ -230,7 +228,7 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
         .attr("class", "arc " + clazz)
         .attr("transform",
             "translate(" + (totalRadius) + "," + (totalRadius) + ")")
-        .on("dblclick", dblclick);
+        .on("dblclick", _this.config.dblclick);
 
     var gradient = svg.append("svg:defs")
         .append("svg:linearGradient")
@@ -307,11 +305,11 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
         .attr("title", _this.textTitle);
 
 
-
     //console.log("paths.data() = " + paths.data());
     for (var j = 0; j < dataset.length; j++) {
-        //console.log("dataset[j] = " + dataset[j]);
-        //console.log("paths.data()[j] = " + paths.data()[j]);
+        for (x in [svg, totalRadius, dataset[j][_this.config.inner], originalDataset, originalDatasetLength, innerRadius + radiusDelta, outerRadius + radiusDelta, radiusDelta, paths.data()[j].startAngle, paths.data()[j].endAngle, arc.centroid(paths.data()[j])]) {
+            console.log(x);
+        } 
         if (dataset[j][_this.config.inner] !== undefined) {
             _this.draw(svg, totalRadius, dataset[j][_this.config.inner], originalDataset, originalDatasetLength, innerRadius + radiusDelta, outerRadius + radiusDelta, radiusDelta, paths.data()[j].startAngle, paths.data()[j].endAngle, arc.centroid(paths.data()[j]));
         }
