@@ -23,6 +23,29 @@
     <link href="css/style.css" rel="stylesheet" type='text/css'>
 </head>
 
+
+{#  XXX TODO complete/fix and compute/fix value #}
+{% macro _consRecTree(mod_children_L, subpie_frac=10) -%}
+    {% set mod_children = mod_children_L.pop(0) %}
+    {% if not mod_children|is_list %}
+        {% set mod_children = [mod_children] %}
+    {% endif %}
+
+    {% for mod_baseid in mod_children %}
+        name: "{{ mod_baseid }}",
+        value: "{{ subpie_frac }}",
+        drilldown: [
+            {% if not loop.last and mod_children[loop.index0 + 1]|is_list %}
+                {#  next element is a list -> proceed with the recursive step #}
+                {{ '{' }}
+                {{ _consRecTree(mod_children[loop.index0 + 1], subpie_frac) }}  {# XXX TODO consider adjusting the value #}
+                {{ '}' }}
+            {% endif %}
+        ]
+    {% endfor %}
+{%- endmacro %}
+
+
 <body>
     <div class= "TitleBlock" >
         <h1> DNAmod — The DNA Modification Database </h1>
@@ -35,7 +58,52 @@
         </ul>
 
         <div id="tabs-1">
-            
+            <script type="text/javascript">
+                var DNA_bases = [
+                    {% for unmod_base, mod_children in verifiedHierarchy|dictsort %}
+                       {{ '{' }}
+                            name: "{{ unmod_base }}",
+                            value: 25,
+                            drilldown: [{{ '{' }}
+                                {{ _consRecTree(mod_children, 10) }} {# XXX TODO compute and fix value #}
+                            {{ '}' }}]
+                        {{ '}' }}{% if loop.last %}, 
+                        {% endif %}
+                    {% endfor %}
+                ];
+
+                var config = {
+                    containerId: "chartContainer",
+                    width: 500,
+                    height: 500,
+                    data: DNA_bases,
+                    heading: {
+                        text: "DNA bases",
+                        pos: "top"
+                    },
+                    label: function(d) {
+                        return d.data.name;
+                    },
+                    inner: "drilldown",
+                    tooltip: function(d) {
+                        return "<div style='background-color: #4a4; color: white; padding: 15px; text-align: middle; border: dotted 1px black;'>" + d.name + "<span class='nucleobase'> ()</span>"  + "</div>";
+                    },
+                    redirOnClick: "http://dnamod.hoffmanlab.org",
+                    transition: "linear",
+                    transitionDuration: 500,
+                    donutRadius: 50,
+                    gradient: true,
+                    colors: d3.scale.category20(),
+                    labelColor: "white",
+                    stroke: "#eee",
+                    strokeWidth: 3,
+                    drilldownTransition: "linear",
+                    drilldownTransitionDuration: 0,
+                    highlightColor: "#c00"
+                };
+
+                var samplePie = new psd3.Pie(config);
+            </script>
             <noscript>
                 <div class= "IndexLayout" >
                     <div id="accordion">

@@ -152,6 +152,7 @@
                                 {% if RefAnnotEntry["citationid"] %}
                                     {% set AuthorL = RefAnnotEntry["authors"].split(';') %}
                                     {% set TitleL = RefAnnotEntry["title"].split(';') %}
+                                    {% set PubdateL = '' %}
                                     {% if RefAnnotEntry["pubdate"] %}
                                         {% set PubdateL = RefAnnotEntry["pubdate"].split(';') %}
                                     {% endif %}

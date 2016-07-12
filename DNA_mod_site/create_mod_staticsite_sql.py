@@ -15,7 +15,8 @@ Function:
 4. Creates a home page with links to html modification pages
 '''
 import codecs
-from collections import OrderedDict, defaultdict
+from collections import OrderedDict, defaultdict, MutableSequence
+from copy import deepcopy
 from itertools import izip
 import os
 import pybel
@@ -24,8 +25,7 @@ from string import maketrans
 import sys
 
 # Using Jinja2 as templating engine
-from jinja2 import Environment
-from jinja2 import FileSystemLoader
+import jinja2
 
 # permit import from parent directory
 sys.path.append(os.path.join(sys.path[0], '..'))
@@ -50,6 +50,12 @@ TEMPLATE_DIR = dnamod_utils.get_constant('site_template_dir')
 SEQ_ANNOT_TABLE = 'sequencing_citations'
 NATURE_ANNOT_TABLE = 'nucleobase_nature_info'
 REFERENCES_TABLE = 'citations'
+
+
+def is_list(object):
+    """Test if the given object is a list, by checking if
+       it is an instance of its proximal abstract class."""
+    return isinstance(object, MutableSequence)
 
 
 def render_image(smiles, name):
@@ -183,19 +189,16 @@ def get_mod_base_ref_annot_data(id, cursor, table):
     return annot_dict_list
 
 
-def create_html_pages():
+# XXX TODO break up below function into multiple smaller functions
+def create_html_pages(env):
     # Load in SQLite database
     conn = sqlite3.connect(dnamod_utils.get_constant('database'))
     c = conn.cursor()
 
-    # Create a Jinja 2 environment object and load in templates
-    env = Environment()
-    env.loader = FileSystemLoader(TEMPLATE_DIR)
-
     page_template = env.get_template('modification.html')
 
     # Dictionary to store links for hompage
-    homepageLinks = {}
+    homepage_links = {}
     links = []
     blacklist = []
 
@@ -321,11 +324,11 @@ def create_html_pages():
                 blacklist.append(link)
 
         links = sorted(links, key=lambda s: s.lower())
-        homepageLinks[BASE] = links
+        homepage_links[BASE] = links
         blacklist = sorted(blacklist, key=lambda s: s.lower())
         blacklistBase = 'Unverified' + BASE
-        homepageLinks[blacklistBase] = blacklist
-    return homepageLinks
+        homepage_links[blacklistBase] = blacklist
+    return homepage_links
 
 
 def get_modbase_hierarchy(cursor, base_id):
@@ -432,8 +435,8 @@ def cons_nested_verified_dict_modbase_hierarchy(conn, cursor):
                 # children within their later referring element
                 for idx, child in enumerate(modbase_relation[1]):
                     if seen_children.get(child):
-                        modbase_relation[1][idx] = [child,
-                                                    seen_children[child]]
+                        modbase_relation[1][idx:idx + 1] = \
+                            [[child] + seen_children[child]]
 
                 # record currently encountered relation
                 seen_children[parent] = modbase_relation[1]
@@ -453,19 +456,39 @@ def cons_nested_verified_dict_modbase_hierarchy(conn, cursor):
             verified_full_hierarchy_dict[hier_query_base] += \
                 modbase_hierarchy[1:]
 
+    # fix the dictionary values, s.t. all doubly-nested lists
+    # with only a single item are made into singly-nested lists
+    for key, val in verified_full_hierarchy_dict.iteritems():
+        fixedVal = deepcopy(val)
+
+        for idx, valL in enumerate(val):
+            if is_list(valL) and len(valL) == 1:
+                fixedVal[idx] = valL[0]
+
+        verified_full_hierarchy_dict[key] = fixedVal
+
+    verified_full_hierarchy_dict = {key: valL[0] if
+                                    (valL[0] and
+                                     is_list(valL[0])
+                                     and len(valL) == 1)
+                                    else valL for key, valL in
+                                    verified_full_hierarchy_dict.
+                                    iteritems()}
+
     return verified_full_hierarchy_dict
 
 
-def create_homepage(homepageLinks):
+# TODO refactor...
+def create_homepage(env, homepage_links):
     conn = sqlite3.connect(dnamod_utils.get_constant('database'))
     cursor = conn.cursor()
 
     verifiedBases = {}
     unverifiedBases = {}
     for base in BASES:
-        verifiedBases[base] = homepageLinks[base]
+        verifiedBases[base] = homepage_links[base]
         unvername = 'Unverified' + base
-        unverifiedBases[base] = homepageLinks[unvername]
+        unverifiedBases[base] = homepage_links[unvername]
 
     verifiedBases['Thymine'] = (verifiedBases['Thymine'] +
                                 verifiedBases['Uracil'])
@@ -476,9 +499,6 @@ def create_homepage(homepageLinks):
 
     # TODO construct HTML from the hierarchy, starting from
     # the lists of maximal elements, rec. & ignoring any previous...
-
-    env = Environment()
-    env.loader = FileSystemLoader(TEMPLATE_DIR)
 
     home_template = env.get_template('homepage.html')
 
@@ -495,7 +515,15 @@ def create_homepage(homepageLinks):
     f.close()
 
 
+# create the Jinja2 environment object, loading from files
+# and disallowing the use of undefined variables
+env = jinja2.Environment(loader=jinja2.FileSystemLoader(TEMPLATE_DIR),
+                         undefined=jinja2.StrictUndefined)
+
+env.filters['is_list'] = is_list  # add custom filter
+
+
 print("Generating Static Site....")
-links = create_html_pages()
-create_homepage(links)
+links = create_html_pages(env)
+create_homepage(env, links)
 print("Static Site Generated")
