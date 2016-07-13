@@ -126,13 +126,10 @@
                             success: function() {
                                 return window.location.href = url;
                             },
-                        error: function() {
-                            return;
-                        }
                         });
                     },
                     transition: "linear",
-                    transitionDuration: 500,
+                    transitionDuration: 100, // in ms
                     donutRadius: 50,
                     gradient: true,
                     colors: d3.scale.category20(),
