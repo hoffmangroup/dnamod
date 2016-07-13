@@ -10,7 +10,7 @@ g.arc path:hover {
 
 .psd3Tooltip {
     position: absolute;
-    max-width: 150px;
+    max-width: 400px;
     height: auto;
     padding: 10px;
     background-color: white;

@@ -24,30 +24,45 @@
 </head>
 
 
-{#  XXX TODO complete/fix and fix value #}
-{% macro _consRecTree(mod_children_L, subpie_frac=0) -%}
+{% macro _consRecTree(mod_children_L, subpie_frac) -%}
     {% if not mod_children_L|is_list %}
         {% set mod_children_L = [mod_children_L] %}
-    {% elif subpie_frac == 0 %}
-        {% set subpie_frac = 100/(mod_children_L|length) %}
     {% endif %}
 
-    {% for mod_baseid in mod_children_L %}
-        {% if not mod_baseid|is_list %}
-            name: "{{ mod_baseid }}",
-            value: {{ subpie_frac }},
-            drilldown: [
-                {% if not loop.last and mod_children_L[loop.index0 + 1]|is_list %}
-                    {#  next element is a list -> proceed with the recursive step #}
-                    {{ '{' }}
-                    {{ _consRecTree(mod_children_L[loop.index0 + 1],
-                                    100/(mod_children_L[loop.index0 + 1]|length))
-                    }}
-                    {{ '}' }}
-                {% endif %}
-            ]{% if not loop.last -%}
-                ,
-            {% endif %}
+    {# Circumvent Jinja2 scoping rules, using an object for the count.
+       Adapted from:  http://stackoverflow.com/a/32700975 #}
+    {% set num_nested_lists = [0] %}
+    {% for mod_base in mod_children_L %}
+        {% if mod_base|is_list %}
+            {# increment num_nested_lists by 1 #}
+            {% if num_nested_lists.append(num_nested_lists.pop() + 1) %}{% endif %}
+        {% endif %}
+    {% endfor %}
+    {% set num_nested_lists = num_nested_lists.pop() %} {# object -> int #}
+
+    {% set subpie_frac = subpie_frac/(mod_children_L|length - num_nested_lists) %}
+
+    {% for mod_base in mod_children_L %}
+        {% if mod_base|is_list %}
+            {% set mod_base_name = mod_base.pop(0) %}
+        {% else %}
+            {% set mod_base_name = mod_base %}
+        {% endif %}
+
+        {{ '{' }}
+        name: "{{ mod_base_name }}",
+        value: {{ subpie_frac }},
+        drilldown: [
+        {% if mod_base|is_list and mod_base|length > 0 %}
+            {#  next element is a list -> proceed with the recursive step #}
+            {#{{ '{' }}#}
+            {{ _consRecTree(mod_base, subpie_frac) }}
+            {#{{ '}' }}#}
+        {% endif %}
+        ]
+        {{ '}' }}
+        {% if not loop.last -%}
+            ,
         {% endif %}
     {% endfor %}
 {%- endmacro %}
@@ -78,14 +93,14 @@
             </div>
 
             <script type="text/javascript">
+                {% set initial_subpie_frac = 100/(verifiedHierarchy.keys()|length) %}
+
                 var DNA_bases = [
                     {% for unmod_base, mod_children in verifiedHierarchy|dictsort %}
                        {{ '{' }}
                             name: "{{ unmod_base }}",
-                            value: 25,
-                            drilldown: [{{ '{' }}
-                                {{ _consRecTree(mod_children) }}
-                            {{ '}' }}]
+                            value: {{ initial_subpie_frac }},
+                            drilldown: [{{ _consRecTree(mod_children, initial_subpie_frac) }}]
                         {{ '}' }}{% if not loop.last %}, 
                         {% endif %}
                     {% endfor %}
@@ -93,8 +108,8 @@
 
                 var config = {
                     containerId: "chartContainer",
-                    width: 500,
-                    height: 500,
+                    width: 1400,
+                    height: 1400,
                     data: DNA_bases,
                     label: function(d) {
                         return d.data.name;
