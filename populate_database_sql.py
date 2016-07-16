@@ -18,6 +18,7 @@ Function:
 
 from contextlib import contextmanager
 import datetime
+from more_itertools import peekable
 import pprint
 import sqlite3
 import sys
@@ -510,15 +511,20 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
 
 
 @contextmanager
-def _read_csv_ignore_comments(file_name):
+def _read_csv_ignore_comments(file_name, enforce_header_num_cols=None):
     try:
         with open(file_name, 'rb') as file:
             # use a generator expression to ignore comments
-            reader = csv.reader((row for row in file if not row.startswith('#')),
-                                delimiter="\t")
-            yield reader
+            reader = peekable(csv.reader((row for row in file if not row.startswith('#')),
+                                         delimiter="\t"))
+            if enforce_header_num_cols:
+                num_cols = len(reader.peek())  # look at header, leaving it in gen.
+                yield (row + ([None] * (num_cols - len(row))) for row in reader)
+            else:
+                yield reader
     finally:
         pass
+
 
 def _create_modbase_annot_table(conn, sql_conn_cursor, header, table_name):
     col_names_create_spec = ''
@@ -563,9 +569,9 @@ def _add_annots_for_id(id, sql_conn_cursor, line, last_col_num, table_name):
 
 
 def create_exp_alph_table(conn, sql_conn_cursor, exp_alph_file_name):
-    print("---------- Adding Expanded Alphabet ----------")
+    print("---------- Adding Nomenclature ----------")
 
-    with _read_csv_ignore_comments(exp_alph_file_name) as reader:
+    with _read_csv_ignore_comments(exp_alph_file_name, True) as reader:
         for num, line in enumerate(reader):
             assert len(line) > 2  # min. of three columns
 

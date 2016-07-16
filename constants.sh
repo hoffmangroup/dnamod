@@ -61,7 +61,7 @@ DATABASE="$DATA_DIR/DNA_mod_database.db"
 WHITELIST="$DATA_DIR/whitelist.txt"
 BLACKLIST="$DATA_DIR/blacklist.txt"
 
-ANNOT_EXP_ALPH="$DATA_DIR/expanded_alphabet.txt"
+ANNOT_EXP_ALPH="$DATA_DIR/nomenclature.txt"
 ANNOT_SEQ="$DATA_DIR/ref_annots_sequencing.txt"
 ANNOT_NATURE="$DATA_DIR/ref_annots_nature.txt"
 

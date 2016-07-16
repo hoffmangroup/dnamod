@@ -1,0 +1,29 @@
+CHEBI	Abbreviation	Name	Symbol	Complement	Complement Symbol
+CHEBI:16964	5hmU	5-hydroxymethyluracil	g	adenine:5-hydroxymethyluracil
+CHEBI:80961	5fU	5-formyluracil	e	adenine:5-formyluracil
+CHEBI:17477	5caU	5-carboxyluracil	b	adenine:5-carboxyluracil
+CHEBI:28871	6mA	6-methyladenine	a	thymine:6-methyladenine
+CHEBI:60281	6-DMA	N(6),N(6)-dimethyladenine
+CHEBI:25272	mA	methyladenine
+CHEBI:18083	1mA	1-methyladenine
+CHEBI:38635	3mA	3-methyladenine
+CHEBI:28871	6mA	6-methyladenine
+CHEBI:28921	7mA	7-methyladenine
+CHEBI:40526	9mA	9-methyladenine
+CHEBI:78685	AHAP	2-amino-6-hydroxyaminopurine
+CHEBI:78235	HAP	6-hydroxyaminopurine
+CHEBI:74029	e3C	3-ethylcytosine
+CHEBI:39624	1mC	1-methylcytosine
+CHEBI:39992	3mC	3-methylcytosine
+CHEBI:21839	4mC	4-methylcytosine
+CHEBI:27551	5mC	5-methylcytosine	m	guanine:5-methylcytosine	1
+CHEBI:76792	5hmC	5-hydroxymethylcytosine	h	guanine:5-hydroxymethylcytosine	2
+CHEBI:131616	5gmC	5-glucosylmethylcytosine
+CHEBI:76794	5fC	5-formylcytosine	f	guanine:5-formylcytosine	3
+CHEBI:76793	5caC	5-carboxylcytosine	c	guanine:5-carboxylcytosine	4
+CHEBI:70854	m2C	2-O-methylcytosine
+CHEBI:29147	ɛC	3,N(4)-ethenocytosine
+CHEBI:62032	CEG	N(2)-carboxyethylguanine
+CHEBI:44605	8oxoG	8-oxoguanine	o	adenine:8-oxoguanine
+# below version has extra Hs (7,9-dihydro)
+CHEBI:52617	8oxoG	8-oxoguanine	o	adenine:8-oxoguanine
