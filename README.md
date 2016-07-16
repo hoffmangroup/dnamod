@@ -42,15 +42,17 @@ The following packages can be obtained from [The Python Package Index, PyPI](htt
 
 1. [Biopython](http://biopython.org/wiki/Main_Page): ```biopython``` on PyPI
 
-2. [```Jinja2```](http://jinja.pocoo.org/)
+2. [`Jinja2`](http://jinja.pocoo.org/)
 
 3. [Pybel](https://openbabel.org/docs/dev/UseTheLibrary/Python_Pybel.html): ```openbabel``` on PyPI
 
-4. [```suds```](https://fedorahosted.org/suds/) (a Python SOAP client)
+4. [`suds`](https://fedorahosted.org/suds/) (a Python SOAP client)
 
-5. [```unicodecsv```](https://pypi.python.org/pypi/unicodecsv)
+5. [`unicodecsv`](https://pypi.python.org/pypi/unicodecsv)
 
-6. [```pysqlite2```](https://pypi.python.org/pypi/pysqlite)
+6. [`pysqlite2`](https://pypi.python.org/pypi/pysqlite)
+
+7. [`more-itertools`](https://pypi.python.org/pypi/more-itertools/)
 
 ## License ##
 
