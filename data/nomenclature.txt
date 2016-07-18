@@ -1,7 +1,4 @@
 CHEBI	Abbreviation	Name	Symbol	Complement	Complement Symbol
-CHEBI:16964	5hmU	5-hydroxymethyluracil	g	adenine:5-hydroxymethyluracil
-CHEBI:80961	5fU	5-formyluracil	e	adenine:5-formyluracil
-CHEBI:17477	5caU	5-carboxyluracil	b	adenine:5-carboxyluracil
 CHEBI:28871	6mA	6-methyladenine	a	thymine:6-methyladenine
 CHEBI:60281	6-DMA	N(6),N(6)-dimethyladenine
 CHEBI:25272	mA	methyladenine
@@ -27,3 +24,24 @@ CHEBI:62032	CEG	N(2)-carboxyethylguanine
 CHEBI:44605	8oxoG	8-oxoguanine	o	adenine:8-oxoguanine
 # below version has extra Hs (7,9-dihydro)
 CHEBI:52617	8oxoG	8-oxoguanine	o	adenine:8-oxoguanine
+CHEBI:25305	mG	methylguanine
+CHEBI:21803	1mG	1-methylguanine
+CHEBI:1604	3mG	3-methylguanine
+# below 3 children of 3mG are all tautomers of eachother; we call them "3mG" too
+CHEBI:27564	3mG	2-amino-3-methyl-3,7-dihydro-6H-purin-6-one
+CHEBI:46892	3mG	2-amino-3-methyl-3,9-dihydro-6H-purin-6-one
+CHEBI:46893	3mG	2-imino-3-methyl-1,2,3,9-tetrahydro-6H-purin-6-one
+CHEBI:20689	m6G	6-O-methylguanine
+CHEBI:2274	7mG	7-methylguanine
+# below 3 children of 7mG are all tautomers of eachother; we call them "7mG" too
+CHEBI:28664	7mG	2-amino-7-methyl-1,7-dihydro-6H-purin-6-one
+CHEBI:46897	7mG	2-amino-7-methyl-7H-purin-6-ol
+CHEBI:46894	7mG	2-imino-7-methyl-1,2,3,7-tetrahydro-6H-purin-6-one
+CHEBI:27468	diHT	5,6-dihydrothymine
+CHEBI:16964	5hmU	5-hydroxymethyluracil	g	adenine:5-hydroxymethyluracil
+CHEBI:80961	5fU	5-formyluracil	e	adenine:5-formyluracil
+CHEBI:111513	base J	β-glucosyl-hydroxymethyluracil	J
+CHEBI:111511	base J	β-glucosyl-hydroxymethyluracil	J
+CHEBI:17477	5caU	5-carboxyluracil	b	adenine:5-carboxyluracil
+CHEBI:74765	1mT	1-methylthymine
+CHEBI:74766	3mT	3-methylthymine
