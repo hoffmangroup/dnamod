@@ -11,7 +11,7 @@ if [[ ! ($(hostname) == 'mordor' && -n $(groups | fgrep 'hoffmangroup')) ]]; the
 fi
 
 SOURCE_DIR="$(dirname $(readlink -f $0))" # From: https://gist.github.com/tvlooy/cbfbdb111a4ebad8b93e
-CONSTANTS_SCRIPT="$SOURCE_DIR/constants.sh"
+CONSTANTS_SCRIPT="$SOURCE_DIR/../constants.sh"
 
 # Testing mode: If this is set to true the site will be copied into a test folder in ~/DNA_Base_Database/DNA_mod_site
 TESTING_MODE=false

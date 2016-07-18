@@ -27,6 +27,7 @@ ChEBI	Origin	Function	Functional info.	Organism(s)	Reference(s)
 39624	synthetic				 14118268
 # 2-O-methylcytosine
 # in EtNU-treated cells or rat liver (Table IV-14, Singer & Grunberger, 1983, chapter IV, in Molecular Biology of Mutagens and Carcinogens, 45–96)
+# But also in tRNA (e.g. in S. cerevisiae)
 70854	endogenous	damage		Rattus norvegicus	
 # 3,N(4)-ethenocytosine (epsilonC)
 29147	endogenous	damage	mutagenic	Escherichia coli,Homo sapiens	9671708,8117915

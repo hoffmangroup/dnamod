@@ -51,6 +51,8 @@ SEQ_ANNOT_TABLE = 'sequencing_citations'
 NATURE_ANNOT_TABLE = 'nucleobase_nature_info'
 REFERENCES_TABLE = 'citations'
 
+IMAGE_FORMAT = 'svg'
+
 
 def is_list(object):
     """Test if the given object is a list, by checking if
@@ -59,7 +61,10 @@ def is_list(object):
 
 
 def render_image(smiles, name):
-    FILE_TYPE = 'svg'
+    """Creates images of chemical structures from their SMILES, with PyBel.
+       The SVG image is saved. The path of the image is returned, if it exists.
+       Otherwise, None is returned.
+    """
 
     img_dir = dnamod_utils.get_constant('site_image_dir')
 
@@ -68,10 +73,17 @@ def render_image(smiles, name):
     if not smiles:
         return
 
-    svg_path = os.path.join(img_dir, "{}.{}".format(name, FILE_TYPE))
+    image_path = os.path.join(img_dir, "{}.{}".format(name, IMAGE_FORMAT))
 
     mol = pybel.readstring('smi', smiles)
-    mol.write(FILE_TYPE, svg_path, overwrite=True)
+    mol.write(IMAGE_FORMAT, image_path, overwrite=True)
+
+    if not os.path.isfile(image_path):
+        print("Warning: failed to render image"
+              "for {}".format(name), file=sys.stderr)
+        image_path = None
+
+    return image_path
 
 
 def get_citations(lookup_key, cursor):
@@ -251,7 +263,8 @@ def create_html_pages(env):
             print("Creating page: " + chebiname + ".html")
             # Process SMILES to render image
             smiles = smiles[1:-1]
-            render_image(smiles, chebiname)
+
+            image_path = render_image(smiles, chebiname)
 
             # Process synonyms for list
             synonyms = synonyms[1:-1]
@@ -305,6 +318,7 @@ def create_html_pages(env):
                                           Synonyms=synonyms,
                                           ChebiId=chebiid,
                                           CommonName=commonname,
+                                          Image=image_path,
                                           Citations=citations,
                                           ParentLink=BASE_DICT[commonname],
                                           Roles=roles,
