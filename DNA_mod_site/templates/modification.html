@@ -31,10 +31,12 @@
                             <th> Abbreviation </th>
                             <td> {{ ExpandedAlpha["Abbreviation"] }} </td>
                         </tr>
-                        <tr>
-                            <th> Symbol </th>
-                            <td class="nucleobase"> {{ ExpandedAlpha["Symbol"] }} </td>
-                        </tr>
+                        {% if ExpandedAlpha["Symbol"] %}
+                            <tr>
+                                <th> Symbol </th>
+                                <td class="nucleobase"> {{ ExpandedAlpha["Symbol"] }} </td>
+                            </tr>
+                        {% endif %}
                         {% if ExpandedAlpha["Complement Symbol"] %}
                             <tr>
                                 <th> Complement </th>
