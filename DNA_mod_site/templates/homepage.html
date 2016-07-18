@@ -126,7 +126,7 @@
                     tooltip: function(d) {
                         return "<div style='background-color: #4a4; color: white; padding: 15px; text-align: middle; border: dotted 1px black;'>" + d.displayname + "</div>";
                     },
-                    dblclick: function(d) {
+                    click: function(d) {
                         var url = d.data.chebiname.concat(".html");
                         $.ajax({
                             type: 'HEAD',

@@ -228,7 +228,7 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
         .attr("class", "arc " + clazz)
         .attr("transform",
             "translate(" + (totalRadius) + "," + (totalRadius) + ")")
-        .on("dblclick", _this.config.dblclick);
+        .on("click", _this.config.click);
 
     var gradient = svg.append("svg:defs")
         .append("svg:linearGradient")
