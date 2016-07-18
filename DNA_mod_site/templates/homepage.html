@@ -44,13 +44,18 @@
 
     {% for mod_base in mod_children_L %}
         {% if mod_base|is_list %}
-            {% set mod_base_name = mod_base.pop(0) %}
+            {% set mod_base_id = mod_base.pop(0) %}
         {% else %}
-            {% set mod_base_name = mod_base %}
+            {% set mod_base_id = mod_base %}
         {% endif %}
 
         {{ '{' }}
-        name: "{{ mod_base_name }}",
+        abbreviation: "{{ customNomenclature[mod_base_id]['Abbreviation'] }}",
+        displayname: "{{ customNomenclature[mod_base_id]['Name'] -}}
+                    {% if customNomenclature[mod_base_id]['Symbol'] -%}
+                    {{' '}}{{'('}}<span class='nucleobase'>{{customNomenclature[mod_base_id]['Symbol']}}</span>{{')'-}}
+                    {% endif -%}",
+        chebiname: "{{ customNomenclature[mod_base_id]['chebiname'] }}",
         value: {{ subpie_frac }},
         drilldown: [
         {% if mod_base|is_list and mod_base|length > 0 %}
@@ -97,8 +102,11 @@
 
                 var DNA_bases = [
                     {% for unmod_base, mod_children in verifiedHierarchy|dictsort %}
-                       {{ '{' }}
-                            name: "{{ unmod_base }}",
+                    {% set unmod_symbol = unmod_base|string|first|upper %}
+                        {{ '{' }}
+                            abbreviation: "{{ unmod_symbol }}",
+                            displayname: "{{unmod_base}}{{' '}}{{'('}}<span class='nucleobase'>{{unmod_symbol}}</span>{{')'}}",
+                            chebiname: "",
                             value: {{ initial_subpie_frac }},
                             drilldown: [{{ _consRecTree(mod_children, initial_subpie_frac) }}]
                         {{ '}' }}{% if not loop.last %}, 
@@ -112,14 +120,14 @@
                     height: 1400,
                     data: DNA_bases,
                     label: function(d) {
-                        return d.data.name;
+                        return d.data.abbreviation;
                     },
                     inner: "drilldown",
                     tooltip: function(d) {
-                        return "<div style='background-color: #4a4; color: white; padding: 15px; text-align: middle; border: dotted 1px black;'>" + d.name + "<span class='nucleobase'> ()</span>"  + "</div>";
+                        return "<div style='background-color: #4a4; color: white; padding: 15px; text-align: middle; border: dotted 1px black;'>" + d.displayname + "</div>";
                     },
                     dblclick: function(d) {
-                        var url = d.data.name.concat(".html");
+                        var url = d.data.chebiname.concat(".html");
                         $.ajax({
                             type: 'HEAD',
                             url: url,

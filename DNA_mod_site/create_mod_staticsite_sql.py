@@ -21,7 +21,6 @@ from itertools import izip
 import os
 import pybel
 from pysqlite2 import dbapi2 as sqlite3  # needed for latest SQLite
-from string import maketrans
 import sys
 
 # Using Jinja2 as templating engine
@@ -306,7 +305,7 @@ def create_html_pages(env):
 
             ref_annots = [seq_annot, nature_annot]
 
-            expandedalpha = get_expanded_alphabet(chebiid, conn)
+            expanded_alpha = get_expanded_alphabet(chebiid, conn)
 
             render = page_template.render(ChebiName=chebiname,
                                           Definition=definition,
@@ -327,7 +326,7 @@ def create_html_pages(env):
                                           RefAnnots=ref_annots,
                                           RefAnnotsRefColNames=REF_COL_NAMES,
                                           # pass ExpandedAlpha=None to disable
-                                          ExpandedAlpha=expandedalpha)
+                                          ExpandedAlpha=expanded_alpha)
             f.write(render)
             f.close()
 
@@ -399,21 +398,28 @@ def cons_nested_verified_dict_modbase_hierarchy(conn, cursor):
     # always going to be a fairly small set.
 
     # get all root verified bases (i.e. those without parents)
-    # since we will be recursively computing their children
-    verified_root_base_IDs_Q = cursor.execute("""SELECT DISTINCT baseid, nameid
-                                                 FROM modbase
+    # since we will be recursively computing their children,
+    # referring to unmodified bases by their full name
+    verified_root_base_IDs_Q = cursor.execute("""SELECT DISTINCT commonname, nameid
+                                                 FROM modbase AS mod
+                                                 JOIN base AS unmod
+                                                     ON mod.baseid=unmod.baseid
                                                  WHERE verifiedstatus=1
                                                      AND nameid NOT IN
                                                      -- s.t. it has no parents
                                                     (SELECT DISTINCT nameid
-                                                     FROM modbase_parents)""")
+                                                     FROM modbase_parents)
+                                                 ORDER BY commonname""")
 
     verified_root_base_IDs_by_unmod_base = defaultdict(list)
     for unmod_key, result in verified_root_base_IDs_Q.fetchall():
         unmod_key = str(unmod_key)  # no need for Unicode
+
         # uracil -> thymine, since verified
-        unmod_key = unmod_key.translate(maketrans('Uu', 'Tt'))
-        assert unmod_key.upper() in dnamod_utils.UNMOD_ALPH
+        if 'uracil' in unmod_key.lower():
+            unmod_key = 'thymine'
+
+        assert unmod_key[:1].upper() in dnamod_utils.UNMOD_ALPH
 
         verified_root_base_IDs_by_unmod_base[unmod_key].append(result)
 
@@ -421,9 +427,6 @@ def cons_nested_verified_dict_modbase_hierarchy(conn, cursor):
     #     do not check this
     verified_full_hierarchy_dict = defaultdict(list)
     seen_children = {}
-
-    name_ID_map = dict(cursor.execute("""SELECT nameid,
-                                         chebiname FROM names""").fetchall())
 
     for (unmod_parent,
          mod_base_children) in (verified_root_base_IDs_by_unmod_base.
@@ -444,10 +447,10 @@ def cons_nested_verified_dict_modbase_hierarchy(conn, cursor):
             conn.commit()
 
             for relation_idx, modbase_relation in enumerate(modbase_hierarchy):
-                parent = name_ID_map.get(modbase_relation[0], '')
+                parent = modbase_relation[0]
 
                 # children
-                modbase_relation[1] = [name_ID_map[id] for id in
+                modbase_relation[1] = [id for id in
                                        modbase_relation[1].split(',')]
 
                 # create a valid nesting by embedding previous
@@ -497,6 +500,30 @@ def cons_nested_verified_dict_modbase_hierarchy(conn, cursor):
     return verified_full_hierarchy_dict
 
 
+def get_custom_nomenclature(cursor):
+    query = cursor.execute("SELECT * FROM expanded_alphabet")
+
+    col_names = [head[0] for head in query.description]
+
+    # list of entires; each a dict by column name
+    res_col_l = [dict(zip(col_names, res))
+                 for res in query.fetchall()]
+
+    id_col_name = next(col for col in col_names if 'id' in col.lower())
+
+    # add the ChEBI name to the dict
+    name_ID_map = dict(cursor.execute("""SELECT nameid,
+                                      chebiname FROM names""").fetchall())
+
+    # return a nested dict, keyed by ChEBI ID, in which each value is a
+    # dict with the column names of the nomenclature/expanded alph. table
+    return {res_col.pop(id_col_name):
+            reduce(lambda x, y: dict(x, **y),
+                   (res_col, {'chebiname':
+                              name_ID_map[res_col[id_col_name]]}))
+            for res_col in res_col_l}
+
+
 # TODO refactor...
 def create_homepage(env, homepage_links):
     conn = sqlite3.connect(dnamod_utils.get_constant('database'))
@@ -504,6 +531,7 @@ def create_homepage(env, homepage_links):
 
     verifiedBases = {}
     unverifiedBases = {}
+
     for base in BASES:
         verifiedBases[base] = homepage_links[base]
         unvername = 'Unverified' + base
@@ -522,11 +550,15 @@ def create_homepage(env, homepage_links):
 
     f = codecs.open(writefile, 'w+', encoding=ENCODING)
 
+    custom_nomenclature = get_custom_nomenclature(cursor)
+
     render = home_template.render(bases=VERIFIED_BASES,
                                   modifications=verifiedBases,
                                   verifiedHierarchy=verified_hierarchy_dict,
                                   unverifiedbases=BASES,
-                                  unverifiedmodifications=unverifiedBases)
+                                  unverifiedmodifications=unverifiedBases,
+                                  customNomenclature=custom_nomenclature)
+
     f.write(render)
     f.close()
 
