@@ -8,14 +8,70 @@
     <!-- <link href="netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"> -->
     <!-- <link href="css/style.css" rel="stylesheet" type='text/css'> -->
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
-    <script type='text/javascript' src='scripts/script.js'></script>
+    <script type='text/javascript' src='scripts/script.js'>
+        <script type="text/javascript" src=".https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+
+        <script type="text/javascript" src="js/psd3.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/psd3.css" /> 
+    </script>
 
     <link href="css/style.css" rel="stylesheet" type='text/css'>
 </head>
+
+
+{% macro _consRecTree(mod_children_L, subpie_frac) -%}
+    {% if not mod_children_L|is_list %}
+        {% set mod_children_L = [mod_children_L] %}
+    {% endif %}
+
+    {# Circumvent Jinja2 scoping rules, using an object for the count.
+       Adapted from:  http://stackoverflow.com/a/32700975 #}
+    {% set num_nested_lists = [0] %}
+    {% for mod_base in mod_children_L %}
+        {% if mod_base|is_list %}
+            {# increment num_nested_lists by 1 #}
+            {% if num_nested_lists.append(num_nested_lists.pop() + 1) %}{% endif %}
+        {% endif %}
+    {% endfor %}
+    {% set num_nested_lists = num_nested_lists.pop() %} {# object -> int #}
+
+    {% set subpie_frac = subpie_frac/(mod_children_L|length - num_nested_lists) %}
+
+    {% for mod_base in mod_children_L %}
+        {% if mod_base|is_list %}
+            {% set mod_base_id = mod_base.pop(0) %}
+        {% else %}
+            {% set mod_base_id = mod_base %}
+        {% endif %}
+
+        {{ '{' }}
+        abbreviation: "{{ customNomenclature[mod_base_id]['Abbreviation'] }}",
+        displayname: "{{ customNomenclature[mod_base_id]['Name'] -}}
+                    {% if customNomenclature[mod_base_id]['Symbol'] -%}
+                    {{' '}}{{'('}}<span class='nucleobase'>{{customNomenclature[mod_base_id]['Symbol']}}</span>{{')'-}}
+                    {% endif -%}",
+        chebiname: "{{ customNomenclature[mod_base_id]['chebiname'] }}",
+        value: {{ subpie_frac }},
+        drilldown: [
+        {% if mod_base|is_list and mod_base|length > 0 %}
+            {#  next element is a list -> proceed with the recursive step #}
+            {#{{ '{' }}#}
+            {{ _consRecTree(mod_base, subpie_frac) }}
+            {#{{ '}' }}#}
+        {% endif %}
+        ]
+        {{ '}' }}
+        {% if not loop.last -%}
+            ,
+        {% endif %}
+    {% endfor %}
+{%- endmacro %}
+
 
 <body>
     <div class= "TitleBlock" >
@@ -24,51 +80,133 @@
 
     <div id="tabs">
         <ul>
-            <li> <a href="#tabs-1"> Verified </a></li>
-            <li> <a href="#tabs-2"> Unverified </a></li>
+            <li class="ui-tabs-selected"> <a href="#tabs-1">Verified</a>
+            <li> <a href="#tabs-2">Unverified</a>
         </ul>
 
         <div id="tabs-1">
-            <div class= "IndexLayout" >
-                <div id="accordion">
-                    {% for base in bases %}
+            <div class="container">
+                <div class="well">
+                    <h2> Covalently modified DNA nucleobases </h2>
+                    <ul>
+                        <li>View the organization of modified nucleobases by their chemical hierarchies.</li>
+                        <li>Nucleobase abbreviations are displayed.</li>
+                        <li>Hover over an item to view its full (curated) name and any associated symbol.</li>
+                        <li>Click on any modified base to view its detailed information.</li>
+                    </ul>
+                </div>
+
+                <div id="chartContainer" class="well"></div>
+            </div>
+
+            <script type="text/javascript">
+                {% set initial_subpie_frac = 100/(verifiedHierarchy.keys()|length) %}
+
+                var DNA_bases = [
+                    {% for unmod_base, mod_children in verifiedHierarchy|dictsort %}
+                    {% set unmod_symbol = unmod_base|string|first|upper %}
+                        {{ '{' }}
+                            abbreviation: "{{ unmod_symbol }}",
+                            displayname: "{{unmod_base}}{{' '}}{{'('}}<span class='nucleobase'>{{unmod_symbol}}</span>{{')'}}",
+                            chebiname: "",
+                            value: {{ initial_subpie_frac }},
+                            drilldown: [{{ _consRecTree(mod_children, initial_subpie_frac) }}]
+                        {{ '}' }}{% if not loop.last %}, 
+                        {% endif %}
+                    {% endfor %}
+                ];
+
+                var config = {
+                    containerId: "chartContainer",
+                    width: 1400,
+                    height: 1400,
+                    data: DNA_bases,
+                    label: function(d) {
+                        return d.data.abbreviation;
+                    },
+                    inner: "drilldown",
+                    tooltip: function(d) {
+                        return "<div style='background-color: #4a4; color: white; padding: 15px; text-align: middle; border: dotted 1px black;'>" + d.displayname + "</div>";
+                    },
+                    click: function(d) {
+                        var url = d.data.chebiname.concat(".html");
+                        $.ajax({
+                            type: 'HEAD',
+                            url: url,
+                            success: function() {
+                                return window.location.href = url;
+                            },
+                        });
+                    },
+                    transition: "linear",
+                    transitionDuration: 100, // in ms
+                    donutRadius: 50,
+                    gradient: true,
+                    colors: d3.scale.category20(),
+                    labelColor: "white",
+                    stroke: "#eee",
+                    strokeWidth: 3,
+                    drilldownTransition: "linear",
+                    drilldownTransitionDuration: 0,
+                    highlightColor: "#c00"
+                };
+
+                var samplePie = new psd3.Pie(config);
+            </script>
+
+            <noscript>
+                <div class= "IndexLayout" >
+                    <div id="accordion">
+                        {% for base in bases %}
+                            <h2> {{ base }} </h2>
+                            <div>
+                                {% set baseloop = loop %}
+                                <ul>
+                                    {% for modification in modifications[base] %}
+                                        <li> <a href= "{{ modification }}.html"> {{ modification }}</a>
+                                    {% endfor %}
+                                </ul>
+                                <br>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </noscript>
+        </div>
+
+        <div id="tabs-2">
+            <div class="container">
+                <div class="well">
+                    <h2> Unverified entries </h2>
+                    <ul>
+                        <li>The entries listed on this page are chemicals associated with a particular unmodified nucleobase,
+                            but have not been manually verified as DNA modifications.
+                        <li>Expand a section and click on a link to view information on the entity.
+                    </ul>
+                </div>
+
+                <div class= "IndexLayout" >
+                    <div id="accordion2">
+                    {% for base in unverifiedbases %}
                         <h2> {{ base }} </h2>
                         <div>
                             {% set baseloop = loop %}
                             <ul>
-                            {% for modification in modifications[base] %}
-                                <li> <a href= "{{ modification }}.html" > {{ modification }}</a> </li>
+                            {% for modification in unverifiedmodifications[base] %}
+                                <li> <a href= "{{ modification }}.html"> {{ modification }}</a>
                             {% endfor %}
                             </ul> <br>
                         </div>
                     {% endfor %}
-                </div>
-            </div>
-        </div>
-
-        <div id="tabs-2">
-            <div class= "IndexLayout" >
-                <div id="accordion2">
-                {% for base in unverifiedbases %}
-                    <h2> {{ base }} </h2>
-                    <div>
-                        {% set baseloop = loop %}
-                        <ul>
-                        {% for modification in unverifiedmodifications[base] %}
-                            <li> <a href= "{{ modification }}.html" > {{ modification }}</a> </li>
-                        {% endfor %}
-                        </ul> <br>
                     </div>
-                {% endfor %}
                 </div>
             </div>
         </div>
-
     </div>
 
     <footer>
-        <a href= "about.html" > About</a>
-        <a href= "contact.html" > Contact</a>
+        <a href= "about.html"> About</a>
+        <a href= "contact.html"> Contact</a>
     </footer>
 
 </body>

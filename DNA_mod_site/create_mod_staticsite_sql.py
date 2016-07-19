@@ -15,16 +15,16 @@ Function:
 4. Creates a home page with links to html modification pages
 '''
 import codecs
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict, MutableSequence
+from copy import deepcopy
 from itertools import izip
 import os
 import pybel
-import sqlite3
+from pysqlite2 import dbapi2 as sqlite3  # needed for latest SQLite
 import sys
 
 # Using Jinja2 as templating engine
-from jinja2 import Environment
-from jinja2 import FileSystemLoader
+import jinja2
 
 # permit import from parent directory
 sys.path.append(os.path.join(sys.path[0], '..'))
@@ -51,6 +51,12 @@ NATURE_ANNOT_TABLE = 'nucleobase_nature_info'
 REFERENCES_TABLE = 'citations'
 
 IMAGE_FORMAT = 'svg'
+
+
+def is_list(object):
+    """Test if the given object is a list, by checking if
+       it is an instance of its proximal abstract class."""
+    return isinstance(object, MutableSequence)
 
 
 def render_image(smiles, name):
@@ -194,22 +200,20 @@ def get_mod_base_ref_annot_data(id, cursor, table):
     return annot_dict_list
 
 
-def create_html_pages():
+# XXX TODO break up below function into multiple smaller functions
+def create_html_pages(env):
     # Load in SQLite database
     conn = sqlite3.connect(dnamod_utils.get_constant('database'))
     c = conn.cursor()
 
-    # Create a Jinja 2 environment object and load in templates
-    env = Environment()
-    env.loader = FileSystemLoader(TEMPLATE_DIR)
-
     page_template = env.get_template('modification.html')
 
     # Dictionary to store links for hompage
-    homepageLinks = {}
+    homepage_links = {}
     links = []
     blacklist = []
 
+    # XXX TODO refactor to use tables and not dump and manually parse
     c.execute('''DROP TABLE IF EXISTS temp''')
     c.execute('''CREATE TABLE temp AS SELECT * FROM
                     (SELECT * from
@@ -301,7 +305,7 @@ def create_html_pages():
 
             ref_annots = [seq_annot, nature_annot]
 
-            expandedalpha = get_expanded_alphabet(chebiid, conn)
+            expanded_alpha = get_expanded_alphabet(chebiid, conn)
 
             render = page_template.render(ChebiName=chebiname,
                                           Definition=definition,
@@ -322,7 +326,7 @@ def create_html_pages():
                                           RefAnnots=ref_annots,
                                           RefAnnotsRefColNames=REF_COL_NAMES,
                                           # pass ExpandedAlpha=None to disable
-                                          ExpandedAlpha=expandedalpha)
+                                          ExpandedAlpha=expanded_alpha)
             f.write(render)
             f.close()
 
@@ -334,27 +338,211 @@ def create_html_pages():
                 blacklist.append(link)
 
         links = sorted(links, key=lambda s: s.lower())
-        homepageLinks[BASE] = links
+        homepage_links[BASE] = links
         blacklist = sorted(blacklist, key=lambda s: s.lower())
         blacklistBase = 'Unverified' + BASE
-        homepageLinks[blacklistBase] = blacklist
-    return homepageLinks
+        homepage_links[blacklistBase] = blacklist
+    return homepage_links
 
 
-def create_homepage(homepageLinks):
+def get_modbase_hierarchy(cursor, base_id):
+    """ Recursively find all modified base children ChEBI IDs for
+        the provided modified base ChEBI ID.
+        Output is ordered by increasing depth.
+    """
+    # use a recursive common table expression to get all children
+    # and then group these by their root base, creating a hierarchy,
+    # ordered by descending depth within the ontology.
+    hierarchy = cursor.execute("""WITH hierarchy AS (
+                                     -- Rec. Q to find children ad infinitum
+                                     WITH RECURSIVE base_children AS (
+                                         SELECT nameid, parentid,
+                                             '' AS prevpar, 0 AS depth
+                                         FROM modbase_parents
+                                         WHERE parentid=:bID
+                                         UNION ALL
+                                         -- The second parentid is used to
+                                         -- recursively record previous parents
+                                         -- The depth in the tree is also rec.
+                                         SELECT b.nameid, b.parentid,
+                                             b.parentid, depth + 1
+                                         FROM modbase_parents AS b
+                                         JOIN base_children modbase_parents ON
+                                             b.parentid=modbase_parents.nameid
+                                     )
+                                     SELECT depth, prevpar, nameid
+                                     FROM base_children
+                                     -- Could add below WHERE to remove
+                                     -- those at depth 0, but want these
+                                     -- WHERE parentid <> :bID
+                                ) SELECT prevpar, GROUP_CONCAT(nameid)
+                                  FROM hierarchy
+                                  -- Could add below WHERE to remove seen items
+                                  -- WHERE nameid
+                                  --     NOT IN (select prevpar FROM hierarchy)
+                                  GROUP BY prevpar
+                                  ORDER BY depth DESC
+                             """, {"bID": base_id})
+
+    return [list(result) for result in hierarchy.fetchall()]
+
+
+def cons_nested_verified_dict_modbase_hierarchy(conn, cursor):
+    """Returns a dictionary, keyed by the hierarchy depth,
+       of the hierarchy of verified modified bases, as values,
+       containing nested lists."""
+    # NB: this is a highly inefficient way of doing things, from
+    # the non-batch insertions and deletions to the lack of SQL
+    # query optimization. This only applies, however, for a
+    # small subset of bases (those that are verified), which is
+    # always going to be a fairly small set.
+
+    # get all root verified bases (i.e. those without parents)
+    # since we will be recursively computing their children,
+    # referring to unmodified bases by their full name
+    verified_root_base_IDs_Q = cursor.execute("""SELECT DISTINCT commonname, nameid
+                                                 FROM modbase AS mod
+                                                 JOIN base AS unmod
+                                                     ON mod.baseid=unmod.baseid
+                                                 WHERE verifiedstatus=1
+                                                     AND nameid NOT IN
+                                                     -- s.t. it has no parents
+                                                    (SELECT DISTINCT nameid
+                                                     FROM modbase_parents)
+                                                 ORDER BY commonname""")
+
+    verified_root_base_IDs_by_unmod_base = defaultdict(list)
+    for unmod_key, result in verified_root_base_IDs_Q.fetchall():
+        unmod_key = str(unmod_key)  # no need for Unicode
+
+        # uracil -> thymine, since verified
+        if 'uracil' in unmod_key.lower():
+            unmod_key = 'thymine'
+
+        assert unmod_key[:1].upper() in dnamod_utils.UNMOD_ALPH
+
+        verified_root_base_IDs_by_unmod_base[unmod_key].append(result)
+
+    # NB: all children of verified bases are also verified, so we
+    #     do not check this
+    verified_full_hierarchy_dict = defaultdict(list)
+    seen_children = {}
+
+    for (unmod_parent,
+         mod_base_children) in (verified_root_base_IDs_by_unmod_base.
+                                iteritems()):
+        for mod_base in mod_base_children:
+            #  INSERT INTO modbase_parents VALUES(mod_base, unmod_parent)
+            #  then query for unmod_parent and not mod_base...
+            cursor.execute("""INSERT INTO modbase_parents
+                              VALUES(?, ?)""", (mod_base, unmod_parent))
+            conn.commit()
+
+            hier_query_base = unmod_parent
+            modbase_hierarchy = get_modbase_hierarchy(cursor, hier_query_base,)
+
+            cursor.execute("""DELETE FROM modbase_parents
+                              WHERE nameid=? AND parentid=?""",
+                           (mod_base, unmod_parent))
+            conn.commit()
+
+            for relation_idx, modbase_relation in enumerate(modbase_hierarchy):
+                parent = modbase_relation[0]
+
+                # children
+                modbase_relation[1] = [id for id in
+                                       modbase_relation[1].split(',')]
+
+                # create a valid nesting by embedding previous
+                # children within their later referring element
+                for idx, child in enumerate(modbase_relation[1]):
+                    if seen_children.get(child):
+                        modbase_relation[1][idx:idx + 1] = \
+                            [[child] + seen_children[child]]
+
+                # record currently encountered relation
+                seen_children[parent] = modbase_relation[1]
+
+                # replace the current list with its nested version
+                modbase_hierarchy[relation_idx] = modbase_relation
+
+            # add the root to its correct pos. in the hierarchy
+
+            # discard previous nested lists, since the
+            # last element now contains the valid nesting
+            modbase_hierarchy = modbase_hierarchy[-1]
+
+            # key by the input base of the hierarchical construction,
+            # i.e. the unmodfied parent base, taking
+            # the position of the empty string from the query
+            verified_full_hierarchy_dict[hier_query_base] += \
+                modbase_hierarchy[1:]
+
+    # fix the dictionary values, s.t. all doubly-nested lists
+    # with only a single item are made into singly-nested lists
+    for key, val in verified_full_hierarchy_dict.iteritems():
+        fixedVal = deepcopy(val)
+
+        for idx, valL in enumerate(val):
+            if is_list(valL) and len(valL) == 1:
+                fixedVal[idx] = valL[0]
+
+        verified_full_hierarchy_dict[key] = fixedVal
+
+    verified_full_hierarchy_dict = {key: valL[0] if
+                                    (valL[0] and
+                                     is_list(valL[0])
+                                     and len(valL) == 1)
+                                    else valL for key, valL in
+                                    verified_full_hierarchy_dict.
+                                    iteritems()}
+
+    return verified_full_hierarchy_dict
+
+
+def get_custom_nomenclature(cursor):
+    query = cursor.execute("SELECT * FROM expanded_alphabet")
+
+    col_names = [head[0] for head in query.description]
+
+    # list of entires; each a dict by column name
+    res_col_l = [dict(zip(col_names, res))
+                 for res in query.fetchall()]
+
+    id_col_name = next(col for col in col_names if 'id' in col.lower())
+
+    # add the ChEBI name to the dict
+    name_ID_map = dict(cursor.execute("""SELECT nameid,
+                                      chebiname FROM names""").fetchall())
+
+    # return a nested dict, keyed by ChEBI ID, in which each value is a
+    # dict with the column names of the nomenclature/expanded alph. table
+    return {res_col.pop(id_col_name):
+            reduce(lambda x, y: dict(x, **y),
+                   (res_col, {'chebiname':
+                              name_ID_map[res_col[id_col_name]]}))
+            for res_col in res_col_l}
+
+
+# TODO refactor...
+def create_homepage(env, homepage_links):
+    conn = sqlite3.connect(dnamod_utils.get_constant('database'))
+    cursor = conn.cursor()
+
     verifiedBases = {}
     unverifiedBases = {}
+
     for base in BASES:
-        verifiedBases[base] = homepageLinks[base]
+        verifiedBases[base] = homepage_links[base]
         unvername = 'Unverified' + base
-        unverifiedBases[base] = homepageLinks[unvername]
+        unverifiedBases[base] = homepage_links[unvername]
 
     verifiedBases['Thymine'] = (verifiedBases['Thymine'] +
                                 verifiedBases['Uracil'])
     del(verifiedBases['Uracil'])
 
-    env = Environment()
-    env.loader = FileSystemLoader(TEMPLATE_DIR)
+    verified_hierarchy_dict = \
+        cons_nested_verified_dict_modbase_hierarchy(conn, cursor)
 
     home_template = env.get_template('homepage.html')
 
@@ -362,14 +550,28 @@ def create_homepage(homepageLinks):
 
     f = codecs.open(writefile, 'w+', encoding=ENCODING)
 
+    custom_nomenclature = get_custom_nomenclature(cursor)
+
     render = home_template.render(bases=VERIFIED_BASES,
                                   modifications=verifiedBases,
+                                  verifiedHierarchy=verified_hierarchy_dict,
                                   unverifiedbases=BASES,
-                                  unverifiedmodifications=unverifiedBases)
+                                  unverifiedmodifications=unverifiedBases,
+                                  customNomenclature=custom_nomenclature)
+
     f.write(render)
     f.close()
 
+
+# create the Jinja2 environment object, loading from files
+# and disallowing the use of undefined variables
+env = jinja2.Environment(loader=jinja2.FileSystemLoader(TEMPLATE_DIR),
+                         undefined=jinja2.StrictUndefined)
+
+env.filters['is_list'] = is_list  # add custom filter
+
+
 print("Generating Static Site....")
-links = create_html_pages()
-create_homepage(links)
+links = create_html_pages(env)
+create_homepage(env, links)
 print("Static Site Generated")
