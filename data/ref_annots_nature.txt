@@ -67,7 +67,7 @@ ChEBI	Origin	Function	Functional info.	Organism(s)	Reference(s)
 2274	endogenous	damage	cytotoxic	Escherichia coli,Homo sapiens,Mesocricetus auratus,Mus musculus,Rattus norvegicus	24810496,5417622,985411,728073,6704174
 # 8-oxoguanine
 # 7,8-dihydro-8-oxoguanine -- same as above, using above ChEBI ID only
-44605	endogenous	damage and possible epigenetic mark	ROS	Homo sapiens	2602371,10490501
+44605	endogenous	damage and possible epigenetic mark	reactive oxygen species	Homo sapiens	2602371,10490501
 # methylguanine (25305) -- category, not annotated
 # N(2)-carboxyethylguanine
 62032	endogenous	damage	mutagenic	Homo sapiens	15487900
