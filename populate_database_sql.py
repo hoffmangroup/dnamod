@@ -22,6 +22,7 @@ import pprint
 import sqlite3
 import sys
 import unicodecsv as csv
+import json
 
 from Bio import Entrez
 from suds.client import Client  # Using Suds web services client for soap
@@ -64,6 +65,7 @@ DATABASE_FILE_FULLPATH = dnamod_utils.get_constant('database')
 ALPHABET_FILE_FULLPATH = dnamod_utils.get_constant('annot_exp_alph')
 SEQ_REF_ANNOTS_FULLPATH = dnamod_utils.get_constant('annot_seq')
 NATURE_REF_ANNOTS_FULLPATH = dnamod_utils.get_constant('annot_nature')
+JSON_INDEX_FILE_FULLPATH = dnamod_utils.get_constant('JSON')
 
 url = 'http://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
 client = Client(url)
@@ -624,16 +626,51 @@ def create_annot_citation_tables(conn, sql_conn_cursor, ref_annots_file_name, ta
                         
         conn.commit()
 
+def create_search_index(conn, sql_conn_cursor, filelocation):
+    with open(filelocation, 'w') as f:
+        json.dump([], f)
+    with open(filelocation, 'a+') as file:
+        feeds = []
+        sql_conn_cursor.execute("SELECT nameid FROM modbase")
+        result = sql_conn_cursor.fetchall()
+        for modification in result:
+            print(modification)
+            sql_conn_cursor.execute("SELECT * FROM names WHERE nameid = ?",(modification))
+            data = sql_conn_cursor.fetchone()
+            print(data)
+            chebiname = data[0]
+            chebiid = data[1]
+            iupacname = data[2]
+            synonyms = data[3]
+            sql_conn_cursor.execute("SELECT formulaid, verifiedstatus FROM modbase WHERE nameid = ?", (modification))
+            furtherdata = sql_conn_cursor.fetchone()
+            formula = furtherdata[0]
+            verified = furtherdata[1]
+            sql_conn_cursor.execute("SELECT Abbreviation FROM expanded_alphabet WHERE nameid = ?",(modification))
+            abbrevdata = sql_conn_cursor.fetchone()
+            abbreviation = abbrevdata
+            
+            writedata = {
+                'Common Name' : chebiname,
+                'ChEBI Id' : chebiid,
+                'IUPAC Name' : iupacname,
+                'Synonyms' : synonyms,
+                'Chemical Formula' : formula,
+                'Abbreviation' : abbreviation,
+                'Verified' : verified
+            }
+            feeds.append(writedata)
+        json.dump(feeds, file)
 
 def populate_tables(conn, sql_conn_cursor, bases, children, client):
-    create_base_table(conn, sql_conn_cursor, bases)
-    create_other_tables(conn, sql_conn_cursor, children, bases)
-    create_exp_alph_table(conn, sql_conn_cursor, ALPHABET_FILE_FULLPATH)
-    create_annot_citation_tables(conn, sql_conn_cursor,
-                                 SEQ_REF_ANNOTS_FULLPATH, SEQ_TABLE_NAME)
-    create_annot_citation_tables(conn, sql_conn_cursor,
-                                 NATURE_REF_ANNOTS_FULLPATH, NATURE_TABLE_NAME)
-
+    #create_base_table(conn, sql_conn_cursor, bases)
+    #create_other_tables(conn, sql_conn_cursor, children, bases)
+    #create_exp_alph_table(conn, sql_conn_cursor, ALPHABET_FILE_FULLPATH)
+    #create_annot_citation_tables(conn, sql_conn_cursor,
+                                 #SEQ_REF_ANNOTS_FULLPATH, SEQ_TABLE_NAME)
+    #create_annot_citation_tables(conn, sql_conn_cursor,
+                                # NATURE_REF_ANNOTS_FULLPATH, NATURE_TABLE_NAME)
+    create_search_index(conn, sql_conn_cursor, JSON_INDEX_FILE_FULLPATH)
 
 def check_for_duplicates(sql_conn_cursor):
     for nameid in sql_conn_cursor.execute('''SELECT nameid FROM modbase'''):

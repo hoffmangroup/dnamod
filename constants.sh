@@ -24,7 +24,7 @@ set -o nounset -o pipefail -o errexit
 # "script_create_site"	The script to create the webpages
 # "script_update_all"	The script to re-create everything
 # "script_sync_site"	The script to push the webpage changes to the external directory for synchronization
-
+# "JSON"    The subdirectory containing the index file for lunr.js search
 ERR_EXIT=64
 
 function not_found {
@@ -83,6 +83,8 @@ if [[ ! ( -x "$SCRIPT_POP_DB" && -x "$SCRIPT_CREATE_SITE" && -x "$SCRIPT_UPDATE_
    not_found 'scripts' 
 fi
 
+JSON="$SITE_HTML_DIR/scripts/lunr.json"
+
 case ${1:-} in 
     root_dir)
         echo -n "$ROOT_DIR"
@@ -122,6 +124,9 @@ case ${1:-} in
         ;;
     annot_nature)
         echo -n "$ANNOT_NATURE"
+        ;;
+    JSON)
+        echo -n "$JSON"
         ;;
     python_utils)
         echo -n "$PYTHON_UTILS_MODULE"
