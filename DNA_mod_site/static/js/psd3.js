@@ -234,7 +234,7 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
 
     // ------------------------------------------
     // Adapted from: http://stackoverflow.com/a/29370355 ("Henry S")
-    // and from https://bl.ocks.org/jfsiii/7772281 (John Schulz)
+    // and from https://gist.github.com/jfsiii/7772281 (John Schulz)
     var pattern = svg.append("svg:defs")
         .append("pattern")
         .attr("id", "stripe")
