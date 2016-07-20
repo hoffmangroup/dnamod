@@ -52,6 +52,9 @@ REFERENCES_TABLE = 'citations'
 
 IMAGE_FORMAT = 'svg'
 
+# shade these types of origins in the homepage pie menu display
+SHADE_ORIGINS = ['synthetic']
+
 
 def is_list(object):
     """Test if the given object is a list, by checking if
@@ -141,8 +144,9 @@ def get_mod_base_ref_annot_data(id, cursor, table):
     table -- the table containing the annotations
 
     Returns:
-    A dictionary containing the headers as keys and
-    a list of each data row per header as values.
+    A list of ordered dictionaries, containing the headers
+    as keys and their content as values. Each list element
+    pertains to an entry for the current id (i.e. one row).
     """
 
     c = cursor.cursor()
@@ -202,6 +206,11 @@ def get_mod_base_ref_annot_data(id, cursor, table):
 
 # XXX TODO break up below function into multiple smaller functions
 def create_html_pages(env):
+    """Loads data for all modification pages and creates them.
+       Returns a tuple of dictionaries: one containing links to
+       the pages and another, keyed by ChEBI ID specifying the origin
+       of each base, for only the verified modified nucleobases."""
+
     # Load in SQLite database
     conn = sqlite3.connect(dnamod_utils.get_constant('database'))
     c = conn.cursor()
@@ -212,6 +221,9 @@ def create_html_pages(env):
     homepage_links = {}
     links = []
     blacklist = []
+
+    # dictionary, keyed by ChEBI ID, storing verified base origins
+    v_base_origins = {}
 
     # XXX TODO refactor to use tables and not dump and manually parse
     c.execute('''DROP TABLE IF EXISTS temp''')
@@ -228,6 +240,7 @@ def create_html_pages(env):
     if not os.path.exists(HTML_FILES_DIR):
         os.makedirs(HTML_FILES_DIR)
 
+    # XXX TODO do not use names in all caps for non-constant variables
     for BASE in BASES:
         links = []
         blacklist = []
@@ -249,12 +262,10 @@ def create_html_pages(env):
             smiles = mod[13].encode('ascii')
             commonname = mod[14]
 
-            citation_lookup = mod[0]
-
             # XXX TODO cleanup commented-out code
             # roles_lookup = mod[7] # unused as roles are not on site
 
-            citations = get_citations(citation_lookup, conn)
+            citations = get_citations(chebiid, conn)
 
             roles = []
             roles_ids = []
@@ -293,14 +304,19 @@ def create_html_pages(env):
                 for citation in citations:
                     citation[key] = citation[key].decode(ENCODING)
 
-            seq_annot = get_mod_base_ref_annot_data(citation_lookup,
-                                                    conn, SEQ_ANNOT_TABLE)
+            seq_annot = get_mod_base_ref_annot_data(chebiid, conn,
+                                                    SEQ_ANNOT_TABLE)
 
-            nature_annot = get_mod_base_ref_annot_data(citation_lookup,
-                                                       conn,
+            nature_annot = get_mod_base_ref_annot_data(chebiid, conn,
                                                        NATURE_ANNOT_TABLE)
 
-            # TODO revise second name
+            if nature_annot:
+                # at most a single entry per base for this
+                assert len(nature_annot) == 1
+
+                v_base_origins[chebiid] = nature_annot[0]['Origin']
+
+            # TODO revise second name?
             ref_annot_tab_names = ['Mapping Techniques', 'Nature']
 
             ref_annots = [seq_annot, nature_annot]
@@ -327,6 +343,7 @@ def create_html_pages(env):
                                           RefAnnotsRefColNames=REF_COL_NAMES,
                                           # pass ExpandedAlpha=None to disable
                                           ExpandedAlpha=expanded_alpha)
+
             f.write(render)
             f.close()
 
@@ -342,7 +359,8 @@ def create_html_pages(env):
         blacklist = sorted(blacklist, key=lambda s: s.lower())
         blacklistBase = 'Unverified' + BASE
         homepage_links[blacklistBase] = blacklist
-    return homepage_links
+
+    return (homepage_links, v_base_origins)
 
 
 def get_modbase_hierarchy(cursor, base_id):
@@ -525,7 +543,9 @@ def get_custom_nomenclature(cursor):
 
 
 # TODO refactor...
-def create_homepage(env, homepage_links):
+def create_homepage(env, homepage_links, v_base_origins):
+    """Loads data needed to create the homepage and creates it."""
+
     conn = sqlite3.connect(dnamod_utils.get_constant('database'))
     cursor = conn.cursor()
 
@@ -557,7 +577,9 @@ def create_homepage(env, homepage_links):
                                   verifiedHierarchy=verified_hierarchy_dict,
                                   unverifiedbases=BASES,
                                   unverifiedmodifications=unverifiedBases,
-                                  customNomenclature=custom_nomenclature)
+                                  customNomenclature=custom_nomenclature,
+                                  vBaseOrigins=v_base_origins,
+                                  shadeOrigins=SHADE_ORIGINS)
 
     f.write(render)
     f.close()
@@ -572,6 +594,6 @@ env.filters['is_list'] = is_list  # add custom filter
 
 
 print("Generating Static Site....")
-links = create_html_pages(env)
-create_homepage(env, links)
+links, v_base_origins = create_html_pages(env)
+create_homepage(env, links, v_base_origins)
 print("Static Site Generated")

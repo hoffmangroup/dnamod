@@ -57,6 +57,12 @@
                     {% endif -%}",
         chebiname: "{{ customNomenclature[mod_base_id]['chebiname'] }}",
         value: {{ subpie_frac }},
+        {% if vBaseOrigins.get(mod_base_id) in shadeOrigins -%}
+            {# shade this pie menu element -#}
+            stripe: true,
+        {% else -%}
+            stripe: false,
+        {% endif -%}
         drilldown: [
         {% if mod_base|is_list and mod_base|length > 0 %}
             {#  next element is a list -> proceed with the recursive step #}
@@ -75,7 +81,7 @@
 
 <body>
     <div class= "TitleBlock" >
-        <h1> DNAmod — The DNA Modification Database </h1>
+        <h1>DNAmod—the DNA modification database</h1>
     </div>
 
     <div id="tabs">
@@ -87,12 +93,13 @@
         <div id="tabs-1">
             <div class="container">
                 <div class="well">
-                    <h2> Covalently modified DNA nucleobases </h2>
+                    <h2>Covalently modified DNA nucleobases</h2>
                     <ul>
-                        <li>View the organization of modified nucleobases by their chemical hierarchies.</li>
-                        <li>Nucleobase abbreviations are displayed.</li>
-                        <li>Hover over an item to view its full (curated) name and any associated symbol.</li>
-                        <li>Click on any modified base to view its detailed information.</li>
+                        <li>View the organization of modified nucleobases by their chemical hierarchies.
+                        <li>Nucleobase abbreviations are displayed.
+                        <li>Bases that have only been observed synthetically are displayed with diagonal stripes.
+                        <li>Hover over an item to view its full (curated) name and any associated symbol.
+                        <li>Click on any modified base to view its detailed information.
                     </ul>
                 </div>
 
@@ -110,7 +117,8 @@
                             displayname: "{{unmod_base}}{{' '}}{{'('}}<span class='nucleobase'>{{unmod_symbol}}</span>{{')'}}",
                             chebiname: "",
                             value: {{ initial_subpie_frac }},
-                            drilldown: [{{ _consRecTree(mod_children, initial_subpie_frac) }}]
+                            drilldown: [{{ _consRecTree(mod_children, initial_subpie_frac) }}],
+                            stripe: false
                         {{ '}' }}{% if not loop.last %}, 
                         {% endif %}
                     {% endfor %}
@@ -177,7 +185,7 @@
         <div id="tabs-2">
             <div class="container">
                 <div class="well">
-                    <h2> Unverified entries </h2>
+                    <h2>Unverified entries</h2>
                     <ul>
                         <li>The entries listed on this page are chemicals associated with a particular unmodified nucleobase,
                             but have not been manually verified as DNA modifications.

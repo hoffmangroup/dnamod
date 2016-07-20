@@ -1,6 +1,5 @@
-/**
- * 
- */
+const MOVE_LABEL_DOWN_AMOUNT = 6;
+
 var psd3 = psd3 || {};
 psd3.Graph = function(config) {
     var _this = this;
@@ -12,6 +11,9 @@ psd3.Graph = function(config) {
         inner: "inner",
         label: function(d) {
             return d.data.value;
+        },
+        stripe: function(d) {
+            return d.data.stripe;
         },
         tooltip: function(d) {
             if (_this.config.value !== undefined) {
@@ -149,7 +151,7 @@ psd3.Pie.prototype.drawPie = function(dataset) {
     }
     var innerRadius = _this.config.donutRadius;
     var maxDepth = _this.findMaxDepth(dataset);
-    //console.log("maxDepth = " + maxDepth);
+
     var outerRadius = innerRadius + (radius - innerRadius) / maxDepth;
     var originalOuterRadius = outerRadius;
     var radiusDelta = outerRadius - innerRadius;
@@ -178,27 +180,36 @@ psd3.Pie.prototype.textTitle = function(d) {
 
 psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, originalDatasetLength, innerRadius, outerRadius, radiusDelta, startAngle, endAngle, parentCentroid) {
     _this = this;
-    //console.log("**** draw ****");
-    //console.log("dataset = " + dataset);
+
     if (dataset === null || dataset === undefined || dataset.length < 1) {
         return;
     }
-    //console.log("parentCentroid = " + parentCentroid);
-    // console.log("innerRadius = " + innerRadius);
-    // console.log("outerRadius = " + outerRadius);
-    // console.log("startAngle = " + startAngle);
-    // console.log("endAngle = " + endAngle);
 
     psd3.Pie.prototype.textText = function(d) {
         return _this.config.label(d);
     };
 
+    psd3.Pie.prototype.getMask = function(d) {
+        if (d.data.stripe) {
+            return "mask:url(#mask);";
+        } else {
+            return "";
+        }
+    };
+
+    // sort the pie menu by a lexicographic comparison of display names
+    function lexicographic(a, b) {
+        return a.displayname.localeCompare(b.displayname);
+    }
+
     var pie = d3.layout.pie();
-    pie.sort(null);
+
+    pie.sort(lexicographic);
+
     pie.value(function(d) {
-        //console.log("d.value = " + d.value);
         return d[_this.config.value];
     });
+
     pie.startAngle(startAngle)
         .endAngle(endAngle);
 
@@ -221,15 +232,49 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
         d.length = dataset.length;
     };
 
+    // ------------------------------------------
+    // Adapted from: http://stackoverflow.com/a/29370355 ("Henry S")
+    // and from https://bl.ocks.org/jfsiii/7772281 (John Schulz)
+    var pattern = svg.append("svg:defs")
+        .append("pattern")
+        .attr("id", "stripe")
+        .attr("patternUnits", "userSpaceOnUse")
+        .attr("width", "4")
+        .attr("height", "4")
+        .attr("patternTransform", "rotate(45)")
+        .append("rect")
+        .attr("width", "3.25")
+        .attr("height", "4")
+        .attr("fill", "white");
+
+    var mask = svg.append("svg:defs")
+        .append("mask") 
+        .attr("id", "mask")
+        .append("rect")
+        .attr("x", "0")
+        .attr("y", "0")
+        .attr("width", "100%")
+        .attr("height", "100%")
+        .attr("fill", "url(#stripe)");
+
+    // Define attributes for the mask rect
+    d3.select("#mask").select("rect")
+        .attr("height", _this.config.height)
+        .attr("width", _this.config.width)
+        .attr("transform",
+              "translate(-" + (totalRadius) + ",-" + (totalRadius) + ")");
+    // ------------------------------------------
+
     var arcs = svg.selectAll("g." + clazz)
         .data(pie(dataset))
         .enter()
         .append("g")
         .attr("class", "arc " + clazz)
+        .attr("style", _this.getMask)
         .attr("transform",
-            "translate(" + (totalRadius) + "," + (totalRadius) + ")")
+              "translate(" + (totalRadius) + "," + (totalRadius) + ")")
         .on("click", _this.config.click);
-
+    
     var gradient = svg.append("svg:defs")
         .append("svg:linearGradient")
         .attr("id", "gradient_" + _this.arcIndex)
@@ -243,13 +288,13 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
     if (_this.config.gradient) {
         var index = 2 * _this.arcIndex;
         var endIndex = index + 1;
-        //console.log("arcindex = " + _this.arcIndex + "(" + index + ", " + endIndex);
+
         startColor = _this.config.colors(index);
         endColor = _this.config.colors(endIndex);
     } else {
         startColor = endColor = _this.config.colors(this.arcIndex);
     }
-    //console.log("color = " + startColor + ", " + endColor);
+
     gradient.append("svg:stop")
         .attr("offset", "0%")
         .attr("stop-color", startColor)
@@ -262,7 +307,6 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
 
     //Draw arc paths
     var paths = arcs.append("path")
-        //.attr("fill", color(_this.arcIndex));
         .attr("fill", "url(#gradient_" + _this.arcIndex + ")")
         .style("stroke", _this.config.stroke)
         .style("stroke-width", _this.config.strokeWidth);
@@ -277,9 +321,7 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
         .duration(_this.config.transitionDuration)
         .delay(_this.config.transitionDuration * (_this.arcIndex - 1))
         .ease(_this.config.transition)
-        .attrTween("d", _this.customArcTween);
-
-    //paths.each(storeMetadataWithArc);
+        .attrTween("d", _this.customArcTween)
 
     //Labels
     var texts = arcs.append("text")
@@ -287,7 +329,7 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
             return parentCentroid[0];
         })
         .attr("y", function() {
-            return parentCentroid[1];
+            return parentCentroid[1] + MOVE_LABEL_DOWN_AMOUNT;
         })
         .transition()
         .ease(_this.config.transition)
@@ -304,12 +346,7 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
         .style("fill", _this.config.labelColor)
         .attr("title", _this.textTitle);
 
-
-    //console.log("paths.data() = " + paths.data());
     for (var j = 0; j < dataset.length; j++) {
-        for (x in [svg, totalRadius, dataset[j][_this.config.inner], originalDataset, originalDatasetLength, innerRadius + radiusDelta, outerRadius + radiusDelta, radiusDelta, paths.data()[j].startAngle, paths.data()[j].endAngle, arc.centroid(paths.data()[j])]) {
-            console.log(x);
-        } 
         if (dataset[j][_this.config.inner] !== undefined) {
             _this.draw(svg, totalRadius, dataset[j][_this.config.inner], originalDataset, originalDatasetLength, innerRadius + radiusDelta, outerRadius + radiusDelta, radiusDelta, paths.data()[j].startAngle, paths.data()[j].endAngle, arc.centroid(paths.data()[j]));
         }
