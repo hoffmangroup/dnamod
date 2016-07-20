@@ -43,7 +43,7 @@ ChEBI	Origin	Function	Functional info.	Organism(s)	Reference(s)
 # 5-carboxycytosine
 76793	endogenous	demethylation intermediate and possible epigenetic mark		Homo sapiens,Mus musculus	23932479,25591929
 # 5-formylcytosine
-76794	endogenous	demethylation intermediate and epigenetic mark		Homo sapiens,Mus musculus	23932479,24755596,25591929,26098680
+76794	endogenous	demethylation intermediate and epigenetic mark		Homo sapiens,Mus musculus	23932479,24755596,25591929,26098680,23602153,27356509
 # 5-methylcytosine
 27551	endogenous	epigenetic mark		Escherichia coli,Chlamydomonas reinhardtii,Homo sapiens,Mus musculus,Locusta migratoria,Ovis aries,Bos taurus,Drosophila melanogaster	5417622,15439258,24640988,6262918,20395551
 # N(4)-methylcytosine
