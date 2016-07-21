@@ -1,29 +1,53 @@
 ChEBI	Mapping method	Method detail	Resolution	Enrichment	Reference
 # ------------------------------------------------
-# 5mC
-27551	HELP assay	restriction endonuclease	low	microarray probes	16809668
-27551	Methyl-Seq	restriction endonuclease	low		19273619
-27551	MeDIP-Seq	affinity-based	low		18950712
-27551	MBD-Seq	affinity-based	low		19906696
-27551	TAmC-Seq	chemical tagging	high		23443545
-27551	Maxam–Gilbert sequencing		single-base 		265521,23301810,24209366,20813757
-27551	BS-Seq	chemical conversion	single-base		1542678,19829295
-27551	RRBS	chemical conversion	single-base	methylation-insensitive restriction digestion	19442738
-27551	SMRT-BS	chemical conversion	single-base	target sequences	25943404
+# 5mC methods that do not distinguish 5hmC
+# 5mC, 5hmC
+27551,76792	HELP assay	restriction endonuclease	low	microarray probes	16809668
+27551,76792	Methyl-Seq	restriction endonuclease	low		19273619
+27551,76792	MeDIP-Seq	affinity-based	low		18950712
+27551,76792	MBD-Seq	affinity-based	low		19906696
+27551,76792	TAmC-Seq	chemical tagging	high		23443545
+27551,76792	Maxam–Gilbert sequencing		single-base 		265521,23301810,24209366,20813757
+# Sanger, NGS, 454, Pyro * 3, microdroplet
+27551,76792	BS-Seq	chemical conversion	single-base		1542678,19829295,17875690,12481262,16774114,17853883,24518816
+27551,76792	RRBS	chemical conversion	single-base	methylation-insensitive restriction digestion	19442738,20062050,18600261,21412275
+27551,76792	SMRT-BS	chemical conversion	single-base	target sequences	25943404
+27551,76792	MspJI recognition	restriction endonuclease	low	specific fragments	21690366
 # ------------------------------------------------
+# discrimination of 5mC and 5hmC
+27551,76792	nanopore	direct detection	single-base	target sequences	20927439,21155562
+# ------------------------------------------------
+# detection of only 5mC
+# 5mC
+27551	oxBS-Seq	chemical conversion	single-base		24755596
+27551	nanopore	direct detection	single-base	target sequences	21991340
+27551	fluorescence microscopy	direct detection	low	target sequences	21981444
+# ------------------------------------------------
+# detection of only 5hmC
+# 5hmC
+76792	TAB-Seq	chemical conversion	single-base		22608086
+# below also used a gated single-molecule sequencing-by-synthesis method (Helicos)
+76792	(GLIB/CMS)-Seq	chemical conversion and immunoprecipitation	low		21552279
+76792	β-GT–based tagging	chemical tagging	high	20685817,21151123,21656634,21300643
+76792	sulfur/selenium tagging	chemical tagging	high	21344558
+# -----------------------------------------------
 # 5fC
 76794	redBS-Seq	chemical conversion	single-base		24755596
-76794	fCAB-seq	chemical conversion	single-base		23602153
+76794	fCAB-Seq	chemical conversion	single-base		23602153
 76794	fC-CET	chemical conversion	single-base		26344045
-76794	MAB-seq	chemical conversion	single-base		27172168
+76794	MAB-Seq	chemical conversion	single-base		27172168
 # ------------------------------------------------
 # 5caC
 76793	CAB-Seq	chemical conversion	single-base		23758547
-76793	caMAB-seq	chemical conversion	single-base		27172168
+76793	caMAB-Seq	chemical conversion	single-base		27172168
 # ------------------------------------------------
 # 5mC, 5hmC, 6mA
 27551,76792,28871	SMRT	direct detection	single-base	target sequences	20453866
 # ------------------------------------------------
+# 4mC, 5mC, 6mA
+21839,27551,28871	dye-terminator Sanger sequencing	direct detection	single-base		16091626,9580708
+21839,27551,28871	SMRT	direct detection	single-base	target sequences	22156058
+# -----------------------------------------------
 # 6mA - also applies to: 4mA
 28871	SMRT	direct detection	single-base	target sequences	23034806
 # ------------------------------------------------
@@ -37,4 +61,5 @@ ChEBI	Mapping method	Method detail	Resolution	Enrichment	Reference
 16964	Yu-labelling	chemical tagging	single-base	5hmU:G mismatch only	25462560
 # ------------------------------------------------
 # base J
+111513	immunodetection	affinity-based	low		9389654
 111513	SMRT	direct detection	single-base	target sequences	25662217
