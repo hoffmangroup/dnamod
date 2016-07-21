@@ -30,12 +30,17 @@ ChEBI	Mapping method	Method detail	Resolution	Enrichment	Reference
 76792	(GLIB/CMS)-Seq	chemical conversion and immunoprecipitation	low		21552279
 76792	β-GT–based tagging	chemical tagging	high		20685817,21151123,21656634,21300643
 76792	sulfur/selenium tagging	chemical tagging	high		21344558
+76792	DMAB-seq	DNMT1 conversion	single-base	CpG contexts only	26504739
+76792	tungsten-oxidation	chemical conversion	single-base		21918786
 # -----------------------------------------------
 # 5fC
 76794	redBS-Seq	chemical conversion	single-base		24755596
 76794	fCAB-Seq	chemical conversion	single-base		23602153
 76794	fC-CET	chemical conversion	single-base		26344045
 76794	MAB-Seq	chemical conversion	single-base		27172168
+# ------------------------------------------------
+# 5hmC, 5fC
+76792,76794	Pvu-seal-seq	enzyme-mediated chemical tagging	single-base		25639471
 # ------------------------------------------------
 # 5caC
 76793	CAB-Seq	chemical conversion	single-base		23758547
@@ -51,8 +56,17 @@ ChEBI	Mapping method	Method detail	Resolution	Enrichment	Reference
 # 6mA - also applies to: 4mA
 28871	SMRT	direct detection	single-base	target sequences	23034806
 # ------------------------------------------------
-# 8oxoG, 1mA, 5hmU - also applies to: 8oxoA, O4-MedT, 5hC, 5hU
-16964,44605,18083,20689	SMRT	direct detection	single-base	target sequences	22185597
+# 8oxoG, 1mA, 5hmU, m6G - also applies to: 8oxoA, O4-MedT, 5hC, 5hU
+44605,18083,16964,20689	SMRT	direct detection	single-base	target sequences	22185597
+# ------------------------------------------------
+# 8oxoG
+44605	fluorescence in situ hybridization	affinity-based	low	target sequences	16651663
+44605	array-based profiling	affinity-based	low	target sequences	25008760
+44605	gap ligation	excision repair enzyme–based	high	target sequences	26741640
+44605	nanopore	direct detection	single-base	target sequences	25768204
+# ------------------------------------------------
+# 8oxoG; also: 1,N6-propanoadenine
+44605	immunoprecipitation	affinity-based	low	target sequences	17003489
 # ------------------------------------------------
 # 5hmU, 5fU
 16964,80961	Hardisty-labelling	chemical tagging	single-base	target sequences	25946119
