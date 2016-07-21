@@ -68,7 +68,9 @@ def render_image(smiles, name):
        Otherwise, None is returned.
     """
 
-    img_dir = dnamod_utils.get_constant('site_image_dir')
+    # get the relative path, from the site HTML directory
+    img_dir = os.path.relpath(dnamod_utils.get_constant('site_image_dir'),
+                              HTML_FILES_DIR)
 
     if not os.path.exists(img_dir):
         os.makedirs(img_dir)
