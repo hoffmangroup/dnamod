@@ -28,8 +28,8 @@ ChEBI	Mapping method	Method detail	Resolution	Enrichment	Reference
 76792	TAB-Seq	chemical conversion	single-base		22608086
 # below also used a gated single-molecule sequencing-by-synthesis method (Helicos)
 76792	(GLIB/CMS)-Seq	chemical conversion and immunoprecipitation	low		21552279
-76792	β-GT–based tagging	chemical tagging	high	20685817,21151123,21656634,21300643
-76792	sulfur/selenium tagging	chemical tagging	high	21344558
+76792	β-GT–based tagging	chemical tagging	high		20685817,21151123,21656634,21300643
+76792	sulfur/selenium tagging	chemical tagging	high		21344558
 # -----------------------------------------------
 # 5fC
 76794	redBS-Seq	chemical conversion	single-base		24755596
