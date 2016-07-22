@@ -5,6 +5,7 @@ Adenine
 	2-amino-6-hydroxyaminopurine
 	methyladenine
 	6-methylaminopurine
+	N(6)-carbamoylmethyladenine
 
 Thymine
 

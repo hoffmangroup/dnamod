@@ -20,6 +20,8 @@ ChEBI	Origin	Function	Functional info.	Organism(s)	Reference(s)
 60281	synthetic and RNA				5671075
 # N(6)-hydroxyadenine
 78235	synthetic		mutagenic		3944125
+# N(6)-carbamoylmethyladenine
+102525	endogenous	hypermodified nucleobase	specific transcriptional roles	Enterobacteria phage Mu	6369315
 #
 # cytosine
 #
