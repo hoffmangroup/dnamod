@@ -32,6 +32,7 @@ ChEBI	Mapping method	Method detail	Resolution	Enrichment	Reference
 76792	sulfur/selenium tagging	chemical tagging	high		21344558
 76792	DMAB-seq	DNMT1 conversion	single-base	CpG contexts only	26504739
 76792	tungsten-oxidation	chemical conversion	single-base		21918786
+76792	nanopore	direct detection	single-base	target sequences	27383905
 # -----------------------------------------------
 # 5fC
 76794	redBS-Seq	chemical conversion	single-base		24755596
