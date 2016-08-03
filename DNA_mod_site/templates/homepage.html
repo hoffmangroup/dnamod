@@ -11,7 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
+    <script type='text/javascript' src='scripts/lunr.js'></script>
     <script type='text/javascript' src='scripts/script.js'></script>
 
     <link href="css/style.css" rel="stylesheet" type='text/css'>
@@ -24,11 +24,23 @@
 
     <div id="tabs">
         <ul>
-            <li> <a href="#tabs-1"> Verified </a></li>
-            <li> <a href="#tabs-2"> Unverified </a></li>
+            <li> <a href="#tabs-1"> Search </a></li>
+            <li> <a href="#tabs-2"> Verified </a></li>
+            <li> <a href="#tabs-3"> Unverified </a></li>
         </ul>
 
         <div id="tabs-1">
+            <div class = "IndexLayout">
+                <div id= "searchinput">
+                    <input type="text" class="searchbox" placeholder="Search">
+                </div>
+                <ul id = "searchresults">
+                
+                </ul>
+            </div>
+        </div>
+        
+        <div id="tabs-2">
             <div class= "IndexLayout" >
                 <div id="accordion">
                     {% for base in bases %}
@@ -46,7 +58,7 @@
             </div>
         </div>
 
-        <div id="tabs-2">
+        <div id="tabs-3">
             <div class= "IndexLayout" >
                 <div id="accordion2">
                 {% for base in unverifiedbases %}

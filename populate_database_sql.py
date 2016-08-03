@@ -627,8 +627,6 @@ def create_annot_citation_tables(conn, sql_conn_cursor, ref_annots_file_name, ta
         conn.commit()
 
 def create_search_index(conn, sql_conn_cursor, filelocation):
-    with open(filelocation, 'w') as f:
-        json.dump([], f)
     with open(filelocation, 'a+') as file:
         feeds = []
         sql_conn_cursor.execute("SELECT nameid FROM modbase")
@@ -670,6 +668,7 @@ def populate_tables(conn, sql_conn_cursor, bases, children, client):
                                  #SEQ_REF_ANNOTS_FULLPATH, SEQ_TABLE_NAME)
     #create_annot_citation_tables(conn, sql_conn_cursor,
                                 # NATURE_REF_ANNOTS_FULLPATH, NATURE_TABLE_NAME)
+    print("4/5 Creating Search Index...")
     create_search_index(conn, sql_conn_cursor, JSON_INDEX_FILE_FULLPATH)
 
 def check_for_duplicates(sql_conn_cursor):
@@ -686,10 +685,10 @@ def check_for_duplicates(sql_conn_cursor):
 WHITE_LIST = dnamod_utils.get_whitelist()
 BLACK_LIST = dnamod_utils.get_blacklist()
 
-print("1/4 Searching for bases...")
+print("1/5 Searching for bases...")
 bases = search_for_bases(client)
 
-print("2/4 Searching for children...")
+print("2/5 Searching for children...")
 children = get_children(bases, client)
 bases = get_complete_bases(bases, client)
 
@@ -700,10 +699,10 @@ sql_conn_cursor = conn.cursor()
 sql_conn_cursor.execute('''PRAGMA foreign_keys = ON''')
 conn.commit()
 
-print("3/4 Creating tables...")
+print("3/5 Creating tables...")
 populate_tables(conn, sql_conn_cursor, bases, children, client)
 
-print("4/4 Finishing up...")
+print("5/5 Finishing up...")
 check_for_duplicates(sql_conn_cursor)
 
 conn.close()
