@@ -19,7 +19,7 @@ ChEBI	Mapping method	Method detail	Resolution	Enrichment	Reference
 # ------------------------------------------------
 # detection of only 5mC
 # 5mC
-27551	oxBS-Seq	chemical conversion	single-base		24755596
+27551	oxBS-Seq	chemical conversion	single-base		24008380
 27551	coBS-seq	chemical conversion	single-base		27460669
 27551	nanopore	direct detection	single-base	target sequences	21991340
 27551	fluorescence microscopy	direct detection	low	target sequences	21981444
