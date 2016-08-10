@@ -20,19 +20,24 @@
 
     <!-- TODO refactor to infer headers from dict -->
         <div class="Alphabet">
-            <img id="chemicalStructureImage" src="images/{{ ChebiName }}.svg" alt="{{ ChebiName }} Image Not Availabe" height='500' width='500'>
-            {% if ExpandedAlpha["Abbreviation"] is defined %}
+            {% if Image %}
+                <img id="chemicalStructureImage" src="{{ Image }}" alt="{{ ChebiName }}" height='500' width='500'>
+            {% endif %}
+
+            {% if ExpandedAlpha %}
                 <div class="ExpandedAlpha">
                     <table>
                         <tr>
                             <th> Abbreviation </th>
                             <td> {{ ExpandedAlpha["Abbreviation"] }} </td>
                         </tr>
-                        <tr>
-                            <th> Symbol </th>
-                            <td class="nucleobase"> {{ ExpandedAlpha["Symbol"] }} </td>
-                        </tr>
-                        {% if ( (ExpandedAlpha["Complement Symbol"] is defined) and (ExpandedAlpha["Complement Symbol"] is not equalto 'NA') ) %}
+                        {% if ExpandedAlpha["Symbol"] %}
+                            <tr>
+                                <th> Symbol </th>
+                                <td class="nucleobase"> {{ ExpandedAlpha["Symbol"] }} </td>
+                            </tr>
+                        {% endif %}
+                        {% if ExpandedAlpha["Complement Symbol"] %}
                             <tr>
                                 <th> Complement </th>
                                 <td> {{ ExpandedAlpha["Complement"] }} </td>
@@ -152,6 +157,7 @@
                                 {% if RefAnnotEntry["citationid"] %}
                                     {% set AuthorL = RefAnnotEntry["authors"].split(';') %}
                                     {% set TitleL = RefAnnotEntry["title"].split(';') %}
+                                    {% set PubdateL = '' %}
                                     {% if RefAnnotEntry["pubdate"] %}
                                         {% set PubdateL = RefAnnotEntry["pubdate"].split(';') %}
                                     {% endif %}

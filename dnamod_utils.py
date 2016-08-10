@@ -6,11 +6,13 @@ import csv
 import os
 import subprocess
 
-SOURCE_DIR = os.path.dirname(os.path.realpath(__file__))
+_SOURCE_DIR = os.path.dirname(os.path.realpath(__file__))
+
+UNMOD_ALPH = ['A', 'C', 'G', 'T']
 
 
 def get_constant(constant_name):
-    CONSTANTS_SCRIPT = os.path.join(SOURCE_DIR, 'constants.sh')
+    CONSTANTS_SCRIPT = os.path.join(_SOURCE_DIR, 'constants.sh')
 
     process = subprocess.Popen([CONSTANTS_SCRIPT, constant_name],
                                stdout=subprocess.PIPE)

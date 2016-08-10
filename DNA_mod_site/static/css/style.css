@@ -177,6 +177,10 @@ footer a {
     font-size: 20px;
 }
 
+.chartContainer {
+    float:left;
+}
+
 a {
     text-decoration: none;
 }
