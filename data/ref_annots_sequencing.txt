@@ -8,13 +8,13 @@ ChEBI	Mapping method	Method detail	Resolution	Enrichment or limitation	Reference
 27551,76792	MBD-Seq	affinity-based	low		19906696
 27551,76792	MRE-Seq	affinity-based	low		20613842
 27551,76792	Methyl-MAPS	affinity-based	high		20488932
-27551,76792	MethylCap-seq	affinity-based	low	salt gradient stratification	20542119
+27551,76792	MethylCap-Seq	affinity-based	low	salt gradient stratification	20542119
 27551,76792	TAmC-Seq	chemical tagging	high		23443545
 27551,76792	Maxam–Gilbert sequencing		single-base 		265521,23301810,24209366,20813757
 # Sanger, NGS, 454, Pyro * 3, microdroplet
 27551,76792	BS-Seq	chemical conversion	single-base		1542678,19829295,17875690,12481262,16774114,17853883,24518816
 27551,76792	RRBS	chemical conversion	single-base	methylation-insensitive restriction digestion	19442738,20062050,18600261,21412275
-27551,76792	Tn5mC-seq	chemical conversion	single-base		22466172
+27551,76792	Tn5mC-Seq	chemical conversion	single-base		22466172
 27551,76792	PBAT	chemical conversion	single-base		22649061
 27551,76792	SMRT-BS	chemical conversion	single-base	target sequences	25943404
 27551,76792	MspJI recognition	restriction endonuclease	low	specific fragments	21690366
@@ -25,7 +25,7 @@ ChEBI	Mapping method	Method detail	Resolution	Enrichment or limitation	Reference
 # detection of only 5mC
 # 5mC
 27551	oxBS-Seq	chemical conversion	single-base		24008380
-27551	coBS-seq	chemical conversion	single-base		27460669
+27551	coBS-Seq	chemical conversion	single-base		27460669
 27551	nanopore	direct detection	single-base	target sequences	21991340
 27551	fluorescence microscopy	direct detection	low	target sequences	21981444
 # ------------------------------------------------
@@ -34,13 +34,13 @@ ChEBI	Mapping method	Method detail	Resolution	Enrichment or limitation	Reference
 76792	TAB-Seq	chemical conversion	single-base		22608086
 76792	hMeDIP-Seq	affinity-based	low		21490601,21460836
 76792	RRHP	restriction endonuclease	single-base	restriction digestion	25248841
-76792	Aba-seq	restriction endonuclease	high		23352666
+76792	Aba-Seq	restriction endonuclease	high		23352666
 76792	HMST-Seq	restriction endonuclease	low	23502161
 # below also used a gated single-molecule sequencing-by-synthesis method (Helicos)
 76792	(GLIB/CMS)-Seq	chemical conversion and immunoprecipitation	low		21552279
 76792	β-GT–based tagging	chemical tagging	high		20685817,21151123,27477909,21656634,21300643,23861445
 76792	sulfur/selenium tagging	chemical tagging	high		21344558
-76792	DMAB-seq	DNMT1 conversion	single-base	CpG contexts only	26504739
+76792	DMAB-Seq	DNMT1 conversion	single-base	CpG contexts only	26504739
 76792	tungsten-oxidation	chemical conversion	single-base		21918786
 76792	nanopore	direct detection	single-base	target sequences	27383905
 # -----------------------------------------------
@@ -51,7 +51,7 @@ ChEBI	Mapping method	Method detail	Resolution	Enrichment or limitation	Reference
 76794	MAB-Seq	chemical conversion	single-base		27172168
 # ------------------------------------------------
 # 5hmC, 5fC
-76792,76794	Pvu-seal-seq	enzyme-mediated chemical tagging	single-base		25639471
+76792,76794	Pvu-seal-Seq	enzyme-mediated chemical tagging	single-base		25639471
 # ------------------------------------------------
 # 5caC
 76793	CAB-Seq	chemical conversion	single-base		23758547
