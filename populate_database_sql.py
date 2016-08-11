@@ -655,11 +655,11 @@ def create_search_index(conn, sql_conn_cursor, filelocation):
             abbreviation = abbrevdata
             
             writedata = {
-                'Common Name' : chebiname,
-                'ChEBI Id' : chebiid,
-                'IUPAC Name' : iupacname,
+                'CommonName' : chebiname,
+                'ChEBIId' : chebiid,
+                'IUPACName' : iupacname,
                 'Synonyms' : synonyms,
-                'Chemical Formula' : formula,
+                'ChemicalFormula' : formula,
                 'Abbreviation' : abbreviation,
                 'Verified' : verified
             }

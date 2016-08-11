@@ -40,7 +40,18 @@ $(document).ready(function() {
     
     console.log("Data Dump: ");
     for (var i in data) {
-        console.log(data[i].Common_Name);
+        var doc = {
+            'Common Name': data[i].CommonName,
+            'ChEBI Id': data[i].ChEBIId,
+            'IUPAC Name': data[i].IUPACName,
+            'Synonyms': data[i].Synonyms,
+            'Chemical Formula': data[i].ChemicalFormula,
+            'Abbreviation': data[i].Abbreviation,
+            'Verified': data[i].Verified,
+            'href':data[i].CommonName + '.html'
+        };
+        console.log(doc)
+        idx.add(doc)
     }
        
     $('.searchbox').keyup(function() {
@@ -53,7 +64,7 @@ $(document).ready(function() {
             var append = '<li> No Results Found</li>';
             resultdiv.append(append)
         } else {
-            window.alert(result.length)
+            console.log(result.length)
             resultdiv.empty();
             resultdiv.append('<li>' + 'found' + '</li>');
         }
