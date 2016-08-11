@@ -31,9 +31,9 @@ $(document).ready(function() {
     request.onload = function() {
         if (request.status >= 200 && request.status < 400) {
             data = JSON.parse(request.responseText);
-            window.alert('JSON success')
+            console.log('JSON success')
         } else {
-            window.alert('JSON error')
+            console.log('JSON error')
         }
     };
     request.send();
@@ -64,9 +64,11 @@ $(document).ready(function() {
             var append = '<li> No Results Found</li>';
             resultdiv.append(append)
         } else {
-            console.log(result.length)
             resultdiv.empty();
-            resultdiv.append('<li>' + 'found' + '</li>');
+            for (var j in result) {
+                console.log(result[j])
+                resultdiv.append('<li>' + result[j].ref + '</li>');
+            }
         }
     });
 });
