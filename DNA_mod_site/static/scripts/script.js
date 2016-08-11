@@ -39,6 +39,7 @@ $(document).ready(function() {
     request.send();
     
     console.log("Data Dump: ");
+    var store = new Array();
     for (var i in data) {
         var doc = {
             'Common Name': data[i].CommonName,
@@ -50,6 +51,17 @@ $(document).ready(function() {
             'Verified': data[i].Verified,
             'href':data[i].CommonName + '.html'
         };
+        
+        store[doc.href] = {
+            'Common Name': data[i].CommonName,
+            'ChEBI Id': data[i].ChEBIId,
+            'IUPAC Name': data[i].IUPACName,
+            'Synonyms': data[i].Synonyms,
+            'Chemical Formula': data[i].ChemicalFormula,
+            'Abbreviation': data[i].Abbreviation,
+            'Verified': data[i].Verified,
+        };
+        
         console.log(doc)
         idx.add(doc)
     }
@@ -67,7 +79,7 @@ $(document).ready(function() {
             resultdiv.empty();
             for (var j in result) {
                 console.log(result[j])
-                resultdiv.append('<li>' + result[j].ref + '</li>');
+                resultdiv.append('<li> <a href=' + result[j].ref + ' >' + store[result[j].ref]['Common Name'] + '</a> </li>');
             }
         }
     });
