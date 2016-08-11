@@ -7,7 +7,7 @@ ChEBI	Mapping method	Method detail	Resolution	Enrichment or limitation	Reference
 27551,76792	MeDIP-Seq	affinity-based	low		18950712
 27551,76792	MBD-Seq	affinity-based	low		19906696
 27551,76792	MRE-Seq	affinity-based	low		20613842
-27551,76792	Methyl-MAPS	affinity-based	high		20488932
+27551,76792	Methyl-MAPS	affinity-based	low		20488932
 27551,76792	MethylCap-Seq	affinity-based	low	salt gradient stratification	20542119
 27551,76792	TAmC-Seq	chemical tagging	high		23443545
 27551,76792	Maxam–Gilbert sequencing		single-base 		265521,23301810,24209366,20813757
