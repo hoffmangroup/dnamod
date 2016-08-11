@@ -213,6 +213,10 @@ a:active {
     width: 100%;
 }
 
+#searchresults {
+    list-style-type: none;
+}
+
 #tabs {
     margin-top: 55px;
     height: 50%;
