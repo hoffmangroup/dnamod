@@ -71,14 +71,14 @@ def render_image(smiles, name):
     # get the relative path, from the site HTML directory
     img_dir = os.path.relpath(dnamod_utils.get_constant('site_image_dir'),
                               dnamod_utils.get_constant('site_dir'))
-    print(img_dir)
+
     if not os.path.exists(img_dir):
         os.makedirs(img_dir)
     if not smiles:
         return
+
     image_path = os.path.relpath(dnamod_utils.get_constant('site_image_dir'),
                               HTML_FILES_DIR)
-    print(image_path)
     image_path_ext = os.path.join(image_path, "{}.{}".format(name, IMAGE_FORMAT))
 
     mol = pybel.readstring('smi', smiles)
