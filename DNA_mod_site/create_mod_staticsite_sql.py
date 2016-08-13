@@ -70,24 +70,26 @@ def render_image(smiles, name):
 
     # get the relative path, from the site HTML directory
     img_dir = os.path.relpath(dnamod_utils.get_constant('site_image_dir'),
-                              HTML_FILES_DIR)
-
+                              dnamod_utils.get_constant('site_dir'))
+    print(img_dir)
     if not os.path.exists(img_dir):
         os.makedirs(img_dir)
     if not smiles:
         return
-
-    image_path = os.path.join(img_dir, "{}.{}".format(name, IMAGE_FORMAT))
+    image_path = os.path.relpath(dnamod_utils.get_constant('site_image_dir'),
+                              HTML_FILES_DIR)
+    print(image_path)
+    image_path_ext = os.path.join(image_path, "{}.{}".format(name, IMAGE_FORMAT))
 
     mol = pybel.readstring('smi', smiles)
-    mol.write(IMAGE_FORMAT, image_path, overwrite=True)
+    mol.write(IMAGE_FORMAT, image_path_ext, overwrite=True)
 
-    if not os.path.isfile(image_path):
+    if not os.path.isfile(image_path_ext):
         print("Warning: failed to render image"
               "for {}".format(name), file=sys.stderr)
         image_path = None
 
-    return image_path
+    return image_path_ext
 
 
 def get_citations(lookup_key, cursor):

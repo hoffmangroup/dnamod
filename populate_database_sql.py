@@ -23,6 +23,7 @@ import pprint
 from pysqlite2 import dbapi2 as sqlite3  # needed for latest SQLite
 import sys
 import unicodecsv as csv
+import json
 
 from Bio import Entrez
 from suds.client import Client  # Using Suds web services client for soap
@@ -65,6 +66,7 @@ DATABASE_FILE_FULLPATH = dnamod_utils.get_constant('database')
 ALPHABET_FILE_FULLPATH = dnamod_utils.get_constant('annot_exp_alph')
 SEQ_REF_ANNOTS_FULLPATH = dnamod_utils.get_constant('annot_seq')
 NATURE_REF_ANNOTS_FULLPATH = dnamod_utils.get_constant('annot_nature')
+JSON_INDEX_FILE_FULLPATH = dnamod_utils.get_constant('JSON')
 
 url = 'http://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
 client = Client(url)
@@ -630,6 +632,40 @@ def create_annot_citation_tables(conn, sql_conn_cursor, ref_annots_file_name, ta
                         
         conn.commit()
 
+def create_search_index(conn, sql_conn_cursor, filelocation):
+    with open(filelocation, 'a+') as file:
+        feeds = []
+        sql_conn_cursor.execute("SELECT nameid FROM modbase")
+        result = sql_conn_cursor.fetchall()
+        for modification in result:
+            print(modification)
+            sql_conn_cursor.execute("SELECT * FROM names WHERE nameid = ?",(modification))
+            data = sql_conn_cursor.fetchone()
+            print(data)
+            chebiname = data[0]
+            chebiid = data[1]
+            iupacname = data[2]
+            synonyms = data[3]
+            sql_conn_cursor.execute("SELECT formulaid, verifiedstatus FROM modbase WHERE nameid = ?", (modification))
+            furtherdata = sql_conn_cursor.fetchone()
+            formula = furtherdata[0]
+            verified = furtherdata[1]
+            sql_conn_cursor.execute("SELECT Abbreviation FROM expanded_alphabet WHERE nameid = ?",(modification))
+            abbrevdata = sql_conn_cursor.fetchone()
+            abbreviation = abbrevdata
+            
+            writedata = {
+                'CommonName' : chebiname,
+                'ChEBIId' : chebiid,
+                'IUPACName' : iupacname,
+                'Synonyms' : synonyms,
+                'ChemicalFormula' : formula,
+                'Abbreviation' : abbreviation,
+                'Verified' : verified
+            }
+            feeds.append(writedata)
+        json.dump(feeds, file)
+
 
 def populate_tables(conn, sql_conn_cursor, bases, children, client):
     create_base_table(conn, sql_conn_cursor, bases)
@@ -639,7 +675,9 @@ def populate_tables(conn, sql_conn_cursor, bases, children, client):
                                  SEQ_REF_ANNOTS_FULLPATH, SEQ_TABLE_NAME)
     create_annot_citation_tables(conn, sql_conn_cursor,
                                  NATURE_REF_ANNOTS_FULLPATH, NATURE_TABLE_NAME)
-
+    print("4/5 Creating Search Index...")
+    print(JSON_INDEX_FILE_FULLPATH)
+    create_search_index(conn, sql_conn_cursor, JSON_INDEX_FILE_FULLPATH)
 
 def check_for_duplicates(sql_conn_cursor):
     for nameid in sql_conn_cursor.execute('''SELECT nameid FROM modbase'''):
@@ -655,10 +693,10 @@ def check_for_duplicates(sql_conn_cursor):
 WHITE_LIST = dnamod_utils.get_whitelist()
 BLACK_LIST = dnamod_utils.get_blacklist()
 
-print("1/4 Searching for bases...")
+print("1/5 Searching for bases...")
 bases = search_for_bases(client)
 
-print("2/4 Searching for children...")
+print("2/5 Searching for children...")
 children = get_children(bases, client)
 bases = get_complete_bases(bases, client)
 
@@ -669,10 +707,10 @@ sql_conn_cursor = conn.cursor()
 sql_conn_cursor.execute('''PRAGMA foreign_keys = ON''')
 conn.commit()
 
-print("3/4 Creating tables...")
+print("3/5 Creating tables...")
 populate_tables(conn, sql_conn_cursor, bases, children, client)
 
-print("4/4 Finishing up...")
+print("5/5 Finishing up...")
 check_for_duplicates(sql_conn_cursor)
 
 conn.close()

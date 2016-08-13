@@ -205,6 +205,18 @@ a:active {
     color: rgb(119, 43, 201);
 }
 
+#searchinput {
+    width: 100%;
+}
+
+.searchbox {
+    width: 100%;
+}
+
+#searchresults {
+    list-style-type: none;
+}
+
 #tabs {
     margin-top: 55px;
     height: 50%;

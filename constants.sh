@@ -25,6 +25,7 @@ set -o nounset -o pipefail -o errexit
 # "script_create_site"	The script to create the webpages
 # "script_update_all"	The script to re-create everything
 # "script_sync_site"	The script to push the webpage changes to the external directory for synchronization
+# "JSON"    The subdirectory containing the index file for lunr.js search
 
 ERR_EXIT=64
 
@@ -52,6 +53,7 @@ SITE_HTML_DIR="$SITE_DIR/static"
 SITE_IMAGE_DIR="$SITE_HTML_DIR/images"
 SITE_CSS_DIR="$SITE_HTML_DIR/css"
 SITE_JS_DIR="$SITE_HTML_DIR/js"
+JSON="$SITE_HTML_DIR/scripts/lunr.json"
 DATA_DIR="$SOURCE_DIR/data"
 
 if [[ ! ( -d "$ROOT_DIR" && -d "$SITE_DIR" && -d "$SITE_TEMPLATE_DIR" && -d "$SITE_HTML_DIR" && -d "$SITE_IMAGE_DIR" && -d "$SITE_CSS_DIR" && -d "$SITE_JS_DIR" && -d "$DATA_DIR" ) ]]; then
@@ -103,6 +105,9 @@ case ${1:-} in
         ;;
     site_js_dir)
         echo -n "$SITE_JS_DIR"
+        ;;
+    JSON)
+        echo -n "$JSON"
         ;;
     site_template_dir)
         echo -n "$SITE_TEMPLATE_DIR"

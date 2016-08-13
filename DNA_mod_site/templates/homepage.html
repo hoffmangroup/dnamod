@@ -19,6 +19,8 @@
         <script type="text/javascript" src="js/psd3.js"></script>
         <link rel="stylesheet" type="text/css" href="css/psd3.css" /> 
     </script>
+    
+    <script type='text/javascript' src='scripts/lunr.js'></script>
 
     <link href="css/style.css" rel="stylesheet" type='text/css'>
 </head>
@@ -86,11 +88,23 @@
 
     <div id="tabs">
         <ul>
-            <li class="ui-tabs-selected"> <a href="#tabs-1">Verified</a>
-            <li> <a href="#tabs-2">Unverified</a>
+            <li> <a href="#tabs-1"> Search </a>
+            <li class="ui-tabs-selected"> <a href="#tabs-2">Verified</a>
+            <li> <a href="#tabs-3">Unverified</a>
         </ul>
 
         <div id="tabs-1">
+            <div class = "IndexLayout">
+                <div id= "searchinput">
+                    <input type="text" class="searchbox" placeholder="Search">
+                </div>
+                <ul id = "searchresults">
+                
+                </ul>
+            </div>
+        </div>
+        
+        <div id="tabs-2">
             <div class="container">
                 <div class="well">
                     <h2>Covalently modified DNA nucleobases</h2>
@@ -182,7 +196,7 @@
             </noscript>
         </div>
 
-        <div id="tabs-2">
+        <div id="tabs-3">
             <div class="container">
                 <div class="well">
                     <h2>Unverified entries</h2>
