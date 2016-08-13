@@ -650,9 +650,11 @@ def create_search_index(conn, sql_conn_cursor, filelocation):
             furtherdata = sql_conn_cursor.fetchone()
             formula = furtherdata[0]
             verified = furtherdata[1]
-            sql_conn_cursor.execute("SELECT Abbreviation FROM expanded_alphabet WHERE nameid = ?",(modification))
+            sql_conn_cursor.execute("SELECT Abbreviation FROM expanded_alphabet WHERE nameid = ?", (modification))
             abbrevdata = sql_conn_cursor.fetchone()
             abbreviation = abbrevdata
+            sql_conn_cursor.execute("SELECT Symbol FROM expanded_alphabet WHERE nameid = ?", (modification))
+            symbol = sql_conn_cursor.fetchone()
             
             writedata = {
                 'CommonName' : chebiname,
@@ -661,7 +663,8 @@ def create_search_index(conn, sql_conn_cursor, filelocation):
                 'Synonyms' : synonyms,
                 'ChemicalFormula' : formula,
                 'Abbreviation' : abbreviation,
-                'Verified' : verified
+                'Verified' : verified,
+                'Symbol' : symbol
             }
             feeds.append(writedata)
         json.dump(feeds, file)

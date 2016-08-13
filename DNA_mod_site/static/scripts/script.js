@@ -13,15 +13,16 @@ $(document).ready(function() {
 });
 
 $(document).ready(function() {
-    var idx = lunr(function() {
-        this.field('Common Name');
-        this.field('ChEBI Id');
-        this.field('IUPAC Name');
-        this.field('Synonyms');
-        this.field('Chemical Formula');
-        this.field('Abbreviation');
-        this.field('Verified');
-        this.ref('href');
+    var idx = elasticlunr(function() {
+        this.addField('Common Name');
+        this.addField('ChEBI Id');
+        this.addField('IUPAC Name');
+        this.addField('Synonyms');
+        this.addField('Chemical Formula');
+        this.addField('Abbreviation');
+        this.addField('Verified');
+        this.addField('Symbol');
+        this.setRef('href');
     });
 
     var data = new Array();
@@ -49,9 +50,10 @@ $(document).ready(function() {
             'Chemical Formula': data[i].ChemicalFormula,
             'Abbreviation': data[i].Abbreviation,
             'Verified': data[i].Verified,
+            'Symbol': data[i].Symbol,
             'href':data[i].CommonName + '.html'
         };
-        
+
         store[doc.href] = {
             'Common Name': data[i].CommonName,
             'ChEBI Id': data[i].ChEBIId,
@@ -60,31 +62,47 @@ $(document).ready(function() {
             'Chemical Formula': data[i].ChemicalFormula,
             'Abbreviation': data[i].Abbreviation,
             'Verified': data[i].Verified,
+            'Symbol': data[i].Symbol
         };
         
-        //console.log(doc)
-        idx.add(doc)
+        idx.addDoc(doc)
     }
        
     $('.searchbox').keyup(function() {
         var query = $(this).val();
-        var result = idx.search(query);
-
-        var resultdiv = $('#searchresults');
-        if (result.length === 0 && query.length > 3) {
-            resultdiv.empty()
-            var append = '<li> No Results Found</li>';
-            resultdiv.append(append)
+        
+        if (query.length <= 2) {
+            var searchfields = ['Abbreviation', 'Symbol'];
         } else {
-            resultdiv.empty();
+            var searchfields = ['Common Name', 'ChEBI Id', 'IUPAC Name', 'Synonyms', 'Chemical Formula', 'Abbreviation', 'Symbol'];
+        }
+        
+        var resultdiv = $('#searchresults');
+        
+        resultdiv.empty();
+        for (var field in searchfields) {
+            var category = searchfields[field];
+            var numboost = 1;
+            
+            if (query.length <= 2) {
+                numboost = 10;
+            }
+            
+            var configuration = {fields: {[category]: {boost: [numboost]}}, bool:"AND", expand:true};
+            var result = idx.search(query, configuration);
+            
+            if (result.length > 0) {
+                resultdiv.append('<h2> Query matches: ' + category + ' </h2>');
+            }
+            
             for (var j in result) {
-                //console.log(result[j])
                 if (store[result[j].ref]['Verified'] === 1) {
-                    resultdiv.append('<li> <a href=' + result[j].ref + ' style="color:green">' + store[result[j].ref]['Common Name'] + '</a> </li>');
+                    resultdiv.append('<li> <a href= "' + result[j].ref + '" style="color:green">' + store[result[j].ref]['Common Name'] + '</a> </li>');
                 } else {
-                    resultdiv.append('<li> <a href= "' + result[j].ref + '" style="color:red">' + store[result[j].ref]['Common Name'] + '</a> </li>');                
+                    resultdiv.append('<li> <a href= "' + result[j].ref + '" style="color:red">' + store[result[j].ref]['Common Name'] + '</a> </li>');
                 }
             }
         }
     });
+    
 });
