@@ -638,10 +638,11 @@ def create_search_index(conn, sql_conn_cursor, filelocation):
         sql_conn_cursor.execute("SELECT nameid FROM modbase")
         result = sql_conn_cursor.fetchall()
         for modification in result:
-            print(modification)
+            sql_conn_cursor.execute("SELECT Name FROM expanded_alphabet WHERE nameid =?", (modification))
+            nomenclature = sql_conn_cursor.fetchone()
+            name = nomenclature;
             sql_conn_cursor.execute("SELECT * FROM names WHERE nameid = ?",(modification))
             data = sql_conn_cursor.fetchone()
-            print(data)
             chebiname = data[0]
             chebiid = data[1]
             iupacname = data[2]
@@ -656,18 +657,33 @@ def create_search_index(conn, sql_conn_cursor, filelocation):
             sql_conn_cursor.execute("SELECT Symbol FROM expanded_alphabet WHERE nameid = ?", (modification))
             symbol = sql_conn_cursor.fetchone()
             
-            writedata = {
-                'CommonName' : chebiname,
-                'ChEBIId' : chebiid,
-                'IUPACName' : iupacname,
-                'Synonyms' : synonyms,
-                'ChemicalFormula' : formula,
-                'Abbreviation' : abbreviation,
-                'Verified' : verified,
-                'Symbol' : symbol
-            }
+            if name:
+                writedata = {
+                    'CommonName' : name,
+                    'ChEBIId' : chebiid,
+                    'IUPACName' : iupacname,
+                    'Synonyms' : synonyms,
+                    'ChemicalFormula' : formula,
+                    'Abbreviation' : abbreviation,
+                    'Verified' : verified,
+                    'Symbol' : symbol,
+                    'Refname' : chebiname
+                }            
+            else:
+                writedata = {
+                    'CommonName' : chebiname,
+                    'ChEBIId' : chebiid,
+                    'IUPACName' : iupacname,
+                    'Synonyms' : synonyms,
+                    'ChemicalFormula' : formula,
+                    'Abbreviation' : abbreviation,
+                    'Verified' : verified,
+                    'Symbol' : symbol,
+                    'Refname' : chebiname
+                }
+                
             feeds.append(writedata)
-        json.dump(feeds, file)
+        json.dump(feeds, file, sort_keys = True, indent = 4)
 
 
 def populate_tables(conn, sql_conn_cursor, bases, children, client):
@@ -679,7 +695,6 @@ def populate_tables(conn, sql_conn_cursor, bases, children, client):
     create_annot_citation_tables(conn, sql_conn_cursor,
                                  NATURE_REF_ANNOTS_FULLPATH, NATURE_TABLE_NAME)
     print("4/5 Creating Search Index...")
-    print(JSON_INDEX_FILE_FULLPATH)
     create_search_index(conn, sql_conn_cursor, JSON_INDEX_FILE_FULLPATH)
 
 def check_for_duplicates(sql_conn_cursor):

@@ -51,7 +51,7 @@ $(document).ready(function() {
             'Abbreviation': data[i].Abbreviation,
             'Verified': data[i].Verified,
             'Symbol': data[i].Symbol,
-            'href':data[i].CommonName + '.html'
+            'href':data[i].Refname + '.html'
         };
 
         store[doc.href] = {
