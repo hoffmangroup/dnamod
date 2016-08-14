@@ -270,7 +270,7 @@ def get_full_citation(PMID):
         if 'MedlineCitation' in record.keys():
             isarticle = True
             article = record['MedlineCitation']['Article']
-
+            daterecord = record['PubmedData']['History'];
             if'ArticleTitle' in article.keys():
                 articleTitle = article['ArticleTitle']
             else:
@@ -279,10 +279,13 @@ def get_full_citation(PMID):
                 authors = article['AuthorList']
             else:
                 authors = None
-            if'PubDate' in article.keys():
+            '''if'PubDate' in article.keys():
                 publicationDate = article['PubDate']
             elif'ArticleDate' in article.keys():
-                publicationDate = article['ArticleDate']
+                publicationDate = article['ArticleDate']'''
+                
+            publicationDate = [date for date in daterecord if date.attributes['PubStatus'] == "pubmed"]
+            
         else:
             # XXX TODO refactor
             # isbook = True # Unused at the moment
@@ -311,18 +314,28 @@ def get_full_citation(PMID):
         result.append('')
         field_not_found('title')
 
-    if publicationDate:
-        if isarticle:
+    if isarticle:
+        if publicationDate:
             publicationDate = publicationDate[0]
 
-        date = datetime.date(int(publicationDate['Year']),
-                             int(publicationDate['Month']),
-                             int(publicationDate['Day']))
-
-        result.append(date.isoformat())
+            date = datetime.date(int(publicationDate['Year']),
+                                 int(publicationDate['Month']),
+                                 int(publicationDate['Day']))
+            print(date.isoformat())
+            result.append(date.isoformat())
+        else:
+            result.append('')
+            field_not_found('date')
     else:
-        result.append('')
-        field_not_found('date')
+        if publicationDate:
+            date = datetime.date(int(publicationDate['Year']),
+                                 int(publicationDate['Month']),
+                                 int(publicationDate['Day']))
+
+            result.append(date.isoformat())
+        else:
+            result.append('')
+            field_not_found('date (non-article entry)')
     if authors:
         result.append("{0}, {1}, et al.".format(authors[0]['LastName'].encode("utf-8"),
                                                 authors[0]['Initials'].encode("utf-8")))
