@@ -9,7 +9,9 @@ $(document).ready(function() {
     collapsible: "true",
     active: false,
     });
-    $("#tabs").tabs();
+    $("#tabs").tabs({
+        active:1
+    });
 });
 
 $(document).ready(function() {
