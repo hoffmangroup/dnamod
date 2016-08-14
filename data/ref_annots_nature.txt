@@ -86,7 +86,7 @@ ChEBI	Origin	Function	Functional info.	Organism(s)	Reference(s)
 # 5-hydroxymethyluracil
 16964	natural	damage, demethylation intermediate, and possible epigenetic mark		Homo sapiens,Gyrodinium cohnii,Rattus norvegicus,Mus musculus	10490501,4515611,6592579,24838012
 # α-putrescinylthymine
-132931	endogenous	hypermodified nucleobase		bacteriophage ϕW-14	4683479
+132931	natural	hypermodified nucleobase		bacteriophage ϕW-14	4683479
 #
 # uracil
 #
@@ -99,4 +99,4 @@ ChEBI	Origin	Function	Functional info.	Organism(s)	Reference(s)
 # uracil-6-ylacetic acid (6-carboxymethyluracil)
 46371	synthetic and RNA			Saccharomyces cerevisiae	4300701
 # 5-dihydroxypentyluracil
-132195	endogenous	hypermodified nucleobase		bacteriophage SP-15	4633813
+132195	natural	hypermodified nucleobase		bacteriophage SP-15	4633813
