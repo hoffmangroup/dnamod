@@ -30,43 +30,49 @@
     </div>
     
     <!-- TODO refactor to infer headers from dict -->
-    <div class="container">
-    {% if Image %}
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <img id="chemicalStructureImage" src="{{ Image }}" alt="{{ ChebiName }}" height='500' width='500'>
-            </div>
+    <div class="container-fluid">
+    
+        <div class="row">
+        
+            {% if ExpandedAlpha %}
+                <div class="col-xs-4">
+                    <div class="ExpandedAlpha">
+                        <h2> Nomenclature: </h2>
+                        <table>
+                            <tr>
+                                <th> Abbreviation </th>
+                                <td> {{ ExpandedAlpha["Abbreviation"] }} </td>
+                            </tr>
+                            {% if ExpandedAlpha["Symbol"] %}
+                                <tr>
+                                    <th> Symbol </th>
+                                    <td class="nucleobase"> {{ ExpandedAlpha["Symbol"] }} </td>
+                                </tr>
+                            {% endif %}
+                            {% if ExpandedAlpha["Complement Symbol"] %}
+                                <tr>
+                                    <th> Complement </th>
+                                    <td> {{ ExpandedAlpha["Complement"] }} </td>
+                                </tr>
+                                <tr>
+                                    <th> Symbol </th>
+                                    <td class="nucleobase"> {{ ExpandedAlpha["Complement Symbol"] }} </td>
+                                </tr>
+                            {% endif %}
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
+            
+            {% if Image %}
+                <div class="col-xs-8">
+                    <div class="panel-body">
+                        <img id="chemicalStructureImage" src="{{ Image }}" alt="{{ ChebiName }}" height='500' width='500'>
+                    </div>
+                </div>
+            {% endif %}
+            
         </div>
-    {% endif %}
-
-    {% if ExpandedAlpha %}
-        <div class="ExpandedAlpha">
-            <h2> Nomenclature: </h2>
-            <table>
-                <tr>
-                    <th> Abbreviation </th>
-                    <td> {{ ExpandedAlpha["Abbreviation"] }} </td>
-                </tr>
-                {% if ExpandedAlpha["Symbol"] %}
-                    <tr>
-                        <th> Symbol </th>
-                        <td class="nucleobase"> {{ ExpandedAlpha["Symbol"] }} </td>
-                    </tr>
-                {% endif %}
-                {% if ExpandedAlpha["Complement Symbol"] %}
-                    <tr>
-                        <th> Complement </th>
-                        <td> {{ ExpandedAlpha["Complement"] }} </td>
-                    </tr>
-                    <tr>
-                        <th> Symbol </th>
-                        <td class="nucleobase"> {{ ExpandedAlpha["Complement Symbol"] }} </td>
-                    </tr>
-                {% endif %}
-            </table>
-        </div>
-    {% endif %}
-</div>
     </div>
 
     <div class="ContentLayout">
