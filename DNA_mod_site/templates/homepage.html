@@ -6,12 +6,15 @@
     <title>DNA Modification Database - Home</title>
 
     <!-- <link href="netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"> -->
-    <!-- <link href="css/style.css" rel="stylesheet" type='text/css'> -->
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    
     <script type='text/javascript' src='js/homepage.js'>
         <script type="text/javascript" src=".https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
@@ -21,8 +24,8 @@
     </script>
     
     <script type='text/javascript' src='js/elasticlunr.js'></script>
-
     <link href="css/style.css" rel="stylesheet" type='text/css'>
+
 </head>
 
 
@@ -83,38 +86,50 @@
 
 <body>
     <div class= "TitleBlock" >
-        <h1>DNAmod—the DNA modification database</h1>
+        <nav class="navbar navbar-custom navbar-fixed-top">
+                <div class="navbar-header">
+                    <h2 class="navbar-brand">DNAmod - the DNA modification database</h2>
+                </div> 
+        </nav>
     </div>
 
-    <div id="tabs">
-        <ul>
-            <li> <a href="#tabs-1"> Search </a>
-            <li class="ui-tabs-selected"> <a href="#tabs-2">Verified</a>
-            <li> <a href="#tabs-3">Unverified</a>
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="nav"> <a href="#tabs-1" data-toggle="tab"> Search </a></li>
+            <li class="nav active"> <a href="#tabs-2" data-toggle="tab">Verified</a></li>
+            <li class="nav"> <a href="#tabs-3" data-toggle="tab">Unverified</a></li>
         </ul>
-
-        <div id="tabs-1">
-            <div class = "IndexLayout">
-                <h2>Searching for DNA modifications</h2>
-                <ul>
-                    <li>Start typing a search query into the box below.
-                    <li>Returned from your query are the results of your search along with the field that they matched.
-                    <li>Verified entries are returned in<span style="color:green;"> green</span>, whereas unverified entires are returned in <span style="color:red;"> red</span>.
-                    <li>The searchable fields include: 'Common Name', 'ChEBI Id', 'IUPAC Name', 'Synonyms', 'Chemical Formula', 'Abbreviation' and, 'Symbol'.
-                    <li>Single letter queries search among the 'Symbol' field.
-                    <li>You may need to scroll down to see all of the results.
-                </ul>
-        
-                <div id= "searchinput">
-                    <input type="text" class="searchbox" placeholder="Search">
+    </div>
+    
+    <div class="tab-content">
+    
+        <div class="tab-pane fade" id="tabs-1">
+            <div class="container">
+                <div class="well">
+                    <h2>Searching for DNA modifications</h2>
+                    <ul>
+                        <li>Start typing a search query into the box below.
+                        <li>Returned from your query are the results of your search along with the field that they matched.
+                        <li>Verified entries are returned in<span style="color:#4DAC26;"> green</span>, whereas unverified entires are returned in <span style="color:#D01C8B;"> red</span>.
+                        <li>The searchable fields include: 'Common Name', 'ChEBI Id', 'IUPAC Name', 'Synonyms', 'Chemical Formula', 'Abbreviation' and, 'Symbol'.
+                        <li>Single letter queries search among the 'Symbol' field.
+                        <li>You may need to scroll down to see all of the results.
+                    </ul>
                 </div>
-                <ul id = "searchresults">
+    
+                <div class="panel panel-default" id="searchinput">
+                    <div class="panel-body">
+                        <input type="text" class="searchbox" placeholder="Search">
+                        <ul class="list-group" id = "searchresults">
+            
+                        </ul>
+                    </div>
+                </div>
                 
-                </ul>
             </div>
         </div>
         
-        <div id="tabs-2">
+        <div class="tab-pane fade in active" id="tabs-2">
             <div class="container">
                 <div class="well">
                     <h2>Covalently modified DNA nucleobases</h2>
@@ -127,75 +142,90 @@
                     </ul>
                 </div>
 
-                <div id="chartContainer" class="well"></div>
+                <div class="panel panel-default">
+                    <div class="panel-body" id="chartContainer"></div>
+                </div>
             </div>
 
             <script type="text/javascript">
-                {% set initial_subpie_frac = 100/(verifiedHierarchy.keys()|length) %}
+                $(window).on("load resize", function () {
+                    $('#chartContainer').empty()
+                    var windowWidth = $(window).width()*0.5;
+                    var windowHeight = $(window).width()*0.5;
+                    var dim;
+                    
+                    if (windowWidth < windowHeight) {
+                        dim = windowWidth;
+                    } else {
+                        dim = windowHeight;
+                    }
+                                    
+                    {% set initial_subpie_frac = 100/(verifiedHierarchy.keys()|length) %}
 
-                var DNA_bases = [
-                    {% for unmod_base, mod_children in verifiedHierarchy|dictsort %}
-                    {% set unmod_symbol = unmod_base|string|first|upper %}
-                        {{ '{' }}
-                            abbreviation: "{{ unmod_symbol }}",
-                            displayname: "{{unmod_base}}{{' '}}{{'('}}<span class='nucleobase'>{{unmod_symbol}}</span>{{')'}}",
-                            chebiname: "",
-                            value: {{ initial_subpie_frac }},
-                            drilldown: [{{ _consRecTree(mod_children, initial_subpie_frac) }}],
-                            stripe: false
-                        {{ '}' }}{% if not loop.last %}, 
-                        {% endif %}
-                    {% endfor %}
-                ];
+                    var DNA_bases = [
+                        {% for unmod_base, mod_children in verifiedHierarchy|dictsort %}
+                        {% set unmod_symbol = unmod_base|string|first|upper %}
+                            {{ '{' }}
+                                abbreviation: "{{ unmod_symbol }}",
+                                displayname: "{{unmod_base}}{{' '}}{{'('}}<span class='nucleobase'>{{unmod_symbol}}</span>{{')'}}",
+                                chebiname: "",
+                                value: {{ initial_subpie_frac }},
+                                drilldown: [{{ _consRecTree(mod_children, initial_subpie_frac) }}],
+                                stripe: false
+                            {{ '}' }}{% if not loop.last %}, 
+                            {% endif %}
+                        {% endfor %}
+                    ];
 
-                var config = {
-                    containerId: "chartContainer",
-                    width: 1400,
-                    height: 1400,
-                    data: DNA_bases,
-                    label: function(d) {
-                        return d.data.abbreviation;
-                    },
-                    inner: "drilldown",
-                    tooltip: function(d) {
-                        return "<div style='background-color: #4a4; color: white; padding: 15px; text-align: middle; border: dotted 1px black;'>" + d.displayname + "</div>";
-                    },
-                    click: function(d) {
-                        var url = d.data.chebiname.concat(".html");
-                        $.ajax({
-                            type: 'HEAD',
-                            url: url,
-                            success: function() {
-                                return window.location.href = url;
-                            },
-                        });
-                    },
-                    transition: "linear",
-                    transitionDuration: 100, // in ms
-                    donutRadius: 50,
-                    gradient: true,
-                    colors: d3.scale.category20(),
-                    labelColor: "white",
-                    stroke: "#eee",
-                    strokeWidth: 3,
-                    drilldownTransition: "linear",
-                    drilldownTransitionDuration: 0,
-                    highlightColor: "#c00"
-                };
+                    var config = {
+                        containerId: "chartContainer",
+                        width: dim,
+                        height: dim,
+                        data: DNA_bases,
+                        label: function(d) {
+                            return d.data.abbreviation;
+                        },
+                        inner: "drilldown",
+                        tooltip: function(d) {
+                            return "<div style='background-color: #4a4; color: white; padding: 15px; text-align: middle; border: dotted 1px black;'>" + d.displayname + "</div>";
+                        },
+                        click: function(d) {
+                            var url = d.data.chebiname.concat(".html");
+                            $.ajax({
+                                type: 'HEAD',
+                                url: url,
+                                success: function() {
+                                    return window.location.href = url;
+                                },
+                            });
+                        },
+                        transition: "linear",
+                        transitionDuration: 100,
+                        donutRadius: 50,
+                        gradient: true,
+                        colors: d3.scale.category20(),
+                        labelColor: "white",
+                        stroke: "#eee",
+                        strokeWidth: 3,
+                        drilldownTransistion: "linear",
+                        drilldownTransistionDuration: 0,
+                        highlightColor: "#c00"
+                    };
 
-                var samplePie = new psd3.Pie(config);
+                    var samplePie = new psd3.Pie(config);
+                });
             </script>
 
             <noscript>
-                <div class= "IndexLayout" >
+                <div class= "panel panel-default" >
                     <div id="accordion">
                         {% for base in bases %}
                             <h2> {{ base }} </h2>
                             <div>
                                 {% set baseloop = loop %}
-                                <ul>
+                                <ul class="list-group">
                                     {% for modification in modifications[base] %}
-                                        <li> <a href= "{{ modification }}.html"> {{ modification }}</a>
+                                        <li class="list-group-item"> <a href= "{{ modification }}.html"> {{ modification }}</a>
                                     {% endfor %}
                                 </ul>
                                 <br>
@@ -206,8 +236,9 @@
             </noscript>
         </div>
 
-        <div id="tabs-3">
+        <div class="tab-pane fade" id="tabs-3">
             <div class="container">
+            
                 <div class="well">
                     <h2>Unverified entries</h2>
                     <ul>
@@ -217,28 +248,46 @@
                     </ul>
                 </div>
 
-                <div class= "IndexLayout" >
+                <div class= "panel panel-default" >
                     <div id="accordion2">
                     {% for base in unverifiedbases %}
                         <h2> {{ base }} </h2>
                         <div>
                             {% set baseloop = loop %}
-                            <ul>
+                            <ul class="list-group">
                             {% for modification in unverifiedmodifications[base] %}
-                                <li> <a href= "{{ modification }}.html"> {{ modification }}</a>
+                                <li class="list-group-item"> <a href= "{{ modification }}.html"> {{ modification }}</a>
                             {% endfor %}
                             </ul> <br>
                         </div>
                     {% endfor %}
                     </div>
                 </div>
-            </div>
+            
+            </div>  
         </div>
+        
     </div>
+    
+    <footer class="footer">
+        <nav class="navbar navbar-custom navbar-fixed-bottom">
+            <div class="navbar-header">
+                <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 
-    <footer>
-        <a href= "about.html"> About</a>
-        <a href= "contact.html"> Contact</a>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+            </div>
+            
+            <div class="collapse navbar-collapse">
+                <div class="nav navbar-nav">
+                    <a href= "about.html"> About</a>
+                    <a href= "contact.html"> Contact</a>
+                </div>
+            </div>
+            
+        </nav>
     </footer>
 
 </body>

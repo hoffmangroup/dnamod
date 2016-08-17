@@ -103,7 +103,7 @@ $(document).ready(function() {
             }
             
             if (uniqueCount > 0) {
-                resultdiv.append('<h2> Query matches: ' + category + ' </h2>');
+                resultdiv.append('<h3> Query matches: ' + category + ' </h3>');
             }
             
             for (var j in result) {
@@ -111,9 +111,9 @@ $(document).ready(function() {
                 if (inArray === -1) {
                     displayedResults.push(store[result[j].ref]['Common Name']);
                     if (store[result[j].ref]['Verified'] === 1) {
-                        resultdiv.append('<li> <a href= "' + result[j].ref + '" style="color:green">' + store[result[j].ref]['Common Name'] + '</a> </li>');
+                        resultdiv.append('<li class="list-group-item"> <a href= "' + result[j].ref + '" style="color:#4DAC26">' + store[result[j].ref]['Common Name'] + '</a> </li>');
                     } else {
-                        resultdiv.append('<li> <a href= "' + result[j].ref + '" style="color:red">' + store[result[j].ref]['Common Name'] + '</a> </li>');
+                        resultdiv.append('<li class="list-group-item"> <a href= "' + result[j].ref + '" style="color:#D01C8B">' + store[result[j].ref]['Common Name'] + '</a> </li>');
                     }
                 }
             }

@@ -1,208 +1,45 @@
-* {
-    font-size: 20px;
-    font-family: Arial;
-}
-
-html {
-    background-color: rgba(129, 251, 189, 0.05);
-}
-
-.TitleBlock {
-    z-index: 1;
-    background-color: rgb(135, 206, 250);
-    border-bottom: 3px solid black;
-    width: 100%;
-    display: inline-block;
-    clear: both;
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
-.TitleBlock h1 {
-    padding: 10px;
-    margin: auto;
-    float: left;
-    font-size: 30px;
-}
-
-.TitleBlock h2 {
-    padding: 10px;
-    padding-right: 0px;
-    margin: auto;
-    float: right;
-    font-size: 25px;
-    font-weight: normal;
-}
-
-.TitleBlock a {
-    padding: 10px;
-    margin:auto;
-    float: right;
-    font-size: 25px;
-}
-
 body {
-    margin: auto;
-    width: 100%;
+    padding-top: 65px;
+    padding-bottom: 65px;
 }
 
-table, th, td {
-    margin-top: 6px;
-    padding: 5px;
-    border: 0px;
-    border-collapse: collapse;
-    border-top: 2px solid;
-    border-bottom: 2px solid;
+.tab-content {
+    margin-top: 25px;
 }
 
-.Alphabet {
-    width: 500px;
-    margin-right: 100px;
-    margin-left: 20px;
-    margin-top: 50px;
+#chartContainer_svg {
     display: block;
-    float: right;
-    top: 50%;
+    margin-left:auto;
+    margin-right:auto;
 }
 
-#chemicalStructureImage{
-    border: 3px solid black;
+.navbar-custom {
+    background-color: #87CEFA;
+    border-color: black;
 }
 
-.ExpandedAlpha {
-    padding-top: 50px;
-    display: table;
-    margin: 0 auto;
+.navbar-brand {
+    margin: 0px;
+    margin-top: 10px;
+    margin-left: 10px;
+    padding: 0px;
 }
 
-.ExpandedAlpha table th {
-    text-align: left;
+.navbar-collapse {
+  text-align:center;
 }
 
-.ExpandedAlpha table, .ExpandedAlpha table tr td, .ExpandedAlpha table tr th {
-    border: 0px;
-    border-collapse: collapse;
-    border-left: 2px solid;
-    border-right: 2px solid;
+.navbar-nav {
+    display:inline-block;
+    float:none;
 }
 
-table tr td.nucleobase {
-    /* Adapted from: http://crafted-software.blogspot.ca/2010/07/css-for-tag-list-of-best-monospaced.html */
-    font-family: 'DejaVu LGC Sans Mono', 'DejaVu Sans Mono', Consolas, 'Everson Mono', 'Lucida Console', 'Andale Mono', 'Nimbus Mono L', 'Liberation Mono', FreeMono, 'Osaka Monospaced', Courier, 'New Courier', monospace;
-}
-
-.RefAnnotTable {
-      margin-top: 20px;
-      margin-bottom: 10px;
-}
-
-table tr td.species {
-    font-style:italic;
-}
-
-.BasicInfo {
-    padding: 10px;
-    height: 50%;
-    font-size: 20px;
-}
-
-.Names {
-    padding: 10px;
-    height: 50%;
-    font-size: 20px;
-}
-
-.Roles {
-    padding: 10px;
-    height: 50%;
-    font-size: 20px;
-}
-
-.Sequencing {
-    padding: 10px;
-    height: 50%;
-    font-size: 20px;
-}
-
-.Links {
-    padding: 10px;
-    height: 50%;
-    font-size: 20px;
-    margin-bottom: 50px;
-}
-
-footer {
-    background-color: rgb(135, 206, 250);
-    border-top: 3px solid black;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-    clear: both;
-    position: fixed;
-    text-align: center;
-}
-
-footer a {
-    display: inline-block;
-    text-align: center;
-    margin: auto;
-    position: relative;
+.navbar-nav a {
     padding: 10px;
 }
 
-#Inline {
-    display: inline;
-}
-
-.IndexLayout {
-    padding: 10px;
-    height: 50%;
-    font-size: 20px;
-    /*margin-top: 50px;*/
-}
-
-.IndexLayout h1 {
-    font-size: 24px;
-    text-align: center;
-    margin: relative;
-}
-
-.ContentLayout {
-    margin-top: 50px;
-    margin-bottom: 25px;
-    /*background-color: rgba(135,206,250,0.05);*/
-    padding: 10px;
-    height: 50%;
-    font-size: 20px;
-}
-
-.chartContainer {
-    float:left;
-}
-
-a {
-    text-decoration: none;
-}
-
-a:link {
-    color: rgb(119, 43, 201);
-}
-
-/* visited link */
-a:visited {
-    color: rgb(119, 43, 201);
-}
-
-/* mouse over link */
-a:hover {
-    color: rgb(119, 43, 201);
-    font-weight: bold;
-}
-
-/* selected link */
-a:active {
-    color: rgb(119, 43, 201);
+.well {
+    background: #f0f7f4;
 }
 
 #searchinput {
@@ -215,34 +52,6 @@ a:active {
 
 #searchresults {
     list-style-type: none;
-}
-
-#tabs {
-    margin-top: 55px;
-    height: 50%;
-    font-size: 20px;
-    font: Times New Roman, Serif;
-    background: transparent; 
-    border: none; 
-} 
-#tabs .ui-widget-header { 
-    background: white; 
-    border: none; 
-    border-bottom: 1px solid #c0c0c0; 
-}
-#tabs .ui-tabs-nav .ui-state-default { 
-    background: transparent; 
-    border: none; 
-} 
-#tabs .ui-tabs-nav .ui-state-active { 
-    background: transparent url(uiTabsArrow.png) no-repeat bottom center; 
-    border: none; 
-} 
-#tabs .ui-tabs-nav .ui-state-default a { 
-    color: #c0c0c0; 
-} 
-#tabs .ui-tabs-nav .ui-state-active a { 
-    color: rgb(119, 43, 201);
 }
 
 .ui-accordion .ui-accordion-header-default {
@@ -259,4 +68,32 @@ a:active {
     padding: 0px;
     margin-top: 0px;
     margin-bottom: 0px;
+}
+
+.ui-accordion .ui-accordion-content {
+    padding: 1em;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:link {
+    color: #b18fcf;
+}
+
+/* visited link */
+a:visited {
+    color: #b18fcf;
+}
+
+/* mouse over link */
+a:hover {
+    color: #b18fcf;
+    font-weight: bold;
+}
+
+/* selected link */
+a:active {
+    color: #b18fcf;
 }
