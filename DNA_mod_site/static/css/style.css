@@ -13,6 +13,17 @@ body {
     margin-right:auto;
 }
 
+#chemicalStructureImage {
+    display: block;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.navbar-right {
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
 .navbar-custom {
     background-color: #87CEFA;
     border-color: black;
@@ -96,4 +107,29 @@ a:hover {
 /* selected link */
 a:active {
     color: #b18fcf;
+}
+
+table, th, td {
+    margin-top: 6px;
+    padding: 5px;
+    border: 0px;
+    border-collapse: collapse;
+    border-top: 2px solid;
+    border-bottom: 2px solid;
+}
+
+table tr td.species {
+    font-style:italic;
+}
+
+table tr td.nucleobase {
+    /* Adapted from: http://crafted-software.blogspot.ca/2010/07/css-for-tag-list-of-best-monospaced.html */
+    font-family: 'DejaVu LGC Sans Mono', 'DejaVu Sans Mono', Consolas, 'Everson Mono', 'Lucida Console', 'Andale Mono', 'Nimbus Mono L', 'Liberation Mono', FreeMono, 'Osaka Monospaced', Courier, 'New Courier', monospace;
+}
+
+.ExpandedAlpha table, .ExpandedAlpha table tr td, .ExpandedAlpha table tr th {
+    border: 0px;
+    border-collapse: collapse;
+    border-left: 2px solid;
+    border-right: 2px solid;
 }
