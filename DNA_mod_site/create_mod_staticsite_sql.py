@@ -52,7 +52,8 @@ REFERENCES_TABLE = 'citations'
 
 IMAGE_FORMAT = 'svg'
 
-# shade these types of origins in the homepage pie menu display
+# shade these types of origins (or any containing the type as a word)
+# in the homepage pie menu display
 SHADE_ORIGINS = ['synthetic']
 
 

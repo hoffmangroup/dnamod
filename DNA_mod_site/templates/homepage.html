@@ -62,12 +62,15 @@
                     {% endif -%}",
         chebiname: "{{ customNomenclature[mod_base_id]['chebiname'] }}",
         value: {{ subpie_frac }},
-        {% if vBaseOrigins.get(mod_base_id) in shadeOrigins -%}
-            {# shade this pie menu element -#}
-            stripe: true,
-        {% else -%}
-            stripe: false,
-        {% endif -%}
+        {% for shadeOrigin in shadeOrigins -%}
+            {% set baseOrigin = vBaseOrigins.get(mod_base_id) -%}
+            {% if baseOrigin and shadeOrigin in baseOrigin.split() -%}
+                {# shade this pie menu element -#}
+                stripe: true,
+            {% else -%}
+                stripe: false,
+            {% endif -%}
+        {% endfor -%}
         drilldown: [
         {% if mod_base|is_list and mod_base|length > 0 %}
             {#  next element is a list -> proceed with the recursive step #}
