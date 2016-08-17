@@ -66,7 +66,7 @@ DATABASE_FILE_FULLPATH = dnamod_utils.get_constant('database')
 ALPHABET_FILE_FULLPATH = dnamod_utils.get_constant('annot_exp_alph')
 SEQ_REF_ANNOTS_FULLPATH = dnamod_utils.get_constant('annot_seq')
 NATURE_REF_ANNOTS_FULLPATH = dnamod_utils.get_constant('annot_nature')
-JSON_INDEX_FILE_FULLPATH = dnamod_utils.get_constant('JSON')
+JSON_INDEX_FILE_FULLPATH = dnamod_utils.get_constant('json')
 
 url = 'http://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
 client = Client(url)
