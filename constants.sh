@@ -25,7 +25,7 @@ set -o nounset -o pipefail -o errexit
 # "script_create_site"	The script to create the webpages
 # "script_update_all"	The script to re-create everything
 # "script_sync_site"	The script to push the webpage changes to the external directory for synchronization
-# "JSON"    The subdirectory containing the index file for lunr.js search
+# "json"		The subdirectory containing the JSON index file for Elasticlunr.js searching
 
 ERR_EXIT=64
 
@@ -106,7 +106,7 @@ case ${1:-} in
     site_js_dir)
         echo -n "$SITE_JS_DIR"
         ;;
-    JSON)
+    json)
         echo -n "$JSON"
         ;;
     site_template_dir)
