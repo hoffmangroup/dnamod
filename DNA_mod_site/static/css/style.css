@@ -3,6 +3,10 @@ body {
     padding-bottom: 65px;
 }
 
+#modification{
+    padding-top: 8em;
+    padding-bottom: 65px;
+}
 .tab-content {
     margin-top: 25px;
 }
@@ -132,4 +136,14 @@ table tr td.nucleobase {
     border-collapse: collapse;
     border-left: 2px solid;
     border-right: 2px solid;
+}
+
+.ExpandedAlpha {
+    padding-top: 50px;
+    display: table;
+    margin: 0 auto;
+}
+
+#Inline {
+    display: inline;
 }

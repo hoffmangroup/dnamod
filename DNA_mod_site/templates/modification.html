@@ -17,7 +17,7 @@
     
 </head>
 
-<body>
+<body id="modification">
     <div class= "TitleBlock" >
         <nav class="navbar navbar-custom navbar-fixed-top">
                 <div class="navbar-header">
@@ -34,198 +34,241 @@
     
         <div class="row">
         
-            {% if ExpandedAlpha %}
-                <div class="col-xs-4">
-                    <div class="ExpandedAlpha">
-                        <h2> Nomenclature: </h2>
-                        <table>
-                            <tr>
-                                <th> Abbreviation </th>
-                                <td> {{ ExpandedAlpha["Abbreviation"] }} </td>
-                            </tr>
-                            {% if ExpandedAlpha["Symbol"] %}
-                                <tr>
-                                    <th> Symbol </th>
-                                    <td class="nucleobase"> {{ ExpandedAlpha["Symbol"] }} </td>
-                                </tr>
-                            {% endif %}
-                            {% if ExpandedAlpha["Complement Symbol"] %}
-                                <tr>
-                                    <th> Complement </th>
-                                    <td> {{ ExpandedAlpha["Complement"] }} </td>
-                                </tr>
-                                <tr>
-                                    <th> Symbol </th>
-                                    <td class="nucleobase"> {{ ExpandedAlpha["Complement Symbol"] }} </td>
-                                </tr>
-                            {% endif %}
-                        </table>
-                    </div>
-                </div>
-            {% endif %}
-            
-            {% if Image %}
-                <div class="col-xs-8">
+            <div class="col-xs-12 col-md-6">
+                <div class="panel panel-default">
                     <div class="panel-body">
-                        <img id="chemicalStructureImage" src="{{ Image }}" alt="{{ ChebiName }}" height='500' width='500'>
+                    
+                        <div class="BasicInfo">
+                            {% if Definition %}
+                                <h2> Description: </h2>
+                                <p> {{ Definition }} </p>
+                            {% endif %}
+
+                            {% if Formula or NetCharge or AverageMass %}
+                                <h2> Chemical properties: </h2>
+                                <table id="ChemProps">
+                                    <tr>
+                                        <th> Chemical formula </th>
+                                        <th> Net charge </th>
+                                        <th> Average mass </th>
+                                    </tr>
+                                    <tr>
+                                        <td> {% if Formula %}{{ Formula }}{% endif %} </td>
+                                        <td> {% if NetCharge %}{{ NetCharge }}{% endif %} </td>
+                                        <td> {% if AverageMass %}{{ AverageMass }}{% endif %} </td>
+                                    </tr>
+                                </table>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="Names">
+                            {% if IupacName or Smiles or Synonyms %}
+                                <h2 id="Inline"> Names: </h2>
+                                <div>
+                                    <table class="table table-striped" id="Names">
+                                        <tr>
+                                            {% if IupacName %}<th> IUPAC </th>{% endif %}
+                                            {% if Smiles %}<th> SMILES </th>{% endif %}
+                                            {% if Synonyms|length %}
+                                                <th> Synonyms </th>
+                                            {% endif %}
+                                        </tr>
+                                        <tr>
+                                            {% if IupacName %}<td> {{ IupacName }} </td>{% endif %}
+                                            {% if Smiles %}<td> {{ Smiles }} </td>{% endif %}
+                                            {% if Synonyms|length %}
+                                                <td>
+                                                    <ul id="Synonyms">
+                                                    {% for Synonym in Synonyms %}
+                                                        <li> {{ Synonym }} </li>
+                                                    {% endfor %}
+                                                </td>
+                                            {% endif %}
+                                        </tr>
+                                    </table>
+                                </div>
+                            {% endif %}
+                        </div>
+                        
                     </div>
                 </div>
-            {% endif %}
+            </div>
             
-        </div>
-    </div>
+            <div class="col-xs-12 col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
 
-    <div class="ContentLayout">
-    
-        <div class="BasicInfo">
-            {% if Definition %}
-                <h2> Description: </h2>
-                <p> {{ Definition }} </p>
-            {% endif %}
-
-            {% if Formula or NetCharge or AverageMass %}
-                <h2> Chemical properties: </h2>
-                <table id="ChemProps">
-                    <tr>
-                        <th> Chemical formula </th>
-                        <th> Net charge </th>
-                        <th> Average mass </th>
-                    </tr>
-                    <tr>
-                        <td> {% if Formula %}{{ Formula }}{% endif %} </td>
-                        <td> {% if NetCharge %}{{ NetCharge }}{% endif %} </td>
-                        <td> {% if AverageMass %}{{ AverageMass }}{% endif %} </td>
-                    </tr>
-                </table>
-            {% endif %}
-        </div>
-        
-
-
-        <div class="Names">
-            {% if IupacName or Smiles or Synonyms %}
-                <h2 id="Inline"> Names: </h2>
-                <table id="Names">
-                    <tr>
-                        {% if IupacName %}<th> IUPAC </th>{% endif %}
-                        {% if Smiles %}<th> SMILES </th>{% endif %}
-                        {% if Synonyms|length %}
-                            <th> Synonyms </th>
-                        {% endif %}
-                    </tr>
-                    <tr>
-                        {% if IupacName %}<td> {{ IupacName }} </td>{% endif %}
-                        {% if Smiles %}<td> {{ Smiles }} </td>{% endif %}
-                        {% if Synonyms|length %}
-                            <td>
-                                <ul id="Synonyms">
-                                {% for Synonym in Synonyms %}
-                                    <li> {{ Synonym }} </li>
-                                {% endfor %}
-                            </td>
-                        {% endif %}
-                    </tr>
-                </table>
-            {% endif %}
-        </div>
-
-    <!--  XXX remove?
-        <div class="Roles">
-            <h2> Roles: </h2>
-            <ul id="Roles">
-                {% if Roles|length %}
-                    {% for Role in Roles %}
-                        <li> <a href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ RolesChebi[loop.index-1] }}" > {{ Role }} </a> </li>
-                    {% endfor %}
-                 {% else %}
-                    <li> No Roles </li>
-                 {% endif %}
-            </ul>
-        </div>
-        -->
-        {% for RefAnnot in RefAnnots %}
-            {% if RefAnnot|length %}  <!-- not in for to ensure counter still increments -->
-                <div class="RefAnnotTable" {{ RefAnnotTabNames[loop.index0] }}>
-                    <h2 id="Inline"> {{ RefAnnotTabNames[loop.index0] }}: </h2>
-                    <table id={{ RefAnnotTabNames[loop.index0] }}>
-                        <tr>
-                            {% for Header, _ in RefAnnot[0].iteritems() if Header not in RefAnnotsRefColNames %}
-                                <th> {{ Header }} </th>
-                            {% endfor %}
-                            <th> Reference(s) </th>
-                        </tr>
-                        <tr>
-                            <!-- XXX refactor to use common ref. print scheme WRT below... -->
-                            {% for RefAnnotEntry in RefAnnot %}
-                                {% for _, Data in RefAnnotEntry.iteritems() if _ not in RefAnnotsRefColNames %}
-                                    <td 
-                                        {% set ListDataToUse = Data.split(',') %}    
-                                    {% if 'organism' in _.lower() or 'species' in _.lower() %}
-                                        class="species"
-                                        {% set ListDataToUse = ListDataToUse | sort %}
+                        {% if Image %}
+                            <img id="chemicalStructureImage" src="{{ Image }}" alt="{{ ChebiName }}" height='250' width='250'>
+                        {% endif %} 
+            
+                        {% if ExpandedAlpha %}
+                            <div class="ExpandedAlpha">
+                                <h2> Nomenclature: </h2>
+                                <table>
+                                    <tr>
+                                        <th> Abbreviation </th>
+                                        <td> {{ ExpandedAlpha["Abbreviation"] }} </td>
+                                    </tr>
+                                    {% if ExpandedAlpha["Symbol"] %}
+                                        <tr>
+                                            <th> Symbol </th>
+                                            <td class="nucleobase"> {{ ExpandedAlpha["Symbol"] }} </td>
+                                        </tr>
                                     {% endif %}
-                                    >
-                                    {% if ',' in Data and 'and' not in Data %} <!-- -->
-                                            <ul>
-                                                {% for Datum in ListDataToUse %}
-                                                    <li> {{ Datum }} </li>
-                                                {% endfor %}
-                                            </ul>
-                                        {% else %}
-                                            {{ Data }}
-                                        {% endif %}
-                                    </td>
-                                {% endfor %}
-                                
-                                {% if RefAnnotEntry["citationid"] %}
-                                    {% set AuthorL = RefAnnotEntry["authors"].split(';') %}
-                                    {% set TitleL = RefAnnotEntry["title"].split(';') %}
-                                    {% set PubdateL = '' %}
-                                    {% if RefAnnotEntry["pubdate"] %}
-                                        {% set PubdateL = RefAnnotEntry["pubdate"].split(';') %}
+                                    {% if ExpandedAlpha["Complement Symbol"] %}
+                                        <tr>
+                                            <th> Complement </th>
+                                            <td> {{ ExpandedAlpha["Complement"] }} </td>
+                                        </tr>
+                                        <tr>
+                                            <th> Symbol </th>
+                                            <td class="nucleobase"> {{ ExpandedAlpha["Complement Symbol"] }} </td>
+                                        </tr>
                                     {% endif %}
-
-                                    <!-- TODO refactor citation format... -->
-                                    <td>
-                                        <ul>
-                                            {% for citationid in RefAnnotEntry["citationid"].split(';') %}
-                                                <li> {{ AuthorL[loop.index0] }} <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ citationid }}' > {{ TitleL[loop.index0] | replace('.', '') }}</a>.  {% if PubdateL and PubdateL[loop.index0] %} {{ PubdateL[loop.index0] }}. {% endif %} </li>
-                                            {% endfor %}
-                                        </ul>
-                                    </td>
-                                {% endif %}
-                            </tr>
-                        {% endfor %}
-                    </table>
+                                </table>
+                            </div>
+                        {% endif %}
+                        
+                    </div>
                 </div>
-            {%endif %}
-        {% endfor %}
+            </div>
+                         
+        </div>
+
+        <div class="row">
+                    
+            {% for RefAnnot in RefAnnots %}
+                {% if RefAnnot|length %}  <!-- not in for to ensure counter still increments -->
+                
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                            
+                                <div class="RefAnnotTable" {{ RefAnnotTabNames[loop.index0] }}>
+                                    <h2 id="Inline"> {{ RefAnnotTabNames[loop.index0] }}: </h2>
+                                    <table class="table table-striped" id={{ RefAnnotTabNames[loop.index0] }}>
+                                        <tr>
+                                            {% for Header, _ in RefAnnot[0].iteritems() if Header not in RefAnnotsRefColNames %}
+                                                <th> {{ Header }} </th>
+                                            {% endfor %}
+                                            <th> Reference(s) </th>
+                                        </tr>
+                                        <tr>
+                                            <!-- XXX refactor to use common ref. print scheme WRT below... -->
+                                            {% for RefAnnotEntry in RefAnnot %}
+                                                {% for _, Data in RefAnnotEntry.iteritems() if _ not in RefAnnotsRefColNames %}
+                                                    <td 
+                                                        {% set ListDataToUse = Data.split(',') %}    
+                                                    {% if 'organism' in _.lower() or 'species' in _.lower() %}
+                                                        class="species"
+                                                        {% set ListDataToUse = ListDataToUse | sort %}
+                                                    {% endif %}
+                                                    >
+                                                    {% if ',' in Data and 'and' not in Data %} <!-- -->
+                                                            <ul>
+                                                                {% for Datum in ListDataToUse %}
+                                                                    <li> {{ Datum }} </li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        {% else %}
+                                                            {{ Data }}
+                                                        {% endif %}
+                                                    </td>
+                                                {% endfor %}
+                
+                                                {% if RefAnnotEntry["citationid"] %}
+                                                    {% set AuthorL = RefAnnotEntry["authors"].split(';') %}
+                                                    {% set TitleL = RefAnnotEntry["title"].split(';') %}
+                                                    {% set PubdateL = '' %}
+                                                    {% if RefAnnotEntry["pubdate"] %}
+                                                        {% set PubdateL = RefAnnotEntry["pubdate"].split(';') %}
+                                                    {% endif %}
+
+                                                    <!-- TODO refactor citation format... -->
+                                                    <td>
+                                                        <ul>
+                                                            {% for citationid in RefAnnotEntry["citationid"].split(';') %}
+                                                                <li> {{ AuthorL[loop.index0] }} <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ citationid }}' > {{ TitleL[loop.index0] | replace('.', '') }}</a>.  {% if PubdateL and PubdateL[loop.index0] %} {{ PubdateL[loop.index0] }}. {% endif %} </li>
+                                                            {% endfor %}
+                                                        </ul>
+                                                    </td>
+                                                {% endif %}
+                                            </tr>
+                                        {% endfor %}
+                                    </table>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    
+                {%endif %}
+            {% endfor %}
             
+        </div>
+                
         <div class="Links">
-            <h2 id="Inline"> Database references: </h2> 
-            <a id="Inline" href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ ChebiId }}" > {{ ChebiId }} </a> <br>
+        
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <h2 id="Inline"> Database references: </h2> 
+                            <a id="Inline" href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ ChebiId }}" > {{ ChebiId }} </a> <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             {% if Citations|length %}
-                <h2> Citations: </h2>
-                <ul id="Citations">
-                    {% if Citations|length %}
-                        {% for Citation in Citations %}
-                        <li>{{ Citation["authors"] }} <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation["citationid"] }}' > {{ Citation["title"] }} </a> {% if Citation["pubdate"] %} {{ Citation["pubdate"] }}. {% endif %}  </li>
-                        {% endfor %}
-                    {% else %}
-                        <li> No Citations </li>
-                    {% endif %}
-                </ul>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                            
+                                <h2> Citations: </h2>
+                                <ul class="list-group" id="Citations">
+                                    {% if Citations|length %}
+                                        {% for Citation in Citations %}
+                                        <li class="list-group-item">{{ Citation["authors"] }} <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation["citationid"] }}' > {{ Citation["title"] }} </a> {% if Citation["pubdate"] %} {{ Citation["pubdate"] }}. {% endif %}  </li>
+                                        {% endfor %}
+                                    {% else %}
+                                        <li> No Citations </li>
+                                    {% endif %}
+                                </ul>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% endif %}
+            
         </div>
         
     </div>
 </body>
 
-<footer>
-    <a href= "index.html" > Home</a>
-    <a href= "about.html" > About</a>
-    <a href= "contact.html" > Contact</a>
+<footer class="footer">
+    <nav class="navbar navbar-custom navbar-fixed-bottom">
+        <div class="navbar-header">
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+        </div>
+        
+        <div class="collapse navbar-collapse">
+            <div class="nav navbar-nav">
+                <a href= "about.html"> About</a>
+                <a href= "contact.html"> Contact</a>
+            </div>
+        </div>
+        
+    </nav>
 </footer>
+
 
 </html>
