@@ -157,9 +157,9 @@ def get_children(bases, client):
 def get_recursive_children(entity, client, childrenverified, additionalChildren):
     if entity.chebiAsciiName not in BLACK_LIST:
         if childrenverified:
-            entity['verifiedstatus'] = 1;
+            entity['verifiedstatus'] = 1
         else:
-            entity['verifiedstatus'] = 0;
+            entity['verifiedstatus'] = 0
 
         print("---------- CHILD of BASE: {0:100} Verified: {1} "
               "".format(entity.chebiAsciiName, childrenverified))
@@ -180,6 +180,8 @@ def get_recursive_children(entity, client, childrenverified, additionalChildren)
             result = list(result)
 
             additionalChildren.extend(result)
+    else:
+        entity['verifiedstatus'] = 0
 
     return additionalChildren
 
@@ -190,11 +192,11 @@ def get_further_children(entities, client):
 
     for entity in entities:
         if entity.chebiAsciiName in WHITE_LIST:
-            entity['verifiedstatus'] = 1;
-            childrenverified = True;
+            entity['verifiedstatus'] = 1
+            childrenverified = True
         else:
-            entity['verifiedstatus'] = 0;
-            childrenverified = False;
+            entity['verifiedstatus'] = 0
+            childrenverified = False
 
         additionalChildren = get_recursive_children(entity, client,
                                                     childrenverified,
