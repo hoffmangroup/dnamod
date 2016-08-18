@@ -322,7 +322,7 @@ def create_html_pages(env):
                 v_base_origins[chebiid] = nature_annot[0]['Origin']
 
             # TODO revise second name?
-            ref_annot_tab_names = ['Mapping Techniques', 'Nature']
+            ref_annot_tab_names = ['Mapping techniques', 'Nature']
 
             ref_annots = [seq_annot, nature_annot]
 

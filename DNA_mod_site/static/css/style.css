@@ -1,10 +1,15 @@
 body {
-    padding-top: 65px;
-    padding-bottom: 65px;
+    padding-top: 6em;
+    padding-bottom: 5em;
+    font-size: 1.5em;
+}
+
+body h2 {
+    font-size: 1.5em;
 }
 
 #modification{
-    padding-top: 8em;
+    padding-top: 7em;
     padding-bottom: 65px;
 }
 .tab-content {
@@ -18,39 +23,14 @@ body {
 }
 
 #chemicalStructureImage {
-    display: block;
+    display: inline-block;
     margin-left:auto;
     margin-right:auto;
-}
-
-.navbar-right {
-    margin-top: 10px;
-    margin-right: 10px;
 }
 
 .navbar-custom {
     background-color: #87CEFA;
     border-color: black;
-}
-
-.navbar-brand {
-    margin: 0px;
-    margin-top: 10px;
-    margin-left: 10px;
-    padding: 0px;
-}
-
-.navbar-collapse {
-  text-align:center;
-}
-
-.navbar-nav {
-    display:inline-block;
-    float:none;
-}
-
-.navbar-nav a {
-    padding: 10px;
 }
 
 .well {
@@ -105,7 +85,7 @@ a:visited {
 /* mouse over link */
 a:hover {
     color: #b18fcf;
-    font-weight: bold;
+    text-decoration: underline;
 }
 
 /* selected link */
@@ -145,4 +125,24 @@ table tr td.nucleobase {
 
 #Inline {
     display: inline;
+}
+
+.Names {
+    margin-top:15px
+}
+
+.navbar.center .navbar-inner {
+    text-align: center;
+}
+.navbar.center .navbar-inner .nav {
+    float: none;
+    display:inline-block;
+}
+.nav > li {
+    position: relative;
+    display: inline-block;
+}
+
+.navbar p {
+    font-size: 1.5em;
 }
