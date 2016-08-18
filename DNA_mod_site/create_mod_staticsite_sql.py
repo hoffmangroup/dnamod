@@ -369,8 +369,8 @@ def create_html_pages(env):
 
 
 def get_modbase_hierarchy(cursor, base_id):
-    """ Recursively find all modified base children ChEBI IDs for
-        the provided modified base ChEBI ID.
+    """ Recursively find all verified modified base child
+        ChEBI IDs for the provided modified base ChEBI ID.
         Output is ordered by increasing depth.
     """
     # use a recursive common table expression to get all children
@@ -403,6 +403,11 @@ def get_modbase_hierarchy(cursor, base_id):
                                   -- Could add below WHERE to remove seen items
                                   -- WHERE nameid
                                   --     NOT IN (select prevpar FROM hierarchy)
+                                  --
+                                  -- Only select verified bases
+                                  WHERE nameid IN
+                                      (select nameid FROM modbase
+                                       WHERE verifiedstatus=1)
                                   GROUP BY prevpar
                                   ORDER BY depth DESC
                              """, {"bID": base_id})
