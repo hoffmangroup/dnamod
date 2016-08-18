@@ -5,16 +5,25 @@
     <meta charset = "UTF-8">
     <title>DNA Modification Database - About</title>
 
-    <!-- <link href="netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <link href="css/style.css" rel="stylesheet" type='text/css'>
+    
 </head>
 
 <body>
     <div class= "TitleBlock" >
-        <h1> About </h1>
+        <nav class="navbar navbar-custom navbar-fixed-top">
+            <div class="navbar-header">
+                <p class="navbar-text">About: DNAmod</p>
+            </div> 
+        </nav>    
     </div>
 
-    <div class= "ContentLayout" >
+    <div class= "container" >
+        <div class="well">
+            <h2> About </h2>
 			<p> Covalent DNA modifications have been found in numerous organisms and more are continually being discovered and characterized, as detection methods improve. Many of these modifications can affect the conformation of the DNA double helix, often resulting in downstream effects upon transcription factor binding. Some of these modifications have been demonstrated to be stable, while others are viewed as merely transient. </p>
 
 			<p> <em>DNAmod</em> catalogs information on known DNA modifications, of which the well-known 5-methylcytosine is only one. It aims to profile modifications' properties, with diagrams and links to databases such as <a href="https://www.ebi.ac.uk/chebi/init.do">ChEBI</a>. It also captures citations to published literature on these modifications. This makes it easier for those new to the field to explore the array of potential modifications. </p>  <!-- TODO: Consider revision. Define ChEBI here... -->
@@ -22,25 +31,32 @@
 			<p> DNAmod is comprised of this static website and a backing <a href="https://www.sqlite.org/">SQLite</a> database. The database is created using Python, including the SOAP client <a href="https://pypi.python.org/pypi/suds">suds</a> and <a href="http://biopython.org">Biopython</a>. The website is also created using Python, makes use of <a href="http://openbabel.org">Open Babel</a> via its Python wrapper, <a href="http://openbabel.org/docs/dev/UseTheLibrary/Python_Pybel.html">Pybel</a>, and uses the <a href="http://jinja.pocoo.org/docs/dev/">Jinja2</a> templating engine. </p>
 
 			<p> This project is open source and its code is on <a href="https://bitbucket.org/hoffmanlab/dnamod">BitBucket</a>. We update DNAmod on a monthly basis and manually curate the modifications verified to occur <i>in vivo</i>. </p>
+        </div>
+        <div class="well">
+            <h2> Methods: </h2>
+                <p> DNAmod uses <a href="http://www.ncbi.nlm.nih.gov/">NCBI</a>’s <a href="https://www.ebi.ac.uk/chebi/init.do">Chemical Entitles of Biological Interest (ChEBI)</a> database to import potential covalent DNA modifications. It initially imports (via <a href="https://www.ebi.ac.uk/chebi/webServices.do">ChEBI Web Services</a>) all children of any of the nucleobases, as indicated by <a href="https://www.ebi.ac.uk/chebi/annotationManualForward.do#ChEBI%20Ontology">ChEBI’s ontology</a> (specifically, any entry which  <img src="http://www.ebi.ac.uk/chebi/images/ontology/checked/has_functional_parent.gif" alt="ChEBI 'has functional parent' icon" style="width:16px;height:16px;"> <i>has functional parent</i> &isin; {<tt>A</tt>, <tt>C</tt>, <tt>G</tt>, <tt>T</tt>, <tt>U</tt>}).</p>
+                <!-- TODO: The tt element is obsolete. CSS should be used instead. -->
 
-		<h3> Methods: </h3>
-			<p> DNAmod uses <a href="http://www.ncbi.nlm.nih.gov/">NCBI</a>’s <a href="https://www.ebi.ac.uk/chebi/init.do">Chemical Entitles of Biological Interest (ChEBI)</a> database to import potential covalent DNA modifications. It initially imports (via <a href="https://www.ebi.ac.uk/chebi/webServices.do">ChEBI Web Services</a>) all children of any of the nucleobases, as indicated by <a href="https://www.ebi.ac.uk/chebi/annotationManualForward.do#ChEBI%20Ontology">ChEBI’s ontology</a> (specifically, any entry which  <img src="http://www.ebi.ac.uk/chebi/images/ontology/checked/has_functional_parent.gif" alt="ChEBI 'has functional parent' icon" style="width:16px;height:16px;"> <i>has functional parent</i> &isin; {<tt>A</tt>, <tt>C</tt>, <tt>G</tt>, <tt>T</tt>, <tt>U</tt>}).</p>
-            <!-- TODO: The tt element is obsolete. CSS should be used instead. -->
+                <p> These putative modifications are then filtered using ChEBI’s star-based rating system and only modifications which have been assigned three stars (indicating the highest level of manual curation) are retained. Citation data for references provided by ChEBI (via <a href="pubmed.gov">PubMed</a> IDs) are imported using the <a href="http://biopython.org/DIST/docs/api/Bio.Entrez-module.html">Biopython <i>Entrez</i></a> package. This information is then imported into the SQLite database. </p>
 
-			<p> These putative modifications are then filtered using ChEBI’s star-based rating system and only modifications which have been assigned three stars (indicating the highest level of manual curation) are retained. Citation data for references provided by ChEBI (via <a href="pubmed.gov">PubMed</a> IDs) are imported using the <a href="http://biopython.org/DIST/docs/api/Bio.Entrez-module.html">Biopython <i>Entrez</i></a> package. This information is then imported into the SQLite database. </p>
+                <p> To create individual webpages that make up this static website, the SQLite database is imported into Python and sorted through Jinja2 templates. The chemical structure images seen on the modification pages are created by converting ChEBI-provided simplified molecular-input line-entry system (SMILES) information into vector images, via Pybel. </p>
 
-			<p> To create individual webpages that make up this static website, the SQLite database is imported into Python and sorted through Jinja2 templates. The chemical structure images seen on the modification pages are created by converting ChEBI-provided simplified molecular-input line-entry system (SMILES) information into vector images, via Pybel. </p>
+                <p> The webpages are demarcated into "Verified" and "Unverified" categories. Assignment to the verified category indicates that the modifications therein were (manually) deemed likely DNA modifications; all other webpages are placed into the unverified category, pending curation or novel functional insights. </p>
 
-			<p> The webpages are demarcated into "Verified" and "Unverified" categories. Assignment to the verified category indicates that the modifications therein were (manually) deemed likely DNA modifications; all other webpages are placed into the unverified category, pending curation or novel functional insights. </p>
-
-		<h4> Authors: </h4>
-			<p> This project was created at the <a href="http://hoffmanlab.org">Hoffman Lab</a> by Ankur Jai Sood, Coby Viner, and Michael M. Hoffman.</p>
+            <h2> Authors: </h2>
+                <p> This project was created at the <a href="http://hoffmanlab.org">Hoffman Lab</a> by Ankur Jai Sood, Coby Viner, and Michael M. Hoffman.</p>
+		</div>
     </div>
 
-    <footer>
-        <a href= "index.html" > Home</a>
-        <a href= "about.html" > About</a>
-        <a href= "contact.html" > Contact</a>
+    <footer class="footer">
+        <nav class="navbar navbar-custom navbar-fixed-bottom center">
+            <div class="navbar-inner">
+                <ul class="nav navbar-nav">
+                    <li><a href= "index.html"> Home</a></li>
+                    <li><a href= "contact.html"> Contact</a></li>
+                </ul>
+            </div> 
+        </nav>
     </footer>
 
 </body>
