@@ -22,6 +22,8 @@ ChEBI	Origin	Function	Functional info.	Organism(s)	Reference(s)
 78235	synthetic		mutagenic		3944125
 # N(6)-carbamoylmethyladenine
 102525	natural	hypermodified nucleobase	specific transcriptional roles	Enterobacteria phage Mu	6369315
+# 2-aminoadenine
+40235	natural	hypermodified nucleobase		Cyanophage S-2L	413053,676082
 #
 # cytosine
 #

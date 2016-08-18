@@ -2,6 +2,7 @@ Adenine
 
 	adenosine
 	adenosines
+	reversine
 
 
 Thymine

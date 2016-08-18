@@ -9,6 +9,7 @@ CHEBI:40526	9mA	9-methyladenine
 CHEBI:78685	AHAP	2-amino-6-hydroxyaminopurine
 CHEBI:78235	HAP	6-hydroxyaminopurine
 CHEBI:102525	ncm6A	N(6)-carbamoylmethyladenine
+CHEBI:40235	m2A	2-aminoadenine
 CHEBI:74029	e3C	3-ethylcytosine
 CHEBI:39624	1mC	1-methylcytosine
 CHEBI:39992	3mC	3-methylcytosine
