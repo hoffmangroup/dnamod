@@ -162,7 +162,11 @@
                     } else {
                         dim = windowHeight;
                     }
-                                    
+                    
+                    if (dim < 750) {
+                        dim = 750;
+                    }
+                              
                     {% set initial_subpie_frac = 100/(verifiedHierarchy.keys()|length) %}
 
                     var DNA_bases = [
