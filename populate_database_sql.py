@@ -256,7 +256,7 @@ def get_ontology_data(child, attribute, selectors):
 
 
 def get_full_citation(PMID):
-    print("Adding Citation: {}".format(PMID))
+    #print("Adding Citation: {}".format(PMID))
     result = []
     # isbook = False # Unused at the moment
     isarticle = False
@@ -323,7 +323,7 @@ def get_full_citation(PMID):
             date = datetime.date(int(publicationDate['Year']),
                                  int(publicationDate['Month']),
                                  int(publicationDate['Day']))
-            print(date.isoformat())
+            #print(date.isoformat())
             result.append(date.isoformat())
         else:
             result.append('')

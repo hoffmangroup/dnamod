@@ -241,7 +241,6 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
         .attr("patternUnits", "userSpaceOnUse")
         .attr("width", "4")
         .attr("height", "4")
-        .attr("patternTransform", "rotate(45)")
         .append("rect")
         .attr("width", "3.25")
         .attr("height", "4")
@@ -344,6 +343,7 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
         .attr("text-anchor", "middle")
         .text(_this.textText)
         .style("fill", _this.config.labelColor)
+        .style("font-size", "0.5em")
         .attr("title", _this.textTitle);
 
     for (var j = 0; j < dataset.length; j++) {
