@@ -52,12 +52,12 @@
                     
                             <div class="BasicInfo">
                                 {% if Definition %}
-                                    <h2> Description: </h2>
+                                    <h2 rel="tooltip" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas bibendum ac felis id commodo. Etiam mauris purus, fringilla id tempus in, mollis vel orci. Duis ultricies at erat eget iaculis."> Description: </h2>
                                     <p> {{ Definition }} </p>
                                 {% endif %}
 
                                 {% if Formula or NetCharge or AverageMass %}
-                                    <h2> Chemical properties: </h2>
+                                    <h2 rel="tooltip" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas bibendum ac felis id commodo. Etiam mauris purus, fringilla id tempus in, mollis vel orci. Duis ultricies at erat eget iaculis."> Chemical properties: </h2>
                                     <table class="table table-striped" id="ChemProps">
                                         <tr>
                                             <th> Chemical formula </th>
@@ -92,7 +92,7 @@
                             {% if ExpandedAlpha %}
                                 <div class="ExpandedAlpha">
                                     <div class="col-sm-6">
-                                        <h2> Recommended notation: </h2>
+                                        <h2 rel="tooltip" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas bibendum ac felis id commodo. Etiam mauris purus, fringilla id tempus in, mollis vel orci. Duis ultricies at erat eget iaculis."> Recommended notation: </h2>
                                         <table>
                                             <tr>
                                                 <th> Name </th>
@@ -137,7 +137,7 @@
                             <div class="panel-body">
                                 <div class="Names">
                                     {% if IupacName or Smiles or Synonyms %}
-                                        <h2 id="Inline"> Nomenclature: </h2>
+                                        <h2 id="Inline" rel="tooltip" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas bibendum ac felis id commodo. Etiam mauris purus, fringilla id tempus in, mollis vel orci. Duis ultricies at erat eget iaculis."> Nomenclature: </h2>
                                         <div class="table-responsive">
                                             <table class="table table-striped" id="Names">
                                                 <tr>
@@ -180,7 +180,7 @@
                             <div class="panel-body">
                             
                                 <div class="RefAnnotTable" {{ RefAnnotTabNames[loop.index0] }}>
-                                    <h2 id="Inline"> {{ RefAnnotTabNames[loop.index0] }}: </h2>
+                                    <h2 id="Inline" rel="tooltip" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas bibendum ac felis id commodo. Etiam mauris purus, fringilla id tempus in, mollis vel orci. Duis ultricies at erat eget iaculis."> {{ RefAnnotTabNames[loop.index0] }}: </h2>
                                     <div class="table-responsive">
                                         <table class="table table-striped" id={{ RefAnnotTabNames[loop.index0] }}>
                                             <tr>
