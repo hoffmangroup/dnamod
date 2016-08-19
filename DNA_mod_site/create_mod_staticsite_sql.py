@@ -22,6 +22,8 @@ import os
 import pybel
 from pysqlite2 import dbapi2 as sqlite3  # needed for latest SQLite
 import sys
+import os.path, time
+import datetime
 
 # Using Jinja2 as templating engine
 import jinja2
@@ -44,6 +46,7 @@ REF_COL_NAMES = ['citationid', 'title', 'pubdate', 'authors']
 
 HTML_FILES_DIR = dnamod_utils.get_constant('site_html_dir')
 TEMPLATE_DIR = dnamod_utils.get_constant('site_template_dir')
+DATABASE_FILE_FULLPATH = dnamod_utils.get_constant('database')
 
 # TODO move to constants.sh ...
 SEQ_ANNOT_TABLE = 'sequencing_citations'
@@ -55,7 +58,6 @@ IMAGE_FORMAT = 'svg'
 # shade these types of origins (or any containing the type as a word)
 # in the homepage pie menu display
 SHADE_ORIGINS = ['synthetic']
-
 
 def is_list(object):
     """Test if the given object is a list, by checking if
@@ -582,6 +584,10 @@ def create_homepage(env, homepage_links, v_base_origins):
 
     custom_nomenclature = get_custom_nomenclature(cursor)
 
+    timeLastMod = os.path.getmtime(DATABASE_FILE_FULLPATH);
+    dt = datetime.datetime.fromtimestamp(timeLastMod);
+    dt = dt.strftime('%Y-%m-%d');
+
     render = home_template.render(bases=VERIFIED_BASES,
                                   modifications=verifiedBases,
                                   verifiedHierarchy=verified_hierarchy_dict,
@@ -589,7 +595,8 @@ def create_homepage(env, homepage_links, v_base_origins):
                                   unverifiedmodifications=unverifiedBases,
                                   customNomenclature=custom_nomenclature,
                                   vBaseOrigins=v_base_origins,
-                                  shadeOrigins=SHADE_ORIGINS)
+                                  shadeOrigins=SHADE_ORIGINS,
+                                  time=dt)
 
     f.write(render)
     f.close()
