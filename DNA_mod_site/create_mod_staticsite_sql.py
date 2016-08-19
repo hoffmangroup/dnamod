@@ -24,6 +24,7 @@ from pysqlite2 import dbapi2 as sqlite3  # needed for latest SQLite
 import sys
 import os.path, time
 import datetime
+import re
 
 # Using Jinja2 as templating engine
 import jinja2
@@ -296,6 +297,7 @@ def create_html_pages(env):
 
             smiles = smiles.decode('ascii')
             chebiname = chebiname.decode('ascii')
+            chebiname_title = toSuperscript(chebiname)
 
             # Formatting
             formula = formula[1:-1]
@@ -329,8 +331,10 @@ def create_html_pages(env):
             ref_annots = [seq_annot, nature_annot]
 
             expanded_alpha = get_expanded_alphabet(chebiid, conn)
+            if expanded_alpha:
+                expanded_alpha["Name"] = toSuperscript(expanded_alpha["Name"])
 
-            render = page_template.render(ChebiName=chebiname,
+            render = page_template.render(ChebiName=chebiname_title,
                                           Definition=definition,
                                           Formula=formula,
                                           NetCharge=netcharge,
@@ -583,7 +587,11 @@ def create_homepage(env, homepage_links, v_base_origins):
     f = codecs.open(writefile, 'w+', encoding=ENCODING)
 
     custom_nomenclature = get_custom_nomenclature(cursor)
-
+    for id in custom_nomenclature:
+        name = custom_nomenclature[id]['Name']
+        custom_nomenclature[id]['Name'] = toSuperscript(name)
+        
+                
     timeLastMod = os.path.getmtime(DATABASE_FILE_FULLPATH);
     dt = datetime.datetime.fromtimestamp(timeLastMod);
     dt = dt.strftime('%Y-%m-%d');
@@ -601,6 +609,14 @@ def create_homepage(env, homepage_links, v_base_origins):
     f.write(render)
     f.close()
 
+def toSuperscript(name):
+    m = re.search('N\(\d\)', name)
+    if m:
+        num = re.search('\d', m.group())
+        newname = name.replace(m.group(), 'N<sup>'+num.group()+'</sup>')
+        return newname
+    else:
+        return name
 
 # create the Jinja2 environment object, loading from files
 # and disallowing the use of undefined variables
