@@ -22,7 +22,7 @@ import os
 import pybel
 from pysqlite2 import dbapi2 as sqlite3  # needed for latest SQLite
 import sys
-import os.path, time
+import os.path
 import datetime
 import re
 
@@ -59,6 +59,7 @@ IMAGE_FORMAT = 'svg'
 # shade these types of origins (or any containing the type as a word)
 # in the homepage pie menu display
 SHADE_ORIGINS = ['synthetic']
+
 
 def is_list(object):
     """Test if the given object is a list, by checking if
@@ -590,11 +591,11 @@ def create_homepage(env, homepage_links, v_base_origins):
     for id in custom_nomenclature:
         name = custom_nomenclature[id]['Name']
         custom_nomenclature[id]['Name'] = toSuperscript(name)
-        
-                
-    timeLastMod = os.path.getmtime(DATABASE_FILE_FULLPATH);
-    dt = datetime.datetime.fromtimestamp(timeLastMod);
-    dt = dt.strftime('%Y-%m-%d');
+
+    # record the last modified date (UTC) without the time
+    # the resulting datetime object will print in ISO 8601 format
+    last_mod_time = os.path.getmtime(DATABASE_FILE_FULLPATH)
+    last_mod_dt = datetime.datetime.utcfromtimestamp(last_mod_time).date()
 
     render = home_template.render(bases=VERIFIED_BASES,
                                   modifications=verifiedBases,
@@ -604,10 +605,11 @@ def create_homepage(env, homepage_links, v_base_origins):
                                   customNomenclature=custom_nomenclature,
                                   vBaseOrigins=v_base_origins,
                                   shadeOrigins=SHADE_ORIGINS,
-                                  time=dt)
+                                  time=last_mod_dt)
 
     f.write(render)
     f.close()
+
 
 def toSuperscript(name):
     m = re.search('N\(\d\)', name)
