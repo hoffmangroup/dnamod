@@ -74,7 +74,7 @@ client = Client(url)
 
 
 def field_not_found(field):
-    print("WARNING: unable to find {} for a reference."
+    print("WARNING: unable to find {} for a reference. "
           "Field left empty.".format(field), file=sys.stderr)
 
 
@@ -257,7 +257,10 @@ def get_ontology_data(child, attribute, selectors):
 
 
 def get_full_citation(PMID):
-    #print("Adding Citation: {}".format(PMID))
+    if PMID[0] == 'I':
+        return;
+        
+    print("Adding Citation: {}".format(PMID))
     result = []
     # isbook = False # Unused at the moment
     isarticle = False
@@ -268,11 +271,18 @@ def get_full_citation(PMID):
     articleTitle = []
     publicationDate = []
     authors = []
-
+    
+    journalName = None
+    Volume = None
+    Issue = None
+    publisherName = None
+    publisherLocation = None
+    
     for record in records:
         if 'MedlineCitation' in record.keys():
             isarticle = True
             article = record['MedlineCitation']['Article']
+            journalrecord = record['MedlineCitation']['Article']['Journal']
             daterecord = record['PubmedData']['History'];
             if'ArticleTitle' in article.keys():
                 articleTitle = article['ArticleTitle']
@@ -289,11 +299,31 @@ def get_full_citation(PMID):
                 
             publicationDate = [date for date in daterecord if date.attributes['PubStatus'] == "pubmed"]
             
+            if 'Title' in journalrecord.keys():
+                journalName = journalrecord['Title']
+            else:
+                journalName = None
+                
+            if 'JournalIssue' in journalrecord.keys():
+                journalIssue = journalrecord['JournalIssue']
+                if 'Volume' in journalIssue.keys():
+                    Volume = journalIssue['Volume']
+                else:
+                    Volume = None
+                if 'Issue' in journalIssue.keys():
+                    Issue = journalIssue['Issue']
+                else:
+                    Issue = None
+            else:
+                Volume = None
+                Issue = None
+                
         else:
             # XXX TODO refactor
             # isbook = True # Unused at the moment
             article = record['BookDocument']['Book']
-
+            print(article)
+            
             if'BookTitle' in article.keys():
                 articleTitle = article['BookTitle']
             else:
@@ -304,8 +334,11 @@ def get_full_citation(PMID):
                 authors = None
             if'PubDate' in article.keys():
                 publicationDate = article['PubDate']
-            #else:
-                #publicationDate = None
+            if 'Publisher' in article.keys():
+                publisherName = article['Publisher']['PublisherName']
+                publisherLocation = article['Publisher']['PublisherLocation']
+            else:
+                publisherName = None
 
     handle.close()
     
@@ -321,21 +354,16 @@ def get_full_citation(PMID):
         if publicationDate:
             publicationDate = publicationDate[0]
 
-            date = datetime.date(int(publicationDate['Year']),
-                                 int(publicationDate['Month']),
-                                 int(publicationDate['Day']))
+            date = publicationDate['Year']
             #print(date.isoformat())
-            result.append(date.isoformat())
+            result.append(date)
         else:
             result.append('')
             field_not_found('date')
     else:
         if publicationDate:
-            date = datetime.date(int(publicationDate['Year']),
-                                 int(publicationDate['Month']),
-                                 int(publicationDate['Day']))
-
-            result.append(date.isoformat())
+            date = publicationDate['Year']
+            result.append(date)
         else:
             result.append('')
             field_not_found('date (non-article entry)')
@@ -346,6 +374,36 @@ def get_full_citation(PMID):
         result.append('')
         field_not_found('author(s)')
 
+    if journalName:
+        result.append(journalName.encode('utf-8'))
+    else: 
+        field_not_found('journal name')
+        result.append('')
+        
+    if Volume:
+        result.append(Volume)
+    else:
+        field_not_found('volume')
+        result.append('')
+        
+    if Issue:
+        result.append(Issue)
+    else:
+        field_not_found('issue')
+        result.append('')
+        
+    if publisherName:
+        result.append(publisherName.encode('utf-8'))        
+    elif journalName == None:
+        field_not_found('publisher name')
+        result.append('')
+
+    if publisherLocation:
+        result.append(publisherLocation)
+    elif Volume == None:
+        field_not_found('publisher location')
+        result.append('')
+            
     return result
 
 
@@ -396,7 +454,10 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
                             (citationid text PRIMARY KEY NOT NULL,
                              title text,
                              pubdate text,
-                             authors text)''')
+                             authors text,
+                             journalnameorpublishername text,
+                             volumeorpublisherlocation text,
+                             issue text)''')
 
     sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS roles
                             (roleid text PRIMARY KEY NOT NULL,
@@ -477,14 +538,17 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
                 data = sql_conn_cursor.fetchone()
                 if True: #data is None:
                     citationinfo = get_full_citation(citation)
-                    citationinfo_uni = [info.decode('utf-8') for info in citationinfo]
-
-                    sql_conn_cursor.execute("UPDATE citations SET title=?, pubdate=?, authors=? WHERE citationid=?",(citationinfo_uni[0], citationinfo_uni[1], citationinfo_uni[2], citation))
+                    if citationinfo:
+                        citationinfo_uni = [info.decode('utf-8') for info in citationinfo]
+                    else:
+                        citationinfo_uni = [" ", " ", " ", " ", " ", " "]
+                    
+                    sql_conn_cursor.execute("UPDATE citations SET title=?, pubdate=?, authors=?, journalnameorpublishername=?, volumeorpublisherlocation=?, issue=? WHERE citationid=?",(citationinfo_uni[0], citationinfo_uni[1], citationinfo_uni[2], citationinfo_uni[3], citationinfo_uni[4], citationinfo_uni[5], citation))
                     conn.commit()
                     
-                    sql_conn_cursor.execute("INSERT OR IGNORE INTO citations VALUES(?,?,?,?)",
+                    sql_conn_cursor.execute("INSERT OR IGNORE INTO citations VALUES(?,?,?,?,?,?,?)",
                               (citation, citationinfo_uni[0], citationinfo_uni[1],
-                               citationinfo_uni[2]))
+                               citationinfo_uni[2], citationinfo_uni[3], citationinfo_uni[4], citationinfo_uni[5]))
                     conn.commit()
 
             sql_conn_cursor.execute("INSERT OR IGNORE INTO baseprops VALUES(?,?)",
@@ -629,9 +693,9 @@ def create_annot_citation_tables(conn, sql_conn_cursor, ref_annots_file_name, ta
                                              citationinfo_uni[2], reference))
                     conn.commit()
 
-                    sql_conn_cursor.execute("INSERT OR IGNORE INTO citations VALUES(?,?,?,?)",
+                    sql_conn_cursor.execute("INSERT OR IGNORE INTO citations VALUES(?,?,?,?,?,?,?)",
                                            (reference, citationinfo_uni[0], citationinfo_uni[1],
-                                             citationinfo_uni[2]))
+                                             citationinfo_uni[2], citationinfo_uni[3], citationinfo_uni[4], citationinfo_uni[5]))
 
                 ids = line[0].split(",")
                 line.pop(0)  # remove the ID, since it is processed above
@@ -753,7 +817,7 @@ def fix_verified_status(conn, sql_conn_cursor, client):
                             ids2unverify.append(id[0])
                     else:
                         uniqueAbbreviations.append(abbreviation)
-    
+
     for id in ids2unverify:
         sql_conn_cursor.execute('''UPDATE modbase SET verifiedstatus = 0 WHERE nameid = ?''', (id,))
     conn.commit()
@@ -779,7 +843,6 @@ print("3/5 Creating tables...")
 populate_tables(conn, sql_conn_cursor, bases, children, client)
 
 print("5/5 Finishing up...")
-check_for_duplicates(sql_conn_cursor)
 fix_verified_status(conn, sql_conn_cursor, client)
 
 conn.close()

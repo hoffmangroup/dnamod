@@ -267,7 +267,7 @@
                                 <ul class="list-group" id="Citations">
                                     {% if Citations|length %}
                                         {% for Citation in Citations %}
-                                        <li class="list-group-item">{{ Citation["authors"] }} <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation["citationid"] }}' > {{ Citation["title"] }} </a> {% if Citation["pubdate"] %} {{ Citation["pubdate"] }}. {% endif %}  </li>
+                                        <li class="list-group-item">{{ Citation["authors"] }} ({{ Citation["pubdate"] }}) <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation["citationid"] }}' > {{ Citation["title"] }} </a> <em>{{ Citation["journalname"] }}</em>, {{ Citation["volume"] }}{% if Citation["issue"] %}({{ Citation["issue"] }}){% endif %}. </li>
                                         {% endfor %}
                                     {% else %}
                                         <li> No Citations </li>

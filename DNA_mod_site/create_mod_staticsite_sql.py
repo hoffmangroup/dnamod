@@ -44,6 +44,8 @@ BASE_DICT = {'adenine': 'CHEBI:16708', 'thymine': 'CHEBI:17821',
              'cytosine': 'CHEBI:16040', 'guanine': 'CHEBI:16235',
              'uracil': 'CHEBI:17568'}
 REF_COL_NAMES = ['citationid', 'title', 'pubdate', 'authors']
+REF_COL_NAMES_CITATIONS = ['citationid', 'title', 'pubdate', 'authors', 'journalname', 'volume', 'issue']
+
 
 HTML_FILES_DIR = dnamod_utils.get_constant('site_html_dir')
 TEMPLATE_DIR = dnamod_utils.get_constant('site_template_dir')
@@ -107,9 +109,8 @@ def get_citations(lookup_key, cursor):
         c.execute("SELECT * FROM citations WHERE citationid = ?",
                   (citationid,))
         query = c.fetchone()
-
-        citationList.append(dict(izip(REF_COL_NAMES,
-                            [item.encode(ENCODING) for item in query])))
+        citationList.append(dict(izip(REF_COL_NAMES_CITATIONS,
+                            [item for item in query])))
     return citationList
 
 
@@ -210,6 +211,7 @@ def get_mod_base_ref_annot_data(id, cursor, table):
     for result in results:
         annot_dict_list += [OrderedDict(izip(REF_COL_NAMES +
                                         table_header, result))]
+    print(annot_dict_list)
     return annot_dict_list
 
 
@@ -312,7 +314,7 @@ def create_html_pages(env):
 
             for key in REF_COL_NAMES:  # decode encoded values
                 for citation in citations:
-                    citation[key] = citation[key].decode(ENCODING)
+                    citation[key] = citation[key]
 
             seq_annot = get_mod_base_ref_annot_data(chebiid, conn,
                                                     SEQ_ANNOT_TABLE)
