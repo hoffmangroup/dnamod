@@ -189,14 +189,22 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
         return _this.config.label(d);
     };
 
-    psd3.Pie.prototype.getMask = function(d) {
+    /*psd3.Pie.prototype.getMask = function(d) {
         if (d.data.stripe) {
             return "mask:url(#mask);";
         } else {
             return "";
         }
-    };
-
+    };*/
+    
+    psd3.Pie.prototype.getColor = function(d) {
+        if (d.data.stripe) {
+                return "#B3B3B3";
+            } else {
+                return "#A1E8AF";
+            }
+    }
+    
     // sort the pie menu by a lexicographic comparison of display names
     function lexicographic(a, b) {
         return a.displayname.localeCompare(b.displayname);
@@ -306,7 +314,8 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
 
     //Draw arc paths
     var paths = arcs.append("path")
-        .attr("fill", "url(#gradient_" + _this.arcIndex + ")")
+        //.attr("fill", "url(#gradient_" + _this.arcIndex + ")")
+        .attr("fill", _this.getColor)
         .style("stroke", _this.config.stroke)
         .style("stroke-width", _this.config.strokeWidth);
 
@@ -343,7 +352,6 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
         .attr("text-anchor", "middle")
         .text(_this.textText)
         .style("fill", _this.config.labelColor)
-        .style("font-size", "0.5em")
         .attr("title", _this.textTitle);
 
     for (var j = 0; j < dataset.length; j++) {
