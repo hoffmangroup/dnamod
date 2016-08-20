@@ -53,6 +53,7 @@ ONTOLOGY_SEARCH_STR = "OntologyParents"
 ONTOLOGY_HAS_ROLE = "has role"
 ONTOLOGY_FP = "has functional parent"
 ONTOLOGY_IS_A = "is a"
+ONTOLOGY_IS_TAUTOMER = "is tautomer of"
 
 RESET_TABLES = False
 ChEBI_ID_PREFIX = "CHEBI:"
@@ -721,17 +722,34 @@ def check_for_duplicates(sql_conn_cursor):
 
             if name == matchname:
                 print("Match!")  # TODO improve message
-
+                
+def fix_verified_status(conn, sql_conn_cursor, client):
+    sql_conn_cursor.execute('''SELECT nameid FROM modbase''')
+    result = sql_conn_cursor.fetchall()
+    ids2unverify = []
+    for nameid in result:
+        sql_conn_cursor.execute('''SELECT verifiedstatus FROM modbase WHERE nameid = ?''', nameid)
+        verified = sql_conn_cursor.fetchone()
+        if verified[0] == 1:
+            entity = get_complete_entity(nameid, client)
+            for ontologyItem in entity.OntologyParents:
+                if ontologyItem.type == ONTOLOGY_IS_TAUTOMER:
+                    tautId = ontologyItem.chebiId
+                    ids2unverify.append(tautId)
+                    
+    for id in ids2unverify:
+        sql_conn_cursor.execute('''UPDATE modbase SET verifiedstatus = 0 WHERE nameid = ?''', (id,))
+    conn.commit()
 
 WHITE_LIST = dnamod_utils.get_whitelist()
 BLACK_LIST = dnamod_utils.get_blacklist()
 
 print("1/5 Searching for bases...")
-bases = search_for_bases(client)
+#bases = search_for_bases(client)
 
 print("2/5 Searching for children...")
-children = get_children(bases, client)
-bases = get_complete_bases(bases, client)
+#children = get_children(bases, client)
+#bases = get_complete_bases(bases, client)
 
 conn = sqlite3.connect(DATABASE_FILE_FULLPATH)
 
@@ -741,10 +759,11 @@ sql_conn_cursor.execute('''PRAGMA foreign_keys = ON''')
 conn.commit()
 
 print("3/5 Creating tables...")
-populate_tables(conn, sql_conn_cursor, bases, children, client)
+#populate_tables(conn, sql_conn_cursor, bases, children, client)
 
 print("5/5 Finishing up...")
-check_for_duplicates(sql_conn_cursor)
+#check_for_duplicates(sql_conn_cursor)
+fix_verified_status(conn, sql_conn_cursor, client)
 
 conn.close()
 
