@@ -739,11 +739,22 @@ def fix_verified_status(conn, sql_conn_cursor, client):
                 matchedName = sql_conn_cursor.fetchone()
                 if matchedName:
                     ids2unverify.append(nameid[0])
-        
-    #Must move manually for now: no useful ontology relationships and no common synonyms -- find way to do this 
-    ids2unverify.append('CHEBI:111511')
     
-    print(ids2unverify)                
+    uniqueAbbreviations = []
+    with _read_csv_ignore_comments(ALPHABET_FILE_FULLPATH, True) as reader:
+            for num, line in enumerate(reader):
+                if num == 0:
+                    line.pop(0)
+                else:
+                    id = line[0].split(",")
+                    abbreviation = line[1]
+                    print(abbreviation)
+                    if abbreviation in uniqueAbbreviations:
+                        if id[0] not in ids2unverify:
+                            ids2unverify.append(id[0])
+                    else:
+                        uniqueAbbreviations.append(abbreviation)
+    
     for id in ids2unverify:
         sql_conn_cursor.execute('''UPDATE modbase SET verifiedstatus = 0 WHERE nameid = ?''', (id,))
     conn.commit()
