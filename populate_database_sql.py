@@ -736,6 +736,9 @@ def fix_verified_status(conn, sql_conn_cursor, client):
                 if ontologyItem.type == ONTOLOGY_IS_TAUTOMER:
                     tautId = ontologyItem.chebiId
                     ids2unverify.append(tautId)
+    
+    #Must move manually for now: no useful ontology relationships and no common synonyms -- find way to do this 
+    ids2unverify.append('CHEBI:111511')
                     
     for id in ids2unverify:
         sql_conn_cursor.execute('''UPDATE modbase SET verifiedstatus = 0 WHERE nameid = ?''', (id,))
