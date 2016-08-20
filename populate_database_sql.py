@@ -322,7 +322,6 @@ def get_full_citation(PMID):
             # XXX TODO refactor
             # isbook = True # Unused at the moment
             article = record['BookDocument']['Book']
-            print(article)
             
             if'BookTitle' in article.keys():
                 articleTitle = article['BookTitle']
@@ -817,7 +816,7 @@ def fix_verified_status(conn, sql_conn_cursor, client):
                             ids2unverify.append(id[0])
                     else:
                         uniqueAbbreviations.append(abbreviation)
-
+    print('Verified status revoked for: ', ids2unverify)
     for id in ids2unverify:
         sql_conn_cursor.execute('''UPDATE modbase SET verifiedstatus = 0 WHERE nameid = ?''', (id,))
     conn.commit()
