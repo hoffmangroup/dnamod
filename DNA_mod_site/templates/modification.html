@@ -219,12 +219,16 @@
                                                         {% if RefAnnotEntry["pubdate"] %}
                                                             {% set PubdateL = RefAnnotEntry["pubdate"].split(';') %}
                                                         {% endif %}
+                                                        {% set JournalNameL = RefAnnotEntry["journalname"].split(';') %}
+                                                        {% set VolumeL = RefAnnotEntry["volume"].split(';') %}
+                                                        {% set IssueL = RefAnnotEntry["issue"].split(';') %}
+
 
                                                         <!-- TODO refactor citation format... -->
                                                         <td>
                                                             <ul>
                                                                 {% for citationid in RefAnnotEntry["citationid"].split(';') %}
-                                                                    <li> {{ AuthorL[loop.index0] }} <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ citationid }}' > {{ TitleL[loop.index0] | replace('.', '') }}</a>.  {% if PubdateL and PubdateL[loop.index0] %} {{ PubdateL[loop.index0] }}. {% endif %} </li>
+                                                                    <li> {{ AuthorL[loop.index0] }} ({{ PubdateL[loop.index0] }})<a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ citationid }}' > {{ TitleL[loop.index0] | replace('.', '') }}</a>. <em>{{ JournalNameL[loop.index0] }}</em>, {{ VolumeL[loop.index0] }}{% if IssueL[loop.index0] %}({{ IssueL[loop.index0] }}){% endif %}.  </li>
                                                                 {% endfor %}
                                                             </ul>
                                                         </td>

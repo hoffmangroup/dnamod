@@ -188,6 +188,9 @@ def get_mod_base_ref_annot_data(id, cursor, table):
                      GROUP_CONCAT({5}.title, ';'),
                      GROUP_CONCAT({5}.pubdate, ';'),
                      GROUP_CONCAT({5}.authors, ';'),
+                     GROUP_CONCAT({5}.journalnameorpublishername, ';'),
+                     GROUP_CONCAT({5}.volumeorpublisherlocation, ';'),
+                     GROUP_CONCAT({5}.issue, ';'),
                      {2}
                  FROM (
                         SELECT * FROM {0}
@@ -203,15 +206,13 @@ def get_mod_base_ref_annot_data(id, cursor, table):
                                    {5}.authors, 1)
                  '''.format(table, REFERENCES_TABLE, sel_cols_str,
                             reference_col_name, table_header[0],
-                            subquery_alias),
-              (id,))
+                            subquery_alias),(id,))
 
     results = c.fetchall()
 
     for result in results:
-        annot_dict_list += [OrderedDict(izip(REF_COL_NAMES +
+        annot_dict_list += [OrderedDict(izip(REF_COL_NAMES_CITATIONS +
                                         table_header, result))]
-    print(annot_dict_list)
     return annot_dict_list
 
 
@@ -354,7 +355,7 @@ def create_html_pages(env):
                                           RolesChebi=roles_ids,
                                           RefAnnotTabNames=ref_annot_tab_names,
                                           RefAnnots=ref_annots,
-                                          RefAnnotsRefColNames=REF_COL_NAMES,
+                                          RefAnnotsRefColNames=REF_COL_NAMES_CITATIONS,
                                           # pass ExpandedAlpha=None to disable
                                           ExpandedAlpha=expanded_alpha)
 
