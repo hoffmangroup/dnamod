@@ -712,16 +712,6 @@ def populate_tables(conn, sql_conn_cursor, bases, children, client):
                                  NATURE_REF_ANNOTS_FULLPATH, NATURE_TABLE_NAME)
     print("4/5 Creating Search Index...")
     create_search_index(conn, sql_conn_cursor, JSON_INDEX_FILE_FULLPATH)
-
-def check_for_duplicates(sql_conn_cursor):
-    for nameid in sql_conn_cursor.execute('''SELECT nameid FROM modbase'''):
-        synonyms = sql_conn_cursor.execute('''SELECT othernames FROM names WHERE nameid = ?''', nameid)
-        for name in synonyms:
-            sql_conn_cursor.execute('''SELECT nameid FROM names WHERE chebiname = ?''', name)
-            matchname = sql_conn_cursor.fetchone()
-
-            if name == matchname:
-                print("Match!")  # TODO improve message
                 
 def fix_verified_status(conn, sql_conn_cursor, client):
     sql_conn_cursor.execute('''SELECT nameid FROM modbase''')
@@ -736,10 +726,24 @@ def fix_verified_status(conn, sql_conn_cursor, client):
                 if ontologyItem.type == ONTOLOGY_IS_TAUTOMER:
                     tautId = ontologyItem.chebiId
                     ids2unverify.append(tautId)
-    
+                    
+        sql_conn_cursor.execute('''SELECT othernames FROM names WHERE nameid = ?''', nameid)
+        synonyms = sql_conn_cursor.fetchone()
+        if verified[0] == 1 and synonyms[0]:
+            synonyms = synonyms[0]
+            synonyms = synonyms[1:-1]
+            synonyms = synonyms.split(', ')
+            for name in synonyms:
+                name = name[1:-1]
+                sql_conn_cursor.execute('''SELECT chebiname FROM names WHERE chebiname = ?''', (name,))
+                matchedName = sql_conn_cursor.fetchone()
+                if matchedName:
+                    ids2unverify.append(nameid[0])
+        
     #Must move manually for now: no useful ontology relationships and no common synonyms -- find way to do this 
     ids2unverify.append('CHEBI:111511')
-                    
+    
+    print(ids2unverify)                
     for id in ids2unverify:
         sql_conn_cursor.execute('''UPDATE modbase SET verifiedstatus = 0 WHERE nameid = ?''', (id,))
     conn.commit()
