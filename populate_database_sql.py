@@ -748,7 +748,6 @@ def fix_verified_status(conn, sql_conn_cursor, client):
                 else:
                     id = line[0].split(",")
                     abbreviation = line[1]
-                    print(abbreviation)
                     if abbreviation in uniqueAbbreviations:
                         if id[0] not in ids2unverify:
                             ids2unverify.append(id[0])
@@ -763,11 +762,11 @@ WHITE_LIST = dnamod_utils.get_whitelist()
 BLACK_LIST = dnamod_utils.get_blacklist()
 
 print("1/5 Searching for bases...")
-#bases = search_for_bases(client)
+bases = search_for_bases(client)
 
 print("2/5 Searching for children...")
-#children = get_children(bases, client)
-#bases = get_complete_bases(bases, client)
+children = get_children(bases, client)
+bases = get_complete_bases(bases, client)
 
 conn = sqlite3.connect(DATABASE_FILE_FULLPATH)
 
@@ -777,10 +776,10 @@ sql_conn_cursor.execute('''PRAGMA foreign_keys = ON''')
 conn.commit()
 
 print("3/5 Creating tables...")
-#populate_tables(conn, sql_conn_cursor, bases, children, client)
+populate_tables(conn, sql_conn_cursor, bases, children, client)
 
 print("5/5 Finishing up...")
-#check_for_duplicates(sql_conn_cursor)
+check_for_duplicates(sql_conn_cursor)
 fix_verified_status(conn, sql_conn_cursor, client)
 
 conn.close()
