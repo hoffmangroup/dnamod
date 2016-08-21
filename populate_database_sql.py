@@ -157,14 +157,19 @@ def get_children(bases, client):
 
 def get_recursive_children(entity, client, childrenverified, additionalChildren):
     if entity.chebiAsciiName not in BLACK_LIST:
-        if childrenverified:
-            entity['verifiedstatus'] = 1
+        if [child for child in additionalChildren if child['chebiId'] == entity.chebiId]:
+            print("--------------------DUPLICATE ONTOLOGY ITEM")
+            if child['verifiedstatus'] == 1:
+                entity['verifiedstatus'] = 1
         else:
-            entity['verifiedstatus'] = 0
+            if childrenverified:
+                entity['verifiedstatus'] = 1
+            else:
+                entity['verifiedstatus'] = 0
 
         print("---------- CHILD of BASE: {0:100} Verified: {1} "
               "".format(entity.chebiAsciiName, childrenverified))
-
+            
         result = client.service.getOntologyChildren(entity.chebiId)
 
         if result:
@@ -198,7 +203,7 @@ def get_further_children(entities, client):
         else:
             entity['verifiedstatus'] = 0
             childrenverified = False
-
+                
         additionalChildren = get_recursive_children(entity, client,
                                                     childrenverified,
                                                     additionalChildren)
@@ -559,7 +564,7 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
                       ('0', str(charge), child.definition))
             conn.commit()
             rowid = sql_conn_cursor.lastrowid
-
+            
             sql_conn_cursor.execute("INSERT OR IGNORE INTO modbase VALUES(?,?,?,?,?,?)",
                       (child.chebiId, '0', base.chebiAsciiName[0],
                        str(formula), rowid, child['verifiedstatus']))
@@ -802,7 +807,7 @@ def fix_verified_status(conn, sql_conn_cursor, client):
                 matchedName = sql_conn_cursor.fetchone()
                 if matchedName:
                     ids2unverify.append(nameid[0])
-    
+                    
     uniqueAbbreviations = []
     with _read_csv_ignore_comments(ALPHABET_FILE_FULLPATH, True) as reader:
             for num, line in enumerate(reader):
@@ -816,6 +821,7 @@ def fix_verified_status(conn, sql_conn_cursor, client):
                             ids2unverify.append(id[0])
                     else:
                         uniqueAbbreviations.append(abbreviation)
+        
     print('Verified status revoked for: ', ids2unverify)
     for id in ids2unverify:
         sql_conn_cursor.execute('''UPDATE modbase SET verifiedstatus = 0 WHERE nameid = ?''', (id,))
