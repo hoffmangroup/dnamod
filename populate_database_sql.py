@@ -717,11 +717,13 @@ def create_annot_citation_tables(conn, sql_conn_cursor, ref_annots_file_name, ta
                         
         conn.commit()
 
-def create_search_index(conn, sql_conn_cursor, filelocation):
-    with open(filelocation, 'a+') as file:
+def create_search_index(conn, sql_conn_cursor, JSON_fullpath):
+    # create or re-create the JSON
+    with open(JSON_fullpath, 'w+') as JSON:
         feeds = []
         sql_conn_cursor.execute("SELECT nameid FROM modbase")
         result = sql_conn_cursor.fetchall()
+
         for modification in result:
             sql_conn_cursor.execute("SELECT Name FROM expanded_alphabet WHERE nameid =?", (modification))
             nomenclature = sql_conn_cursor.fetchone()
@@ -732,43 +734,46 @@ def create_search_index(conn, sql_conn_cursor, filelocation):
             chebiid = data[1]
             iupacname = data[2]
             synonyms = data[3]
+
             sql_conn_cursor.execute("SELECT formulaid, verifiedstatus FROM modbase WHERE nameid = ?", (modification))
             furtherdata = sql_conn_cursor.fetchone()
             formula = furtherdata[0]
             verified = furtherdata[1]
+
             sql_conn_cursor.execute("SELECT Abbreviation FROM expanded_alphabet WHERE nameid = ?", (modification))
             abbrevdata = sql_conn_cursor.fetchone()
             abbreviation = abbrevdata
+
             sql_conn_cursor.execute("SELECT Symbol FROM expanded_alphabet WHERE nameid = ?", (modification))
             symbol = sql_conn_cursor.fetchone()
-            
-            if name:
-                writedata = {
-                    'CommonName' : name,
-                    'ChEBIId' : chebiid,
-                    'IUPACName' : iupacname,
-                    'Synonyms' : synonyms,
-                    'ChemicalFormula' : formula,
-                    'Abbreviation' : abbreviation,
-                    'Verified' : verified,
-                    'Symbol' : symbol,
-                    'Refname' : chebiname
-                }            
-            else:
-                writedata = {
-                    'CommonName' : chebiname,
-                    'ChEBIId' : chebiid,
-                    'IUPACName' : iupacname,
-                    'Synonyms' : synonyms,
-                    'ChemicalFormula' : formula,
-                    'Abbreviation' : abbreviation,
-                    'Verified' : verified,
-                    'Symbol' : symbol,
-                    'Refname' : chebiname
-                }
-                
-            feeds.append(writedata)
-        json.dump(feeds, file, sort_keys = True, indent = 4)
+
+            common_name = name if name else chebiname
+
+            writedata = {
+                'CommonName' : common_name,
+                'ChEBIId' : chebiid,
+                'IUPACName' : iupacname,
+                'Synonyms' : synonyms,
+                'ChemicalFormula' : formula,
+                'Abbreviation' : abbreviation,
+                'Verified' : verified,
+                'Symbol' : symbol,
+                'Refname' : chebiname
+            }
+
+            feeds.append(writedata.copy())
+
+        # write the JSON
+        json.dump(feeds, JSON, sort_keys=True, indent=4)
+
+    with open(JSON_fullpath, 'r') as JSON:
+        # check the JSON
+        try:
+            json.load(JSON)
+        except ValueError as JSON_err:
+            print("WARNING: invalid JSON ({}). Search is unlikely"
+                  "to function.".format(JSON_err),
+                  file=sys.stderr)
 
 
 def populate_tables(conn, sql_conn_cursor, bases, children, client):
@@ -781,7 +786,8 @@ def populate_tables(conn, sql_conn_cursor, bases, children, client):
                                  NATURE_REF_ANNOTS_FULLPATH, NATURE_TABLE_NAME)
     print("4/5 Creating Search Index...")
     create_search_index(conn, sql_conn_cursor, JSON_INDEX_FILE_FULLPATH)
-                
+
+
 def fix_verified_status(conn, sql_conn_cursor, client):
     sql_conn_cursor.execute('''SELECT nameid FROM modbase''')
     result = sql_conn_cursor.fetchall()
