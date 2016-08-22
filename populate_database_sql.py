@@ -36,12 +36,10 @@ from suds.client import Client  # Using Suds web services client for soap
 
 import dnamod_utils
 
-# XXX register this with NCBI
-Entrez.email = "jai.sood@hotmail.com"  # XXX come up with an alternative for this... (perhaps a DNAmod address)
+Entrez.email = "DNAmod-L-request@listserv.utoronto.ca"
 Entrez.tool = "DNAmod"
 
 # TODO externalize these to dnamod_utils from constants.sh and refactor Python code to use from there
-
 EXP_ALPH_TABLE_NAME = 'expanded_alphabet'
 SEQ_TABLE_NAME = 'sequencing_citations'
 NATURE_TABLE_NAME = 'nucleobase_nature_info'
