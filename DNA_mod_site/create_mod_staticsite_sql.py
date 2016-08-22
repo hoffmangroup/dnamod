@@ -53,9 +53,8 @@ UNVERIFIED_BASES = ('UnverifiedAdenine', 'UnverifiedThymine',
 BASE_DICT = {'adenine': 'CHEBI:16708', 'thymine': 'CHEBI:17821',
              'cytosine': 'CHEBI:16040', 'guanine': 'CHEBI:16235',
              'uracil': 'CHEBI:17568'}
-REF_COL_NAMES = ['citationid', 'title', 'pubdate', 'authors']
-REF_COL_NAMES_CITATIONS = ['citationid', 'title', 'pubdate', 'authors', 'journalname', 'volume', 'issue']
-
+REF_COL_NAMES = ['citationid', 'title', 'pubdate', 'authors',
+                 'journalname', 'volume', 'issue']
 
 HTML_FILES_DIR = dnamod_utils.get_constant('site_html_dir')
 TEMPLATE_DIR = dnamod_utils.get_constant('site_template_dir')
@@ -119,7 +118,7 @@ def get_citations(lookup_key, cursor):
         c.execute("SELECT * FROM citations WHERE citationid = ?",
                   (citationid,))
         query = c.fetchone()
-        citationList.append(dict(izip(REF_COL_NAMES_CITATIONS,
+        citationList.append(dict(izip(REF_COL_NAMES,
                             [item for item in query])))
     return citationList
 
@@ -216,12 +215,12 @@ def get_mod_base_ref_annot_data(id, cursor, table):
                                    {5}.authors, 1)
                  '''.format(table, REFERENCES_TABLE, sel_cols_str,
                             reference_col_name, table_header[0],
-                            subquery_alias),(id,))
+                            subquery_alias), (id,))
 
     results = c.fetchall()
 
     for result in results:
-        annot_dict_list += [OrderedDict(izip(REF_COL_NAMES_CITATIONS +
+        annot_dict_list += [OrderedDict(izip(REF_COL_NAMES +
                                         table_header, result))]
     return annot_dict_list
 
@@ -365,7 +364,7 @@ def create_html_pages(env):
                                           RolesChebi=roles_ids,
                                           RefAnnotTabNames=ref_annot_tab_names,
                                           RefAnnots=ref_annots,
-                                          RefAnnotsRefColNames=REF_COL_NAMES_CITATIONS,
+                                          RefAnnotsRefColNames=REF_COL_NAMES,
                                           # pass ExpandedAlpha=None to disable
                                           ExpandedAlpha=expanded_alpha)
 
