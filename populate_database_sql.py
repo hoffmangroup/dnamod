@@ -163,19 +163,17 @@ def get_children(bases, client):
 
 def get_recursive_children(entity, client, childrenverified, additionalChildren):
     if entity.chebiAsciiName not in BLACK_LIST:
-        if [child for child in additionalChildren if child['chebiId'] == entity.chebiId]:
-            print("--------------------DUPLICATE ONTOLOGY ITEM")
-            if child['verifiedstatus'] == 1:
-                entity['verifiedstatus'] = 1
+        if childrenverified or [child for child in additionalChildren
+                                if child['chebiId'] == entity.chebiId and
+                                child['verifiedstatus']]:
+            # TODO improve the way duplicate verified ontology entries are handled
+            entity['verifiedstatus'] = 1
         else:
-            if childrenverified:
-                entity['verifiedstatus'] = 1
-            else:
-                entity['verifiedstatus'] = 0
+            entity['verifiedstatus'] = 0
 
         print("---------- CHILD of BASE: {0:100} Verified: {1} "
               "".format(entity.chebiAsciiName, childrenverified))
-            
+
         result = client.service.getOntologyChildren(entity.chebiId)
 
         if result:
