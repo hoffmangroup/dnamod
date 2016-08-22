@@ -25,13 +25,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 """
 
 from contextlib import contextmanager
-import datetime
+import json
 from more_itertools import peekable
-import pprint
 from pysqlite2 import dbapi2 as sqlite3  # needed for latest SQLite
 import sys
 import unicodecsv as csv
-import json
 
 from Bio import Entrez
 from suds.client import Client  # Using Suds web services client for soap
@@ -367,7 +365,6 @@ def get_full_citation(PMID):
             publicationDate = publicationDate[0]
 
             date = publicationDate['Year']
-            #print(date.isoformat())
             result.append(date)
         else:
             result.append('')
