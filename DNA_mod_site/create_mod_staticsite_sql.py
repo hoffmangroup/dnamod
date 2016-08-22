@@ -3,17 +3,27 @@
 
 from __future__ import with_statement, division, print_function
 
-'''
-Ankur Jai Sood
-09/6/2015
+"""Creates the DNAmod website.
 
-Create_mod_staticsite.py
-Function:
-1. Opens FSDB database files
-2. Returns a modification
-3. Creates a html page for the modifcation based on created jinja2 template
-4. Creates a home page with links to html modification pages
-'''
+-------------------------------------------------------------------------------
+Copyright (C) 2016  Ankur Jai Sood and Coby Viner
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+-------------------------------------------------------------------------------
+"""
+
 import codecs
 from collections import OrderedDict, defaultdict, MutableSequence
 from copy import deepcopy

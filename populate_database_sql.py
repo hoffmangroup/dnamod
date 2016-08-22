@@ -3,18 +3,26 @@
 
 from __future__ import with_statement, division, print_function
 
-'''
-Ankur Jai Sood
-29/5/2015
+"""Creates the DNAmod database.
 
-Populate_database.py
-Function:
-1. Performs search of CHEBI database for DNA bases
-2. Returns chebiId and chebiAsciiName of bases
-3. Searches CHEBI database for all entities of which
-   the DNA bases are functional parents
-4. Using above results, populates DNA post-transciptional modification table
-'''
+-------------------------------------------------------------------------------
+Copyright (C) 2016  Ankur Jai Sood
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+-------------------------------------------------------------------------------
+"""
 
 from contextlib import contextmanager
 import datetime
