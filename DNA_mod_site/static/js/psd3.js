@@ -35,10 +35,7 @@ psd3.Graph = function(config) {
         strokeWidth: 2,
         highlightColor: "orange"
     };
-    /*console.log("before defaults");
-    for(var property in config){
-        console.log(property);
-    }*/
+    
     for (var property in this.defaults) {
         if (this.defaults.hasOwnProperty(property)) {
             if (!config.hasOwnProperty(property)) {
@@ -46,10 +43,6 @@ psd3.Graph = function(config) {
             }
         }
     }
-    /*console.log("after defaults");
-    for(var property in config){
-        console.log(property);
-    }*/
 };
 
 var psd3 = psd3 || {};
@@ -188,14 +181,6 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
     psd3.Pie.prototype.textText = function(d) {
         return _this.config.label(d);
     };
-
-    /*psd3.Pie.prototype.getMask = function(d) {
-        if (d.data.stripe) {
-            return "mask:url(#mask);";
-        } else {
-            return "";
-        }
-    };*/
     
     psd3.Pie.prototype.getColor = function(d) {
         if (d.data.stripe) {
@@ -240,38 +225,6 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
         d.length = dataset.length;
     };
 
-    // ------------------------------------------
-    // Adapted from: http://stackoverflow.com/a/29370355 ("Henry S")
-    // and from https://gist.github.com/jfsiii/7772281 (John Schulz)
-    var pattern = svg.append("svg:defs")
-        .append("pattern")
-        .attr("id", "stripe")
-        .attr("patternUnits", "userSpaceOnUse")
-        .attr("width", "4")
-        .attr("height", "4")
-        .append("rect")
-        .attr("width", "3.25")
-        .attr("height", "4")
-        .attr("fill", "white");
-
-    var mask = svg.append("svg:defs")
-        .append("mask") 
-        .attr("id", "mask")
-        .append("rect")
-        .attr("x", "0")
-        .attr("y", "0")
-        .attr("width", "100%")
-        .attr("height", "100%")
-        .attr("fill", "url(#stripe)");
-
-    // Define attributes for the mask rect
-    d3.select("#mask").select("rect")
-        .attr("height", _this.config.height)
-        .attr("width", _this.config.width)
-        .attr("transform",
-              "translate(-" + (totalRadius) + ",-" + (totalRadius) + ")");
-    // ------------------------------------------
-
     var arcs = svg.selectAll("g." + clazz)
         .data(pie(dataset))
         .enter()
@@ -314,7 +267,6 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
 
     //Draw arc paths
     var paths = arcs.append("path")
-        //.attr("fill", "url(#gradient_" + _this.arcIndex + ")")
         .attr("fill", _this.getColor)
         .style("stroke", _this.config.stroke)
         .style("stroke-width", _this.config.strokeWidth);
