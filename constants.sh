@@ -78,7 +78,7 @@ if [[ ! ( -d "$ROOT_DIR" && -d "$SITE_DIR" && -d "$SITE_TEMPLATE_DIR" && -d "$SI
     not_found 'directories'
 fi
 
-DATABASE="$DATA_DIR/DNA_mod_database.db"
+DATABASE="$DATA_DIR/DNAmod.sqlite"
 
 WHITELIST="$DATA_DIR/whitelist.txt"
 BLACKLIST="$DATA_DIR/blacklist.txt"
