@@ -1,4 +1,4 @@
-ChEBI	Origin	Function	Functional info.	Organism(s)	Reference(s)
+ChEBI	Origin	Function	Functional detail	Organisms	References
 #
 # adenine
 #
