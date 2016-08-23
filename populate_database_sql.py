@@ -761,7 +761,8 @@ def create_search_index(conn, sql_conn_cursor, JSON_fullpath):
                 'Refname' : chebiname
             }
 
-            feeds.append(writedata.copy())
+            if (writedata['ChEBIId'] is not None):
+                feeds.append(writedata.copy())
 
         # write the JSON
         json.dump(feeds, JSON, sort_keys=True, indent=4)
