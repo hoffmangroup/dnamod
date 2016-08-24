@@ -90,34 +90,36 @@
                             {% endif %} 
             
                             {% if ExpandedAlpha %}
-                                <div class="ExpandedAlpha">
-                                    <div class="col-sm-6">
+                                <div class="col-sm-6">
+                                    <div class="ExpandedAlpha">
                                         <h2 rel="tooltip" title="DNAmod integrates manually-curated nomenclature, including the name and abbreviation deemed most consistent and in common use. We additionally provide recommendations for one-letter symbols of selected modified bases, and in some instances for their complements. We have previously described these, as part of our expanded epigenetic alphabet, which we currently use to model modification-sensitive transcription factor binding sites."> Recommended notation </h2>
-                                        <table>
-                                            <tr>
-                                                <th> Name </th>
-                                                <td> {{ ExpandedAlpha["Name"] }} </td> 
-                                            <tr>
-                                                <th> Abbreviation </th>
-                                                <td> {{ ExpandedAlpha["Abbreviation"] }} </td>
-                                            </tr>
-                                            {% if ExpandedAlpha["Symbol"] %}
+                                        <div class="table-responsive">
+                                            <table class="table">
                                                 <tr>
-                                                    <th> Symbol </th>
-                                                    <td class="nucleobase"> {{ ExpandedAlpha["Symbol"] }} </td>
-                                                </tr>
-                                            {% endif %}
-                                            {% if ExpandedAlpha["Complement Symbol"] %}
+                                                    <th> Name </th>
+                                                    <td> {{ ExpandedAlpha["Name"] }} </td> 
                                                 <tr>
-                                                    <th> Complement </th>
-                                                    <td> {{ ExpandedAlpha["Complement"] }} </td>
+                                                    <th> Abbreviation </th>
+                                                    <td> {{ ExpandedAlpha["Abbreviation"] }} </td>
                                                 </tr>
-                                                <tr>
-                                                    <th> Symbol </th>
-                                                    <td class="nucleobase"> {{ ExpandedAlpha["Complement Symbol"] }} </td>
-                                                </tr>
-                                            {% endif %}
-                                        </table>
+                                                {% if ExpandedAlpha["Symbol"] %}
+                                                    <tr>
+                                                        <th> Symbol </th>
+                                                        <td class="nucleobase"> {{ ExpandedAlpha["Symbol"] }} </td>
+                                                    </tr>
+                                                {% endif %}
+                                                {% if ExpandedAlpha["Complement Symbol"] %}
+                                                    <tr>
+                                                        <th> Complement </th>
+                                                        <td> {{ ExpandedAlpha["Complement"] }} </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th> Symbol </th>
+                                                        <td class="nucleobase"> {{ ExpandedAlpha["Complement Symbol"] }} </td>
+                                                    </tr>
+                                                {% endif %}
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             {% endif %}
