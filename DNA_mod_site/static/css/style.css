@@ -159,3 +159,9 @@ table tr td.nucleobase {
 .footer {
     font-size: 1.25em;
 }
+
+#hangingindent {
+    list-style-type: none;
+    padding-left: 1.5em;
+    text-indent: -1.5em;    
+}
