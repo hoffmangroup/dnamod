@@ -12,6 +12,11 @@ $(document).ready(function() {
     $("#tabs").tabs({
         active:1
     });
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $('.searchbox').val('');
+        $('.searchbox').focus().blur();
+        $('#searchresults').empty();
+    });
 });
 
 $(document).ready(function() {
