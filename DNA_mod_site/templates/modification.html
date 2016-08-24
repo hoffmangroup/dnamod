@@ -52,12 +52,12 @@
                     
                             <div class="BasicInfo">
                                 {% if Definition %}
-                                    <h2> Description: </h2>
+                                    <h2> Description </h2>
                                     <p> {{ Definition }} </p>
                                 {% endif %}
 
                                 {% if Formula or NetCharge or AverageMass %}
-                                    <h2> Chemical properties: </h2>
+                                    <h2> Chemical properties </h2>
                                     <table class="table table-striped" id="ChemProps">
                                         <tr>
                                             <th> Chemical formula </th>
@@ -92,7 +92,7 @@
                             {% if ExpandedAlpha %}
                                 <div class="ExpandedAlpha">
                                     <div class="col-sm-6">
-                                        <h2 rel="tooltip" title="DNAmod integrates manually-curated nomenclature, including the name and abbreviation deemed most consistent and in common use. We additionally provide recommendations for one-letter symbols of selected modified bases, and in some instances for their complements. We have previously described these, as part of our expanded epigenetic alphabet, which we currently use to model modification-sensitive transcription factor binding sites."> Recommended notation: </h2>
+                                        <h2 rel="tooltip" title="DNAmod integrates manually-curated nomenclature, including the name and abbreviation deemed most consistent and in common use. We additionally provide recommendations for one-letter symbols of selected modified bases, and in some instances for their complements. We have previously described these, as part of our expanded epigenetic alphabet, which we currently use to model modification-sensitive transcription factor binding sites."> Recommended notation </h2>
                                         <table>
                                             <tr>
                                                 <th> Name </th>
@@ -137,7 +137,7 @@
                             <div class="panel-body">
                                 <div class="Names">
                                     {% if IupacName or Smiles or Synonyms %}
-                                        <h2> Nomenclature: </h2>
+                                        <h2> Nomenclature </h2>
                                         <div class="table-responsive">
                                             <table class="table table-striped" id="Names">
                                                 <tr>
@@ -181,10 +181,10 @@
                             
                                 <div class="RefAnnotTable" {{ RefAnnotTabNames[loop.index0] }}>
                                     {% if RefAnnotTabNames[loop.index0] == "Mapping techniques" %}
-                                        <h2 id="Inline" rel="tooltip" title="These annotations include the method's name, our categorizations of the basis for the method (such as chemical conversion), its resolution, limited genome-wide applicability or use of an enrichment method, and the citation for the method. We consider any method which involves affinity-based recognition of targets to be of ``low'' resolution. Conversely, we annotate any methods based principally upon the detection of a chemically converted modification as ``high'' resolution. This generally reflects the resulting resolution of the method's output data and often corresponds to the necessity to bin genomic regions during downstream analyses of the detected analyte."> {{ RefAnnotTabNames[loop.index0] }}: </h2>
+                                        <h2 id="Inline" rel="tooltip" title="These annotations include the method's name, our categorizations of the basis for the method (such as chemical conversion), its resolution, limited genome-wide applicability or use of an enrichment method, and the citation for the method. We consider any method which involves affinity-based recognition of targets to be of ``low'' resolution. Conversely, we annotate any methods based principally upon the detection of a chemically converted modification as ``high'' resolution. This generally reflects the resulting resolution of the method's output data and often corresponds to the necessity to bin genomic regions during downstream analyses of the detected analyte."> {{ RefAnnotTabNames[loop.index0] }} </h2>
                                     {% endif %}
                                     {% if RefAnnotTabNames[loop.index0] == "Nature" %}
-                                        <h2 id="Inline" rel="tooltip" title="We investigated if each modified base had been previously reported to occur in vivo, either as an endogenously-generated modification or those that have been observed to occur as a result of exogenous stimuli, such as exposure to an environmental toxin. We annotate any modification observed in vivo merely as ``natural''. We additionally provide non-exhaustive examples of some organisms in which the modifications have been reported. We annotate any modification not observed in vivo as ``synthetic'', and list a reference in which it was synthesized or in which the synthetic base was used. For each of these annotations, we also briefly annotate a primary biological function, if known."> {{ RefAnnotTabNames[loop.index0] }}: </h2>
+                                        <h2 id="Inline" rel="tooltip" title="We investigated if each modified base had been previously reported to occur in vivo, either as an endogenously-generated modification or those that have been observed to occur as a result of exogenous stimuli, such as exposure to an environmental toxin. We annotate any modification observed in vivo merely as ``natural''. We additionally provide non-exhaustive examples of some organisms in which the modifications have been reported. We annotate any modification not observed in vivo as ``synthetic'', and list a reference in which it was synthesized or in which the synthetic base was used. For each of these annotations, we also briefly annotate a primary biological function, if known."> {{ RefAnnotTabNames[loop.index0] }} </h2>
                                     {% endif %}
                                     <div class="table-responsive">
                                         <table class="table table-striped" id={{ RefAnnotTabNames[loop.index0] }}>
@@ -272,7 +272,7 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                             
-                                <h2> Citations: </h2>
+                                <h2> Citations </h2>
                                 <ul class="list-group" id="Citations">
                                     {% if Citations|length %}
                                         {% for Citation in Citations %}
