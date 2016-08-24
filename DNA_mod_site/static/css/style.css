@@ -155,3 +155,7 @@ table tr td.nucleobase {
 .tooltip-inner {
     white-space: nowrap;
 }
+
+.footer {
+    font-size: 1.25em;
+}
