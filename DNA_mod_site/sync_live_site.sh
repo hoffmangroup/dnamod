@@ -67,7 +67,7 @@ fi
 >&2 echo "Fixing permissions and copying to www directory."
 
 chmod -Rv g+rwX,a+rX "$MAIN_SITE_DIR/.." "${ADDTL_FILES[@]}"
-rsync --progress -av --delete "$MAIN_SITE_DIR"/* "${ADDTL_FILES[@]}""$COPY_PATH" || true
+rsync --progress -av --delete "$MAIN_SITE_DIR"/* "${ADDTL_FILES[@]}" "$COPY_PATH" || true
 
 # push the actual site to the external directory
 if [[ "$TESTING_MODE" == false && "$internal_only" == false ]]; then
