@@ -55,7 +55,7 @@ body h2 {
 
 .ui-accordion .ui-accordion-header-active {
     background: rgb(135, 206, 250);
-    color: rgb(119, 43, 201);;
+    color: rgb(119, 43, 201);
 }
 
 .ui-accordion .ui-accordion-content ul{
