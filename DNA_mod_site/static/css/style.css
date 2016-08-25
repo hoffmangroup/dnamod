@@ -124,7 +124,7 @@ table tr td.nucleobase {
 }
 
 #Inline {
-    display: inline;
+    display: inline-block;
 }
 
 .Names {
