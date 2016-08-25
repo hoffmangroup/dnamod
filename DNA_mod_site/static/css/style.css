@@ -55,7 +55,7 @@ body h2 {
 
 .ui-accordion .ui-accordion-header-active {
     background: rgb(135, 206, 250);
-    color: rgb(119, 43, 201);
+    color: rgb(119, 43, 201);;
 }
 
 .ui-accordion .ui-accordion-content ul{
@@ -74,23 +74,23 @@ a {
 }
 
 a:link {
-    color: #b18fcf;
+    color: #7B68EE;
 }
 
 /* visited link */
 a:visited {
-    color: #b18fcf;
+    color: #7B68EE;
 }
 
 /* mouse over link */
 a:hover {
-    color: #b18fcf;
+    color: #7B68EE;
     text-decoration: underline;
 }
 
 /* selected link */
 a:active {
-    color: #b18fcf;
+    color: #7B68EE;
 }
 
 table, th, td {
@@ -158,10 +158,6 @@ table tr td.nucleobase {
 
 .footer {
     font-size: 1.1em;
-}
-
-.footer a {
-    color: #663096;
 }
 
 #hangingindent {
