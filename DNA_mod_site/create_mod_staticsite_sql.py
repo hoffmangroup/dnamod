@@ -45,6 +45,11 @@ import dnamod_utils
 
 # Program Constants
 ENCODING = 'utf8'
+
+JINJA2_EXTENSION_NAMES = ['do']
+JINJA2_EXTENSIONS = ['jinja2.ext.' + ext_name for ext_name
+                     in JINJA2_EXTENSION_NAMES]
+
 BASES = 'Adenine', 'Cytosine', 'Guanine', 'Thymine', 'Uracil'
 VERIFIED_BASES = 'Adenine', 'Cytosine', 'Guanine', 'Thymine'
 UNVERIFIED_BASES = ('UnverifiedAdenine', 'UnverifiedThymine',
@@ -632,13 +637,15 @@ def toSuperscript(name):
     else:
         return name
 
+
 # create the Jinja2 environment object, loading from files
 # and disallowing the use of undefined variables
 env = jinja2.Environment(loader=jinja2.FileSystemLoader(TEMPLATE_DIR),
-                         undefined=jinja2.StrictUndefined)
+                         undefined=jinja2.StrictUndefined,
+                         extensions=JINJA2_EXTENSIONS)
 
-env.filters['is_list'] = is_list  # add custom filter
-
+# add custom filters
+env.filters['is_list'] = is_list
 
 print("Generating Static Site....")
 links, v_base_origins = create_html_pages(env)
