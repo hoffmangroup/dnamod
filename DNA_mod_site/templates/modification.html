@@ -280,10 +280,10 @@
                             <div class="panel-body">
                             
                                 <h2> Citations </h2>
-                                <ul class="list-group" id="Citations">
+                                <ul id="hangingindent">
                                     {% if Citations|length %}
                                         {% for Citation in Citations %}
-                                        <li class="list-group-item">{{ Citation["authors"] }} ({{ Citation["pubdate"] }}) <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation["citationid"] }}' > {{ Citation["title"] }} </a> <em>{{ Citation["journalname"] }}</em>, {{ Citation["volume"] }}{% if Citation["issue"] %}({{ Citation["issue"] }}){% endif %}. </li>
+                                        <li>{{ Citation["authors"] }} ({{ Citation["pubdate"] }}) <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation["citationid"] }}' > {{ Citation["title"] }} </a> <em>{{ Citation["journalname"] }}</em>, {{ Citation["volume"] }}{% if Citation["issue"] %}({{ Citation["issue"] }}){% endif %}. </li>
                                         {% endfor %}
                                     {% else %}
                                         <li> No Citations </li>
