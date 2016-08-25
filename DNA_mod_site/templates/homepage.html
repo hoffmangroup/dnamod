@@ -33,20 +33,43 @@
     {# Circumvent Jinja2 scoping rules, using an object for the count.
        Adapted from:  http://stackoverflow.com/a/32700975 #}
     {% set num_nested_lists = [0] %}
+    {% set num_nested_lists_gt_3 = [0] %}
+
     {% for mod_base in mod_children_L %}
         {% if mod_base|is_list %}
             {# increment num_nested_lists by 1 #}
-            {% if num_nested_lists.append(num_nested_lists.pop() + 1) %}{% endif %}
+            {% do num_nested_lists.append(num_nested_lists.pop() + 1) %}
+
+            {% if mod_base|length > 3 %}
+                {% do num_nested_lists_gt_3.append(num_nested_lists_gt_3.pop() + 1) %}
+            {% endif %}
         {% endif %}
     {% endfor %}
+
     {% set num_nested_lists = num_nested_lists.pop() %} {# object -> int #}
 
-    {% set subpie_frac = subpie_frac/(mod_children_L|length - num_nested_lists) %}
+    {% set num_nested_lists_gt_3 = num_nested_lists_gt_3.pop() %} {# object -> int #}
+
+    {% set num_items_at_lvl = (mod_children_L|length - num_nested_lists) %}
+
+    {% set subpie_frac_adj = subpie_frac %}
+
+    {% set subpie_subitem_growth_factor = num_items_at_lvl/2 %}
 
     {% for mod_base in mod_children_L %}
         {% if mod_base|is_list %}
+            {# increase the size of pie menu items with many children #}
+            {% if mod_base|length > 3 %}
+                {% set subpie_frac_adj = subpie_frac/num_items_at_lvl + subpie_subitem_growth_factor %}
+            {% endif %}
+            
             {% set mod_base_id = mod_base.pop(0) %}
         {% else %}
+            {# decrease size of other pie menu items to compensate for the increase of those with many children #}
+            {% if num_nested_lists_gt_3 > 0 %}
+                {% set subpie_frac_adj = subpie_frac/num_items_at_lvl - subpie_subitem_growth_factor/num_nested_lists_gt_3 %}
+            {% endif %}
+            
             {% set mod_base_id = mod_base %}
         {% endif %}
 
@@ -54,10 +77,10 @@
         abbreviation: "{{ customNomenclature[mod_base_id]['Abbreviation'] }}",
         displayname: "{{ customNomenclature[mod_base_id]['Name'] -}}
                     {% if customNomenclature[mod_base_id]['Symbol'] -%}
-                    {{' '}}{{'('}}<span class='nucleobase'>{{customNomenclature[mod_base_id]['Symbol']}}</span>{{')'-}}
+                    {{' '}}{{'('}}<span class='nucleobase'>{{customNomenclature[mod_base_id]['Symbol']}}</span>{{')' -}}
                     {% endif -%}",
-        chebiname: "{{ customNomenclature[mod_base_id]['chebiname'] }}",
-        value: {{ subpie_frac }},
+                    chebiname: "{{ customNomenclature[mod_base_id]['chebiname'] }}",
+        value: {{ subpie_frac_adj }},
         {% for shadeOrigin in shadeOrigins -%}
             {% set baseOrigin = vBaseOrigins.get(mod_base_id) -%}
             {% if baseOrigin and shadeOrigin in baseOrigin.split() -%}
@@ -70,9 +93,7 @@
         drilldown: [
         {% if mod_base|is_list and mod_base|length > 0 %}
             {#  next element is a list -> proceed with the recursive step #}
-            {#{{ '{' }}#}
-            {{ _consRecTree(mod_base, subpie_frac) }}
-            {#{{ '}' }}#}
+            {{ _consRecTree(mod_base, subpie_frac_adj) }}
         {% endif %}
         ]
         {{ '}' }}
