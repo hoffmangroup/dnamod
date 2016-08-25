@@ -160,6 +160,10 @@ table tr td.nucleobase {
     font-size: 1.1em;
 }
 
+.footer a {
+    color: #663399;
+}
+
 #hangingindent {
     list-style-type: none;
     padding-left: 1.5em;
