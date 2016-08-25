@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    
+    <script type='text/javascript' src='js/modification.js'></script>
+
     <link href="css/style.css" rel="stylesheet" type='text/css'>
     
 </head>
@@ -97,7 +98,7 @@
                             {% if ExpandedAlpha %}
                                 <div class="col-sm-6">
                                     <div class="ExpandedAlpha">
-                                        <h2 rel="tooltip" title="DNAmod's recommended nomenclature. {% if ExpandedAlpha["Symbol"] -%} For bioinformatic contexts, DNAmod provides a one-letter symbol for genomic {{ ExpandedAlpha["Name"] }} {% if ExpandedAlpha["Complement Symbol"] -%} as well as for its base-pairing complement{% endif -%}.{% endif -%}"> Recommended notation </h2>
+                                        <abbr data-toggle="popover" data-placement="left" data-content="DNAmod's recommended nomenclature. {% if ExpandedAlpha["Symbol"] -%} For bioinformatic contexts, DNAmod provides a one-letter symbol for genomic {{ ExpandedAlpha["Name"] }} {% if ExpandedAlpha["Complement Symbol"] -%} as well as for its base-pairing complement{% endif -%}.{% endif -%}" data-original-title title><h2 id="Inline"> Recommended notation </h2></abbr>
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <tr>
@@ -188,10 +189,10 @@
                             
                                 <div class="RefAnnotTable" {{ RefAnnotTabNames[loop.index0] }}>
                                     {% if RefAnnotTabNames[loop.index0] == "Mapping techniques" %}
-                                    <h2 id="Inline" rel="tooltip" title="Sequencing methods available to profile {{ DispName }}. Annotations include: the method's name, a categorization of the basis for the method (such as chemical conversion), its resolution, its possessing limited genome-wide applicability or use of an enrichment method, and its reference."> {{ RefAnnotTabNames[loop.index0] }} </h2>
+                                    <abbr data-toggle="popover" data-placement="top" data-content="Sequencing methods available to profile {{ DispName }}. Annotations include: the method's name, a categorization of the basis for the method (such as chemical conversion), its resolution, its possessing limited genome-wide applicability or use of an enrichment method, and its reference." data-original-title title><h2 id="Inline"> {{ RefAnnotTabNames[loop.index0] }} </h2></abbr>
                                     {% endif %}
                                     {% if RefAnnotTabNames[loop.index0] == "Nature" %}
-                                    <h2 id="Inline" rel="tooltip" title="Natural occurrence information (natural or synthetic) for {{ DispName }}. Natural modifications include previous reports of in vivo occurrence, with non-exhaustive examples of some organisms in which {{ DispName }} has been reported and their primary biological function, if known."> {{ RefAnnotTabNames[loop.index0] }} </h2>
+                                    <abbr data-toggle="popover" data-placement="top" data-content="Natural occurrence information (natural or synthetic) for {{ DispName }}. Natural modifications include previous reports of in vivo occurrence, with non-exhaustive examples of some organisms in which {{ DispName }} has been reported and their primary biological function, if known." data-original-title title><h2 id="Inline"> {{ RefAnnotTabNames[loop.index0] }} </h2></abbr>
                                     {% endif %}
                                     <div class="table-responsive">
                                         <table class="table table-striped" id={{ RefAnnotTabNames[loop.index0] }}>
