@@ -157,7 +157,11 @@ table tr td.nucleobase {
 }
 
 .footer {
-    font-size: 1.25em;
+    font-size: 1.1em;
+}
+
+.footer a {
+    color: #885ead;
 }
 
 #hangingindent {
