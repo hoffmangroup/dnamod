@@ -315,7 +315,7 @@ def create_html_pages(env):
 
             smiles = smiles.decode('ascii')
             chebiname = chebiname.decode('ascii')
-            chebiname_title = toSuperscript(chebiname)
+            chebiname_title = formatCuratedName(chebiname)
 
             # Formatting
             formula = formula[1:-1]
@@ -350,7 +350,8 @@ def create_html_pages(env):
 
             expanded_alpha = get_expanded_alphabet(chebiid, conn)
             if expanded_alpha:
-                expanded_alpha["Name"] = toSuperscript(expanded_alpha["Name"])
+                expanded_alpha["Name"] = \
+                    formatCuratedName(expanded_alpha["Name"])
 
             render = page_template.render(ChebiName=chebiname_title,
                                           Definition=definition,
@@ -607,7 +608,7 @@ def create_homepage(env, homepage_links, v_base_origins):
     custom_nomenclature = get_custom_nomenclature(cursor)
     for id in custom_nomenclature:
         name = custom_nomenclature[id]['Name']
-        custom_nomenclature[id]['Name'] = toSuperscript(name)
+        custom_nomenclature[id]['Name'] = formatCuratedName(name)
 
     # record the last modified date (UTC) without the time
     # the resulting datetime object will print in ISO 8601 format
@@ -628,11 +629,12 @@ def create_homepage(env, homepage_links, v_base_origins):
     f.close()
 
 
-def toSuperscript(name):
+def formatCuratedName(name):
     m = re.search('N\(\d\)', name)
     if m:
         num = re.search('\d', m.group())
-        newname = name.replace(m.group(), 'N<sup>'+num.group()+'</sup>')
+        newname = name.replace(m.group(), '<i>N</i><sup>'
+                               + num.group() + '</sup>')
         return newname
     else:
         return name
