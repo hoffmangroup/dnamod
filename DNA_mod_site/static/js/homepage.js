@@ -96,14 +96,8 @@ $(document).ready(function() {
                 numboost = 10;
             }
             
-            var configuration = {
-                                    "fields": {
-                                        [category]: {"boost": [numboost]}
-                                    }, 
-                                    "expand": true
-                                };
-            
-            console.log(configuration)
+            var configuration = '{"fields": {"'+category+'": {"boost": "'+numboost+'"}}, "expand": true}'
+            configuration = JSON.parse(configuration)
             
             var result = idx.search(query, configuration);
             
