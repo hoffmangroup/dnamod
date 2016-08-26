@@ -87,6 +87,8 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 27468	natural	damage	mutagenic	Escherichia coili,Homo sapiens	4860750,889777
 # 5-hydroxymethyluracil
 16964	natural	damage, demethylation intermediate, and possible epigenetic mark		Homo sapiens,Gyrodinium cohnii,Rattus norvegicus,Mus musculus	10490501,4515611,6592579,24838012
+# 5-formyluracil
+80961	natural	damage and demethylation intermediate		Homo sapiens	7578084
 # α-putrescinylthymine
 132931	natural	hypermodified nucleobase		bacteriophage ϕW-14	4683479
 #
