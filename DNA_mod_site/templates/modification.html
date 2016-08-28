@@ -237,7 +237,7 @@
                                                         </td>
                                                     {% endfor %}
             
-                                                    {% if RefAnnotEntry["citationid"] %}
+                                                    {% if RefAnnotEntry["citationid"] is defined %}
                                                         {% set AuthorL = RefAnnotEntry["authors"].split(';') %}
                                                         {% set TitleL = RefAnnotEntry["title"].split(';') %}
                                                         {% set PubdateL = '' %}

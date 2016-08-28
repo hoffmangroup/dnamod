@@ -197,6 +197,7 @@ def get_mod_base_ref_annot_data(id, cursor, table):
     # Overall orders first by reference's date,
     # both within groups and to determine group order,
     # but still grouped by the second column of data.
+        
     c.execute('''SELECT DISTINCT
                      GROUP_CONCAT({5}.citationid, ';'),
                      GROUP_CONCAT({5}.title, ';'),
@@ -227,6 +228,16 @@ def get_mod_base_ref_annot_data(id, cursor, table):
     for result in results:
         annot_dict_list += [OrderedDict(izip(REF_COL_NAMES +
                                         table_header, result))]
+                                        
+    if results == []:
+        c.execute('''SELECT * FROM {0} WHERE nameid = ?'''.format(table), (id,))
+        results = c.fetchall()
+        
+        for result in results:
+            result = list(result)
+            result.pop(0)
+            annot_dict_list += [OrderedDict(izip(table_header, result))]
+            
     return annot_dict_list
 
 
@@ -352,7 +363,7 @@ def create_html_pages(env):
             if expanded_alpha:
                 expanded_alpha["Name"] = \
                     formatCuratedName(expanded_alpha["Name"])
-
+                                
             render = page_template.render(ChebiName=chebiname_title,
                                           Definition=definition,
                                           Formula=formula,
