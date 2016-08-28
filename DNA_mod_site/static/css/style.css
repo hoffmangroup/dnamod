@@ -170,3 +170,9 @@ table tr td.nucleobase {
     padding-left: 1.5em;
     text-indent: -1.5em;    
 }
+
+#InTextCitation {
+    list-style-type: none;
+    padding-left: 3.5em;
+    text-indent: -1.5em;
+}
