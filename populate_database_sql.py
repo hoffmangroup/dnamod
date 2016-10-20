@@ -30,6 +30,8 @@ from more_itertools import peekable
 from pysqlite2 import dbapi2 as sqlite3  # needed for latest SQLite
 import sys
 import unicodecsv as csv
+import time
+from datetime import datetime
 
 from Bio import Entrez
 from suds.client import Client  # Using Suds web services client for soap
@@ -39,7 +41,8 @@ import dnamod_utils
 Entrez.email = "DNAmod-L-request@listserv.utoronto.ca"
 Entrez.tool = "DNAmod"
 
-# TODO externalize these to dnamod_utils from constants.sh and refactor Python code to use from there
+# TODO externalize these to dnamod_utils from constants.sh
+# and refactor Python code to use from there
 EXP_ALPH_TABLE_NAME = 'expanded_alphabet'
 SEQ_TABLE_NAME = 'sequencing_citations'
 NATURE_TABLE_NAME = 'nucleobase_nature_info'
@@ -73,8 +76,36 @@ SEQ_REF_ANNOTS_FULLPATH = dnamod_utils.get_constant('annot_seq')
 NATURE_REF_ANNOTS_FULLPATH = dnamod_utils.get_constant('annot_nature')
 JSON_INDEX_FILE_FULLPATH = dnamod_utils.get_constant('json')
 
-url = 'http://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
+url = 'https://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
 client = Client(url)
+
+
+class RequestMonitor:
+    def __init__(self):
+        self.requestCount = 0
+        self.timeStart = time.time()
+
+    def add_request(self):
+        if self.requestCount < 3:
+            self.requestCount += 1
+        else:
+            self.timeCurrent = time.time()
+            self.waitTime = 1 - (self.timeCurrent - self.timeStart)
+            if self.waitTime <= 1 and self.waitTime > 0:
+                time.sleep(self.waitTime)
+            self.timeStart = time.time()
+            self.requestCount = 1
+
+
+def check_time():
+    utc = datetime.utcnow()
+    time = utc.hour + utc.minute / 60. + utc.second / 3600.
+    timeEST = time - 5
+    if timeEST < 21 or timeEST > 5:
+        print("NCBI E-utilities restricts scripts to the off peak hours of "
+              "9PM to 5AM EST. Please try running this script again during "
+              "unrestricted hours.")
+        sys.exit(0)
 
 
 def field_not_found(field):
@@ -82,13 +113,15 @@ def field_not_found(field):
           "Field left empty.".format(field), file=sys.stderr)
 
 
-def search_exact_match(searchKey, client):
+def search_exact_match(searchKey, requestMonitor, client):
     # Parameters for getLiteEntity() search
     searchCategory = 'ALL'
     maximumResults = sys.maxint
     starsCategory = 'THREE ONLY'
 
     # Save results from query into list
+    requestMonitor.add_request()
+
     results = client.service.getLiteEntity(searchKey, searchCategory,
                                            maximumResults, starsCategory)
     if not results:
@@ -110,43 +143,47 @@ def search_exact_match(searchKey, client):
     return result
 
 
-def search_for_bases(client):
+def search_for_bases(client, requestMonitor):
     # Initialize empy list
     result = []
 
     # Search CHEBI for bases and return lite entries
     for base in DNA_BASES:
         # print elements # Output for debugging
-        result.append(search_exact_match(base, client))
+        result.append(search_exact_match(base, requestMonitor, client))
 
     return result
 
 
-def filter_and_build_from_ontology(content, stars, client):
+def filter_and_build_from_ontology(content, stars, client, requestMonitor):
     result = []
 
     for entity in content:
         temphold = entity
-        entity = get_complete_entity(entity.chebiId, client)
+        entity = get_complete_entity(entity.chebiId, requestMonitor, client)
 
         if entity == 'Invalid Input' or entity == 'DNE':
             continue
         elif (entity.entityStar == stars and
-              (temphold.type == ONTOLOGY_FP 
+              (temphold.type == ONTOLOGY_FP
                or temphold.type == ONTOLOGY_IS_A)):
             result.append(entity)
 
     return result
 
 
-def get_children(bases, client):
+def get_children(bases, requestMonitor, client):
     modDictionary = {}
     for base in bases:
+        requestMonitor.add_request()
+
         result = client.service.getOntologyChildren(base.chebiId)
         print("----- BASE: {}".format(base.chebiAsciiName))
         result = result.ListElement
-        result = filter_and_build_from_ontology(result, 3, client)
-        additionalChildren = get_further_children(result, client)
+        result = filter_and_build_from_ontology(result, 3, client,
+                                                requestMonitor)
+        additionalChildren = get_further_children(result, client,
+                                                  requestMonitor)
 
         for child in additionalChildren:
             result.append(child)
@@ -159,12 +196,14 @@ def get_children(bases, client):
     return modDictionary
 
 
-def get_recursive_children(entity, client, childrenverified, additionalChildren):
+def get_recursive_children(entity, client, childrenverified, requestMonitor,
+                           additionalChildren):
     if entity.chebiAsciiName not in BLACK_LIST:
         if childrenverified or [child for child in additionalChildren
                                 if child['chebiId'] == entity.chebiId and
                                 child['verifiedstatus']]:
-            # TODO improve the way duplicate verified ontology entries are handled
+            # TODO improve the way duplicate verified ontology entries are
+            # handled
             entity['verifiedstatus'] = 1
         else:
             entity['verifiedstatus'] = 0
@@ -172,15 +211,19 @@ def get_recursive_children(entity, client, childrenverified, additionalChildren)
         print("---------- CHILD of BASE: {0:100} Verified: {1} "
               "".format(entity.chebiAsciiName, childrenverified))
 
+        requestMonitor.add_request()
+
         result = client.service.getOntologyChildren(entity.chebiId)
 
         if result:
             result = result.ListElement
-            result = filter_and_build_from_ontology(result, 3, client)
+            result = filter_and_build_from_ontology(result, 3, client,
+                                                    requestMonitor)
 
             for child in result:
                 recursivestep = get_recursive_children(child, client,
                                                        childrenverified,
+                                                       requestMonitor,
                                                        additionalChildren)
                 result = result + recursivestep
 
@@ -194,8 +237,8 @@ def get_recursive_children(entity, client, childrenverified, additionalChildren)
     return additionalChildren
 
 
-def get_further_children(entities, client):
-    childrenverified = False;
+def get_further_children(entities, client, requestMonitor):
+    childrenverified = False
     additionalChildren = []
 
     for entity in entities:
@@ -205,23 +248,27 @@ def get_further_children(entities, client):
         else:
             entity['verifiedstatus'] = 0
             childrenverified = False
-                
+
         additionalChildren = get_recursive_children(entity, client,
                                                     childrenverified,
+                                                    requestMonitor,
                                                     additionalChildren)
 
     return additionalChildren
 
 
-def get_complete_entity(CHEBIid, client):
+def get_complete_entity(CHEBIid, requestMonitor, client):
+    requestMonitor.add_request()
+
     result = client.service.getCompleteEntity(CHEBIid)
     return result
 
 
-def get_complete_bases(bases, client):
+def get_complete_bases(bases, requestMonitor, client):
     result = []
     for base in bases:
-        result.append(get_complete_entity(base.chebiId, client))
+        result.append(get_complete_entity(base.chebiId, requestMonitor,
+                      client))
     return result
 
 
@@ -236,7 +283,10 @@ def create_base_table(conn, sql_conn_cursor, bases):
     conn.commit()
 
     for base in bases:
-        sql_conn_cursor.execute("UPDATE base SET commonname=?, basedefinition=? WHERE commonname=?",(base.chebiAsciiName, base.chebiAsciiName, base.chebiAsciiName[0]))
+        sql_conn_cursor.execute('''UPDATE base SET commonname=?,
+                                basedefinition=? WHERE commonname=?''',
+                                (base.chebiAsciiName,
+                                 base.chebiAsciiName, base.chebiAsciiName[0]))
         conn.commit()
         sql_conn_cursor.execute("INSERT OR IGNORE INTO base VALUES(?,?,?)",
                                 (base.chebiAsciiName[0],
@@ -246,7 +296,8 @@ def create_base_table(conn, sql_conn_cursor, bases):
 
 def concatenate_list(child, attribute):
     if attribute in dir(child):
-        return [synonym_data.data for synonym_data in getattr(child, attribute)]
+        return [synonym_data.data for synonym_data in
+                getattr(child, attribute)]
     else:
         return []
 
@@ -265,8 +316,8 @@ def get_ontology_data(child, attribute, selectors):
 
 def get_full_citation(PMID):
     if PMID[0] == 'I':
-        return;
-        
+        return
+
     print("Adding Citation: {}".format(PMID))
     result = []
     # isbook = False # Unused at the moment
@@ -278,19 +329,19 @@ def get_full_citation(PMID):
     articleTitle = []
     publicationDate = []
     authors = []
-    
+
     journalName = None
     Volume = None
     Issue = None
     publisherName = None
     publisherLocation = None
-    
+
     for record in records:
         if 'MedlineCitation' in record.keys():
             isarticle = True
             article = record['MedlineCitation']['Article']
             journalrecord = record['MedlineCitation']['Article']['Journal']
-            daterecord = record['PubmedData']['History'];
+            daterecord = record['PubmedData']['History']
             if'ArticleTitle' in article.keys():
                 articleTitle = article['ArticleTitle']
             else:
@@ -303,14 +354,15 @@ def get_full_citation(PMID):
                 publicationDate = article['PubDate']
             elif'ArticleDate' in article.keys():
                 publicationDate = article['ArticleDate']'''
-                
-            publicationDate = [date for date in daterecord if date.attributes['PubStatus'] == "pubmed"]
-            
+
+            publicationDate = [date for date in daterecord if
+                               date.attributes['PubStatus'] == "pubmed"]
+
             if 'Title' in journalrecord.keys():
                 journalName = journalrecord['Title']
             else:
                 journalName = None
-                
+
             if 'JournalIssue' in journalrecord.keys():
                 journalIssue = journalrecord['JournalIssue']
                 if 'Volume' in journalIssue.keys():
@@ -324,12 +376,12 @@ def get_full_citation(PMID):
             else:
                 Volume = None
                 Issue = None
-                
+
         else:
             # XXX TODO refactor
             # isbook = True # Unused at the moment
             article = record['BookDocument']['Book']
-            
+
             if'BookTitle' in article.keys():
                 articleTitle = article['BookTitle']
             else:
@@ -347,7 +399,7 @@ def get_full_citation(PMID):
                 publisherName = None
 
     handle.close()
-    
+
     # XXX TODO refactor not found instances
 
     if articleTitle:
@@ -373,42 +425,43 @@ def get_full_citation(PMID):
             result.append('')
             field_not_found('date (non-article entry)')
     if authors:
-        result.append("{0}, {1}, et al.".format(authors[0]['LastName'].encode("utf-8"),
-                                                authors[0]['Initials'].encode("utf-8")))
+        result.append("{0}, {1}, et al.".format(
+                      authors[0]['LastName'].encode("utf-8"),
+                      authors[0]['Initials'].encode("utf-8")))
     else:
         result.append('')
         field_not_found('author(s)')
 
     if journalName:
         result.append(journalName.encode('utf-8'))
-    else: 
+    else:
         field_not_found('journal name')
         result.append('')
-        
+
     if Volume:
         result.append(Volume)
     else:
         field_not_found('volume')
         result.append('')
-        
+
     if Issue:
         result.append(Issue)
     else:
         field_not_found('issue')
         result.append('')
-        
+
     if publisherName:
-        result.append(publisherName.encode('utf-8'))        
-    elif journalName == None:
+        result.append(publisherName.encode('utf-8'))
+    elif journalName is None:
         field_not_found('publisher name')
         result.append('')
 
     if publisherLocation:
         result.append(publisherLocation)
-    elif Volume == None:
+    elif Volume is None:
         field_not_found('publisher location')
         result.append('')
-            
+
     return result
 
 
@@ -433,10 +486,16 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
                              formulaid text,
                              cmodid integer,
                              verifiedstatus integer,
-                             FOREIGN KEY(baseid) REFERENCES base(baseid) ON DELETE CASCADE ON UPDATE CASCADE,
-                             FOREIGN KEY(nameid) REFERENCES names(nameid) ON DELETE CASCADE ON UPDATE CASCADE,
-                             FOREIGN KEY(formulaid) REFERENCES baseprops(formulaid) ON DELETE CASCADE ON UPDATE CASCADE,
-                             FOREIGN KEY(cmodid) REFERENCES covmod(cmodid) ON DELETE CASCADE ON UPDATE CASCADE)''')
+                             FOREIGN KEY(baseid) REFERENCES base(baseid)
+                             ON DELETE CASCADE ON UPDATE CASCADE,
+                             FOREIGN KEY(nameid) REFERENCES names(nameid)
+                             ON DELETE CASCADE ON UPDATE CASCADE,
+                             FOREIGN KEY(formulaid) REFERENCES
+                             baseprops(formulaid) ON DELETE CASCADE
+                             ON UPDATE CASCADE,
+                             FOREIGN KEY(cmodid) REFERENCES
+                             covmod(cmodid) ON DELETE CASCADE
+                             ON UPDATE CASCADE)''')
 
     sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS covmod
                             (cmodid integer PRIMARY KEY NOT NULL,
@@ -471,23 +530,30 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
     sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS citation_lookup
                             (nameid text,
                              citationid text,
-                             FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE,
-                             FOREIGN KEY(citationid) REFERENCES citations(citationid) ON DELETE CASCADE ON UPDATE CASCADE,
+                             FOREIGN KEY(nameid) REFERENCES modbase(nameid)
+                             ON DELETE CASCADE ON UPDATE CASCADE,
+                             FOREIGN KEY(citationid) REFERENCES
+                             citations(citationid) ON DELETE CASCADE
+                             ON UPDATE CASCADE,
                              PRIMARY KEY(nameid, citationid))''')
 
     sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS roles_lookup
                             (nameid text,
                              roleid text,
-                             FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE,
-                             FOREIGN KEY(roleid) REFERENCES roles(roleid) ON DELETE CASCADE ON UPDATE CASCADE,
+                             FOREIGN KEY(nameid) REFERENCES modbase(nameid)
+                             ON DELETE CASCADE ON UPDATE CASCADE,
+                             FOREIGN KEY(roleid) REFERENCES roles(roleid)
+                             ON DELETE CASCADE ON UPDATE CASCADE,
                              PRIMARY KEY(nameid, roleid))''')
-    
+
     sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS modbase_parents
                             (nameid text,
                              parentid text,
                              UNIQUE (nameid, parentid) ON CONFLICT IGNORE,
-                             FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE,
-                             FOREIGN KEY(parentid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE)''')
+                             FOREIGN KEY(nameid) REFERENCES modbase(nameid)
+                             ON DELETE CASCADE ON UPDATE CASCADE,
+                             FOREIGN KEY(parentid) REFERENCES modbase(nameid)
+                             ON DELETE CASCADE ON UPDATE CASCADE)''')
 
     conn.commit()
 
@@ -514,74 +580,106 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
 
             formula = concatenate_list(child, FORMULA_SEARCH_STR)
             if not formula:
-                formulafill = formulafill + 1;
-                formula = formulafill;
+                formulafill = formulafill + 1
+                formula = formulafill
 
             charge = get_entity(child, CHARGE_SEARCH_STR)
             mass = get_entity(child, MASS_SEARCH_STR)
             citations = concatenate_list(child, CITATION_SEARCH_STR)
 
-            roles = get_ontology_data(child, ONTOLOGY_SEARCH_STR, [ONTOLOGY_HAS_ROLE])
+            roles = get_ontology_data(child, ONTOLOGY_SEARCH_STR,
+                                      [ONTOLOGY_HAS_ROLE])
             role_names = [role.chebiName for role in roles]
             role_ids = [role.chebiId for role in roles]
 
             # Populate roles and citations tables with unique data
             for role in range(len(roles)):
-                sql_conn_cursor.execute("SELECT count(*) FROM roles WHERE roleid = ?",
-                          (role_ids[role],))
+                sql_conn_cursor.execute('''SELECT count(*) FROM roles
+                                        WHERE roleid = ?''', (role_ids[role],))
                 data = sql_conn_cursor.fetchone()[0]
                 if data == 0:
-                    sql_conn_cursor.execute("UPDATE roles SET role=? WHERE roleid=?",(role_names[role], role_ids[role]))
+                    sql_conn_cursor.execute('''UPDATE roles SET role=?
+                                            WHERE roleid=?''',
+                                            (role_names[role], role_ids[role]))
                     conn.commit()
-                    sql_conn_cursor.execute("INSERT OR IGNORE INTO roles VALUES(?,?)",
-                              (role_ids[role], role_names[role]))
+                    sql_conn_cursor.execute('''INSERT OR IGNORE
+                                            INTO roles VALUES(?,?)''',
+                                            (role_ids[role], role_names[role]))
                     conn.commit()
 
             for citation in citations:
-                sql_conn_cursor.execute("SELECT * FROM citations WHERE citationid = ?",
-                          [citation])
+                sql_conn_cursor.execute('''SELECT * FROM citations
+                                        WHERE citationid = ?''',
+                                        [citation])
                 data = sql_conn_cursor.fetchone()
-                if True: #data is None:
+                if True:
                     citationinfo = get_full_citation(citation)
                     if citationinfo:
-                        citationinfo_uni = [info.decode('utf-8') for info in citationinfo]
+                        citationinfo_uni = [info.decode('utf-8') for info in
+                                            citationinfo]
                     else:
                         citationinfo_uni = [" ", " ", " ", " ", " ", " "]
-                    
-                    sql_conn_cursor.execute("UPDATE citations SET title=?, pubdate=?, authors=?, journalnameorpublishername=?, volumeorpublisherlocation=?, issue=? WHERE citationid=?",(citationinfo_uni[0], citationinfo_uni[1], citationinfo_uni[2], citationinfo_uni[3], citationinfo_uni[4], citationinfo_uni[5], citation))
-                    conn.commit()
-                    
-                    sql_conn_cursor.execute("INSERT OR IGNORE INTO citations VALUES(?,?,?,?,?,?,?)",
-                              (citation, citationinfo_uni[0], citationinfo_uni[1],
-                               citationinfo_uni[2], citationinfo_uni[3], citationinfo_uni[4], citationinfo_uni[5]))
+
+                    sql_conn_cursor.execute('''UPDATE citations SET title=?,
+                                            pubdate=?, authors=?,
+                                            journalnameorpublishername=?,
+                                            volumeorpublisherlocation=?,
+                                            issue=? WHERE citationid=?''',
+                                            (citationinfo_uni[0],
+                                             citationinfo_uni[1],
+                                             citationinfo_uni[2],
+                                             citationinfo_uni[3],
+                                             citationinfo_uni[4],
+                                             citationinfo_uni[5],
+                                             citation))
                     conn.commit()
 
-            sql_conn_cursor.execute("INSERT OR IGNORE INTO baseprops VALUES(?,?)",
-                      (str(formula), str(mass)))
-            sql_conn_cursor.execute("INSERT OR IGNORE INTO names VALUES(?,?,?,?,?)",
-                      (child.chebiAsciiName, child.chebiId,
-                       str(iupac), str(synonyms), str(smiles)))
-            sql_conn_cursor.execute("INSERT OR IGNORE INTO covmod VALUES(NULL,?,?,?)",
-                      ('0', str(charge), child.definition))
+                    sql_conn_cursor.execute('''INSERT OR IGNORE
+                                            INTO citations
+                                            VALUES(?,?,?,?,?,?,?)''',
+                                            (citation, citationinfo_uni[0],
+                                             citationinfo_uni[1],
+                                             citationinfo_uni[2],
+                                             citationinfo_uni[3],
+                                             citationinfo_uni[4],
+                                             citationinfo_uni[5]))
+                    conn.commit()
+
+            sql_conn_cursor.execute('''INSERT OR IGNORE
+                                    INTO baseprops VALUES(?,?)''',
+                                    (str(formula), str(mass)))
+            sql_conn_cursor.execute('''INSERT OR IGNORE
+                                    INTO names VALUES(?,?,?,?,?)''',
+                                    (child.chebiAsciiName, child.chebiId,
+                                     str(iupac), str(synonyms), str(smiles)))
+            sql_conn_cursor.execute('''INSERT OR IGNORE
+                                    INTO covmod VALUES(NULL,?,?,?)''',
+                                    ('0', str(charge), child.definition))
             conn.commit()
             rowid = sql_conn_cursor.lastrowid
-            
-            sql_conn_cursor.execute("INSERT OR IGNORE INTO modbase VALUES(?,?,?,?,?,?)",
-                      (child.chebiId, '0', base.chebiAsciiName[0],
-                       str(formula), rowid, child['verifiedstatus']))
+
+            sql_conn_cursor.execute('''INSERT OR IGNORE
+                                    INTO modbase VALUES(?,?,?,?,?,?)''',
+                                    (child.chebiId, '0',
+                                     base.chebiAsciiName[0],
+                                     str(formula),
+                                     rowid, child['verifiedstatus']))
             conn.commit()
 
             for role in range(len(roles)):
-                sql_conn_cursor.execute("INSERT OR IGNORE INTO roles_lookup VALUES(?,?)",
-                          (child.chebiId, role_ids[role]))
+                sql_conn_cursor.execute('''INSERT OR IGNORE
+                                        INTO roles_lookup VALUES(?,?)''',
+                                        (child.chebiId, role_ids[role]))
             conn.commit()
 
             for citation in citations:
-                sql_conn_cursor.execute("INSERT OR IGNORE INTO citation_lookup VALUES(?,?)",
-                          (child.chebiId, citation))
+                sql_conn_cursor.execute('''INSERT OR IGNORE
+                                        INTO citation_lookup VALUES(?,?)''',
+                                        (child.chebiId, citation))
             conn.commit()
 
-        # for each base, go through children again and annotate parents within database
+        # for each base, go through children again and annotate parents within
+        # database
         # NB: only bases with other modified bases are annotated as parents
         #     the non-modified (A/C/G/T/U) base is annotated elsewhere
         for child in children[base.chebiAsciiName]:
@@ -592,7 +690,8 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
                                 if parent.chebiId in added_entry_IDs]
 
             for parent_to_annot in parents_to_annot:
-                sql_conn_cursor.execute("INSERT OR IGNORE INTO modbase_parents VALUES(?,?)",
+                sql_conn_cursor.execute('''INSERT OR IGNORE
+                                        INTO modbase_parents VALUES(?,?)''',
                                         (child.chebiId, parent_to_annot))
             conn.commit()
 
@@ -602,11 +701,13 @@ def _read_csv_ignore_comments(file_name, enforce_header_num_cols=None):
     try:
         with open(file_name, 'rb') as file:
             # use a generator expression to ignore comments
-            reader = peekable(csv.reader((row for row in file if not row.startswith('#')),
-                                         delimiter="\t"))
+            reader = peekable(csv.reader((row for row in file if not
+                              row.startswith('#')), delimiter="\t"))
             if enforce_header_num_cols:
-                num_cols = len(reader.peek())  # look at header, leaving it in gen.
-                yield (row + ([None] * (num_cols - len(row))) for row in reader)
+                # look at header, leaving it in gen.
+                num_cols = len(reader.peek())
+                yield (row + ([None] * (num_cols - len(row))) for row in
+                       reader)
             else:
                 yield reader
     finally:
@@ -621,12 +722,14 @@ def _create_modbase_annot_table(conn, sql_conn_cursor, header, table_name):
             col_names_create_spec += ','
 
     # TODO fix below to perform stringent validation
-    # (see: http://stackoverflow.com/questions/25387537/sqlite3-operationalerror-near-syntax-error)
+    # (see: http://stackoverflow.com/questions/25387537/
+    # sqlite3-operationalerror-near-syntax-error)
     # maybe ignore, since never "user" sourced (since this is static)
     sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS {}
                             (nameid text,
                              {}
-                             FOREIGN KEY(nameid) REFERENCES modbase(nameid) ON DELETE CASCADE ON UPDATE CASCADE)
+                             FOREIGN KEY(nameid) REFERENCES modbase(nameid)
+                             ON DELETE CASCADE ON UPDATE CASCADE)
                              '''.format(table_name, col_names_create_spec))
     conn.commit()
 
@@ -663,27 +766,36 @@ def create_exp_alph_table(conn, sql_conn_cursor, exp_alph_file_name):
             assert len(line) > 2  # min. of three columns
 
             if num == 0:  # header
-                line.pop(0)  # remove the first column, since it is our foreign key and not displayed
-                _create_modbase_annot_table(conn, sql_conn_cursor, line, EXP_ALPH_TABLE_NAME)
+                # remove the first column, since it is our foreign key and not
+                # displayed
+                line.pop(0)
+                _create_modbase_annot_table(conn, sql_conn_cursor, line,
+                                            EXP_ALPH_TABLE_NAME)
             else:
                 ids = line[0].split(",")
                 line.pop(0)  # remove the ID, since it is processed above
                 for id in ids:
                     id = _add_annots_for_id(id, sql_conn_cursor,
-                                            line, len(line), EXP_ALPH_TABLE_NAME)
+                                            line, len(line),
+                                            EXP_ALPH_TABLE_NAME)
     conn.commit()
 
 
-def create_annot_citation_tables(conn, sql_conn_cursor, ref_annots_file_name, table_name):
+def create_annot_citation_tables(conn, sql_conn_cursor, ref_annots_file_name,
+                                 table_name):
     print("---------- Adding Custom Annotations ----------")
 
     with _read_csv_ignore_comments(ref_annots_file_name) as reader:
         for num, line in enumerate(reader):
             if num == 0:  # header
-                line.pop(0)  # remove the first column, since it is our foreign key and not displayed
-                _create_modbase_annot_table(conn, sql_conn_cursor, line, table_name)
+                # remove the first column, since it is our foreign key and
+                # not displayed
+                line.pop(0)
+                _create_modbase_annot_table(conn, sql_conn_cursor, line,
+                                            table_name)
             else:
-                # TODO refactor to check or at least output a descriptive error if PMID is not last col
+                # TODO refactor to check or at least output a descriptive error
+                # if PMID is not last col
                 references = line[-1].split(",")
 
                 for reference in references:
@@ -691,31 +803,47 @@ def create_annot_citation_tables(conn, sql_conn_cursor, ref_annots_file_name, ta
                         continue
 
                     citationinfo = get_full_citation(reference)
-                    citationinfo_uni = [info.decode('utf-8') for info in citationinfo]
+                    citationinfo_uni = [info.decode('utf-8') for info in
+                                        citationinfo]
 
-                    sql_conn_cursor.execute("UPDATE citations SET title=?, pubdate=?, authors=? WHERE citationid=?",
-                                            (citationinfo_uni[0], citationinfo_uni[1],
+                    sql_conn_cursor.execute('''UPDATE citations
+                                            SET title=?, pubdate=?, authors=?
+                                            WHERE citationid=?''',
+                                            (citationinfo_uni[0],
+                                             citationinfo_uni[1],
                                              citationinfo_uni[2], reference))
                     conn.commit()
 
-                    sql_conn_cursor.execute("INSERT OR IGNORE INTO citations VALUES(?,?,?,?,?,?,?)",
-                                           (reference, citationinfo_uni[0], citationinfo_uni[1],
-                                             citationinfo_uni[2], citationinfo_uni[3], citationinfo_uni[4], citationinfo_uni[5]))
+                    sql_conn_cursor.execute('''INSERT OR IGNORE INTO citations
+                                            VALUES(?,?,?,?,?,?,?)''',
+                                            (reference,
+                                             citationinfo_uni[0],
+                                             citationinfo_uni[1],
+                                             citationinfo_uni[2],
+                                             citationinfo_uni[3],
+                                             citationinfo_uni[4],
+                                             citationinfo_uni[5]))
 
                 ids = line[0].split(",")
                 line.pop(0)  # remove the ID, since it is processed above
                 for id in ids:
-                    id = _add_annots_for_id(id, sql_conn_cursor, line, len(line), table_name)
- 
-                    if id:  # id may now be None, if it is not (yet) in the database
+                    id = _add_annots_for_id(id, sql_conn_cursor, line,
+                                            len(line), table_name)
+
+                    # id may now be None, if it is not (yet) in the database
+                    if id:
                         for reference in references:
-                            if not reference:  # some annotations may lack a reference
+                            # some annotations may lack a reference
+                            if not reference:
                                 continue
 
-                            sql_conn_cursor.execute("INSERT OR IGNORE INTO citation_lookup VALUES(?,?)",
-                                                   (id, reference))
-                        
+                            sql_conn_cursor.execute('''INSERT OR IGNORE
+                                                    INTO citation_lookup
+                                                    VALUES(?,?)''',
+                                                    (id, reference))
+
         conn.commit()
+
 
 def create_search_index(conn, sql_conn_cursor, JSON_fullpath):
     # create or re-create the JSON
@@ -725,40 +853,47 @@ def create_search_index(conn, sql_conn_cursor, JSON_fullpath):
         result = sql_conn_cursor.fetchall()
 
         for modification in result:
-            sql_conn_cursor.execute("SELECT Name FROM expanded_alphabet WHERE nameid =?", (modification))
+            sql_conn_cursor.execute('''SELECT Name FROM expanded_alphabet
+                                    WHERE nameid =?''', (modification))
             nomenclature = sql_conn_cursor.fetchone()
-            name = nomenclature;
-            sql_conn_cursor.execute("SELECT * FROM names WHERE nameid = ?",(modification))
+            name = nomenclature
+            sql_conn_cursor.execute('''SELECT * FROM names WHERE nameid = ?''',
+                                    (modification))
             data = sql_conn_cursor.fetchone()
             chebiname = data[0]
             chebiid = data[1]
             iupacname = data[2]
             synonyms = data[3]
 
-            sql_conn_cursor.execute("SELECT formulaid, verifiedstatus FROM modbase WHERE nameid = ?", (modification))
+            sql_conn_cursor.execute('''SELECT formulaid, verifiedstatus
+                                    FROM modbase WHERE nameid = ?''',
+                                    (modification))
             furtherdata = sql_conn_cursor.fetchone()
             formula = furtherdata[0]
             verified = furtherdata[1]
 
-            sql_conn_cursor.execute("SELECT Abbreviation FROM expanded_alphabet WHERE nameid = ?", (modification))
+            sql_conn_cursor.execute('''SELECT Abbreviation
+                                    FROM expanded_alphabet WHERE nameid = ?''',
+                                    (modification))
             abbrevdata = sql_conn_cursor.fetchone()
             abbreviation = abbrevdata
 
-            sql_conn_cursor.execute("SELECT Symbol FROM expanded_alphabet WHERE nameid = ?", (modification))
+            sql_conn_cursor.execute('''SELECT Symbol FROM expanded_alphabet
+                                    WHERE nameid = ?''', (modification))
             symbol = sql_conn_cursor.fetchone()
 
             common_name = name if name else chebiname
 
             writedata = {
-                'CommonName' : common_name,
-                'ChEBIId' : chebiid,
-                'IUPACName' : iupacname,
-                'Synonyms' : synonyms,
-                'ChemicalFormula' : formula,
-                'Abbreviation' : abbreviation,
-                'Verified' : verified,
-                'Symbol' : symbol,
-                'Refname' : chebiname
+                'CommonName': common_name,
+                'ChEBIId': chebiid,
+                'IUPACName': iupacname,
+                'Synonyms': synonyms,
+                'ChemicalFormula': formula,
+                'Abbreviation': abbreviation,
+                'Verified': verified,
+                'Symbol': symbol,
+                'Refname': chebiname
             }
 
             if (writedata['ChEBIId'] is not None):
@@ -789,21 +924,23 @@ def populate_tables(conn, sql_conn_cursor, bases, children, client):
     create_search_index(conn, sql_conn_cursor, JSON_INDEX_FILE_FULLPATH)
 
 
-def fix_verified_status(conn, sql_conn_cursor, client):
+def fix_verified_status(conn, sql_conn_cursor, client, requestMonitor):
     sql_conn_cursor.execute('''SELECT nameid FROM modbase''')
     result = sql_conn_cursor.fetchall()
     ids2unverify = []
     for nameid in result:
-        sql_conn_cursor.execute('''SELECT verifiedstatus FROM modbase WHERE nameid = ?''', nameid)
+        sql_conn_cursor.execute('''SELECT verifiedstatus FROM modbase
+                                WHERE nameid = ?''', nameid)
         verified = sql_conn_cursor.fetchone()
         if verified[0] == 1:
-            entity = get_complete_entity(nameid, client)
+            entity = get_complete_entity(nameid, requestMonitor, client)
             for ontologyItem in entity.OntologyParents:
                 if ontologyItem.type == ONTOLOGY_IS_TAUTOMER:
                     tautId = ontologyItem.chebiId
                     ids2unverify.append(tautId)
-                    
-        sql_conn_cursor.execute('''SELECT othernames FROM names WHERE nameid = ?''', nameid)
+
+        sql_conn_cursor.execute('''SELECT othernames FROM names
+                                WHERE nameid = ?''', nameid)
         synonyms = sql_conn_cursor.fetchone()
         if verified[0] == 1 and synonyms[0]:
             synonyms = synonyms[0]
@@ -811,11 +948,12 @@ def fix_verified_status(conn, sql_conn_cursor, client):
             synonyms = synonyms.split(', ')
             for name in synonyms:
                 name = name[1:-1]
-                sql_conn_cursor.execute('''SELECT chebiname FROM names WHERE chebiname = ?''', (name,))
+                sql_conn_cursor.execute('''SELECT chebiname FROM names
+                                        WHERE chebiname = ?''', (name,))
                 matchedName = sql_conn_cursor.fetchone()
                 if matchedName:
                     ids2unverify.append(nameid[0])
-                    
+
     uniqueAbbreviations = []
     with _read_csv_ignore_comments(ALPHABET_FILE_FULLPATH, True) as reader:
             for num, line in enumerate(reader):
@@ -829,21 +967,25 @@ def fix_verified_status(conn, sql_conn_cursor, client):
                             ids2unverify.append(id[0])
                     else:
                         uniqueAbbreviations.append(abbreviation)
-        
+
     print('Verified status revoked for: ', ids2unverify)
     for id in ids2unverify:
-        sql_conn_cursor.execute('''UPDATE modbase SET verifiedstatus = 0 WHERE nameid = ?''', (id,))
+        sql_conn_cursor.execute('''UPDATE modbase SET verifiedstatus = 0
+                                WHERE nameid = ?''', (id,))
     conn.commit()
 
 WHITE_LIST = dnamod_utils.get_whitelist()
 BLACK_LIST = dnamod_utils.get_blacklist()
 
+requestMonitor = RequestMonitor()
+
+check_time()
 print("1/5 Searching for bases...")
-bases = search_for_bases(client)
+bases = search_for_bases(client, requestMonitor)
 
 print("2/5 Searching for children...")
-children = get_children(bases, client)
-bases = get_complete_bases(bases, client)
+children = get_children(bases, requestMonitor, client)
+bases = get_complete_bases(bases, requestMonitor, client)
 
 conn = sqlite3.connect(DATABASE_FILE_FULLPATH)
 
@@ -856,7 +998,7 @@ print("3/5 Creating tables...")
 populate_tables(conn, sql_conn_cursor, bases, children, client)
 
 print("5/5 Finishing up...")
-fix_verified_status(conn, sql_conn_cursor, client)
+fix_verified_status(conn, sql_conn_cursor, client, requestMonitor)
 
 conn.close()
 
