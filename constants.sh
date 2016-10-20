@@ -44,6 +44,10 @@ set -o nounset -o pipefail -o errexit
 # "script_update_all"	The script to re-create everything
 # "script_sync_site"	The script to push the webpage changes to the external directory for synchronization
 # "json"		The subdirectory containing the JSON index file for Elasticlunr.js searching
+# "seq_annot_table" A constant holding the name of the sequencing annotation table
+# "nature_annot_table" A constant holding the name of the nature annotation table
+# "references_table" A constant holding the name of the references table
+# "exp_alpha_table" A constant holding the name of the expanded alphabet table
 
 ERR_EXIT=64
 
@@ -105,6 +109,11 @@ if [[ ! ( -x "$SCRIPT_POP_DB" && -x "$SCRIPT_CREATE_SITE" && -x "$SCRIPT_UPDATE_
    not_found 'scripts' 
 fi
 
+SEQ_ANNOT_TABLE="sequencing_citations"
+NATURE_ANNOT_TABLE="nucleobase_nature_info"
+REFERENCES_TABLE="citations"
+EXP_ALPH_TABLE="expanded_alphabet"
+
 case ${1:-} in 
     root_dir)
         echo -n "$ROOT_DIR"
@@ -165,6 +174,18 @@ case ${1:-} in
         ;;
     script_sync_site)
         echo -n "$SCRIPT_SYNC_SITE"
+        ;;
+    seq_annot_table)
+        echo -n "$SEQ_ANNOT_TABLE"
+        ;;
+    nature_annot_table)
+        echo -n "$NATURE_ANNOT_TABLE"
+        ;;
+    references_table)
+        echo -n "$REFERENCES_TABLE"
+        ;;
+    exp_alph_table)
+        echo -n "$EXP_ALPH_TABLE"
         ;;
     *)
         # get all possible cases by searching this script

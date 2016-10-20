@@ -31,7 +31,7 @@ from pysqlite2 import dbapi2 as sqlite3  # needed for latest SQLite
 import sys
 import unicodecsv as csv
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from Bio import Entrez
 from suds.client import Client  # Using Suds web services client for soap
@@ -41,11 +41,9 @@ import dnamod_utils
 Entrez.email = "DNAmod-L-request@listserv.utoronto.ca"
 Entrez.tool = "DNAmod"
 
-# TODO externalize these to dnamod_utils from constants.sh
-# and refactor Python code to use from there
-EXP_ALPH_TABLE_NAME = 'expanded_alphabet'
-SEQ_TABLE_NAME = 'sequencing_citations'
-NATURE_TABLE_NAME = 'nucleobase_nature_info'
+EXP_ALPH_TABLE_NAME = dnamod_utils.get_constant('exp_alph_table')
+SEQ_TABLE_NAME = dnamod_utils.get_constant('seq_annot_table')
+NATURE_TABLE_NAME = dnamod_utils.get_constant('nature_annot_table')
 
 # Search Variables made up of CHEBI object attributes
 SYNONYM_SEARCH_STR = 'Synonyms'
@@ -100,11 +98,10 @@ class RequestMonitor:
 def check_time():
     utc = datetime.utcnow()
     time = utc.hour + utc.minute / 60. + utc.second / 3600.
-    timeEST = time - 5
-    if timeEST < 21 or timeEST > 5:
+    if time < 2 or time > 10:
         print("NCBI E-utilities restricts scripts to the off peak hours of "
               "9PM to 5AM EST. Please try running this script again during "
-              "unrestricted hours.")
+              "unrestricted hours. Current time (UTC): " + str(utc))
         sys.exit(0)
 
 

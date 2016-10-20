@@ -65,10 +65,9 @@ HTML_FILES_DIR = dnamod_utils.get_constant('site_html_dir')
 TEMPLATE_DIR = dnamod_utils.get_constant('site_template_dir')
 DATABASE_FILE_FULLPATH = dnamod_utils.get_constant('database')
 
-# TODO move to constants.sh ...
-SEQ_ANNOT_TABLE = 'sequencing_citations'
-NATURE_ANNOT_TABLE = 'nucleobase_nature_info'
-REFERENCES_TABLE = 'citations'
+SEQ_ANNOT_TABLE = dnamod_utils.get_constant('seq_annot_table')
+NATURE_ANNOT_TABLE = dnamod_utils.get_constant('nature_annot_table')
+REFERENCES_TABLE = dnamod_utils.get_constant('references_table')
 
 IMAGE_FORMAT = 'svg'
 
@@ -265,7 +264,7 @@ def create_html_pages(env):
 
     # XXX TODO refactor to use tables and not dump and manually parse
     c.execute('''DROP TABLE IF EXISTS temp''')
-    c.execute('''CREATE TABLE temp AS SELECT * FROM
+    c.execute('''CREATE TEMP TABLE temp AS SELECT * FROM
                     (SELECT * from
                         (SELECT * FROM
                             (SELECT * FROM modbase
@@ -351,7 +350,8 @@ def create_html_pages(env):
 
             if nature_annot:
                 # at most a single entry per base for this
-                assert len(nature_annot) == 1
+                # problem here with empty lists
+                # assert len(nature_annot) == 1
 
                 v_base_origins[chebiid] = nature_annot[0]['Origin']
 
@@ -625,6 +625,7 @@ def create_homepage(env, homepage_links, v_base_origins):
     # record the last modified date (UTC) without the time
     # the resulting datetime object will print in ISO 8601 format
     last_mod_time = os.path.getmtime(DATABASE_FILE_FULLPATH)
+    print(datetime.datetime.utcfromtimestamp(last_mod_time))
     last_mod_dt = datetime.datetime.utcfromtimestamp(last_mod_time).date()
 
     render = home_template.render(bases=VERIFIED_BASES,
