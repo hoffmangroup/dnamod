@@ -124,6 +124,7 @@ def get_citations(lookup_key, cursor):
         query = c.fetchone()
         citationList.append(dict(izip(REF_COL_NAMES,
                             [item for item in query])))
+        citationList.sort(key=lambda x: x['authors'])
     return citationList
 
 
@@ -237,7 +238,7 @@ def get_mod_base_ref_annot_data(id, cursor, table):
             result = list(result)
             result.pop(0)
             annot_dict_list += [OrderedDict(izip(table_header, result))]
-
+    
     return annot_dict_list
 
 
