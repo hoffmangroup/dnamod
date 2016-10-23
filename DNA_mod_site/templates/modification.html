@@ -253,7 +253,7 @@
                                                         <td>
                                                             <ul id="hangingindent">
                                                                 {% for citationid in RefAnnotEntry["citationid"].split(';') %}
-                                                                    <li> {{ AuthorL[loop.index0] }} ({{ PubdateL[loop.index0] }})<a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ citationid }}' > {{ TitleL[loop.index0] | replace('.', '') }}</a>. <em>{{ JournalNameL[loop.index0] }}</em>, {{ VolumeL[loop.index0] }}{% if IssueL[loop.index0] %}({{ IssueL[loop.index0] }}){% endif %}.  </li>
+                                                                    <li> {{ AuthorL[loop.index0] }} {{ PubdateL[loop.index0] }}. <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ citationid }}' > {{ TitleL[loop.index0] | replace('.', '') }}</a>. {{ JournalNameL[loop.index0] }}. {{ VolumeL[loop.index0] }}{% if IssueL[loop.index0] %}({{ IssueL[loop.index0] }}){% endif %}.  </li>
                                                                 {% endfor %}
                                                             </ul>
                                                         </td>
@@ -296,7 +296,7 @@
                                 <ul id="hangingindent">
                                     {% if Citations|length %}
                                         {% for Citation in Citations %}
-                                        <li>{{ Citation["authors"] }} ({{ Citation["pubdate"] }}) <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation["citationid"] }}' > {{ Citation["title"] }} </a> <em>{{ Citation["journalname"] }}</em>, {{ Citation["volume"] }}{% if Citation["issue"] %}({{ Citation["issue"] }}){% endif %}. </li>
+                                        <li>{{ Citation["authors"] }} {{ Citation["pubdate"] }}. <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation["citationid"] }}' > {{ Citation["title"] }} </a> {{ Citation["journalname"] }}. {{ Citation["volume"] }}{% if Citation["issue"] %}({{ Citation["issue"] }}){% endif %}. </li>
                                         {% endfor %}
                                     {% else %}
                                         <li> No Citations </li>
