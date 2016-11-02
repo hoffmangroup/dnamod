@@ -199,8 +199,10 @@
                     if (dim < 750) {
                         dim = 750;
                     }
-                              
-                    {% set initial_subpie_frac = 100/(verifiedHierarchy.keys()|length) %}
+                    
+                    {% if verifiedHierarchy.keys()|length != 0 %}  
+                        {% set initial_subpie_frac = 100/(verifiedHierarchy.keys()|length) %}
+                    {% endif %}
 
                     var DNA_bases = [
                         {% for unmod_base, mod_children in verifiedHierarchy|dictsort %}

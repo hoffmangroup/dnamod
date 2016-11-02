@@ -283,7 +283,7 @@ def create_html_pages(env):
         links = []
         blacklist = []
 
-        baseid = BASE[0].lower()
+        baseid = BASE[0]
         mods = c.execute("SELECT * FROM temp WHERE baseid = ?", baseid)
         conn.commit()
 

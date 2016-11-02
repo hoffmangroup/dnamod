@@ -280,13 +280,14 @@ def create_base_table(conn, sql_conn_cursor, bases):
     conn.commit()
 
     for base in bases:
-        sql_conn_cursor.execute('''UPDATE base SET commonname=?,
+        sql_conn_cursor.execute('''UPDATE base SET baseid=?, commonname=?,
                                 basedefinition=? WHERE commonname=?''',
-                                (base.chebiAsciiName,
+                                (base.chebiAsciiName[0].capitalize(),
+                                 base.chebiAsciiName,
                                  base.chebiAsciiName, base.chebiAsciiName[0]))
         conn.commit()
         sql_conn_cursor.execute("INSERT OR IGNORE INTO base VALUES(?,?,?)",
-                                (base.chebiAsciiName[0],
+                                (base.chebiAsciiName[0].capitalize(),
                                  base.chebiAsciiName, base.definition))
     conn.commit()
 
@@ -658,7 +659,7 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
             sql_conn_cursor.execute('''INSERT OR IGNORE
                                     INTO modbase VALUES(?,?,?,?,?,?)''',
                                     (child.chebiId, '0',
-                                     base.chebiAsciiName[0],
+                                     base.chebiAsciiName[0].capitalize(),
                                      str(formula),
                                      rowid, child['verifiedstatus']))
             conn.commit()
