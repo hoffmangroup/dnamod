@@ -32,6 +32,7 @@ import sys
 import unicodecsv as csv
 import time
 from datetime import datetime, timedelta
+import socket
 
 from Bio import Entrez
 from suds.client import Client  # Using Suds web services client for soap
@@ -976,8 +977,9 @@ WHITE_LIST = dnamod_utils.get_whitelist()
 BLACK_LIST = dnamod_utils.get_blacklist()
 
 requestMonitor = RequestMonitor()
-
+socket.setdefaulttimeout(300)
 check_time()
+
 print("1/5 Searching for bases...")
 bases = search_for_bases(client, requestMonitor)
 
