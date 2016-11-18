@@ -33,6 +33,8 @@ import unicodecsv as csv
 import time
 from datetime import datetime, timedelta
 import socket
+import argparse
+import os
 
 from Bio import Entrez
 from suds.client import Client  # Using Suds web services client for soap
@@ -978,7 +980,29 @@ BLACK_LIST = dnamod_utils.get_blacklist()
 
 requestMonitor = RequestMonitor()
 socket.setdefaulttimeout(300)
-check_time()
+#check_time()
+
+parser = argparse.ArgumentParser()
+parser.add_argument('-r', '--reset', action='store_true')
+args = parser.parse_args()
+
+if args.reset == True:
+    RESET_TABLES = True
+
+if RESET_TABLES == True:
+    if os.path.exists(DATABASE_FILE_FULLPATH):
+        os.remove(DATABASE_FILE_FULLPATH)
+    print("Reseting Database...")
+
+conn = sqlite3.connect(DATABASE_FILE_FULLPATH)
+
+sql_conn_cursor = conn.cursor()
+
+if RESET_TABLES == False:
+    sql_conn_cursor.execute('''PRAGMA foreign_keys = ON''')
+
+conn.commit()
+os.chmod(DATABASE_FILE_FULLPATH, 0755)
 
 print("1/5 Searching for bases...")
 bases = search_for_bases(client, requestMonitor)
@@ -986,13 +1010,6 @@ bases = search_for_bases(client, requestMonitor)
 print("2/5 Searching for children...")
 children = get_children(bases, requestMonitor, client)
 bases = get_complete_bases(bases, requestMonitor, client)
-
-conn = sqlite3.connect(DATABASE_FILE_FULLPATH)
-
-sql_conn_cursor = conn.cursor()
-
-sql_conn_cursor.execute('''PRAGMA foreign_keys = ON''')
-conn.commit()
 
 print("3/5 Creating tables...")
 populate_tables(conn, sql_conn_cursor, bases, children, client)
