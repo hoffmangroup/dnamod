@@ -980,7 +980,7 @@ BLACK_LIST = dnamod_utils.get_blacklist()
 
 requestMonitor = RequestMonitor()
 socket.setdefaulttimeout(300)
-#check_time()
+check_time()
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-r', '--reset', action='store_true')
