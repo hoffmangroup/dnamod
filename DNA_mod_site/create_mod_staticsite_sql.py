@@ -35,6 +35,7 @@ import sys
 import os.path
 import datetime
 import re
+import shutil
 
 # Using Jinja2 as templating engine
 import jinja2
@@ -64,7 +65,7 @@ REF_COL_NAMES = ['citationid', 'title', 'pubdate', 'authors',
 HTML_FILES_DIR = dnamod_utils.get_constant('site_html_dir')
 TEMPLATE_DIR = dnamod_utils.get_constant('site_template_dir')
 DATABASE_FILE_FULLPATH = dnamod_utils.get_constant('database')
-
+DATABASE_FILE_COPY = dnamod_utils.get_constant('database_copy')
 SEQ_ANNOT_TABLE = dnamod_utils.get_constant('seq_annot_table')
 NATURE_ANNOT_TABLE = dnamod_utils.get_constant('nature_annot_table')
 REFERENCES_TABLE = dnamod_utils.get_constant('references_table')
@@ -75,6 +76,8 @@ IMAGE_FORMAT = 'svg'
 # in the homepage pie menu display
 SHADE_ORIGINS = ['synthetic']
 
+# Create Database copy file to work with in script
+shutil.copy2(DATABASE_FILE_FULLPATH, DATABASE_FILE_COPY)
 
 def is_list(object):
     """Test if the given object is a list, by checking if
@@ -250,7 +253,7 @@ def create_html_pages(env):
        of each base, for only the verified modified nucleobases."""
 
     # Load in SQLite database
-    conn = sqlite3.connect(dnamod_utils.get_constant('database'))
+    conn = sqlite3.connect(DATABASE_FILE_COPY)
     c = conn.cursor()
 
     page_template = env.get_template('modification.html')
@@ -594,7 +597,7 @@ def get_custom_nomenclature(cursor):
 def create_homepage(env, homepage_links, v_base_origins):
     """Loads data needed to create the homepage and creates it."""
 
-    conn = sqlite3.connect(dnamod_utils.get_constant('database'))
+    conn = sqlite3.connect(DATABASE_FILE_COPY)
     cursor = conn.cursor()
 
     verifiedBases = {}
@@ -667,3 +670,4 @@ print("Generating Static Site....")
 links, v_base_origins = create_html_pages(env)
 create_homepage(env, links, v_base_origins)
 print("Static Site Generated")
+os.remove(DATABASE_FILE_COPY)

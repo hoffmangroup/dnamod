@@ -83,7 +83,7 @@ if [[ ! ( -d "$ROOT_DIR" && -d "$SITE_DIR" && -d "$SITE_TEMPLATE_DIR" && -d "$SI
 fi
 
 DATABASE="$DATA_DIR/DNAmod.sqlite"
-
+DATABASE_COPY="$DATA_DIR/DNAmod_copy.sqlite"
 WHITELIST="$DATA_DIR/whitelist.txt"
 BLACKLIST="$DATA_DIR/blacklist.txt"
 
@@ -144,6 +144,9 @@ case ${1:-} in
         ;;
     database)
         echo -n "$DATABASE"
+        ;;
+    database_copy)
+        echo -n "$DATABASE_COPY"
         ;;
     whitelist)
         echo -n "$WHITELIST"
