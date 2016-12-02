@@ -265,18 +265,22 @@ def create_html_pages(env):
 
     # dictionary, keyed by ChEBI ID, storing verified base origins
     v_base_origins = {}
-
-    # XXX TODO refactor to use tables and not dump and manually parse
-    c.execute('''DROP TABLE IF EXISTS temp''')
-    c.execute('''CREATE TEMP TABLE temp AS SELECT * FROM
-                    (SELECT * from
+    
+    conn2 = sqlite3.connect("file::memory:?cache=shared")
+    c2 = conn2.cursor()
+    
+    command = "ATTACH DATABASE '" + DATABASE_FILE_COPY + "' as db"
+    c2.execute(command)
+    
+    c2.execute('''CREATE TEMP TABLE temp AS SELECT * FROM
+                    (SELECT * FROM
                         (SELECT * FROM
-                            (SELECT * FROM modbase
-                             AS MB NATURAL JOIN baseprops)
-                        AS MB_BP NATURAL JOIN covmod)
-                    AS MB_CV NATURAL JOIN names)
-                AS MB_B NATURAL JOIN base''')
-    conn.commit()
+                            (SELECT * FROM db.modbase
+                             AS MB NATURAL JOIN db.baseprops)
+                        AS MB_BP NATURAL JOIN db.covmod)
+                    AS MB_CV NATURAL JOIN db.names)
+                AS MB_B NATURAL JOIN db.base''')
+    conn2.commit()
 
     if not os.path.exists(HTML_FILES_DIR):
         os.makedirs(HTML_FILES_DIR)
@@ -287,8 +291,8 @@ def create_html_pages(env):
         blacklist = []
 
         baseid = BASE[0]
-        mods = c.execute("SELECT * FROM temp WHERE baseid = ?", baseid)
-        conn.commit()
+        mods = c2.execute("SELECT * FROM temp WHERE baseid = ?", baseid)
+        conn2.commit()
 
         for mod in mods:
             # Read data:
