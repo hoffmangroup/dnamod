@@ -266,7 +266,7 @@ def create_html_pages(env):
     # dictionary, keyed by ChEBI ID, storing verified base origins
     v_base_origins = {}
     
-    conn2 = sqlite3.connect("file::memory:?cache=shared")
+    conn2 = sqlite3.connect(':memory:')
     c2 = conn2.cursor()
     
     command = "ATTACH DATABASE '" + DATABASE_FILE_COPY + "' as db"
