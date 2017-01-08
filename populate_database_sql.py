@@ -76,6 +76,7 @@ ALPHABET_FILE_FULLPATH = dnamod_utils.get_constant('annot_exp_alph')
 SEQ_REF_ANNOTS_FULLPATH = dnamod_utils.get_constant('annot_seq')
 NATURE_REF_ANNOTS_FULLPATH = dnamod_utils.get_constant('annot_nature')
 JSON_INDEX_FILE_FULLPATH = dnamod_utils.get_constant('json')
+MANUALADD_FILE_FULLPATH = dnamod_utils.get_constant('manual_additions')
 
 url = 'https://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
 client = Client(url)
@@ -96,6 +97,13 @@ class RequestMonitor:
                 time.sleep(self.waitTime)
             self.timeStart = time.time()
             self.requestCount = 1
+
+
+class CustomMod:
+    def __init__(self, id, par, typ):
+        self.chebiId = id
+        self.parent = par
+        self.type = typ
 
 
 def check_time():
@@ -172,6 +180,23 @@ def filter_and_build_from_ontology(content, stars, client, requestMonitor):
     return result
 
 
+def find_manual_additions(base):
+    additions = []
+    with _read_csv_ignore_comments(MANUALADD_FILE_FULLPATH, True) as reader:
+        for num, line in enumerate(reader):
+            assert len(line) == 2
+            if num == 0:  # header
+                line.pop(0)
+            else:
+                id = "CHEBI:" + line[0]
+                parent = line[1]
+                if parent == base:
+                    add = CustomMod(id, parent, ONTOLOGY_FP)
+                    additions.append(add)
+                    print("----- Manual Addition: {}".format(add.chebiId))
+    return additions
+
+
 def get_children(bases, requestMonitor, client):
     modDictionary = {}
     for base in bases:
@@ -180,6 +205,9 @@ def get_children(bases, requestMonitor, client):
         result = client.service.getOntologyChildren(base.chebiId)
         print("----- BASE: {}".format(base.chebiAsciiName))
         result = result.ListElement
+        manualadds = find_manual_additions(base.chebiAsciiName)
+        for add in manualadds:
+            result.append(add)
         result = filter_and_build_from_ontology(result, 3, client,
                                                 requestMonitor)
         additionalChildren = get_further_children(result, client,
@@ -192,6 +220,25 @@ def get_children(bases, requestMonitor, client):
         result = list(result)
 
         modDictionary[base.chebiAsciiName] = result
+        
+    requestMonitor.add_request()
+    print("----- BASE: {}".format("other"))
+    manualadds = find_manual_additions("other")
+    result = []
+    for add in manualadds:
+        result.append(add)
+    result = filter_and_build_from_ontology(result, 3, client,
+                                            requestMonitor)
+    additionalChildren = get_further_children(result, client,
+                                              requestMonitor)
+
+    for child in additionalChildren:
+        result.append(child)
+
+    result = set(result)
+    result = list(result)
+
+    modDictionary["other"] = result
 
     return modDictionary
 
@@ -980,7 +1027,7 @@ BLACK_LIST = dnamod_utils.get_blacklist()
 
 requestMonitor = RequestMonitor()
 socket.setdefaulttimeout(300)
-check_time()
+#check_time()
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-r', '--reset', action='store_true')

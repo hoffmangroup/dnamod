@@ -90,6 +90,7 @@ BLACKLIST="$DATA_DIR/blacklist.txt"
 ANNOT_EXP_ALPH="$DATA_DIR/nomenclature.txt"
 ANNOT_SEQ="$DATA_DIR/ref_annots_sequencing.txt"
 ANNOT_NATURE="$DATA_DIR/ref_annots_nature.txt"
+MANUAL_ADDITIONS="$DATA_DIR/manual_additions.txt"
 
 # NB: do not check for the existence of the database,
 #     since we often remove and re-create it
@@ -189,6 +190,9 @@ case ${1:-} in
         ;;
     exp_alph_table)
         echo -n "$EXP_ALPH_TABLE"
+        ;;
+    manual_additions)
+        echo -n "$MANUAL_ADDITIONS"
         ;;
     *)
         # get all possible cases by searching this script

@@ -1,0 +1,3 @@
+ChEBI	Base
+28997	other
+16450	other
