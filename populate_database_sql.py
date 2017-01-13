@@ -372,7 +372,7 @@ def get_full_citation(PMID):
     isarticle = False
 
     handle = Entrez.efetch("pubmed", id=PMID, retmode="xml")
-    records = Entrez.parse(handle)
+    records = Entrez.read(handle)
 
     articleTitle = []
     publicationDate = []
@@ -384,8 +384,8 @@ def get_full_citation(PMID):
     publisherName = None
     publisherLocation = None
 
-    for record in records:
-        if 'MedlineCitation' in record.keys():
+    for record in records['PubmedArticle']:
+        if 'MedlineCitation' in record:
             isarticle = True
             article = record['MedlineCitation']['Article']
             journalrecord = record['MedlineCitation']['Article']['Journal']
