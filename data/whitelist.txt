@@ -47,3 +47,7 @@ Uracil
 	uracil-5-carboxylic acid
 	5-(4,5-dihydroxypentyl)uracil
 	5-formyluracil
+
+Other
+	2'-deoxyinosine
+	2'-deoxyuridine

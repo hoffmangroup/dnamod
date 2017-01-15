@@ -78,6 +78,10 @@ NATURE_REF_ANNOTS_FULLPATH = dnamod_utils.get_constant('annot_nature')
 JSON_INDEX_FILE_FULLPATH = dnamod_utils.get_constant('json')
 MANUALADD_FILE_FULLPATH = dnamod_utils.get_constant('manual_additions')
 
+OTHER_BASE_ID = "CHEBI:other"
+OTHER_BASE_NAME = "other"
+OTHER_BASE_DEF = "A DNA base category added to encompass entities which do not fit into ATCG in the CHEBI ontology."
+
 url = 'https://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
 client = Client(url)
 
@@ -104,6 +108,13 @@ class CustomMod:
         self.chebiId = id
         self.parent = par
         self.type = typ
+
+
+class CustomBase:
+    def __init__(self, id, asciiname, definition):
+        self.chebId = id
+        self.chebiAsciiName = asciiname
+        self.definition = definition
 
 
 def check_time():
@@ -316,6 +327,8 @@ def get_complete_bases(bases, requestMonitor, client):
     for base in bases:
         result.append(get_complete_entity(base.chebiId, requestMonitor,
                       client))
+    otherBase = CustomBase(OTHER_BASE_ID, OTHER_BASE_NAME, OTHER_BASE_DEF)
+    result.append(otherBase)
     return result
 
 
