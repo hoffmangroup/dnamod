@@ -87,6 +87,8 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 # (beta-D-glucopyranosyloxymethyl)deoxyuridine 5'-monophosphate (111511) -- same as above with phosphate, omitted
 # 5,6-dihydrothymine
 27468	natural	damage	mutagenic	Escherichia coili,Homo sapiens	4860750,889777
+# 2'-deoxyuridine
+16450	natural			E. Coli	25015380
 # 5-hydroxymethyluracil
 16964	natural	damage, demethylation intermediate, and possible epigenetic mark		Homo sapiens,Gyrodinium cohnii,Rattus norvegicus,Mus musculus	10490501,4515611,6592579,24838012
 # 5-formyluracil

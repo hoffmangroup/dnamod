@@ -88,3 +88,7 @@ ChEBI	Method	Method detail	Resolution	Enrichment or limitation	References
 # base J
 111513	immunodetection	affinity-based	low		9389654
 111513	SMRT	direct detection	single-base	target sequences	25662217
+#-------------------------------------------------
+# dU
+16450	Excision-seq				25015380
+16450	XR-seq					25934506
