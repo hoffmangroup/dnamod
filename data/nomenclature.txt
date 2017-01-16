@@ -28,6 +28,7 @@ CHEBI:44605	8oxoG	8-oxoguanine	o	adenine:8-oxoguanine
 CHEBI:52617	8oxoG	8-oxoguanine	o	adenine:8-oxoguanine
 CHEBI:25305	mG	methylguanine
 CHEBI:21803	1mG	1-methylguanine
+CHEBI:21818	2mG	2-methylguanine
 CHEBI:1604	3mG	3-methylguanine
 # below 3 children of 3mG are all tautomers of eachother; we call them "3mG" too
 CHEBI:27564	3mG	2-amino-3-methyl-3,7-dihydro-6H-purin-6-one
