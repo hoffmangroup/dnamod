@@ -29,7 +29,7 @@ import subprocess
 
 _SOURCE_DIR = os.path.dirname(os.path.realpath(__file__))
 
-UNMOD_ALPH = ['A', 'C', 'G', 'T']
+UNMOD_ALPH = ['A', 'C', 'G', 'T', 'O']
 
 
 def get_constant(constant_name):
