@@ -35,6 +35,8 @@ CHEBI:1604	3mG	3-methylguanine
 CHEBI:27564	3mG	2-amino-3-methyl-3,7-dihydro-6H-purin-6-one
 CHEBI:46892	3mG	2-amino-3-methyl-3,9-dihydro-6H-purin-6-one
 CHEBI:46893	3mG	2-imino-3-methyl-1,2,3,9-tetrahydro-6H-purin-6-one
+CHEBI:134095    N(2),3-ɛG   N(2),3-ethenoguanine
+CHEBI:134096    1,N(2)-ɛG   1,N(2)-ethenoguanine
 CHEBI:20689	m6G	6-O-methylguanine
 CHEBI:2274	7mG	7-methylguanine
 # below 3 children of 7mG are all tautomers of eachother; we call them "7mG" too
