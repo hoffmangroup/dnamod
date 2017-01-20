@@ -43,6 +43,7 @@ ChEBI	Method	Method detail	Resolution	Enrichment or limitation	References
 76792	DMAB-seq	DNMT1 conversion	single-base	CpG contexts only	26504739
 76792	tungsten-oxidation	chemical conversion	single-base		21918786
 76792	nanopore	direct detection	single-base	target sequences	27383905
+76792	peroxotungstate-mediated oxidation	chemical conversion	single-base	27766835
 # -----------------------------------------------
 # 5fC
 76794	redBS-seq	chemical conversion	single-base		24755596
