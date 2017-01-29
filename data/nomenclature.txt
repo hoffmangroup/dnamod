@@ -54,3 +54,6 @@ CHEBI:74765	1mT	1-methylthymine
 CHEBI:74766	3mT	3-methylthymine
 CHEBI:132931	putThy	α-putrescinylthymine
 CHEBI:132195	dhpUra	5-dihydroxypentyluracil
+CHEBI:28997	dU	2'-deoxyinosine
+CHEBI:132189	DHdU	5,6-dihydroxy-2'-deoxyuridine
+CHEBI:132191	dhpdU	2'-deoxy-5-(4,5-dihydroxypentyl)uridine
