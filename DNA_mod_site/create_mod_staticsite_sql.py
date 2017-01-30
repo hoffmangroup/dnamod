@@ -51,14 +51,14 @@ JINJA2_EXTENSION_NAMES = ['do']
 JINJA2_EXTENSIONS = ['jinja2.ext.' + ext_name for ext_name
                      in JINJA2_EXTENSION_NAMES]
 
-BASES = 'Adenine', 'Cytosine', 'Guanine', 'Thymine', 'Uracil'
-VERIFIED_BASES = 'Adenine', 'Cytosine', 'Guanine', 'Thymine'
+BASES = 'Adenine', 'Cytosine', 'Guanine', 'Thymine', 'Uracil', 'Other'
+VERIFIED_BASES = 'Adenine', 'Cytosine', 'Guanine', 'Thymine', 'Other'
 UNVERIFIED_BASES = ('UnverifiedAdenine', 'UnverifiedThymine',
                     'UnverifiedCytosine', 'UnverifiedGuanine',
                     'UnverifiedUracil')
 BASE_DICT = {'adenine': 'CHEBI:16708', 'thymine': 'CHEBI:17821',
              'cytosine': 'CHEBI:16040', 'guanine': 'CHEBI:16235',
-             'uracil': 'CHEBI:17568'}
+             'uracil': 'CHEBI:17568','other':''}
 REF_COL_NAMES = ['citationid', 'title', 'pubdate', 'authors',
                  'journalname', 'volume', 'issue']
 
