@@ -200,8 +200,14 @@
                         dim = 750;
                     }
                     
-                    {% if verifiedHierarchy.keys()|length != 0 %}  
-                        {% set initial_subpie_frac = 100/(verifiedHierarchy.keys()|length) %}
+                    {% if verifiedHierarchy.keys()|length != 0 %}
+			{% if verifiedHierarchy.keys()|length == 5 %}
+                        	{% set initial_subpie_frac = 100/(verifiedHierarchy.keys()|length - 1) %}
+				{% set other_subpie_frac = initial_subpie_frac/otherRatio %}
+				{% set other_sharedbase_frac = initial_subpie_frac|int - other_subpie_frac|int %}
+			{% else %}
+                        	{% set initial_subpie_frac = 100/(verifiedHierarchy.keys()|length) %}
+			{% endif %}
                     {% endif %}
 
                     var DNA_bases = [
@@ -211,8 +217,21 @@
                                 abbreviation: "{{ unmod_symbol }}",
                                 displayname: "{{unmod_base}}{{' '}}{{'('}}<span class='nucleobase'>{{unmod_symbol}}</span>{{')'}}",
                                 chebiname: "",
-                                value: {{ initial_subpie_frac }},
-                                drilldown: [{{ _consRecTree(mod_children, initial_subpie_frac) }}],
+				{% if verifiedHierarchy.keys()|length == 5 %}
+					{% if unmod_base|string == "other" %}
+                                		value: {{ other_subpie_frac }},
+						drilldown: [{{ _consRecTree(mod_children, other_subpie_frac) }}],
+					{% elif unmod_base|string == otherBase %}
+						value: {{ other_sharedbase_frac }},
+						drilldown: [{{ _consRecTree(mod_children, other_sharedbase_frac) }}],
+					{% else %}
+						value: {{ initial_subpie_frac }},
+						drilldown: [{{ _consRecTree(mod_children, initial_subpie_frac) }}],
+					{% endif %}
+				{% else %}
+					value: {{ initial_subpie_frac }},
+                                	drilldown: [{{ _consRecTree(mod_children, initial_subpie_frac) }}],
+				{% endif %}					
                                 stripe: false
                             {{ '}' }}{% if not loop.last %}, 
                             {% endif %}

@@ -71,6 +71,8 @@ NATURE_ANNOT_TABLE = dnamod_utils.get_constant('nature_annot_table')
 REFERENCES_TABLE = dnamod_utils.get_constant('references_table')
 
 IMAGE_FORMAT = 'svg'
+OTHER_RATIO = 3
+OTHER_SHARED_BASE = 'guanine'
 
 # shade these types of origins (or any containing the type as a word)
 # in the homepage pie menu display
@@ -644,7 +646,9 @@ def create_homepage(env, homepage_links, v_base_origins):
                                   customNomenclature=custom_nomenclature,
                                   vBaseOrigins=v_base_origins,
                                   shadeOrigins=SHADE_ORIGINS,
-                                  time=last_mod_dt)
+                                  time=last_mod_dt,
+                                  otherRatio=OTHER_RATIO,
+                                  otherBase=OTHER_SHARED_BASE)
 
     f.write(render)
     f.close()
