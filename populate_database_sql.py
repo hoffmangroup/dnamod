@@ -63,7 +63,7 @@ ONTOLOGY_FP = "has functional parent"
 ONTOLOGY_IS_A = "is a"
 ONTOLOGY_IS_TAUTOMER = "is tautomer of"
 
-RESET_TABLES = False
+RESET_TABLES = True
 ChEBI_ID_PREFIX = "CHEBI:"
 
 BLACK_LIST = []
@@ -257,9 +257,7 @@ def get_children(bases, requestMonitor, client):
 def get_recursive_children(entity, client, childrenverified, requestMonitor,
                            additionalChildren):
     if entity.chebiAsciiName not in BLACK_LIST:
-        if childrenverified or [child for child in additionalChildren
-                                if child['chebiId'] == entity.chebiId and
-                                child['verifiedstatus']]:
+        if (childrenverified or (entity.chebiAsciiName in WHITE_LIST)):
             # TODO improve the way duplicate verified ontology entries are
             # handled
             entity['verifiedstatus'] = 1
@@ -267,7 +265,7 @@ def get_recursive_children(entity, client, childrenverified, requestMonitor,
             entity['verifiedstatus'] = 0
 
         print("---------- CHILD of BASE: {0:100} Verified: {1} "
-              "".format(entity.chebiAsciiName, childrenverified))
+              "".format(entity.chebiAsciiName, entity['verifiedstatus']))
 
         requestMonitor.add_request()
 
@@ -537,6 +535,10 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
         sql_conn_cursor.execute('''DROP TABLE IF EXISTS citations''')
         sql_conn_cursor.execute('''DROP TABLE IF EXISTS roles''')
         sql_conn_cursor.execute('''DROP TABLE IF EXISTS modbase''')
+        sql_conn_cursor.execute('''DROP TABLE IF EXISTS expanded_alphabet''')
+        sql_conn_cursor.execute('''DROP TABLE IF EXISTS modbase_parents''')
+        sql_conn_cursor.execute('''DROP TABLE IF EXISTS nucleobase_nature_info''')
+        sql_conn_cursor.execute('''DROP TABLE IF EXISTS sequencing_citations''')
         conn.commit()
 
     # Create Tables
