@@ -571,7 +571,9 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
                              nameid text PRIMARY KEY NOT NULL,
                              iupacname text,
                              othernames text,
-                             smiles text)''')
+                             smiles text,
+                             inchi text,
+                             inchikey text)''')
 
     sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS baseprops
                             (formulaid text PRIMARY KEY NOT NULL,
@@ -640,6 +642,8 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
 
             iupac = concatenate_list(child, IUPAC_SEARCH_STR)
             smiles = get_entity(child, SMILES_SEARCH_STR)
+            inchi = get_entity(child, "inchi")
+            inchikey = get_entity(child, "inchiKey")
 
             formula = concatenate_list(child, FORMULA_SEARCH_STR)
             if not formula:
@@ -712,9 +716,10 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
                                     INTO baseprops VALUES(?,?)''',
                                     (str(formula), str(mass)))
             sql_conn_cursor.execute('''INSERT OR IGNORE
-                                    INTO names VALUES(?,?,?,?,?)''',
+                                    INTO names VALUES(?,?,?,?,?,?,?)''',
                                     (child.chebiAsciiName, child.chebiId,
-                                     str(iupac), str(synonyms), str(smiles)))
+                                     str(iupac), str(synonyms), str(smiles),
+                                     str(inchi), str(inchikey)))
             sql_conn_cursor.execute('''INSERT OR IGNORE
                                     INTO covmod VALUES(NULL,?,?,?)''',
                                     ('0', str(charge), child.definition))
