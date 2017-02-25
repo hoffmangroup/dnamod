@@ -307,7 +307,9 @@ def create_html_pages(env):
             iupacname = mod[11]
             synonyms = mod[12]
             smiles = mod[13].encode('ascii')
-            commonname = mod[14]
+            inchi = mod[14]
+            inchikey = mod[15]
+            commonname = mod[16]
 
             # XXX TODO cleanup commented-out code
             # roles_lookup = mod[7] # unused as roles are not on site
@@ -343,6 +345,8 @@ def create_html_pages(env):
             netcharge = netcharge[1:-1]
             iupacname = iupacname[1:-1]
             avgmass = avgmass[1:-1]
+            inchi = inchi[1:-1]
+            inchikey = inchikey[1:-1]
 
             # Write html page
             writefile = os.path.join(HTML_FILES_DIR, chebiname + '.html')
@@ -382,6 +386,8 @@ def create_html_pages(env):
                                           AverageMass=avgmass,
                                           IupacName=iupacname,
                                           Smiles=smiles,
+                                          InChI=inchi,
+                                          InChIKey=inchikey,
                                           Synonyms=synonyms,
                                           ChebiId=chebiid,
                                           CommonName=commonname,

@@ -163,6 +163,8 @@
                                                 <tr>
                                                     {% if IupacName %}<th> IUPAC </th>{% endif %}
                                                     {% if Smiles %}<th> SMILES </th>{% endif %}
+                                                    {% if InChI %}<th> InChI </th>{% endif %}
+                                                    {% if InChIKey %}<th> InChIKey </th>{% endif %}
                                                     {% if Synonyms|length %}
                                                         <th> Synonyms </th>
                                                     {% endif %}
@@ -170,6 +172,8 @@
                                                 <tr>
                                                     {% if IupacName %}<td> {{ IupacName }} </td>{% endif %}
                                                     {% if Smiles %}<td> {{ Smiles }} </td>{% endif %}
+                                                    {% if InChI %}<td> {{ InChI }} </td>{% endif %}
+                                                    {% if InChIKey %}<td> {{ InChIKey }} </td>{% endif %}
                                                     {% if Synonyms|length %}
                                                         <td>
                                                             <ul id="hangingindent">
