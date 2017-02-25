@@ -93,3 +93,6 @@ ChEBI	Method	Method detail	Resolution	Enrichment or limitation	References
 # dU
 16450	Excision-seq				25015380
 16450	XR-seq				25934506
+#-------------------------------------------------
+# 5fU, 5caU
+80961,17477	SMRT	direct detection	single-base		25831492
