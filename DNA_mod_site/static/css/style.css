@@ -12,6 +12,11 @@ body h2 {
     padding-top: 7em;
     padding-bottom: 65px;
 }
+
+#modification a {
+    color: #663399;
+}
+
 .tab-content {
     margin-top: 25px;
 }
