@@ -181,3 +181,8 @@ table tr td.nucleobase {
     padding-left: 3.5em;
     text-indent: -1.5em;
 }
+
+#larger {
+    font-size: 1.2em;
+    font-weight: bold;
+}
