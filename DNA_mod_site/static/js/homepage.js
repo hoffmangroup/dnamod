@@ -78,7 +78,9 @@ $(document).ready(function() {
     $('.searchbox').keyup(function() {
         var query = $(this).val();
         
-        if (query.length <= 2) {
+        if (query.length <= 1) {
+            var searchfields = ['Symbol'];
+        } else if (query.length <= 2) {
             var searchfields = ['Abbreviation', 'Symbol'];
         } else {
             var searchfields = ['Common Name', 'Abbreviation', 'Synonyms', 'Symbol', 'ChEBI Id', 'IUPAC Name', 'Chemical Formula'];
