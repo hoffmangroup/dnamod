@@ -492,6 +492,7 @@ def get_full_citation(PMID):
         field_not_found('author(s)')
 
     if journalName:
+        journalName = capitalize_journal_name(journalName)
         result.append(journalName.encode('utf-8'))
     else:
         field_not_found('journal name')
@@ -522,6 +523,19 @@ def get_full_citation(PMID):
         result.append('')
 
     return result
+
+
+def capitalize_journal_name(name):
+    ignoreList = ["and", "or", "the", "of", "in"]
+    phrase=name.split(" ")
+    wordList=[]
+    s = " "
+    for word in phrase:
+        if word not in ignoreList:
+            word = word[0].upper() + word[1:]
+        wordList.append(word)
+    capitalizedPhrase = s.join(wordList)
+    return capitalizedPhrase
 
 
 def create_other_tables(conn, sql_conn_cursor, children, bases):
