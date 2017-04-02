@@ -43,6 +43,7 @@ CHEBI:2274	7mG	7-methylguanine
 CHEBI:28664	7mG	2-amino-7-methyl-1,7-dihydro-6H-purin-6-one
 CHEBI:46897	7mG	2-amino-7-methyl-7H-purin-6-ol
 CHEBI:46894	7mG	2-imino-7-methyl-1,2,3,7-tetrahydro-6H-purin-6-one
+CHEBI:19289	m22G	N(2),N(2)-dimethylguanosine
 CHEBI:27468	diHT	5,6-dihydrothymine
 CHEBI:16450	dU	2'-deoxyuridine
 CHEBI:16964	5hmU	5-hydroxymethyluracil	g	adenine:5-hydroxymethyluracil
