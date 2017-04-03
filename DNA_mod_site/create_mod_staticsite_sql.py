@@ -362,12 +362,15 @@ def create_html_pages(env):
             nature_annot = get_mod_base_ref_annot_data(chebiid, conn,
                                                        NATURE_ANNOT_TABLE)
 
+            synthetic = False
             if nature_annot:
                 # at most a single entry per base for this
                 # problem here with empty lists
                 # assert len(nature_annot) == 1
 
                 v_base_origins[chebiid] = nature_annot[0]['Origin']
+                if v_base_origins[chebiid][0] == "s":
+                    synthetic = True
 
             # TODO revise second name?
             ref_annot_tab_names = ['Mapping techniques', 'Nature']
@@ -400,7 +403,8 @@ def create_html_pages(env):
                                           RefAnnots=ref_annots,
                                           RefAnnotsRefColNames=REF_COL_NAMES,
                                           # pass ExpandedAlpha=None to disable
-                                          ExpandedAlpha=expanded_alpha)
+                                          ExpandedAlpha=expanded_alpha,
+                                          Synthetic = synthetic)
 
             f.write(render)
             f.close()

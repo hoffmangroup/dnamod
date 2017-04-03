@@ -208,7 +208,7 @@
                                     <abbr data-toggle="popover" data-placement="top" data-html="true" data-content="Sequencing methods available to profile {{ DispName }}. Outlines the limitations and basis of each method. We list mapping techniques only under the nucelobase(s) which they directly elucidate." data-original-title title><h2 id="Inline"> {{ RefAnnotTabNames[loop.index0] }} </h2></abbr>
                                     {% endif %}
                                     {% if RefAnnotTabNames[loop.index0] == "Nature" %}
-                                    <abbr data-toggle="popover" data-placement="top" data-html="true" data-content="Natural occurrence information for {{ DispName }}{% if RefAnnot[0].values()[0] != 'synthetic' -%}, outlining its biological properties{% endif %}." data-original-title title><h2 id="Inline"> {{ RefAnnotTabNames[loop.index0] }} </h2></abbr>
+                                    <abbr data-toggle="popover" data-placement="top" data-html="true" data-content="Natural occurrence information for {{ DispName }}{% if Synthetic == False -%}, outlining its biological properties{% endif %}." data-original-title title><h2 id="Inline"> {{ RefAnnotTabNames[loop.index0] }} </h2></abbr>
                                     {% endif %}
                                     <div class="table-responsive">
                                         <table class="table table-striped" id={{ RefAnnotTabNames[loop.index0] }}>
