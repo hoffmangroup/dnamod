@@ -79,8 +79,12 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 # 7-cyano-7-deazaguanine / preQ(0) (awaiting addition)
 # XXXXXX	natural	restriction-modification		Salmonella enterica serovar Montevideo,Kineococcus radiotolerans,Comamonas testosteroni,Sphingopyxis alaskensis,Ferrimonas balearica	26929322
 # methylguanine (25305) -- category, not annotated
+# 1,N(2)-ethenoguanine
+134096	natural	damage	mutagenic	Homo sapiens	21163908
 # N(2)-carboxyethylguanine
 62032	natural	damage	mutagenic	Homo sapiens	15487900
+# N(2),3-ethenoguanine
+134095	natural	damage	mutagenic	Homo sapiens	21163908
 # N(2),N(2)-dimethylguanosine
 19289	natural			Homo sapiens	5417622
 #
