@@ -38,6 +38,7 @@ CHEBI:46893	3mG	2-imino-3-methyl-1,2,3,9-tetrahydro-6H-purin-6-one
 CHEBI:134095	N(2),3-ɛG	N(2),3-ethenoguanine
 CHEBI:134096	1,N(2)-ɛG	1,N(2)-ethenoguanine
 CHEBI:20689	m6G	6-O-methylguanine
+CHEBI:131836	ADG	7-amido-7-deazaguanosine
 CHEBI:2274	7mG	7-methylguanine
 # below 3 children of 7mG are all tautomers of eachother; we call them "7mG" too
 CHEBI:28664	7mG	2-amino-7-methyl-1,7-dihydro-6H-purin-6-one
@@ -48,13 +49,13 @@ CHEBI:27468	diHT	5,6-dihydrothymine
 CHEBI:16450	dU	2'-deoxyuridine
 CHEBI:16964	5hmU	5-hydroxymethyluracil	g	adenine:5-hydroxymethyluracil
 CHEBI:80961	5fU	5-formyluracil	e	adenine:5-formyluracil
-CHEBI:111513	base J	β-glucosyl-hydroxymethyluracil	J
 CHEBI:111511	base J	β-glucosyl-hydroxymethyluracil	J
+CHEBI:111513	base J	β-glucosyl-hydroxymethyluracil	J
 CHEBI:17477	5caU	5-carboxyluracil	b	adenine:5-carboxyluracil
 CHEBI:74765	1mT	1-methylthymine
 CHEBI:74766	3mT	3-methylthymine
 CHEBI:132931	putThy	α-putrescinylthymine
 CHEBI:132195	dhpUra	5-dihydroxypentyluracil
-CHEBI:28997	dU	2'-deoxyinosine
+CHEBI:28997	dI	2'-deoxyinosine
 CHEBI:132189	DHdU	5,6-dihydroxy-2'-deoxyuridine
 CHEBI:132191	dhpdU	2'-deoxy-5-(4,5-dihydroxypentyl)uridine
