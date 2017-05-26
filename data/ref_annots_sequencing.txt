@@ -65,8 +65,8 @@ ChEBI	Method	Method detail	Resolution	Enrichment or limitation	References
 21839,27551,28871	dye-terminator Sanger sequencing	direct detection	single-base		16091626,9580708
 21839,27551,28871	SMRT	direct detection	single-base	target sequences	22156058
 # -----------------------------------------------
-# 4mA, 6mA
-134106,28871	SMRT	direct detection	single-base	target sequences	23034806
+# 6mA
+28871	SMRT	direct detection	single-base	target sequences	23034806
 # ------------------------------------------------
 # 8oxoG, 1mA, 5hmU, m6G, 8oxoA - also applies to: O4-MedT, 5hC, 5hU
 44605,18083,16964,20689,134104	SMRT	direct detection	single-base	target sequences	22185597
