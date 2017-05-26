@@ -74,6 +74,10 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 # 8-oxoguanine
 # 7,8-dihydro-8-oxoguanine -- same as above, using above ChEBI ID only
 44605	natural	damage and possible epigenetic mark	reactive oxygen species	Homo sapiens	2602371,10490501
+# 7-amido-7-deazaguanosine
+131836	natural	restriction-modification		Salmonella enterica serovar Montevideo,Kineococcus radiotolerans,Meiothermus chliarophilus,Comamonas testosteroni,Sphingopyxis alaskensis,Ferrimonas balearica	26929322
+# 7-cyano-7-deazaguanine / preQ(0) (awaiting addition)
+# XXXXXX	natural	restriction-modification		Salmonella enterica serovar Montevideo,Kineococcus radiotolerans,Comamonas testosteroni,Sphingopyxis alaskensis,Ferrimonas balearica	26929322
 # methylguanine (25305) -- category, not annotated
 # N(2)-carboxyethylguanine
 62032	natural	damage	mutagenic	Homo sapiens	15487900
@@ -87,8 +91,6 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 # (beta-D-glucopyranosyloxymethyl)deoxyuridine 5'-monophosphate (111511) -- same as above with phosphate, omitted
 # 5,6-dihydrothymine
 27468	natural	damage	mutagenic	Escherichia coili,Homo sapiens	4860750,889777
-# 2'-deoxyuridine
-16450	natural			E. Coli	25015380
 # 5-hydroxymethyluracil
 16964	natural	damage, demethylation intermediate, and possible epigenetic mark		Homo sapiens,Gyrodinium cohnii,Rattus norvegicus,Mus musculus	10490501,4515611,6592579,24838012
 # 5-formyluracil
@@ -102,9 +104,16 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 74765	synthetic				
 # 3,5-dimethyluracil (3-methylthymine)
 74766	natural	damage	mutagenic	Rattus norvegicus	3948325
+# 2'-deoxyuridine
+16450	natural			E. Coli	25015380
 # uracil-5-carboxylic acid (5-carboxyuracil)
 17477	natural	demethylation intermediate		Rattus norvegicus	26447562
 # uracil-6-ylacetic acid (6-carboxymethyluracil)
 46371	synthetic and RNA			Saccharomyces cerevisiae	4300701
 # 5-dihydroxypentyluracil
 132195	natural	hypermodified nucleobase		bacteriophage SP-15	4633813
+#
+# other
+#
+# 2'-deoxyinosine
+28997	natural	hypermodified nucleobase		Thermoanaerobacter acetoethylicus	4000939
