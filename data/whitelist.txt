@@ -31,6 +31,7 @@ Cytosine
 
 Guanine
 
+	7-amido-7-deazaguanosine
 	7,8-dihydro-8-oxoguanine
 	8-oxoguanine
 	N(2)-carboxyethylguanine
