@@ -59,6 +59,8 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 #
 # 1-methylguanine
 21803	natural	damage	mutagenic	Homo sapiens	5417622
+# 2-methylguanine
+21818	natural	damage	mutagenic	Homo sapiens	5417622
 # 2-amino-3-methyl-3,7-dihydro-6H-purin-6-one (27564) -- similar to 3-methylguanine, omitted
 # 2-amino-3-methyl-3,9-dihydro-6H-purin-6-one (46892) -- similar to 3-methylguanine, omitted
 # 2-amino-7-methyl-1,7-dihydro-6H-purin-6-one (28664) -- same as 7-methylguanine, omitted
