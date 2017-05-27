@@ -209,37 +209,30 @@
                     }
                     
                     {% if verifiedHierarchy.keys()|length != 0 %}
-			{% if verifiedHierarchy.keys()|length == 5 %}
-                        	{% set initial_subpie_frac = 100/(verifiedHierarchy.keys()|length - 1) %}
-				{% set other_subpie_frac = initial_subpie_frac/otherRatio %}
-				{% set other_sharedbase_frac = initial_subpie_frac|int - other_subpie_frac|int %}
-			{% else %}
-                        	{% set initial_subpie_frac = 100/(verifiedHierarchy.keys()|length) %}
-			{% endif %}
+                        {# initial fraction for all DNA bases, but not "other", so length - 1  #}
+                        {% set DNA_subpie_frac = 100/(verifiedHierarchy.keys()|length - 1) %}
+
+                        {# initial fraction for the "other" category; smaller than the DNA bases #}
+                        {% set other_subpie_frac = DNA_subpie_frac/otherRatio %}
                     {% endif %}
 
                     var DNA_bases = [
                         {% for unmod_base, mod_children in verifiedHierarchy|dictsort %}
-                        {% set unmod_symbol = unmod_base|string|first|upper %}
+                            {# different settings for "other" category than for DNA bases #}
+                            {% if unmod_base|string == "other" %}
+                                {% set initial_subpie_frac = other_subpie_frac %}
+                            {% else %}
+                                {% set initial_subpie_frac = DNA_subpie_frac %}
+                            {% endif %}
+
+                            {% set unmod_symbol = unmod_base|string|first|upper %}
+
                             {{ '{' }}
                                 abbreviation: "{{ unmod_symbol }}",
                                 displayname: "{{unmod_base}}{{' '}}{{'('}}<span class='nucleobase'>{{unmod_symbol}}</span>{{')'}}",
                                 chebiname: "",
-				{% if verifiedHierarchy.keys()|length == 5 %}
-					{% if unmod_base|string == "other" %}
-                                		value: {{ other_subpie_frac }},
-						drilldown: [{{ _consRecTree(mod_children, other_subpie_frac) }}],
-					{% elif unmod_base|string == otherBase %}
-						value: {{ other_sharedbase_frac }},
-						drilldown: [{{ _consRecTree(mod_children, other_sharedbase_frac) }}],
-					{% else %}
-						value: {{ initial_subpie_frac }},
-						drilldown: [{{ _consRecTree(mod_children, initial_subpie_frac) }}],
-					{% endif %}
-				{% else %}
-					value: {{ initial_subpie_frac }},
-                                	drilldown: [{{ _consRecTree(mod_children, initial_subpie_frac) }}],
-				{% endif %}					
+                                value: {{ initial_subpie_frac }},
+                                drilldown: [{{ _consRecTree(mod_children, initial_subpie_frac) }}],
                                 stripe: false
                             {{ '}' }}{% if not loop.last %}, 
                             {% endif %}
