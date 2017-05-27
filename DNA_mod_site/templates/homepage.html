@@ -221,15 +221,22 @@
                             {# different settings for "other" category than for DNA bases #}
                             {% if unmod_base|string == "other" %}
                                 {% set initial_subpie_frac = other_subpie_frac %}
+
+                                {# do not abbreviate in this case #}
+                                {% set unmod_symbol = unmod_base|string %}
+
+                                {# identical name and symbol; do not duplicate #}
+                                {% set unmod_display_HTML = unmod_base|string %}
                             {% else %}
                                 {% set initial_subpie_frac = DNA_subpie_frac %}
-                            {% endif %}
 
-                            {% set unmod_symbol = unmod_base|string|first|upper %}
+                                {% set unmod_symbol = unmod_base|string|first|upper %}
+                                {% set unmod_display_HTML = "{} (<span class='nucleobase'>{}</span>)".format(unmod_base, unmod_symbol) %}
+                            {% endif %}
 
                             {{ '{' }}
                                 abbreviation: "{{ unmod_symbol }}",
-                                displayname: "{{unmod_base}}{{' '}}{{'('}}<span class='nucleobase'>{{unmod_symbol}}</span>{{')'}}",
+                                displayname: "{{ unmod_display_HTML }}",
                                 chebiname: "",
                                 value: {{ initial_subpie_frac }},
                                 drilldown: [{{ _consRecTree(mod_children, initial_subpie_frac) }}],
