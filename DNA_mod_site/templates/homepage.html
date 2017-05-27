@@ -234,8 +234,7 @@
                                 value: {{ initial_subpie_frac }},
                                 drilldown: [{{ _consRecTree(mod_children, initial_subpie_frac) }}],
                                 stripe: false
-                            {{ '}' }}{% if not loop.last %}, 
-                            {% endif %}
+                                {{ '}' if loop.last else '},' }} 
                         {% endfor %}
                     ];
 
