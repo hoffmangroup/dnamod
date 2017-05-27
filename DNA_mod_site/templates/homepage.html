@@ -216,7 +216,7 @@
                         {% set other_subpie_frac = DNA_subpie_frac/otherRatio %}
                     {% endif %}
 
-                    var DNA_bases = [
+                    var innermost_ring = [
                         {% for unmod_base, mod_children in verifiedHierarchy|dictsort %}
                             {# different settings for "other" category than for DNA bases #}
                             {% if unmod_base|string == "other" %}
@@ -249,7 +249,7 @@
                         containerId: "chartContainer",
                         width: dim,
                         height: dim,
-                        data: DNA_bases,
+                        data: innermost_ring,
                         label: function(d) {
                             return d.data.abbreviation;
                         },
