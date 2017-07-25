@@ -115,7 +115,7 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 # 5,6-dihydroxy-2'-deoxyuridine
 132189	synthetic				
 # 2'-deoxy-5-(4,5-dihydroxypentyl)uridine
-132191	synthetic				
+132191	natural	hypermodified nucleobase		bacteriophage SP-15	146749,4633812,4633813
 # uracil-5-carboxylic acid (5-carboxyuracil)
 17477	natural	demethylation intermediate		Rattus norvegicus	26447562
 # uracil-6-ylacetic acid (6-carboxymethyluracil)
