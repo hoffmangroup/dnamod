@@ -32,17 +32,17 @@
         </div>
 
         <div class= "container" >
-            <div class="well">
+            <div class="well" resource="/about">
                 <h2 property="title"> About </h2>
-                    <p> Covalent DNA modifications have been found in numerous organisms and more are continually being discovered and characterized, as detection methods improve. Many of these modifications can affect the conformation of the DNA double helix, often resulting in downstream effects upon transcription factor binding. Some of these modifications have been demonstrated to be stable, while others are viewed as merely transient. </p>
+                    <p property="articleBody"> Covalent DNA modifications have been found in numerous organisms and more are continually being discovered and characterized, as detection methods improve. Many of these modifications can affect the conformation of the DNA double helix, often resulting in downstream effects upon transcription factor binding. Some of these modifications have been demonstrated to be stable, while others are viewed as merely transient. </p>
 
-                     <p> DNAmod catalogues information on known DNA modifications, of which the well-known 5-methylcytosine is only one. It aims to profile modifications' properties, building upon data contained within the <a href="https://www.ebi.ac.uk/chebi/init.do">Chemical Entities of Biological Interest (ChEBI)</a> database. It also provides literature citations and includes curated annotations on mapping techniques and natural occurrence information. </p>
+                     <p property="articleBody"> DNAmod catalogues information on known DNA modifications, of which the well-known 5-methylcytosine is only one. It aims to profile modifications' properties, building upon data contained within the <a href="https://www.ebi.ac.uk/chebi/init.do">Chemical Entities of Biological Interest (ChEBI)</a> database. It also provides literature citations and includes curated annotations on mapping techniques and natural occurrence information. </p>
 
-                    <p> We regularly update DNAmod and manually curate the modifications verified to occur <i>in vivo</i>. </p>
+                    <p property="articleBody"> We regularly update DNAmod and manually curate the modifications verified to occur <i>in vivo</i>. </p>
             </div>
-            <div class="well">
+            <div class="well" resource="/methods">
                 <h2 property="title"> Methods </h2>
-                <p> DNAmod is comprised of this static website and a backing <a href="https://www.sqlite.org/">SQLite</a> database. The database is created using Python, including the SOAP client <a href="https://pypi.python.org/pypi/suds">suds</a> and <a href="http://biopython.org">Biopython</a>. The website is also created using Python, makes use of <a href="http://openbabel.org">Open Babel</a> via its Python wrapper, <a href="http://openbabel.org/docs/dev/UseTheLibrary/Python_Pybel.html">Pybel</a>, and uses the <a href="http://jinja.pocoo.org/docs/dev/">Jinja2</a> templating engine. It uses the <a href="http://elasticlunr.com"> elasticlunr.js</a> JavaScript module to provide search functionality. </p>
+                <p property="articleBody"> DNAmod is comprised of this static website and a backing <a href="https://www.sqlite.org/">SQLite</a> database. The database is created using Python, including the SOAP client <a href="https://pypi.python.org/pypi/suds">suds</a> and <a href="http://biopython.org">Biopython</a>. The website is also created using Python, makes use of <a href="http://openbabel.org">Open Babel</a> via its Python wrapper, <a href="http://openbabel.org/docs/dev/UseTheLibrary/Python_Pybel.html">Pybel</a>, and uses the <a href="http://jinja.pocoo.org/docs/dev/">Jinja2</a> templating engine. It uses the <a href="http://elasticlunr.com"> elasticlunr.js</a> JavaScript module to provide search functionality. </p>
 
                     <p> DNAmod uses <a href="https://www.ebi.ac.uk/chebi/init.do">ChEBI</a> to import potential covalent DNA modifications. It initially imports (via <a href="https://www.ebi.ac.uk/chebi/webServices.do">ChEBI Web Services</a>) all children of any of the nucleobases, as indicated by <a href="https://www.ebi.ac.uk/chebi/annotationManualForward.do#ChEBI%20Ontology">ChEBI’s ontology</a> (specifically, any entry which  <img src="http://www.ebi.ac.uk/chebi/images/ontology/checked/has_functional_parent.gif" alt="ChEBI 'has functional parent' icon" style="width:16px;height:16px;"> <i>has functional parent</i> &isin; {<tt>A</tt>, <tt>C</tt>, <tt>G</tt>, <tt>T</tt>, <tt>U</tt>}).</p>
                     <!-- TODO: The tt element is obsolete. CSS should be used instead. -->
@@ -51,10 +51,10 @@
 
                 <p> To create individual webpages that make up this static website, the SQLite database is imported into Python and processed using Jinja2 templates. The chemical structures displayed on the modification pages are created by converting ChEBI-provided simplified molecular-input line-entry system (SMILES) information into vector images, via <a href="http://openbabel.org/docs/dev/UseTheLibrary/Python_Pybel.html">Pybel</a>. </p>
             </div>
-            <div class="well">
+            <div class="well" resource="/license">
                 <h2 property="title"> License </h2>
-                    <p> All source code and web assets are licensed under a <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html">GNU General Public License, version 2 (GPLv2)</a>.
-                    DNAmod's data is licensed under a <a property="license" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution International license (CC BY 4.0)</a>. </p>
+                    <p property="articleBody"> All source code and web assets are licensed under a <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html">GNU General Public License, version 2 (GPLv2)</a>.
+                    DNAmod's data is licensed under a <a property="license" rel="cite" href="https://creativecommons.org/licenses/by/4.0/">Creative Commons Attribution International license (CC BY 4.0)</a>. </p>
                 <h2 id="availability" property="title"> Availability </h2>
                     <p> The DNAmod source code is available on <a href="https://bitbucket.org/hoffmanlab/dnamod"> Bitbucket</a>.</p>
                     <p> The backing SQLite database is <a href="DNAmod.sqlite" download>available</a>. </p>

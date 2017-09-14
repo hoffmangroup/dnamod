@@ -30,7 +30,7 @@
     <link href="css/style.css" rel="stylesheet" type='text/css'>  
 </head>
 
-<body id="modification" vocab="http://purl.org/dc/terms/">
+<body id="modification" vocab="http://purl.org/dc/terms/" prefix='cio: http://semanticscience.org/resource/'>
     <div class= "TitleBlock" >
         <nav class="navbar navbar-custom navbar-fixed-top">
           <div class="container-fluid">
@@ -75,7 +75,7 @@
                                 {% endif %}
 
                                 {% if Formula or NetCharge or AverageMass %}
-                                    <h2 h2 property="title"> Chemical properties </h2>
+                                    <h2 property="title"> Chemical properties </h2>
                                     <table class="table table-striped" id="ChemProps">
                                         <tr>
                                             <th> Chemical formula </th>
@@ -83,9 +83,9 @@
                                             <th> Average mass </th>
                                         </tr>
                                         <tr>
-                                            <td> {% if Formula %}{{ Formula }}{% endif %} </td>
-                                            <td> {% if NetCharge %}{{ NetCharge }}{% endif %} </td>
-                                            <td> {% if AverageMass %}{{ AverageMass }}{% endif %} </td>
+                                            <td property='cio:CHEMINF_000335'> {% if Formula %}{{ Formula }}{% endif %} </td>
+                                            <td property='cio:CHEMINF_000336'> {% if NetCharge %}{{ NetCharge }}{% endif %} </td>
+                                            <td property='cio:CHEMINF_000338'> {% if AverageMass %}{{ AverageMass }}{% endif %} </td>
                                         </tr>
                                     </table>
                                 {% endif %}
@@ -115,7 +115,7 @@
                                             <table class="table">
                                                 <tr>
                                                     <th> Name </th>
-                                                    <td> {{ ExpandedAlpha["Name"] }} </td> 
+                                                    <td property='cio:CHEMINF_000561'> {{ ExpandedAlpha["Name"] }} </td> 
                                                 <tr>
                                                     <th> Abbreviation </th>
                                                     <td> {{ ExpandedAlpha["Abbreviation"] }} </td>
@@ -170,10 +170,10 @@
                                                     {% endif %}
                                                 </tr>
                                                 <tr>
-                                                    {% if IupacName %}<td> {{ IupacName }} </td>{% endif %}
-                                                    {% if Smiles %}<td> {{ Smiles }} </td>{% endif %}
-                                                    {% if InChI %}<td> {{ InChI }} </td>{% endif %}
-                                                    {% if InChIKey %}<td> {{ InChIKey }} </td>{% endif %}
+                                                    {% if IupacName %}<td property='cio:CHEMINF_000382'> {{ IupacName }} </td>{% endif %}
+                                                    {% if Smiles %}<td property='cio:CHEMINF_000376'> {{ Smiles }} </td>{% endif %}
+                                                    {% if InChI %}<td property='cio:CHEMINF_000396'> {{ InChI }} </td>{% endif %}
+                                                    {% if InChIKey %}<td property='cio:CHEMINF_000399'> {{ InChIKey }} </td>{% endif %}
                                                     {% if Synonyms|length %}
                                                         <td>
                                                             <ul id="hangingindent">
@@ -255,9 +255,9 @@
 
                                                         <!-- TODO refactor citation format... -->
                                                         <td>
-                                                            <ul id="hangingindent">
+                                                            <ul id="hangingindent" resource='/table/citations'>
                                                                 {% for citationid in RefAnnotEntry["citationid"].split(';') %}
-                                                                    <li> {{ AuthorL[loop.index0] }} {{ PubdateL[loop.index0] }}. <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ citationid }}' > {{ TitleL[loop.index0] | replace('.', '') }}</a>. {{ JournalNameL[loop.index0] }}. {{ VolumeL[loop.index0] }}{% if IssueL[loop.index0] %}({{ IssueL[loop.index0] }}){% endif %}.  </li>
+                                                                    <li property='bibliographicCitation'> {{ AuthorL[loop.index0] }} {{ PubdateL[loop.index0] }}. <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ citationid }}' > {{ TitleL[loop.index0] | replace('.', '') }}</a>. {{ JournalNameL[loop.index0] }}. {{ VolumeL[loop.index0] }}{% if IssueL[loop.index0] %}({{ IssueL[loop.index0] }}){% endif %}.  </li>
                                                                 {% endfor %}
                                                             </ul>
                                                         </td>
@@ -286,7 +286,7 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                             <h2 id="Inline" property="title"> Database references: </h2> 
-                            <a id="Inline" href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ ChebiId }}" > {{ ChebiId }} </a> <br>
+                            <a id="Inline" property='cio:CHEMINF_000407' href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ ChebiId }}" > {{ ChebiId }} </a> <br>
                         </div>
                     </div>
                 </div>
@@ -298,11 +298,11 @@
                         <div class="panel panel-default">
                             <div class="panel-body">
                             
-                                <h2 property="title"> Citations </h2>
+                                <h2 property="title" resource='/citations'> Citations </h2>
                                 <ul id="hangingindent">
                                     {% if Citations|length %}
                                         {% for Citation in Citations %}
-                                        <li>{{ Citation["authors"] }} {{ Citation["pubdate"] }}. <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation["citationid"] }}' > {{ Citation["title"] }} </a> {{ Citation["journalname"] }}. {{ Citation["volume"] }}{% if Citation["issue"] %}({{ Citation["issue"] }}){% endif %}. </li>
+                                        <li property='bibliographicCitation'>{{ Citation["authors"] }} {{ Citation["pubdate"] }}. <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation["citationid"] }}' > {{ Citation["title"] }} </a> {{ Citation["journalname"] }}. {{ Citation["volume"] }}{% if Citation["issue"] %}({{ Citation["issue"] }}){% endif %}. </li>
                                         {% endfor %}
                                     {% else %}
                                         <li> No Citations </li>
