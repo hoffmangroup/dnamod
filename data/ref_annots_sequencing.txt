@@ -1,4 +1,4 @@
-ChEBI	Method	Method detail	Resolution	Enrichment or limitation	References
+ChEBI	Method	Method detail	Resolution	Qualifier	References
 # ------------------------------------------------
 # 5mC methods that do not distinguish 5hmC
 # 5mC, 5hmC

@@ -214,7 +214,13 @@
                                         <table class="table table-striped" id={{ RefAnnotTabNames[loop.index0] }}>
                                             <tr>
                                                 {% for Header, _ in RefAnnot[0].iteritems() if Header not in RefAnnotsRefColNames %}
-                                                    <th> {{ Header }} </th>
+                                                    {% if Header == "Qualifier" %}
+                                                        <th>
+                                                            <abbr data-toggle="popover" data-placement="top" data-html="true" data-content="Genomic enrichment, limitation, or advantage." data-original-title title><div> {{ Header }} </div></abbr>
+                                                        </th>
+                                                    {% else %}
+                                                        <th> {{ Header }} </th>
+                                                    {% endif %}
                                                 {% endfor %}
                                                 <th> References </th>
                                             </tr>
