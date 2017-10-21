@@ -218,6 +218,10 @@
                                                         <th>
                                                             <abbr data-toggle="popover" data-placement="top" data-html="true" data-content="Genomic enrichment, limitation, or advantage." data-original-title title><div> {{ Header }} </div></abbr>
                                                         </th>
+                                                    {% elif Header == "Organisms" %}
+                                                        <th>
+                                                            <abbr data-toggle="popover" data-placement="top" data-html="true" data-content="Examples only; not comprehensive" data-original-title title><div> {{ Header }} </div></abbr>
+                                                        </th>
                                                     {% else %}
                                                         <th> {{ Header }} </th>
                                                     {% endif %}
