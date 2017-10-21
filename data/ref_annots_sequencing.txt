@@ -50,9 +50,13 @@ ChEBI	Method	Method detail	Resolution	Qualifier	References
 76794	fCAB-seq	chemical conversion	single-base		23602153
 76794	fC-CET	chemical conversion	single-base		26344045
 76794	MAB-seq	chemical conversion	single-base		27172168
+76794	CLEVER-seq	chemical tagging	single-base	single-cell	28343982
 # ------------------------------------------------
 # 5hmC, 5fC
 76792,76794	Pvu-seal-seq	enzyme-mediated chemical tagging	single-base		25639471
+# ------------------------------------------------
+# 5fC, 5caC
+76794,76793	MAB-seq	chemical conversion	single-base	low-input or single-cell	28360182
 # ------------------------------------------------
 # 5caC
 76793	CAB-seq	chemical conversion	single-base		23758547
