@@ -186,3 +186,7 @@ table tr td.nucleobase {
     font-size: 1.2em;
     font-weight: bold;
 }
+.panel #piemenu {
+    min-width: 750px;
+    border: 0px;
+}

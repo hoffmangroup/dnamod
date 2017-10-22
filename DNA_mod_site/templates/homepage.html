@@ -186,7 +186,7 @@
                         <li>Click on any modified base to view its detailed information.
                     </ul>
                 </div>
-                <div class="panel panel-default">
+                <div class="panel" id="piemenu">
                     <div class="panel-body" id="chartContainer"></div>
                 </div>
             </div>
@@ -285,7 +285,7 @@
             </script>
 
             <noscript>
-                <div class= "panel panel-default" >
+                <div class= "panel panel-default">
                     <div id="accordion">
                         {% for base in bases %}
                             <h2> {{ base }} </h2>
