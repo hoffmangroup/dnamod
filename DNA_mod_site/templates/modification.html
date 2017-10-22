@@ -46,7 +46,9 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse">
               <div class="nav navbar-nav navbar-right">
-                <p class="navbar-text">A modification of <a href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ ParentLink }}" > {{ CommonName }} </a></p>
+                {% if ParentLink != "" %}
+                    <p class="navbar-text">A modification of <a href= "https://www.ebi.ac.uk/chebi/searchId.do?chebiId={{ ParentLink }}" > {{ CommonName }} </a></p>
+                {% endif %}
               </div>
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
