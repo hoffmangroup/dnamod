@@ -70,7 +70,7 @@
 
     {% set subpie_frac_adj = subpie_frac %}
 
-    {% set subpie_subitem_growth_factor = num_items_at_lvl/2 %}
+    {% set subpie_subitem_growth_factor = num_items_at_lvl/5 %}
 
     {% for mod_base in mod_children_L %}
         {% if mod_base|is_list %}
@@ -131,9 +131,8 @@
 
     <div class="container">
         <div class="well">
-            <p> If you use DNAmod in your work, please cite </p>
             <div id="InTextCitation" property="creator">
-                Sood AJ, Viner C, Hoffman MM. 2016. <a href="http://doi.org/10.1101/071712">DNAmod: the DNA modification database</a>. bioRxiv 071712.
+                Sood AJ, Viner C, Hoffman MM. 2016. <a href="http://doi.org/10.1101/071712">DNAmod: the DNA modification database</a>. <i>bioRxiv</i>. 071712.
             </div>
         </div>
     </div>
@@ -227,6 +226,12 @@
 
                                 {# identical name and symbol; do not duplicate #}
                                 {% set unmod_display_HTML = unmod_base|string %}
+                            {% elif unmod_base|string == otherBase %}
+                                {% set initial_subpie_frac = DNA_subpie_frac-other_subpie_frac %}
+
+                                {% set unmod_symbol = unmod_base|string|first|upper %}
+                                {% set unmod_display_HTML = "{} (<span class='nucleobase'>{}</span>)".format(unmod_base, unmod_symbol) %}
+                                
                             {% else %}
                                 {% set initial_subpie_frac = DNA_subpie_frac %}
 

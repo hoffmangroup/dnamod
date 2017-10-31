@@ -269,7 +269,7 @@
                                                         <td>
                                                             <ul id="hangingindent" resource='/table/citations'>
                                                                 {% for citationid in RefAnnotEntry["citationid"].split(';') %}
-                                                                    <li property='bibliographicCitation'> {{ AuthorL[loop.index0] }} {{ PubdateL[loop.index0] }}. <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ citationid }}' > {{ TitleL[loop.index0] | replace('.', '') }}</a>. {{ JournalNameL[loop.index0] }}. {{ VolumeL[loop.index0] }}{% if IssueL[loop.index0] %}({{ IssueL[loop.index0] }}){% endif %}.  </li>
+                                                                    <li property='bibliographicCitation'> {{ AuthorL[loop.index0] }} {{ PubdateL[loop.index0] }}. <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ citationid }}' > {{ TitleL[loop.index0] | replace('.', '') }}</a>. <i>{{ JournalNameL[loop.index0] }}</i>. {{ VolumeL[loop.index0] }}{% if IssueL[loop.index0] %}({{ IssueL[loop.index0] }}){% endif %}.  </li>
                                                                 {% endfor %}
                                                             </ul>
                                                         </td>
@@ -314,7 +314,7 @@
                                 <ul id="hangingindent">
                                     {% if Citations|length %}
                                         {% for Citation in Citations %}
-                                        <li property='bibliographicCitation'>{{ Citation["authors"] }} {{ Citation["pubdate"] }}. <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation["citationid"] }}' > {{ Citation["title"] }} </a> {{ Citation["journalname"] }}. {{ Citation["volume"] }}{% if Citation["issue"] %}({{ Citation["issue"] }}){% endif %}. </li>
+                                        <li property='bibliographicCitation'>{{ Citation["authors"] }} {{ Citation["pubdate"] }}. <a href= 'http://www.ncbi.nlm.nih.gov/pubmed/?term={{ Citation["citationid"] }}' > {{ Citation["title"] }} </a> <i>{{ Citation["journalname"] }}</i>. {{ Citation["volume"] }}{% if Citation["issue"] %}({{ Citation["issue"] }}){% endif %}. </li>
                                         {% endfor %}
                                     {% else %}
                                         <li> No Citations </li>

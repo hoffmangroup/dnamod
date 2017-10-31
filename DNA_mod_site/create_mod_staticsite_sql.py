@@ -71,8 +71,8 @@ NATURE_ANNOT_TABLE = dnamod_utils.get_constant('nature_annot_table')
 REFERENCES_TABLE = dnamod_utils.get_constant('references_table')
 
 IMAGE_FORMAT = 'svg'
-OTHER_RATIO = 3
-OTHER_SHARED_BASE = 'guanine'
+OTHER_RATIO = 5
+OTHER_SHARED_BASE = 'thymine'
 
 # shade these types of origins (or any containing the type as a word)
 # in the homepage pie menu display
