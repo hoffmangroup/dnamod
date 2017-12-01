@@ -54,6 +54,7 @@ CHEBI:111513	base J	β-glucosyl-hydroxymethyluracil	J
 CHEBI:17477	5caU	5-carboxyluracil	b	adenine:5-carboxyluracil
 CHEBI:74765	1mT	1-methylthymine
 CHEBI:74766	3mT	3-methylthymine
+CHEBI:134100	O4-meT	O4-methylthymine 
 CHEBI:132931	putThy	α-putrescinylthymine
 CHEBI:132195	dhpUra	5-dihydroxypentyluracil
 CHEBI:28997	dI	2'-deoxyinosine
