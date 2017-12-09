@@ -52,6 +52,7 @@ CHEBI:80961	5fU	5-formyluracil	e	adenine:5-formyluracil
 CHEBI:111511	base J	β-glucosyl-hydroxymethyluracil	J
 CHEBI:111513	base J	β-glucosyl-hydroxymethyluracil	J
 CHEBI:17477	5caU	5-carboxyluracil	b	adenine:5-carboxyluracil
+CHEBI:134101	mT	methylthymine
 CHEBI:74765	1mT	1-methylthymine
 CHEBI:74766	3mT	3-methylthymine
 CHEBI:134100	O4-meT	O4-methylthymine 

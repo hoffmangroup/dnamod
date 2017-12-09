@@ -256,6 +256,7 @@ def get_children(bases, requestMonitor, client):
 
 def get_recursive_children(entity, client, childrenverified, requestMonitor,
                            additionalChildren):
+                                           
     if entity.chebiAsciiName not in BLACK_LIST:
         if (childrenverified or (entity.chebiAsciiName in WHITE_LIST)):
             # TODO improve the way duplicate verified ontology entries are
@@ -1061,7 +1062,7 @@ BLACK_LIST = dnamod_utils.get_blacklist()
 
 requestMonitor = RequestMonitor()
 socket.setdefaulttimeout(300)
-#check_time()
+check_time()
 
 parser = argparse.ArgumentParser()
 parser.add_argument('-r', '--reset', action='store_true')
