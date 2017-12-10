@@ -58,7 +58,7 @@ UNVERIFIED_BASES = ('UnverifiedAdenine', 'UnverifiedThymine',
                     'UnverifiedUracil')
 BASE_DICT = {'adenine': 'CHEBI:16708', 'thymine': 'CHEBI:17821',
              'cytosine': 'CHEBI:16040', 'guanine': 'CHEBI:16235',
-             'uracil': 'CHEBI:17568','other':''}
+             'uracil': 'CHEBI:17568', 'other': ''}
 REF_COL_NAMES = ['citationid', 'title', 'pubdate', 'authors',
                  'journalname', 'volume', 'issue']
 
@@ -80,6 +80,7 @@ SHADE_ORIGINS = ['synthetic']
 
 # Create Database copy file to work with in script
 shutil.copy2(DATABASE_FILE_FULLPATH, DATABASE_FILE_COPY)
+
 
 def is_list(object):
     """Test if the given object is a list, by checking if
@@ -243,20 +244,15 @@ def get_mod_base_ref_annot_data(id, cursor, table):
             result = list(result)
             result.pop(0)
             annot_dict_list += [OrderedDict(izip(table_header, result))]
-    
+
     return annot_dict_list
 
 
-# XXX TODO break up below function into multiple smaller functions
 def create_html_pages(env):
     """Loads data for all modification pages and creates them.
        Returns a tuple of dictionaries: one containing links to
        the pages and another, keyed by ChEBI ID specifying the origin
        of each base, for only the verified modified nucleobases."""
-
-    # Load in SQLite database
-    conn = sqlite3.connect(DATABASE_FILE_COPY)
-    c = conn.cursor()
 
     page_template = env.get_template('modification.html')
 
@@ -267,14 +263,15 @@ def create_html_pages(env):
 
     # dictionary, keyed by ChEBI ID, storing verified base origins
     v_base_origins = {}
-    
-    conn2 = sqlite3.connect(':memory:')
-    c2 = conn2.cursor()
-    
-    command = "ATTACH DATABASE '" + DATABASE_FILE_COPY + "' as db"
-    c2.execute(command)
-    
-    c2.execute('''CREATE TEMP TABLE temp AS SELECT * FROM
+
+    # load in the SQLite database, storing it purely in memory
+    conn = sqlite3.connect(':memory:')
+    c = conn.cursor()
+
+    command = "ATTACH DATABASE '{}' as db".format(DATABASE_FILE_COPY)
+    c.execute(command)
+
+    c.execute('''CREATE TEMP TABLE temp AS SELECT * FROM
                     (SELECT * FROM
                         (SELECT * FROM
                             (SELECT * FROM db.modbase
@@ -282,19 +279,18 @@ def create_html_pages(env):
                         AS MB_BP NATURAL JOIN db.covmod)
                     AS MB_CV NATURAL JOIN db.names)
                 AS MB_B NATURAL JOIN db.base''')
-    conn2.commit()
+    conn.commit()
 
     if not os.path.exists(HTML_FILES_DIR):
         os.makedirs(HTML_FILES_DIR)
 
-    # XXX TODO do not use names in all caps for non-constant variables
     for BASE in BASES:
         links = []
         blacklist = []
 
         baseid = BASE[0]
-        mods = c2.execute("SELECT * FROM temp WHERE baseid = ?", baseid)
-        conn2.commit()
+        mods = c.execute("SELECT * FROM temp WHERE baseid = ?", baseid)
+        conn.commit()
 
         for mod in mods:
             # Read data:
@@ -310,9 +306,6 @@ def create_html_pages(env):
             inchi = mod[14]
             inchikey = mod[15]
             commonname = mod[16]
-
-            # XXX TODO cleanup commented-out code
-            # roles_lookup = mod[7] # unused as roles are not on site
 
             citations = get_citations(chebiid, conn)
 
@@ -372,7 +365,6 @@ def create_html_pages(env):
                 if v_base_origins[chebiid][0] == "s":
                     synthetic = True
 
-            # TODO revise second name?
             ref_annot_tab_names = ['Mapping techniques', 'Nature']
 
             ref_annots = [seq_annot, nature_annot]
@@ -404,7 +396,7 @@ def create_html_pages(env):
                                           RefAnnotsRefColNames=REF_COL_NAMES,
                                           # pass ExpandedAlpha=None to disable
                                           ExpandedAlpha=expanded_alpha,
-                                          Synthetic = synthetic)
+                                          Synthetic=synthetic)
 
             f.write(render)
             f.close()
@@ -609,7 +601,6 @@ def get_custom_nomenclature(cursor):
             for res_col in res_col_l}
 
 
-# TODO refactor...
 def create_homepage(env, homepage_links, v_base_origins):
     """Loads data needed to create the homepage and creates it."""
 
@@ -685,7 +676,11 @@ env = jinja2.Environment(loader=jinja2.FileSystemLoader(TEMPLATE_DIR),
 env.filters['is_list'] = is_list
 
 print("Generating Static Site....")
+
 links, v_base_origins = create_html_pages(env)
+
 create_homepage(env, links, v_base_origins)
+
 print("Static Site Generated")
+
 os.remove(DATABASE_FILE_COPY)
