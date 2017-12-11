@@ -245,11 +245,8 @@ def get_children(bases, requestMonitor, client):
         for child in additionalChildren:
             result.append(child)
 
-        result = set(result)
-        result = list(result)
-
         modDictionary[base.chebiAsciiName] = result
-        
+
     requestMonitor.add_request()
     print("----- BASE: {}".format("other"))
     manualadds = find_manual_additions("other")
@@ -274,11 +271,9 @@ def get_children(bases, requestMonitor, client):
 
 def get_recursive_children(entity, client, childrenverified, requestMonitor,
                            additionalChildren):
-                                           
     if entity.chebiAsciiName not in BLACK_LIST:
         if (childrenverified or (entity.chebiAsciiName in WHITE_LIST)):
-            # TODO improve the way duplicate verified ontology entries are
-            # handled
+            # TODO improve handling of duplicate verified ontology entries
             entity['verifiedstatus'] = 1
         else:
             entity['verifiedstatus'] = 0
@@ -456,7 +451,6 @@ def get_full_citation(PMID):
                 Issue = None
 
         else:
-            # XXX TODO refactor
             # isbook = True # Unused at the moment
             article = record['BookDocument']['Book']
 
@@ -477,8 +471,6 @@ def get_full_citation(PMID):
                 publisherName = None
 
     handle.close()
-
-    # XXX TODO refactor not found instances
 
     if articleTitle:
         result.append(articleTitle.encode('utf-8'))
@@ -546,9 +538,13 @@ def get_full_citation(PMID):
 
 def capitalize_journal_name(name):
     ignoreList = ["and", "or", "the", "of", "in"]
-    phrase=name.split(" ")
-    wordList=[]
+
+    phrase = name.split(" ")
+
+    wordList = []
+
     s = " "
+
     for word in phrase:
         if word not in ignoreList:
             word = word[0].upper() + word[1:]
@@ -560,18 +556,18 @@ def capitalize_journal_name(name):
 def create_other_tables(conn, sql_conn_cursor, children, bases):
     # Reset Tables
     if RESET_TABLES is True:
-        sql_conn_cursor.execute('''DROP TABLE IF EXISTS covmod''')
-        sql_conn_cursor.execute('''DROP TABLE IF EXISTS names''')
-        sql_conn_cursor.execute('''DROP TABLE IF EXISTS baseprops''')
-        sql_conn_cursor.execute('''DROP TABLE IF EXISTS citation_lookup''')
-        sql_conn_cursor.execute('''DROP TABLE IF EXISTS roles_lookup''')
-        sql_conn_cursor.execute('''DROP TABLE IF EXISTS citations''')
-        sql_conn_cursor.execute('''DROP TABLE IF EXISTS roles''')
-        sql_conn_cursor.execute('''DROP TABLE IF EXISTS modbase''')
-        sql_conn_cursor.execute('''DROP TABLE IF EXISTS expanded_alphabet''')
-        sql_conn_cursor.execute('''DROP TABLE IF EXISTS modbase_parents''')
-        sql_conn_cursor.execute('''DROP TABLE IF EXISTS nucleobase_nature_info''')
-        sql_conn_cursor.execute('''DROP TABLE IF EXISTS sequencing_citations''')
+        sql_conn_cursor.execute("DROP TABLE IF EXISTS covmod")
+        sql_conn_cursor.execute("DROP TABLE IF EXISTS names")
+        sql_conn_cursor.execute("DROP TABLE IF EXISTS baseprops")
+        sql_conn_cursor.execute("DROP TABLE IF EXISTS citation_lookup")
+        sql_conn_cursor.execute("DROP TABLE IF EXISTS roles_lookup")
+        sql_conn_cursor.execute("DROP TABLE IF EXISTS citations")
+        sql_conn_cursor.execute("DROP TABLE IF EXISTS roles")
+        sql_conn_cursor.execute("DROP TABLE IF EXISTS modbase")
+        sql_conn_cursor.execute("DROP TABLE IF EXISTS expanded_alphabet")
+        sql_conn_cursor.execute("DROP TABLE IF EXISTS modbase_parents")
+        sql_conn_cursor.execute("DROP TABLE IF EXISTS nucleobase_nature_info")
+        sql_conn_cursor.execute("DROP TABLE IF EXISTS sequencing_citations")
         conn.commit()
 
     # Create Tables
@@ -822,10 +818,6 @@ def _create_modbase_annot_table(conn, sql_conn_cursor, header, table_name):
         if (num < len(header)):
             col_names_create_spec += ','
 
-    # TODO fix below to perform stringent validation
-    # (see: http://stackoverflow.com/questions/25387537/
-    # sqlite3-operationalerror-near-syntax-error)
-    # maybe ignore, since never "user" sourced (since this is static)
     sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS {}
                             (nameid text,
                              {}
@@ -895,8 +887,6 @@ def create_annot_citation_tables(conn, sql_conn_cursor, ref_annots_file_name,
                 _create_modbase_annot_table(conn, sql_conn_cursor, line,
                                             table_name)
             else:
-                # TODO refactor to check or at least output a descriptive error
-                # if PMID is not last col
                 references = line[-1].split(",")
 
                 for reference in references:
@@ -1086,10 +1076,10 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-r', '--reset', action='store_true')
 args = parser.parse_args()
 
-if args.reset == True:
+if args.reset:
     RESET_TABLES = True
 
-if RESET_TABLES == True:
+if RESET_TABLES:
     if os.path.exists(DATABASE_FILE_FULLPATH):
         os.remove(DATABASE_FILE_FULLPATH)
     print("Reseting Database...")
@@ -1098,7 +1088,7 @@ conn = sqlite3.connect(DATABASE_FILE_FULLPATH)
 
 sql_conn_cursor = conn.cursor()
 
-if RESET_TABLES == False:
+if not RESET_TABLES:
     sql_conn_cursor.execute('''PRAGMA foreign_keys = ON''')
 
 conn.commit()
