@@ -31,7 +31,8 @@ from pysqlite2 import dbapi2 as sqlite3  # needed for latest SQLite
 import sys
 import unicodecsv as csv
 import time
-from datetime import datetime, timedelta
+import datetime
+import pytz
 import socket
 import argparse
 import os
@@ -80,7 +81,21 @@ MANUALADD_FILE_FULLPATH = dnamod_utils.get_constant('manual_additions')
 
 OTHER_BASE_ID = "CHEBI:other"
 OTHER_BASE_NAME = "other"
-OTHER_BASE_DEF = "A DNA base category added to encompass entities which do not fit into ATCG in the CHEBI ontology."
+OTHER_BASE_DEF = ("A DNA base category encompassing entities which do not "
+                  "fit into the A/T/G/C nucleobases of the ChEBI ontology.")
+
+_NCBI_TIMEZONE = pytz.timezone('US/Eastern')
+_EASTERN_HOUR_TIME_SUFFIX = (0, 0, 0, _NCBI_TIMEZONE)
+
+_NCBI_PERMITTED_QUERY_TIME_RANGE = \
+    (datetime.time(21, *_EASTERN_HOUR_TIME_SUFFIX),
+     datetime.time(5, *_EASTERN_HOUR_TIME_SUFFIX))
+
+_NCBI_INVALID_TIME_MSG_FSTRING = \
+    ("NCBI E-utilities restricts scripts with many queries to the "
+     "off-peak hours of 9 PM to 5 AM Eastern time on weekdays, "
+     "or weekends. Please try running this script again during "
+     "unrestricted hours. The current ({0:%Z}) time is {0:%I:%M %p}.")
 
 url = 'https://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
 client = Client(url)
@@ -118,13 +133,16 @@ class CustomBase:
 
 
 def check_time():
-    utc = datetime.utcnow()
-    time = utc.hour + utc.minute / 60. + utc.second / 3600.
-    if time < 2 or time > 10:
-        print("NCBI E-utilities restricts scripts to the off peak hours of "
-              "9PM to 5AM EST. Please try running this script again during "
-              "unrestricted hours. Current time (UTC): " + str(utc))
-        sys.exit(0)
+    NCBI_datetime = datetime.datetime.now(_NCBI_TIMEZONE)
+
+    # anytime is fine on weekends
+    if NCBI_datetime.weekday() < 5:
+        time = NCBI_datetime.timetz()
+        # only permit query if between 9 PM to 5 AM Eastern time
+        if (time > _NCBI_PERMITTED_QUERY_TIME_RANGE[1] and
+                time < _NCBI_PERMITTED_QUERY_TIME_RANGE[0]):
+            raise RuntimeError(_NCBI_INVALID_TIME_MSG_FSTRING.
+                               format(time))
 
 
 def field_not_found(field):
