@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 -------------------------------------------------------------------------------
 """
 
+import atexit
 import codecs
 from collections import OrderedDict, defaultdict, MutableSequence
 from copy import deepcopy
@@ -80,6 +81,16 @@ SHADE_ORIGINS = ['synthetic']
 
 # Create Database copy file to work with in script
 shutil.copy2(DATABASE_FILE_FULLPATH, DATABASE_FILE_COPY)
+
+
+def _exit_handler():
+    try:
+        os.remove(DATABASE_FILE_COPY)
+    except OSError:
+        pass
+
+
+atexit.register(_exit_handler)
 
 
 def is_list(object):
@@ -682,5 +693,3 @@ links, v_base_origins = create_html_pages(env)
 create_homepage(env, links, v_base_origins)
 
 print("Static Site Generated")
-
-os.remove(DATABASE_FILE_COPY)
