@@ -7,13 +7,13 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 # 2-amino-6-hydroxyaminopurine
 78685	synthetic		mutagenic	Escherichia coli, Salmonella typhimurium,Saccharomyces cerevisiae	1870608
 # 3-methyladenine
-38635	natural	damage	highly cytotoxic	Escherichia coili,Rattus norvegicus,Mesocricetus auratus,Mus musculus	24810496,2702723,985411,728073,6704174
+38635	natural	damage	highly cytotoxic	Escherichia coli,Rattus norvegicus,Mesocricetus auratus,Mus musculus	24810496,2702723,985411,728073,6704174
 # 4-methyladenine
 134106	natural				
 # 6-methyladenine (6mA)
-28871	natural	epigenetic mark		Escherichia coili,Caenorhabditis elegans,Chlamydomonas reinhardtii,Drosophila melanogaster,Clostridium thermoautotrophicum	25936836,25936839,25936839,25936838,4000939
+28871	natural	epigenetic mark		Escherichia coli,Caenorhabditis elegans,Chlamydomonas reinhardtii,Drosophila melanogaster,Clostridium thermoautotrophicum	25936836,25936839,25936839,25936838,4000939
 # 7-methyladenine
-28921	natural	damage	mutagenic	Escherichia coili,Rattus norvegicus,Mesocricetus auratus,Mus musculus	24810496,2702723,764991,985411,728073
+28921	natural	damage	mutagenic	Escherichia coli,Rattus norvegicus,Mesocricetus auratus,Mus musculus	24810496,2702723,764991,985411,728073
 # 9-methyladenine
 40526	synthetic				
 # methyladenine - category, create merge of containing members
@@ -68,7 +68,7 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 # 2-imino-3-methyl-1,2,3,9-tetrahydro-6H-purin-6-one (46893) -- similar to 3-methylguanine, omitted
 # 2-imino-7-methyl-1,2,3,7-tetrahydro-6H-purin-6-one (46894) -- similar to 7-methylguanine, omitted
 # 3-methylguanine
-1604	natural	damage	mutagenic	Escherichia coili,Mesocricetus auratus,Mus musculus	764991,24810496,985411,728073
+1604	natural	damage	mutagenic	Escherichia coli,Mesocricetus auratus,Mus musculus	764991,24810496,985411,728073
 # 6-O-methylguanine
 20689	natural	damage	highly cytotoxic	Escherichia colii,Mesocricetus auratus,Mus musculus,Rattus norvegicus	24810496,985411,728073,6704174
 # 7-methylguanine
@@ -98,7 +98,7 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 111513	natural	hypermodified nucleobase	transcription terminator	Trypanosoma cruzi,Trypanosoma brucei,Leishmania tarentolae,Leishmania donovani,Crithidia fasciculata,Trypanosoma equiperdum,Trypanoplasma borreli,Euglena gracilis	21321080,8261512,17329373,10931915
 # (beta-D-glucopyranosyloxymethyl)deoxyuridine 5'-monophosphate (111511) -- same as above with phosphate, omitted
 # 5,6-dihydrothymine
-27468	natural	damage	mutagenic	Escherichia coili,Homo sapiens	4860750,889777
+27468	natural	damage	mutagenic	Escherichia coli,Homo sapiens	4860750,889777
 # 5-hydroxymethyluracil
 16964	natural	damage, demethylation intermediate, and possible epigenetic mark		Homo sapiens,Gyrodinium cohnii,Rattus norvegicus,Mus musculus	10490501,4515611,6592579,24838012
 # 5-formyluracil
@@ -115,7 +115,7 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 # O4-methylthymine
 134100	natural	damage	mutagenic	Homo sapiens	7788843
 # 2'-deoxyuridine
-16450	natural			E. Coli	25015380
+16450	natural			Escherichia Coli	25015380
 # 5,6-dihydroxy-2'-deoxyuridine
 132189	synthetic				
 # 2'-deoxy-5-(4,5-dihydroxypentyl)uridine
