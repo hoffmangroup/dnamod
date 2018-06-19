@@ -116,6 +116,10 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 134100	natural	damage	mutagenic	Homo sapiens	7788843
 # 2'-deoxyuridine
 16450	natural			Escherichia Coli	25015380
+# 5-(2-aminoethoxy)methyluridine  (awaiting addition)
+# XXX	natural	hypermodified nucleobase		Enterobacteria phage ViI	29555775
+# 5-(2-aminoethyl)uridine (awaiting addition)
+# XXX	natural	hypermodified nucleobase		bacteriophage M6	29555775
 # 5,6-dihydroxy-2'-deoxyuridine
 132189	synthetic				
 # 2'-deoxy-5-(4,5-dihydroxypentyl)uridine
