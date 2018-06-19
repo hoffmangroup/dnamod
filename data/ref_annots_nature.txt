@@ -78,8 +78,8 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 44605	natural	damage and possible epigenetic mark	reactive oxygen species	Homo sapiens	2602371,10490501
 # 7-amido-7-deazaguanosine
 131836	natural	restriction-modification		Salmonella enterica serovar Montevideo,Kineococcus radiotolerans,Meiothermus chliarophilus,Comamonas testosteroni,Sphingopyxis alaskensis,Ferrimonas balearica	26929322
-# 7-cyano-7-deazaguanine / preQ(0) (awaiting addition)
-# XXXXXX	natural	restriction-modification		Salmonella enterica serovar Montevideo,Kineococcus radiotolerans,Comamonas testosteroni,Sphingopyxis alaskensis,Ferrimonas balearica	26929322
+# 7-cyano-7-deazaguanine / preQ(0)
+45075	natural	restriction-modification		Salmonella enterica serovar Montevideo,Kineococcus radiotolerans,Comamonas testosteroni,Sphingopyxis alaskensis,Ferrimonas balearica	26929322
 # methylguanine (25305) -- category, not annotated
 # 1,N(2)-ethenoguanine
 134096	natural	damage	mutagenic	Homo sapiens	21163908
