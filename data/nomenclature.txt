@@ -39,6 +39,8 @@ CHEBI:134095	N(2),3-ɛG	N(2),3-ethenoguanine
 CHEBI:134096	1,N(2)-ɛG	1,N(2)-ethenoguanine
 CHEBI:20689	m6G	6-O-methylguanine
 CHEBI:131836	ADG	7-amido-7-deazaguanosine
+CHEBI:45075	preQ(0)	7-cyano-7-deazaguanine
+CHEBI:64686	G+	7-formamidino-7-deazaguanine
 CHEBI:2274	7mG	7-methylguanine
 # below 3 children of 7mG are all tautomers of eachother; we call them "7mG" too
 CHEBI:28664	7mG	2-amino-7-methyl-1,7-dihydro-6H-purin-6-one
