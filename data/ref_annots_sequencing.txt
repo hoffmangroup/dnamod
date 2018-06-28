@@ -21,6 +21,7 @@ ChEBI	Method	Method detail	Resolution	Qualifier	References
 # ------------------------------------------------
 # discrimination of 5mC and 5hmC
 27551,76792	nanopore	direct detection	single-base	target sequences	20927439,21155562
+27551,76792	HPoxBS	chemical conversion	single-base	strand-specific	29912476
 # ------------------------------------------------
 # detection of only 5mC
 # 5mC
