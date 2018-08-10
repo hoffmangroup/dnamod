@@ -11,7 +11,7 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 # 4-methyladenine
 134106	natural				
 # 6-methyladenine (6mA)
-28871	natural	epigenetic mark		Escherichia coli,Caenorhabditis elegans,Chlamydomonas reinhardtii,Drosophila melanogaster,Clostridium thermoautotrophicum	25936836,25936839,25936839,25936838,4000939
+28871	natural	epigenetic mark		Escherichia coli,Caenorhabditis elegans,Chlamydomonas reinhardtii,Drosophila melanogaster,Clostridium thermoautotrophicum,Bombyx mori	25936836,25936839,25936839,25936838,4000939,30071347
 # 7-methyladenine
 28921	natural	damage	mutagenic	Escherichia coli,Rattus norvegicus,Mesocricetus auratus,Mus musculus	24810496,2702723,764991,985411,728073
 # 9-methyladenine
