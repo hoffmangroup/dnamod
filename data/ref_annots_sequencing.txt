@@ -80,7 +80,7 @@ ChEBI	Method	Method detail	Resolution	Qualifier	References
 # 8oxoG
 44605	fluorescence in situ hybridization	affinity-based	low	target sequences	16651663
 44605	array-based profiling	affinity-based	low	target sequences	25008760
-44605	gap ligation	excision repair enzyme–based	high	target sequences	26741640
+44605	gap ligation	excision repair enzyme-based	high	target sequences	26741640
 44605	nanopore	direct detection	single-base	target sequences	25768204
 # ------------------------------------------------
 # 8oxoG; also: 1,N6-propanoadenine
