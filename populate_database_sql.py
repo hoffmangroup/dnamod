@@ -36,9 +36,12 @@ import pytz
 import socket
 import argparse
 import os
+import ssl
 
 from Bio import Entrez
 from suds.client import Client  # Using Suds web services client for soap
+from suds.transport.https import HttpAuthenticated
+from urllib2 import HTTPSHandler
 
 import dnamod_utils
 
@@ -97,8 +100,8 @@ _NCBI_INVALID_TIME_MSG_FSTRING = \
      "or weekends. Please try running this script again during "
      "unrestricted hours. The current ({0:%Z}) time is {0:%I:%M %p}.")
 
-url = 'https://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
-client = Client(url)
+# TODO refactor to obtain via dnamod_utils.get_constant
+URL = 'https://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
 
 
 class RequestMonitor:
@@ -116,6 +119,20 @@ class RequestMonitor:
                 time.sleep(self.waitTime)
             self.timeStart = time.time()
             self.requestCount = 1
+
+
+class InsecureTransport(HttpAuthenticated):
+    """Adapted from: https://stackoverflow.com/a/37331984/5339699"""
+    # TODO use a valid SSL cert and authenticated instance instead.
+    def u2handlers(self):
+        handlers = HttpAuthenticated.u2handlers(self)
+
+        context = ssl._create_unverified_context()
+
+        # add an HTTPS handler, using the custom context
+        handlers.append(HTTPSHandler(context=context))
+
+        return handlers
 
 
 class CustomMod:
@@ -1093,6 +1110,8 @@ if not RESET_TABLES:
 
 conn.commit()
 os.chmod(DATABASE_FILE_FULLPATH, 0755)
+
+client = Client(URL, transport=InsecureTransport())
 
 print("1/5 Searching for bases...")
 bases = search_for_bases(client, requestMonitor)
