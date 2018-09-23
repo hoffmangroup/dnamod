@@ -745,8 +745,15 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
                     if citation[0] == 'I':
                         continue
 
-                    citationinfo = \
-                        get_full_citation(citation_details[citation])
+                    record = citation_details.get(citation)
+
+                    if not record:
+                        print("WARNING: No citation data found for {}. "
+                              "Citation skipped.".format(citation),
+                              file=sys.stderr)
+                        continue
+
+                    citationinfo = get_full_citation(record)
 
                     if citationinfo:
                         citationinfo_uni = [info.decode('utf-8') for info in
@@ -927,12 +934,12 @@ def create_annot_citation_tables(conn, sql_conn_cursor, ref_annots_file_name,
             else:
                 references = line[-1].split(",")
 
+                if not references or not references[0]:
+                    continue
+
                 citation_details = efetch_citation_details(references)
 
                 for reference in references:
-                    if not reference:
-                        continue
-
                     citationinfo = \
                         get_full_citation(citation_details[reference])
 
@@ -1129,7 +1136,7 @@ conn = sqlite3.connect(DATABASE_FILE_FULLPATH)
 sql_conn_cursor = conn.cursor()
 
 # XXX fix issue in other table and re-enable
-#sql_conn_cursor.execute('''PRAGMA foreign_keys = ON''')
+# sql_conn_cursor.execute('''PRAGMA foreign_keys = ON''')
 
 conn.commit()
 os.chmod(DATABASE_FILE_FULLPATH, 0755)
