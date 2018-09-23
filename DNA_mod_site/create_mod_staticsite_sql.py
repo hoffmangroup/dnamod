@@ -139,6 +139,10 @@ def get_citations(lookup_key, cursor):
         c.execute("SELECT * FROM citations WHERE citationid = ?",
                   (citationid,))
         query = c.fetchone()
+
+        if not query:  # allow empty citations
+            continue
+
         citationList.append(dict(izip(REF_COL_NAMES,
                             [item for item in query])))
         citationList.sort(key=lambda x: x['authors'])
