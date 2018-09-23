@@ -414,6 +414,9 @@ def efetch_citation_details(PMIDs):
        Entrez record object.
     """
 
+    if not PMIDs:
+        return dict()
+
     handle = Entrez.efetch(db="pubmed", id=",".join([str(PMID) for
                                                      PMID in PMIDs]),
                            retmode="xml")
@@ -421,10 +424,9 @@ def efetch_citation_details(PMIDs):
     return dict(zip(PMIDs, Entrez.read(handle)['PubmedArticle']))
 
 
-def get_full_citation(Entrez_records):
-    # XXX
-    #if PMID[0] == 'I':
-    #    return
+def get_full_citation(record):
+    """Parse and construct citation details for the given Entrez record.
+    """
 
     isarticle = False
 
@@ -438,65 +440,64 @@ def get_full_citation(Entrez_records):
     publisherName = None
     publisherLocation = None
 
-    for record in Entrez_records:
-        if 'MedlineCitation' in record:
-            isarticle = True
-            article = record['MedlineCitation']['Article']
-            journalrecord = record['MedlineCitation']['Article']['Journal']
-            daterecord = record['PubmedData']['History']
-            if'ArticleTitle' in article.keys():
-                articleTitle = article['ArticleTitle']
-            else:
-                articleTitle = None
-            if'AuthorList' in article.keys():
-                authors = article['AuthorList']
-            else:
-                authors = None
-            '''if'PubDate' in article.keys():
-                publicationDate = article['PubDate']
-            elif'ArticleDate' in article.keys():
-                publicationDate = article['ArticleDate']'''
+    if 'MedlineCitation' in record:
+        isarticle = True
+        article = record['MedlineCitation']['Article']
+        journalrecord = record['MedlineCitation']['Article']['Journal']
+        daterecord = record['PubmedData']['History']
+        if'ArticleTitle' in article.keys():
+            articleTitle = article['ArticleTitle']
+        else:
+            articleTitle = None
+        if'AuthorList' in article.keys():
+            authors = article['AuthorList']
+        else:
+            authors = None
+        '''if'PubDate' in article.keys():
+            publicationDate = article['PubDate']
+        elif'ArticleDate' in article.keys():
+            publicationDate = article['ArticleDate']'''
 
-            publicationDate = [date for date in daterecord if
-                               date.attributes['PubStatus'] == "pubmed"]
+        publicationDate = [date for date in daterecord if
+                           date.attributes['PubStatus'] == "pubmed"]
 
-            if 'Title' in journalrecord.keys():
-                journalName = journalrecord['Title']
-            else:
-                journalName = None
+        if 'Title' in journalrecord.keys():
+            journalName = journalrecord['Title']
+        else:
+            journalName = None
 
-            if 'JournalIssue' in journalrecord.keys():
-                journalIssue = journalrecord['JournalIssue']
-                if 'Volume' in journalIssue.keys():
-                    Volume = journalIssue['Volume']
-                else:
-                    Volume = None
-                if 'Issue' in journalIssue.keys():
-                    Issue = journalIssue['Issue']
-                else:
-                    Issue = None
+        if 'JournalIssue' in journalrecord.keys():
+            journalIssue = journalrecord['JournalIssue']
+            if 'Volume' in journalIssue.keys():
+                Volume = journalIssue['Volume']
             else:
                 Volume = None
+            if 'Issue' in journalIssue.keys():
+                Issue = journalIssue['Issue']
+            else:
                 Issue = None
-
         else:
-            article = record['BookDocument']['Book']
+            Volume = None
+            Issue = None
 
-            if'BookTitle' in article.keys():
-                articleTitle = article['BookTitle']
-            else:
-                articleTitle = None
-            if'AuthorList' in article.keys():
-                authors = article['AuthorList']
-            else:
-                authors = None
-            if'PubDate' in article.keys():
-                publicationDate = article['PubDate']
-            if 'Publisher' in article.keys():
-                publisherName = article['Publisher']['PublisherName']
-                publisherLocation = article['Publisher']['PublisherLocation']
-            else:
-                publisherName = None
+    else:
+        article = record['BookDocument']['Book']
+
+        if'BookTitle' in article.keys():
+            articleTitle = article['BookTitle']
+        else:
+            articleTitle = None
+        if'AuthorList' in article.keys():
+            authors = article['AuthorList']
+        else:
+            authors = None
+        if'PubDate' in article.keys():
+            publicationDate = article['PubDate']
+        if 'Publisher' in article.keys():
+            publisherName = article['Publisher']['PublisherName']
+            publisherLocation = article['Publisher']['PublisherLocation']
+        else:
+            publisherName = None
 
     result = []
 
@@ -740,6 +741,10 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
                 data = sql_conn_cursor.fetchone()
 
                 if True:
+                    # ignore /IND\d+/ citations (not PubMed IDs)
+                    if citation[0] == 'I':
+                        continue
+
                     citationinfo = \
                         get_full_citation(citation_details[citation])
 
