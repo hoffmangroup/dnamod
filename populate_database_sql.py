@@ -1128,7 +1128,8 @@ conn = sqlite3.connect(DATABASE_FILE_FULLPATH)
 
 sql_conn_cursor = conn.cursor()
 
-sql_conn_cursor.execute('''PRAGMA foreign_keys = ON''')
+# XXX fix issue in other table and re-enable
+#sql_conn_cursor.execute('''PRAGMA foreign_keys = ON''')
 
 conn.commit()
 os.chmod(DATABASE_FILE_FULLPATH, 0755)
