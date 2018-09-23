@@ -67,7 +67,6 @@ ONTOLOGY_FP = "has functional parent"
 ONTOLOGY_IS_A = "is a"
 ONTOLOGY_IS_TAUTOMER = "is tautomer of"
 
-RESET_TABLES = True
 ChEBI_ID_PREFIX = "CHEBI:"
 
 BLACK_LIST = []
@@ -362,7 +361,7 @@ def get_complete_bases(bases, requestMonitor, client):
 
 
 def create_base_table(conn, sql_conn_cursor, bases):
-    if RESET_TABLES is True:
+    if args.reset:
         sql_conn_cursor.execute('''DROP TABLE IF EXISTS base''')
 
     sql_conn_cursor.execute('''CREATE TABLE IF NOT EXISTS base
@@ -584,7 +583,7 @@ def capitalize_journal_name(name):
 
 def create_other_tables(conn, sql_conn_cursor, children, bases):
     # Reset Tables
-    if RESET_TABLES is True:
+    if args.reset:
         sql_conn_cursor.execute("DROP TABLE IF EXISTS covmod")
         sql_conn_cursor.execute("DROP TABLE IF EXISTS names")
         sql_conn_cursor.execute("DROP TABLE IF EXISTS baseprops")
@@ -1116,9 +1115,6 @@ parser.add_argument('-r', '--reset', action='store_true')
 args = parser.parse_args()
 
 if args.reset:
-    RESET_TABLES = True
-
-if RESET_TABLES:
     if os.path.exists(DATABASE_FILE_FULLPATH):
         os.remove(DATABASE_FILE_FULLPATH)
     print("Reseting Database...")
@@ -1127,8 +1123,7 @@ conn = sqlite3.connect(DATABASE_FILE_FULLPATH)
 
 sql_conn_cursor = conn.cursor()
 
-if not RESET_TABLES:
-    sql_conn_cursor.execute('''PRAGMA foreign_keys = ON''')
+sql_conn_cursor.execute('''PRAGMA foreign_keys = ON''')
 
 conn.commit()
 os.chmod(DATABASE_FILE_FULLPATH, 0755)
