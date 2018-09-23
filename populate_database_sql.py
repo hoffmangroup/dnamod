@@ -404,17 +404,30 @@ def get_ontology_data(child, attribute, selectors):
             getattr(child, attribute) if ontologyitem.type in selectors]
 
 
-def get_full_citation(PMID):
-    if PMID[0] == 'I':
-        return
+def efetch_citation_details(PMIDs):
+    """Fetch all citation details using the Entrez EFetch API.
+       Fetch a large group at once, for efficiency.
 
-    print("Adding Citation: {}".format(PMID))
-    result = []
-    # isbook = False # Unused at the moment
+       Accepts a list of PubMed IDs.
+
+       Returns a dictionary, keyed by the PubMed IDs,
+       with values containing the internal 'PubmedArticle'
+       Entrez record object.
+    """
+
+    handle = Entrez.efetch(db="pubmed", id=",".join([str(PMID) for
+                                                     PMID in PMIDs]),
+                           retmode="xml")
+
+    return dict(zip(PMIDs, Entrez.read(handle)['PubmedArticle']))
+
+
+def get_full_citation(Entrez_records):
+    # XXX
+    #if PMID[0] == 'I':
+    #    return
+
     isarticle = False
-
-    handle = Entrez.efetch("pubmed", id=PMID, retmode="xml")
-    records = Entrez.read(handle)
 
     articleTitle = []
     publicationDate = []
@@ -426,7 +439,7 @@ def get_full_citation(PMID):
     publisherName = None
     publisherLocation = None
 
-    for record in records['PubmedArticle']:
+    for record in Entrez_records:
         if 'MedlineCitation' in record:
             isarticle = True
             article = record['MedlineCitation']['Article']
@@ -468,7 +481,6 @@ def get_full_citation(PMID):
                 Issue = None
 
         else:
-            # isbook = True # Unused at the moment
             article = record['BookDocument']['Book']
 
             if'BookTitle' in article.keys():
@@ -487,7 +499,7 @@ def get_full_citation(PMID):
             else:
                 publisherName = None
 
-    handle.close()
+    result = []
 
     if articleTitle:
         result.append(articleTitle.encode('utf-8'))
@@ -720,13 +732,18 @@ def create_other_tables(conn, sql_conn_cursor, children, bases):
                                             (role_ids[role], role_names[role]))
                     conn.commit()
 
+            citation_details = efetch_citation_details(citations)
+
             for citation in citations:
                 sql_conn_cursor.execute('''SELECT * FROM citations
                                         WHERE citationid = ?''',
                                         [citation])
                 data = sql_conn_cursor.fetchone()
+
                 if True:
-                    citationinfo = get_full_citation(citation)
+                    citationinfo = \
+                        get_full_citation(citation_details[citation])
+
                     if citationinfo:
                         citationinfo_uni = [info.decode('utf-8') for info in
                                             citationinfo]
@@ -906,11 +923,15 @@ def create_annot_citation_tables(conn, sql_conn_cursor, ref_annots_file_name,
             else:
                 references = line[-1].split(",")
 
+                citation_details = efetch_citation_details(references)
+
                 for reference in references:
                     if not reference:
                         continue
 
-                    citationinfo = get_full_citation(reference)
+                    citationinfo = \
+                        get_full_citation(citation_details[reference])
+
                     citationinfo_uni = [info.decode('utf-8') for info in
                                         citationinfo]
 
@@ -1081,6 +1102,7 @@ def fix_verified_status(conn, sql_conn_cursor, client, requestMonitor):
         sql_conn_cursor.execute('''UPDATE modbase SET verifiedstatus = 0
                                 WHERE nameid = ?''', (id,))
     conn.commit()
+
 
 WHITE_LIST = dnamod_utils.get_whitelist()
 BLACK_LIST = dnamod_utils.get_blacklist()
