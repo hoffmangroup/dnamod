@@ -28,7 +28,7 @@ CONSTANTS_SCRIPT="$SOURCE_DIR/constants.sh"
 echo "Begining to update DNAmod and create static site..."
 
 # re-build the database from scratch
-$($CONSTANTS_SCRIPT 'script_pop_db' -r)
+$($CONSTANTS_SCRIPT 'script_pop_db') -r
 echo "Database updated."
 
 $($CONSTANTS_SCRIPT 'script_create_site')
