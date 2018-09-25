@@ -51,8 +51,8 @@ CHEBI:27468	diHT	5,6-dihydrothymine
 CHEBI:16450	dU	2'-deoxyuridine
 CHEBI:142164	5-NeOmdU	5-(2-aminoethoxy)methyluridine
 CHEBI:142166	5-NedU	5-(2-aminoethyl)uridine
+# below 2 children of T are the ribose and deoxy of 5hmU
 CHEBI:16964	5hmU	5-hydroxymethyluracil	g	adenine:5-hydroxymethyluracil
-# below is the deoxy of the above, which we group
 CHEBI:61288	5hmU	5-hydroxymethyluracil	g	adenine:5-hydroxymethyluracil
 CHEBI:80961	5fU	5-formyluracil	e	adenine:5-formyluracil
 CHEBI:111511	base J	β-glucosyl-hydroxymethyluracil	J
