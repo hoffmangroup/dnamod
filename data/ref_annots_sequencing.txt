@@ -46,6 +46,7 @@ ChEBI	Method	Method detail	Resolution	Qualifier	References
 76792	nanopore	direct detection	single-base	target sequences	27383905
 76792	peroxotungstate-mediated oxidation	chemical conversion	single-base		27766835
 76792	hmC-CATCH	chemical conversion	single-base	low-input	30278133
+76792	ACE-seq	enzyme-mediated chemical tagging	single-base	low-input	30295673
 # -----------------------------------------------
 # 5fC
 76794	redBS-seq	chemical conversion	single-base		24755596
