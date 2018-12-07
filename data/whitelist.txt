@@ -4,6 +4,7 @@ Adenine
 	N(6)-hydroxyadenine
 	2-amino-6-hydroxyaminopurine
 	methyladenine
+	6-hydroxymethyladenine
 	6-methylaminopurine
 	N(6)-carbamoylmethyladenine
 	9H-purine-2,6-diamine

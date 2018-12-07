@@ -5,6 +5,7 @@ CHEBI:18083	1mA	1-methyladenine
 CHEBI:38635	3mA	3-methyladenine
 CHEBI:134106	4mA	4-methyladenine
 CHEBI:28871	6mA	6-methyladenine	a	thymine:6-methyladenine
+CHEBI:142766	6hmA	6-hydroxymethyladenine
 CHEBI:28921	7mA	7-methyladenine
 CHEBI:134104	8oxoA	8-oxoadenine
 CHEBI:40526	9mA	9-methyladenine
