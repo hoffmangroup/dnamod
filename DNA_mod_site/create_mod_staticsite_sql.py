@@ -498,9 +498,25 @@ def cons_nested_verified_dict_modbase_hierarchy(conn, cursor):
                                                      ON mod.baseid=unmod.baseid
                                                  WHERE verifiedstatus=1
                                                      AND nameid NOT IN
-                                                     -- s.t. it has no parents
-                                                    (SELECT DISTINCT nameid
-                                                     FROM modbase_parents)
+                                                     -- s.t. it has no
+                                                     -- *verified* parents
+                                                     -- (since those are added
+                                                     --  at the next level).
+                                                     -- May have unverified
+                                                     -- parents, which we
+                                                     -- want to add, without
+                                                     -- some unverified
+                                                     -- intermediate like 6hmA.
+                                                    (SELECT mod.nameid FROM
+                                                     modbase_parents AS par
+                                                     JOIN modbase AS mod
+                                                     ON par.nameid=mod.nameid
+                                                     WHERE
+                                                         (SELECT verifiedstatus
+                                                          FROM modbase
+                                                          WHERE nameid=
+                                                          par.parentid)
+                                                         =1)
                                                  ORDER BY commonname""")
 
     verified_root_base_IDs_by_unmod_base = defaultdict(list)
