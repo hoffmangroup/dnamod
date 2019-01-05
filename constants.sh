@@ -48,7 +48,7 @@ set -o nounset -o pipefail -o errexit
 # "nature_annot_table" A constant holding the name of the nature annotation table
 # "references_table" A constant holding the name of the references table
 # "exp_alpha_table" A constant holding the name of the expanded alphabet table
-# "dnamod_version" A constant holding the current version number of DNAmod
+# "dnamod_version" A constant holding the current version number of DNAmod. This version number captures both DNAmod database and software versions which are kept in sync for release.
 # "chebi_version" A constant holding the current version number of ChEBI
 
 ERR_EXIT=64
