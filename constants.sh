@@ -48,6 +48,8 @@ set -o nounset -o pipefail -o errexit
 # "nature_annot_table" A constant holding the name of the nature annotation table
 # "references_table" A constant holding the name of the references table
 # "exp_alpha_table" A constant holding the name of the expanded alphabet table
+# "dnamod_version" A constant holding the current version number of DNAmod
+# "chebi_version" A constant holding the current version number of ChEBI
 
 ERR_EXIT=64
 
@@ -114,6 +116,9 @@ SEQ_ANNOT_TABLE="sequencing_citations"
 NATURE_ANNOT_TABLE="nucleobase_nature_info"
 REFERENCES_TABLE="citations"
 EXP_ALPH_TABLE="expanded_alphabet"
+
+DNAMOD_VERSION="v1.4"
+CHEBI_VERSION="04-01-2019" #From: https://www.ebi.ac.uk/ols/ontologies/chebi
 
 case ${1:-} in 
     root_dir)
@@ -193,6 +198,12 @@ case ${1:-} in
         ;;
     manual_additions)
         echo -n "$MANUAL_ADDITIONS"
+        ;;
+    dnamod_version)
+        echo -n "$DNAMOD_VERSION"
+        ;;
+    chebi_version)
+        echo -n "$CHEBI_VERSION"
         ;;
     *)
         # get all possible cases by searching this script

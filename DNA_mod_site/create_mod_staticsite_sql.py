@@ -71,6 +71,9 @@ SEQ_ANNOT_TABLE = dnamod_utils.get_constant('seq_annot_table')
 NATURE_ANNOT_TABLE = dnamod_utils.get_constant('nature_annot_table')
 REFERENCES_TABLE = dnamod_utils.get_constant('references_table')
 
+DNAMOD_VERSION = dnamod_utils.get_constant('dnamod_version')
+CHEBI_VERSION = dnamod_utils.get_constant('chebi_version')
+
 IMAGE_FORMAT = 'svg'
 OTHER_RATIO = 5
 OTHER_SHARED_BASE = 'thymine'
@@ -389,6 +392,11 @@ def create_html_pages(env):
                 expanded_alpha["Name"] = \
                     formatCuratedName(expanded_alpha["Name"])
 
+            # record the last modified date (UTC) without the time
+            # the resulting datetime object will print in ISO 8601 format
+            last_mod_time = os.path.getmtime(DATABASE_FILE_FULLPATH)
+            last_mod_dt = datetime.datetime.utcfromtimestamp(last_mod_time).date()
+    
             render = page_template.render(ChebiName=chebiname_title,
                                           Definition=definition,
                                           Formula=formula,
@@ -411,7 +419,10 @@ def create_html_pages(env):
                                           RefAnnotsRefColNames=REF_COL_NAMES,
                                           # pass ExpandedAlpha=None to disable
                                           ExpandedAlpha=expanded_alpha,
-                                          Synthetic=synthetic)
+                                          Synthetic=synthetic,
+                                          time=last_mod_dt,
+                                          DnamodVer=DNAMOD_VERSION,
+                                          ChebiVer=CHEBI_VERSION)
 
             f.write(render)
             f.close()
@@ -680,7 +691,9 @@ def create_homepage(env, homepage_links, v_base_origins):
                                   shadeOrigins=SHADE_ORIGINS,
                                   time=last_mod_dt,
                                   otherRatio=OTHER_RATIO,
-                                  otherBase=OTHER_SHARED_BASE)
+                                  otherBase=OTHER_SHARED_BASE,
+                                  DnamodVer=DNAMOD_VERSION,
+                                  ChebiVer=CHEBI_VERSION)
 
     f.write(render)
     f.close()
