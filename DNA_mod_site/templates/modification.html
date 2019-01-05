@@ -224,6 +224,14 @@
                                                         <th>
                                                             <abbr data-toggle="popover" data-placement="top" data-html="true" data-content="Examples only; not comprehensive" data-original-title title><div> {{ Header }} </div></abbr>
                                                         </th>
+                                                    {% elif Header == "Method detail" %}
+                                                        <th>
+                                                            <abbr data-toggle="popover" data-placement="top" data-html="true" data-content="Specifies the type of modified nucleobase detection. This is generally used to demarcate between chemical, antibody, or direct detection methods." data-original-title title><div> {{ Header }} </div></abbr>
+                                                        </th>
+                                                    {% elif Header == "Resolution" %}
+                                                        <th>
+                                                            <abbr data-toggle="popover" data-placement="top" data-html="true" data-content="Specifies the resolution of the sequencing method. Generally ranges from 'low' (indicating only detection or enrichment within some, possibly large or inexact, region) to single-base resolution." data-original-title title><div> {{ Header }} </div></abbr>
+                                                        </th>
                                                     {% else %}
                                                         <th> {{ Header }} </th>
                                                     {% endif %}
