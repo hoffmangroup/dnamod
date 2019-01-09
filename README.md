@@ -54,6 +54,8 @@ The following packages can be obtained from [The Python Package Index, PyPI](htt
 
 7. [`more-itertools`](https://pypi.python.org/pypi/more-itertools/)
 
+8. [`retrying`](https://pypi.org/project/retrying/)
+
 ## NCBI disclaimer ##
 
 DNAmod uses NCBI's E-utilities. NCBI's disclaimer and copyright notice applies to this usage. It is available [online](https://www.ncbi.nlm.nih.gov/home/about/policies.shtml) and [within this repository](NCBI_disclaimer.html).

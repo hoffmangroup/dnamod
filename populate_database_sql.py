@@ -39,9 +39,10 @@ import os
 import ssl
 
 from Bio import Entrez
+from retrying import retry
 from suds.client import Client  # Using Suds web services client for soap
 from suds.transport.https import HttpAuthenticated
-from urllib2 import HTTPSHandler
+from urllib2 import HTTPSHandler, URLError
 
 import dnamod_utils
 
@@ -98,6 +99,11 @@ _NCBI_INVALID_TIME_MSG_FSTRING = \
      "off-peak hours of 9 PM to 5 AM Eastern time on weekdays, "
      "or weekends. Please try running this script again during "
      "unrestricted hours. The current ({0:%Z}) time is {0:%I:%M %p}.")
+
+# parameters for retrying Entrez API (EFetch) queries
+_R_MAX_EFETCH_TRIES = 4
+_R_DELAY = 3000  # ms
+_R_EXP_MUL_BACKOFF = 1000  # 2^x * <value> ms
 
 # TODO refactor to obtain via dnamod_utils.get_constant
 URL = 'https://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
@@ -403,9 +409,15 @@ def get_ontology_data(child, attribute, selectors):
             getattr(child, attribute) if ontologyitem.type in selectors]
 
 
+@retry(retry_on_exception=URLError,
+       stop_max_attempt_number=_R_MAX_EFETCH_TRIES, wait_fixed=_R_DELAY,
+       wait_exponential_multiplier=_R_EXP_MUL_BACKOFF)
 def efetch_citation_details(PMIDs):
     """Fetch all citation details using the Entrez EFetch API.
        Fetch a large group at once, for efficiency.
+
+       Uses a retry decorator, re-running this upon failure
+       (API overload), with a delay and exp. back-off.
 
        Accepts a list of PubMed IDs.
 
