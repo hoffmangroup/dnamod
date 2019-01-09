@@ -39,7 +39,7 @@ import os
 import ssl
 
 from Bio import Entrez
-from retrying import retry
+from retry import retry
 from suds.client import Client  # Using Suds web services client for soap
 from suds.transport.https import HttpAuthenticated
 from urllib2 import HTTPSHandler, URLError
@@ -102,8 +102,8 @@ _NCBI_INVALID_TIME_MSG_FSTRING = \
 
 # parameters for retrying Entrez API (EFetch) queries
 _R_MAX_EFETCH_TRIES = 4
-_R_DELAY = 3000  # ms
-_R_EXP_MUL_BACKOFF = 1000  # 2^x * <value> ms
+_R_DELAY = 3  # s
+_R_EXP_MUL_BACKOFF = 2  # exponent base
 
 # TODO refactor to obtain via dnamod_utils.get_constant
 URL = 'https://www.ebi.ac.uk/webservices/chebi/2.0/webservice?wsdl'
@@ -409,9 +409,8 @@ def get_ontology_data(child, attribute, selectors):
             getattr(child, attribute) if ontologyitem.type in selectors]
 
 
-@retry(retry_on_exception=URLError,
-       stop_max_attempt_number=_R_MAX_EFETCH_TRIES, wait_fixed=_R_DELAY,
-       wait_exponential_multiplier=_R_EXP_MUL_BACKOFF)
+@retry(URLError, tries=_R_MAX_EFETCH_TRIES, delay=_R_DELAY,
+       backoff=_R_EXP_MUL_BACKOFF)
 def efetch_citation_details(PMIDs):
     """Fetch all citation details using the Entrez EFetch API.
        Fetch a large group at once, for efficiency.

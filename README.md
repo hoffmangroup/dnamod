@@ -54,7 +54,7 @@ The following packages can be obtained from [The Python Package Index, PyPI](htt
 
 7. [`more-itertools`](https://pypi.python.org/pypi/more-itertools/)
 
-8. [`retrying`](https://pypi.org/project/retrying/)
+8. [`retry`](https://pypi.org/project/retry/)
 
 ## NCBI disclaimer ##
 
