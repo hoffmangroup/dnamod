@@ -75,7 +75,7 @@ DNAMOD_VERSION = dnamod_utils.get_constant('dnamod_version')
 CHEBI_VERSION = dnamod_utils.get_constant('chebi_version')
 
 IMAGE_FORMAT = 'svg'
-OTHER_RATIO = 5
+OTHER_RATIO = 8
 OTHER_SHARED_BASE = 'thymine'
 
 # shade these types of origins (or any containing the type as a word)
