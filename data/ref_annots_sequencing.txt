@@ -18,6 +18,7 @@ ChEBI	Method	Method detail	Resolution	Qualifier	References
 27551,76792	PBAT	chemical conversion	single-base		22649061
 27551,76792	SMRT-BS	chemical conversion	single-base	target sequences	25943404
 27551,76792	MspJI recognition	restriction endonuclease	low	specific fragments	21690366
+27551,76792	TAPS	chemical conversion	single-base		30804537
 # ------------------------------------------------
 # discrimination of 5mC and 5hmC
 27551,76792	nanopore	direct detection	single-base	target sequences	20927439,21155562
@@ -29,6 +30,7 @@ ChEBI	Method	Method detail	Resolution	Qualifier	References
 27551	coBS-seq	chemical conversion	single-base		27460669
 27551	nanopore	direct detection	single-base	target sequences	21991340
 27551	fluorescence microscopy	direct detection	low	target sequences	21981444
+27551	TAPSβ	chemical conversion	single-base		30804537
 # ------------------------------------------------
 # detection of only 5hmC
 # 5hmC
@@ -47,6 +49,7 @@ ChEBI	Method	Method detail	Resolution	Qualifier	References
 76792	peroxotungstate-mediated oxidation	chemical conversion	single-base		27766835
 76792	hmC-CATCH	chemical conversion	single-base	low-input	30278133
 76792	ACE-seq	enzyme-mediated chemical tagging	single-base	low-input	30295673
+76792	CAPS	chemical conversion	single-base		30804537
 # -----------------------------------------------
 # 5fC
 76794	redBS-seq	chemical conversion	single-base		24755596
