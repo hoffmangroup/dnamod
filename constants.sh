@@ -118,7 +118,7 @@ REFERENCES_TABLE="citations"
 EXP_ALPH_TABLE="expanded_alphabet"
 
 DNAMOD_VERSION="v1.5"
-CHEBI_VERSION="04-01-2019" #From: https://www.ebi.ac.uk/ols/ontologies/chebi
+CHEBI_VERSION="04-03-2019" #From: https://www.ebi.ac.uk/ols/ontologies/chebi
 
 case ${1:-} in 
     root_dir)
