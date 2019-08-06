@@ -101,12 +101,12 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 # thymine
 #
 # (beta-D-glucopyranosyloxymethyl)deoxyuridine (nucleobase: base J)
-111513	natural	hypermodified nucleobase	transcription terminator	Trypanosoma cruzi,Trypanosoma brucei,Leishmania tarentolae,Leishmania donovani,Crithidia fasciculata,Trypanosoma equiperdum,Trypanoplasma borreli,Euglena gracilis	21321080,8261512,17329373,10931915
+111513	natural	hypermodified nucleobase	transcription terminator	Trypanosoma cruzi,Trypanosoma brucei,Leishmania tarentolae,Leishmania donovani,Crithidia fasciculata,Trypanosoma equiperdum,Trypanoplasma borreli,Euglena gracilis,Leishmania major	21321080,8261512,17329373,10931915,28137275
 # (beta-D-glucopyranosyloxymethyl)deoxyuridine 5'-monophosphate (111511) -- same as above with phosphate, omitted
 # 5,6-dihydrothymine
 27468	natural	damage	mutagenic	Escherichia coli,Homo sapiens	4860750,889777
 # 5-hydroxymethyluracil
-16964	natural	damage, demethylation intermediate, and possible epigenetic mark		Homo sapiens,Gyrodinium cohnii,Rattus norvegicus,Mus musculus	10490501,4515611,6592579,24838012
+16964	natural	damage, demethylation intermediate, and possible epigenetic mark		Homo sapiens,Gyrodinium cohnii,Rattus norvegicus,Mus musculus,Leishmania donovani,Leishmania major	10490501,4515611,6592579,24838012,28137275
 # 5-formyluracil
 80961	natural	damage and demethylation intermediate		Homo sapiens	7578084
 # α-putrescinylthymine
