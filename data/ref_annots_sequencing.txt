@@ -100,7 +100,7 @@ ChEBI	Method	Method detail	Resolution	Qualifier	References
 44605	nanopore	direct detection	single-base	target sequences	28967259
 # ------------------------------------------------
 # 5hmU, 5fU
-16964,80961	Hardisty-labelling	chemical tagging	single-base	target sequences	25946119
+16964,80961	Hardisty-labelling	chemical tagging	single-base	target sequences	25946119,28137275
 # ------------------------------------------------
 # 5hmU
 16964	Yu-labelling	chemical tagging	single-base	5hmU:G mismatch only	25462560
@@ -108,6 +108,7 @@ ChEBI	Method	Method detail	Resolution	Qualifier	References
 # base J
 111513	immunodetection	affinity-based	low		9389654
 111513	SMRT	direct detection	single-base	target sequences	25662217
+111513	(GLIB/CMS)-seq	chemical conversion and immunoprecipitation	low		28137275
 #-------------------------------------------------
 # dU
 16450	Excision-seq				25015380
