@@ -28,7 +28,7 @@ ChEBI	Method	Method detail	Resolution	Qualifier	References
 # 5mC
 27551	oxBS-seq	chemical conversion	single-base		24008380
 27551	coBS-seq	chemical conversion	single-base		27460669
-27551	nanopore	direct detection	single-base	target sequences	21991340
+27551	nanopore	direct detection	single-base	target sequences	21991340,28125225
 27551	fluorescence microscopy	direct detection	low	target sequences	21981444
 27551	TAPSβ	chemical conversion	single-base		30804537
 # ------------------------------------------------
@@ -70,8 +70,12 @@ ChEBI	Method	Method detail	Resolution	Qualifier	References
 76793	CAB-seq	chemical conversion	single-base		23758547
 76793	caMAB-seq	chemical conversion	single-base		27172168
 # ------------------------------------------------
+# 5mC, 5hmC, 5fC, 5caC
+27551,76792,76794,76793	nanopore	direct detection	single-base	target sequences	28125225
+# ------------------------------------------------
 # 5mC, 5hmC, 6mA
 27551,76792,28871	SMRT	direct detection	single-base	target sequences	20453866
+27551,76792,28871	nanopore	direct detection	single-base	target sequences	28218897
 # ------------------------------------------------
 # 4mC, 5mC, 6mA
 21839,27551,28871	dye-terminator Sanger sequencing	direct detection	single-base		16091626,9580708
@@ -91,6 +95,9 @@ ChEBI	Method	Method detail	Resolution	Qualifier	References
 # ------------------------------------------------
 # 8oxoG; also: 1,N6-propanoadenine
 44605	immunoprecipitation	affinity-based	low	target sequences	17003489
+# ------------------------------------------------
+# 8oxoG; also: 1,N6-ethenoadenine
+44605	nanopore	direct detection	single-base	target sequences	28967259
 # ------------------------------------------------
 # 5hmU, 5fU
 16964,80961	Hardisty-labelling	chemical tagging	single-base	target sequences	25946119
