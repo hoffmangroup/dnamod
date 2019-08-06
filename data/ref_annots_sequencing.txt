@@ -50,6 +50,7 @@ ChEBI	Method	Method detail	Resolution	Qualifier	References
 76792	hmC-CATCH	chemical conversion	single-base	low-input	30278133
 76792	ACE-seq	enzyme-mediated chemical tagging	single-base	low-input	30295673
 76792	CAPS	chemical conversion	single-base		30804537
+76792	Jump-seq	chemical tagging	high		31117646
 # -----------------------------------------------
 # 5fC
 76794	redBS-seq	chemical conversion	single-base		24755596
