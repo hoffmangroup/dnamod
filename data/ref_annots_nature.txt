@@ -79,7 +79,7 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 2274	natural	damage	cytotoxic	Escherichia coli,Homo sapiens,Mesocricetus auratus,Mus musculus,Rattus norvegicus	24810496,5417622,985411,728073,6704174
 # 8-oxoguanine
 # 7,8-dihydro-8-oxoguanine -- same as above, using above ChEBI ID only
-44605	natural	damage and possible epigenetic mark	reactive oxygen species	Homo sapiens	2602371,10490501
+44605	natural	damage and epigenetic mark	reactive oxygen species	Homo sapiens	2602371,10490501,28629775
 # 7-amido-7-deazaguanosine
 131836	natural	restriction-modification		Salmonella enterica serovar Montevideo,Kineococcus radiotolerans,Meiothermus chliarophilus,Comamonas testosteroni,Sphingopyxis alaskensis,Ferrimonas balearica	26929322
 # 7-cyano-7-deazaguanine / preQ(0)
