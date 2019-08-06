@@ -28,6 +28,8 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 102525	natural	hypermodified nucleobase	specific transcriptional roles	Enterobacteria phage Mu	6369315
 # 2-aminoadenine
 40235	natural	hypermodified nucleobase		Cyanophage S-2L	413053,676082
+# hypoxanthine
+17368	natural	damage	mutagenic	Homo sapiens,Escherichia coli,Rattus norvegicus	1557408,8016081
 #
 # cytosine
 #
@@ -93,6 +95,8 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 134095	natural	damage	mutagenic	Homo sapiens	21163908
 # N(2),N(2)-dimethylguanosine
 19289	natural			Homo sapiens	5417622
+# xanthine (7H)
+48517	natural	damage	mutagenic	Homo sapiens	1557408
 #
 # thymine
 #

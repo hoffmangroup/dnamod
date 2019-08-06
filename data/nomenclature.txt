@@ -13,6 +13,7 @@ CHEBI:78685	AHAP	2-amino-6-hydroxyaminopurine
 CHEBI:78235	HAP	6-hydroxyaminopurine
 CHEBI:102525	ncm6A	N(6)-carbamoylmethyladenine
 CHEBI:40235	m2A	2-aminoadenine
+CHEBI:17368	hxA	hypoxanthine
 CHEBI:74029	e3C	3-ethylcytosine
 CHEBI:39624	1mC	1-methylcytosine
 CHEBI:39992	3mC	3-methylcytosine
@@ -48,6 +49,8 @@ CHEBI:28664	7mG	2-amino-7-methyl-1,7-dihydro-6H-purin-6-one
 CHEBI:46897	7mG	2-amino-7-methyl-7H-purin-6-ol
 CHEBI:46894	7mG	2-imino-7-methyl-1,2,3,7-tetrahydro-6H-purin-6-one
 CHEBI:19289	m22G	N(2),N(2)-dimethylguanosine
+# below, 2,6-dioxopurine/xanthine, selected 7H tautomer to instantiate it with a structure
+CHEBI:48517	xG	xanthine
 CHEBI:27468	diHT	5,6-dihydrothymine
 CHEBI:16450	dU	2'-deoxyuridine
 CHEBI:142164	5-NeOmdU	5-(2-aminoethoxy)methyluridine
