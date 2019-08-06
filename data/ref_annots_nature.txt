@@ -11,7 +11,7 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 # 4-methyladenine
 134106	natural				
 # 6-methyladenine (6mA)
-28871	natural	epigenetic mark		Escherichia coli,Caenorhabditis elegans,Chlamydomonas reinhardtii,Drosophila melanogaster,Clostridium thermoautotrophicum,Bombyx mori	25936836,25936839,25936839,25936838,4000939,30071347
+28871	natural	epigenetic mark		Escherichia coli,Caenorhabditis elegans,Chlamydomonas reinhardtii,Drosophila melanogaster,Clostridium thermoautotrophicum,Bombyx mori,Thermobacteroides acetoethylicus,Methanobacterium thermoautotrophicum,Methanococcus,thermolithotrophicus,Thermoanaerobacter kivui,Clostridium thermoaceticum,Clostridium thermoautotrophicum,Clostridium thermosaccharolyticum,Desulfotomaculum nigrificans,Bacillus stearothermophilus,Arthrobacter luteus,Bacillus amyloliquefaciens,Bacillus aneurinolyticus,Bacillus caldolyticus,Fusobacterium nucleatum,Haemophilus aegyptius,Haemophilus gallinarum,Haemophilus haemolyticus,Haemophilus influenzae,Haemophilus influenzae,Haemophilus parainfluenzae,Klebsiella pneumoniae,Moraxella bovis,Moraxella nonliquefaciens,Nocardia aerocolonigenes,Proteus vulgaris,Rhodopseudomonas sphaeroides,Serratia marcescens,Streptococcus pneumoniae,Thermus aquaticus,Xanthomonas campestris	25936836,25936839,25936839,25936838,4000939,30071347,3029036
 # 6-hydroxymethyladenine (6hmA)
 142766	natural	epigenetic mark		Escherichia coli,Rattus norvegicus,Homo sapiens	30517733
 # 7-methyladenine
@@ -53,9 +53,9 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 # 5-formylcytosine
 76794	natural	demethylation intermediate and epigenetic mark		Homo sapiens,Mus musculus	23932479,24755596,25591929,26098680,23602153,27356509
 # 5-methylcytosine
-27551	natural	epigenetic mark		Escherichia coli,Chlamydomonas reinhardtii,Homo sapiens,Mus musculus,Locusta migratoria,Ovis aries,Bos taurus,Drosophila melanogaster,Desulfovibrio desulfuricans	5417622,15439258,24640988,6262918,20395551,4000939
+27551	natural	epigenetic mark		Escherichia coli,Chlamydomonas reinhardtii,Homo sapiens,Mus musculus,Locusta migratoria,Ovis aries,Bos taurus,Drosophila melanogaster,Desulfotomaculum nigrificans,Bacillus stearothermophilus,Desulfovibrio desulfuricans,Arthrobacter luteus,Bacillus amyloliquefaciens,Haemophilus aegyptius,Haemophilus haemolyticus,Haemophilus parainfluenzae,Serratia marcescens,Xanthomonas campestris,Bacillus aneurinolyticus,Fusobacterium nucleatum,Haemophilus gallinarum,Klebsiella pneumoniae,Moraxella nonliquefaciens,Nocardia aerocolonigenes,Streptomyces achromogenes,Caldicellulosiruptor kristjanssonii	5417622,15439258,24640988,6262918,20395551,4000939,3029036,26184871
 # N(4)-methylcytosine
-21839	natural	restriction-modification		Bacillus cenirosporus,Geobacillus stearothermophilus	6884523,4000939,25818841
+21839	natural	restriction-modification		Bacillus cenirosporus,Thermobacteroides acetoethylicus,Methanococcus thermolithotrophicus,Clostridium thermoaceticum,Clostridium thermoautotrophicum,Desulfotomaculum nigrificans,Bacillus stearothermophilus,Geobacillus stearothermophilus,Bacillus globigii,Moraxella bovis,Proteus vulgaris,Thermus aquaticus,Xanthomonas campestris,Bacillus aneurinolyticus,Rhodopseudomonas sphaeroides,Caldicellulosiruptor kristjanssonii	6884523,4000939,25818841,3029036,26184871
 #
 # guanine
 #
