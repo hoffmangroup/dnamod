@@ -13,7 +13,8 @@ CHEBI:78685	AHAP	2-amino-6-hydroxyaminopurine
 CHEBI:78235	HAP	6-hydroxyaminopurine
 CHEBI:102525	ncm6A	N(6)-carbamoylmethyladenine
 CHEBI:40235	m2A	2-aminoadenine
-CHEBI:17368	hxA	hypoxanthine
+# same as the below: CHEBI:17368	hxA	hypoxanthine
+CHEBI:28997	dI	2'-deoxyinosine
 CHEBI:74029	e3C	3-ethylcytosine
 CHEBI:39624	1mC	1-methylcytosine
 CHEBI:39992	3mC	3-methylcytosine
@@ -68,6 +69,5 @@ CHEBI:74766	3mT	3-methylthymine
 CHEBI:134100	O4-meT	O4-methylthymine
 CHEBI:132931	putThy	α-putrescinylthymine
 CHEBI:132195	dhpUra	5-dihydroxypentyluracil
-CHEBI:28997	dI	2'-deoxyinosine
 CHEBI:132189	DHdU	5,6-dihydroxy-2'-deoxyuridine
 CHEBI:132191	dhpdU	2'-deoxy-5-(4,5-dihydroxypentyl)uridine

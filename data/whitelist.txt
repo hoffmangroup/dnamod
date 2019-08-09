@@ -8,6 +8,7 @@ Adenine
 	6-methylaminopurine
 	N(6)-carbamoylmethyladenine
 	9H-purine-2,6-diamine
+	2'-deoxyinosine
 
 
 Thymine
@@ -58,5 +59,4 @@ Uracil
 
 
 Other
-	2'-deoxyinosine
 	2'-deoxyuridine

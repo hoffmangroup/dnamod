@@ -3,6 +3,7 @@ Adenine
 	adenosine
 	adenosines
 	reversine
+	hypoxanthine
 
 
 Thymine
