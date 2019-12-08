@@ -5,6 +5,7 @@ ChEBI	Method	Method detail	Resolution	Qualifier	References
 27551,76792	HELP assay	restriction endonuclease	low	microarray probes	16809668
 27551,76792	Methyl-seq	restriction endonuclease	low		19273619
 27551,76792	MeDIP-seq	affinity-based	low		18950712
+27551,76792	cfMeDIP-seq	affinity-based	low	low-input	31471598,30429608
 27551,76792	MBD-seq	affinity-based	low		19906696
 27551,76792	MRE-seq	affinity-based	low		20613842
 27551,76792	Methyl-MAPS	affinity-based	low		20488932
