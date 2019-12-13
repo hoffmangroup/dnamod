@@ -37,7 +37,7 @@ ChEBI	Method	Method detail	Resolution	Qualifier	References
 # 5hmC
 76792	TAB-seq	chemical conversion	single-base		22608086
 76792	hMeDIP-seq	affinity-based	low		21490601,21460836
-76792	RRHP	restriction endonuclease	single-base	restriction digestion	25248841
+76792	RRHP	restriction endonuclease	high	restriction digestion	25248841
 76792	Aba-seq	restriction endonuclease	high		23352666
 76792	HMST-seq	restriction endonuclease	low		23502161
 # below also used a gated single-molecule sequencing-by-synthesis method (Helicos)
