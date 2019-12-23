@@ -20,6 +20,7 @@ ChEBI	Method	Method detail	Resolution	Qualifier	References
 27551,76792	SMRT-BS	chemical conversion	single-base	target sequences	25943404
 27551,76792	MspJI recognition	restriction endonuclease	low	specific fragments	21690366
 27551,76792	TAPS	chemical conversion	single-base		30804537
+27551,76792	EM-seq	affinity-based	low	low-input	
 # ------------------------------------------------
 # discrimination of 5mC and 5hmC
 27551,76792	nanopore	direct detection	single-base	target sequences	20927439,21155562
