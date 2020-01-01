@@ -53,8 +53,11 @@ CHEBI:48517	xG	xanthine
 CHEBI:17368	xI	inosine
 # below is the same as above
 #CHEBI:28997	dI	2'-deoxyinosine
-# hypoxanthine: inosine when attached to a ribose ring; xI here simplicity and consistency
+# hypoxanthine (Hx): inosine when attached to a ribose ring; xI here simplicity and consistency
 #CHEBI:17596	xI	inosine
+CHEBI:73958	mHyp	methylhypoxanthine
+CHEBI:73959	1mHyp	1-methylhypoxanthine
+#CHEBI:XXXXX	9mHyp	9-methylhypoxanthine
 CHEBI:27468	diHT	5,6-dihydrothymine
 CHEBI:16450	dU	2'-deoxyuridine
 CHEBI:142164	5-NeOmdU	5-(2-aminoethoxy)methyluridine
