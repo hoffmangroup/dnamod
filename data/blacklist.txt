@@ -4,6 +4,7 @@ Adenine
 	adenosines
 	reversine
 	inosine
+	9-riburonosylhypoxanthine
 
 
 Thymine
