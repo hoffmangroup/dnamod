@@ -57,7 +57,9 @@ CHEBI:17368	xI	inosine
 #CHEBI:17596	xI	inosine
 CHEBI:73958	mHyp	methylhypoxanthine
 CHEBI:73959	1mHyp	1-methylhypoxanthine
-#CHEBI:XXXXX	9mHyp	9-methylhypoxanthine
+CHEBI:145739	3mHyp	3-methylhypoxanthine
+CHEBI:145737	7mHyp	7-methylhypoxanthine
+CHEBI:145736	9mHyp	9-methylhypoxanthine
 CHEBI:27468	diHT	5,6-dihydrothymine
 CHEBI:16450	dU	2'-deoxyuridine
 CHEBI:142164	5-NeOmdU	5-(2-aminoethoxy)methyluridine
