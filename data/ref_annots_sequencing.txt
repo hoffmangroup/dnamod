@@ -25,6 +25,8 @@ ChEBI	Method	Method detail	Resolution	Qualifier	References
 # discrimination of 5mC and 5hmC
 27551,76792	nanopore	direct detection	single-base	target sequences	20927439,21155562
 27551,76792	HPoxBS	chemical conversion	single-base	strand-specific	29912476
+# can be used to differentiate 5mC vs. 5hmC, though often just (effectively) detects (5mC/5hmC)
+27551,76792	TOP-seq	enzyme-mediated chemical tagging	high	 target sequences	28111014
 # ------------------------------------------------
 # detection of only 5mC
 # 5mC
