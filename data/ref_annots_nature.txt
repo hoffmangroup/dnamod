@@ -53,7 +53,7 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 # 5-carboxycytosine
 76793	natural	demethylation intermediate and possible epigenetic mark		Homo sapiens,Mus musculus	23932479,25591929
 # 5-formylcytosine
-76794	natural	demethylation intermediate and epigenetic mark		Homo sapiens,Mus musculus	23932479,24755596,25591929,26098680,23602153,27356509
+76794	natural	demethylation intermediate and epigenetic mark		Homo sapiens,Mus musculus	23932479,24755596,25591929,26098680,23602153,27356509,28693723
 # 5-methylcytosine
 27551	natural	epigenetic mark		Escherichia coli,Chlamydomonas reinhardtii,Homo sapiens,Mus musculus,Locusta migratoria,Ovis aries,Bos taurus,Drosophila melanogaster,Desulfotomaculum nigrificans,Bacillus stearothermophilus,Desulfovibrio desulfuricans,Arthrobacter luteus,Bacillus amyloliquefaciens,Haemophilus aegyptius,Haemophilus haemolyticus,Haemophilus parainfluenzae,Serratia marcescens,Xanthomonas campestris,Bacillus aneurinolyticus,Fusobacterium nucleatum,Haemophilus gallinarum,Klebsiella pneumoniae,Moraxella nonliquefaciens,Nocardia aerocolonigenes,Streptomyces achromogenes,Caldicellulosiruptor kristjanssonii	5417622,15439258,24640988,6262918,20395551,4000939,3029036,26184871
 # N(4)-methylcytosine
@@ -108,7 +108,7 @@ ChEBI	Origin	Function	Functional detail	Organisms	References
 # 5-hydroxymethyluracil
 16964	natural	damage, demethylation intermediate, and possible epigenetic mark		Homo sapiens,Gyrodinium cohnii,Rattus norvegicus,Mus musculus,Leishmania donovani,Leishmania major	10490501,4515611,6592579,24838012,28137275
 # 5-formyluracil
-80961	natural	damage and demethylation intermediate		Homo sapiens	7578084
+80961	natural	damage and demethylation intermediate		Homo sapiens	7578084,28693723
 # α-putrescinylthymine
 132931	natural	hypermodified nucleobase		bacteriophage ϕW-14	4683479
 #
