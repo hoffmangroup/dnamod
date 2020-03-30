@@ -25,7 +25,7 @@ ERR_EXIT=64
 
 # Copy contents of the site's HTML files into the directory for the live site, updating the repo.
 
-if [[ ! ($(hostname) == 'mordor' && -n $(groups | fgrep 'hoffmangroup')) ]]; then
+if [[ ! ($(hostname) =~ 'mordor' && -n $(groups | fgrep 'hoffmangroup')) ]]; then
     >&2 echo "Must be run on the Hoffman Lab cluster, by a lab member."
     exit $ERR_EXIT
 fi
