@@ -238,14 +238,12 @@
 
                                 {# identical name and symbol; do not duplicate #}
                                 {% set unmod_display_HTML = unmod_base|string %}
-                            {% elif unmod_base|string == otherBase %}
-                                {% set initial_subpie_frac = DNA_subpie_frac-other_subpie_frac %}
-
-                                {% set unmod_symbol = unmod_base|string|first|upper %}
-                                {% set unmod_display_HTML = "{} (<span class='nucleobase'>{}</span>)".format(unmod_base, unmod_symbol) %}
-                                
                             {% else %}
                                 {% set initial_subpie_frac = DNA_subpie_frac %}
+
+                                {% if "other" in verifiedHierarchy and unmod_base|string == otherBase %}
+                                    {% set initial_subpie_frac = DNA_subpie_frac - other_subpie_frac %}
+                                {% endif %}
 
                                 {% set unmod_symbol = unmod_base|string|first|upper %}
                                 {% set unmod_display_HTML = "{} (<span class='nucleobase'>{}</span>)".format(unmod_base, unmod_symbol) %}
