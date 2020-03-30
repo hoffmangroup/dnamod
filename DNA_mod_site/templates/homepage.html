@@ -68,6 +68,11 @@
 
     {% set num_items_at_lvl = (mod_children_L|length - num_nested_lists) %}
 
+    {% if num_items_at_lvl <= 0 %}
+        {# do not permit nested lists to decrement the root count below 1 #}
+        {% set num_items_at_lvl = 1 %}
+    {% endif %}
+
     {% set subpie_frac_adj = subpie_frac %}
 
     {% set subpie_subitem_growth_factor = num_items_at_lvl/5 %}
