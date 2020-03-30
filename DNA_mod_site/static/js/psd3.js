@@ -1,5 +1,6 @@
-const MOVE_LABEL_DOWN_AMOUNT = 6;
-
+/**
+ * 
+ */
 var psd3 = psd3 || {};
 psd3.Graph = function(config) {
     var _this = this;
@@ -11,9 +12,6 @@ psd3.Graph = function(config) {
         inner: "inner",
         label: function(d) {
             return d.data.value;
-        },
-        stripe: function(d) {
-            return d.data.stripe;
         },
         tooltip: function(d) {
             if (_this.config.value !== undefined) {
@@ -33,9 +31,13 @@ psd3.Graph = function(config) {
         drilldownTransitionDuration: 0,
         stroke: "white",
         strokeWidth: 2,
-        highlightColor: "orange"
+        highlightColor: "orange",
+        rotateLabel: false
     };
-    
+    /*console.log("before defaults");
+    for(var property in config){
+        console.log(property);
+    }*/
     for (var property in this.defaults) {
         if (this.defaults.hasOwnProperty(property)) {
             if (!config.hasOwnProperty(property)) {
@@ -43,6 +45,10 @@ psd3.Graph = function(config) {
             }
         }
     }
+    /*console.log("after defaults");
+    for(var property in config){
+        console.log(property);
+    }*/
 };
 
 var psd3 = psd3 || {};
@@ -118,18 +124,15 @@ psd3.Pie.prototype.drawPie = function(dataset) {
     }
     _this = this;
     _this.arcIndex = 0;
-
     var svg = d3.select("#" + _this.config.containerId)
         .append("svg")
         .attr("id", _this.config.containerId + "_svg")
         .attr("width", _this.config.width)
         .attr("height", _this.config.height);
     _this.tooltipId = _this.config.containerId + "_tooltip";
-
     var tooltipDiv = d3.select("#" + _this.config.containerId).append("div")
         .attr("id", _this.tooltipId)
         .attr("class", "psd3Hidden psd3Tooltip");
-
     tooltipDiv.append("p")
         .append("span")
         .attr("id", "value")
@@ -144,7 +147,7 @@ psd3.Pie.prototype.drawPie = function(dataset) {
     }
     var innerRadius = _this.config.donutRadius;
     var maxDepth = _this.findMaxDepth(dataset);
-
+    //console.log("maxDepth = " + maxDepth);
     var outerRadius = innerRadius + (radius - innerRadius) / maxDepth;
     var originalOuterRadius = outerRadius;
     var radiusDelta = outerRadius - innerRadius;
@@ -173,36 +176,27 @@ psd3.Pie.prototype.textTitle = function(d) {
 
 psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, originalDatasetLength, innerRadius, outerRadius, radiusDelta, startAngle, endAngle, parentCentroid) {
     _this = this;
-
+    //console.log("**** draw ****");
+    //console.log("dataset = " + dataset);
     if (dataset === null || dataset === undefined || dataset.length < 1) {
         return;
     }
+    //console.log("parentCentroid = " + parentCentroid);
+    // console.log("innerRadius = " + innerRadius);
+    // console.log("outerRadius = " + outerRadius);
+    // console.log("startAngle = " + startAngle);
+    // console.log("endAngle = " + endAngle);
 
     psd3.Pie.prototype.textText = function(d) {
         return _this.config.label(d);
     };
-    
-    psd3.Pie.prototype.getColor = function(d) {
-        if (d.data.stripe) {
-                return "#B3B3B3";
-            } else {
-                return "#A1E8AF";
-            }
-    }
-    
-    // sort the pie menu by a lexicographic comparison of display names
-    function lexicographic(a, b) {
-        return a.displayname.localeCompare(b.displayname);
-    }
 
     var pie = d3.layout.pie();
-
-    pie.sort(lexicographic);
-
+    pie.sort(null);
     pie.value(function(d) {
+        //console.log("d.value = " + d.value);
         return d[_this.config.value];
     });
-
     pie.startAngle(startAngle)
         .endAngle(endAngle);
 
@@ -210,6 +204,11 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
     for (var i = 0; i < dataset.length; i++) {
         values.push(dataset[i][_this.config.value]);
     }
+    //console.log(values);
+
+    var dblclick = function(d) {
+        _this.reDrawPie(d, originalDataset);
+    };
 
     var arc = d3.svg.arc().innerRadius(innerRadius)
         .outerRadius(outerRadius);
@@ -230,11 +229,10 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
         .enter()
         .append("g")
         .attr("class", "arc " + clazz)
-        .attr("style", _this.getMask)
         .attr("transform",
-              "translate(" + (totalRadius) + "," + (totalRadius) + ")")
-        .on("click", _this.config.click);
-    
+            "translate(" + (totalRadius) + "," + (totalRadius) + ")")
+        .on("dblclick", dblclick);
+
     var gradient = svg.append("svg:defs")
         .append("svg:linearGradient")
         .attr("id", "gradient_" + _this.arcIndex)
@@ -248,13 +246,13 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
     if (_this.config.gradient) {
         var index = 2 * _this.arcIndex;
         var endIndex = index + 1;
-
+        //console.log("arcindex = " + _this.arcIndex + "(" + index + ", " + endIndex);
         startColor = _this.config.colors(index);
         endColor = _this.config.colors(endIndex);
     } else {
         startColor = endColor = _this.config.colors(this.arcIndex);
     }
-
+    //console.log("color = " + startColor + ", " + endColor);
     gradient.append("svg:stop")
         .attr("offset", "0%")
         .attr("stop-color", startColor)
@@ -267,7 +265,8 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
 
     //Draw arc paths
     var paths = arcs.append("path")
-        .attr("fill", _this.getColor)
+        //.attr("fill", color(_this.arcIndex));
+        .attr("fill", "url(#gradient_" + _this.arcIndex + ")")
         .style("stroke", _this.config.stroke)
         .style("stroke-width", _this.config.strokeWidth);
 
@@ -281,7 +280,9 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
         .duration(_this.config.transitionDuration)
         .delay(_this.config.transitionDuration * (_this.arcIndex - 1))
         .ease(_this.config.transition)
-        .attrTween("d", _this.customArcTween)
+        .attrTween("d", _this.customArcTween);
+
+    //paths.each(storeMetadataWithArc);
 
     //Labels
     var texts = arcs.append("text")
@@ -289,7 +290,7 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
             return parentCentroid[0];
         })
         .attr("y", function() {
-            return parentCentroid[1] + MOVE_LABEL_DOWN_AMOUNT;
+            return parentCentroid[1];
         })
         .transition()
         .ease(_this.config.transition)
@@ -299,14 +300,28 @@ psd3.Pie.prototype.draw = function(svg, totalRadius, dataset, originalDataset, o
             var a = [];
             a[0] = arc.centroid(d)[0] - parentCentroid[0];
             a[1] = arc.centroid(d)[1] - parentCentroid[1];
-            return "translate(" + a + ")";
+            var rotate = "";
+            if(_this.config.rotateLabel === true){
+                var rotateAngle = (d.endAngle + d.startAngle) / 2 * (180 / Math.PI) + 90;
+                //console.log("rotateAngle = " + rotateAngle);
+                var b = [];
+                b[0] = parentCentroid[0];
+                b[1] = parentCentroid[1];    
+                rotate = "rotate( " + rotateAngle + ", " + b + ")";
+            }
+            return "translate(" + a + ")" + rotate;
         })
         .attr("text-anchor", "middle")
         .text(_this.textText)
         .style("fill", _this.config.labelColor)
         .attr("title", _this.textTitle);
 
+
+
+    //console.log("paths.data() = " + paths.data());
     for (var j = 0; j < dataset.length; j++) {
+        //console.log("dataset[j] = " + dataset[j]);
+        //console.log("paths.data()[j] = " + paths.data()[j]);
         if (dataset[j][_this.config.inner] !== undefined) {
             _this.draw(svg, totalRadius, dataset[j][_this.config.inner], originalDataset, originalDatasetLength, innerRadius + radiusDelta, outerRadius + radiusDelta, radiusDelta, paths.data()[j].startAngle, paths.data()[j].endAngle, arc.centroid(paths.data()[j]));
         }
