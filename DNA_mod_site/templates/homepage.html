@@ -46,25 +46,28 @@
         {% set mod_children_L = [mod_children_L] %}
     {% endif %}
 
+    {# adjust size, if number of nested items strictly exceeds this threshold #}
+    {% set NUM_NESTED_LISTS_ENLARGE_THRESH = 3 %}
+
     {# Circumvent Jinja2 scoping rules, using an object for the count.
        Adapted from:  http://stackoverflow.com/a/32700975 #}
     {% set num_nested_lists = [0] %}
-    {% set num_nested_lists_gt_3 = [0] %}
+    {% set num_nested_lists_gt_thresh = [0] %}
 
     {% for mod_base in mod_children_L %}
-        {% if mod_base|is_list %}
+    {% if mod_base|is_list %}
             {# increment num_nested_lists by 1 #}
             {% do num_nested_lists.append(num_nested_lists.pop() + 1) %}
 
-            {% if mod_base|length > 3 %}
-                {% do num_nested_lists_gt_3.append(num_nested_lists_gt_3.pop() + 1) %}
+            {% if mod_base|length > NUM_NESTED_LISTS_ENLARGE_THRESH %}
+                {% do num_nested_lists_gt_thresh.append(num_nested_lists_gt_thresh.pop() + 1) %}
             {% endif %}
         {% endif %}
     {% endfor %}
 
     {% set num_nested_lists = num_nested_lists.pop() %} {# object -> int #}
 
-    {% set num_nested_lists_gt_3 = num_nested_lists_gt_3.pop() %} {# object -> int #}
+    {% set num_nested_lists_gt_thresh = num_nested_lists_gt_thresh.pop() %} {# object -> int #}
 
     {% set num_items_at_lvl = (mod_children_L|length - num_nested_lists) %}
 
@@ -73,22 +76,26 @@
         {% set num_items_at_lvl = 1 %}
     {% endif %}
 
+    {% set SUBPIE_GROWTH_FACTOR_NUM_FRAC_COEFF = 0.4 %}
+
+    {% set subpie_subitem_growth_factor = (SUBPIE_GROWTH_FACTOR_NUM_FRAC_COEFF*subpie_frac)/num_items_at_lvl %}
+
     {% set subpie_frac_adj = subpie_frac %}
 
-    {% set subpie_subitem_growth_factor = num_items_at_lvl/5 %}
-
     {% for mod_base in mod_children_L %}
+        {% set subpie_frac_adj = subpie_frac/num_items_at_lvl %}
+
         {% if mod_base|is_list %}
             {# increase the size of pie menu items with many children #}
-            {% if mod_base|length > 3 %}
-                {% set subpie_frac_adj = subpie_frac/num_items_at_lvl + subpie_subitem_growth_factor %}
+            {% if mod_base|length > NUM_NESTED_LISTS_ENLARGE_THRESH %}
+                {% set subpie_frac_adj = subpie_frac_adj + subpie_subitem_growth_factor %}
             {% endif %}
             
             {% set mod_base_id = mod_base.pop(0) %}
         {% else %}
             {# decrease size of other pie menu items to compensate for the increase of those with many children #}
-            {% if num_nested_lists_gt_3 > 0 %}
-                {% set subpie_frac_adj = subpie_frac/num_items_at_lvl - subpie_subitem_growth_factor/num_nested_lists_gt_3 %}
+            {% if num_nested_lists_gt_thresh > 0 %}
+                {% set subpie_frac_adj = subpie_frac_adj - num_nested_lists_gt_thresh*subpie_subitem_growth_factor %}
             {% endif %}
             
             {% set mod_base_id = mod_base %}
