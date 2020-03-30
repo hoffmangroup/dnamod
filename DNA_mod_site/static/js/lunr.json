@@ -1,0 +1,3496 @@
+[
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:102485", 
+        "ChemicalFormula": "[C10H12N2O7]", 
+        "CommonName": "5-carboxy-2'-deoxyuridine", 
+        "IUPACName": "[5-carboxy-2'-deoxyuridine]", 
+        "Refname": "5-carboxy-2'-deoxyuridine", 
+        "Symbol": null, 
+        "Synonyms": "[\"2'-deoxy-5-carboxyuridine\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "ncm6A"
+        ], 
+        "ChEBIId": "CHEBI:102525", 
+        "ChemicalFormula": "[C7H8N6O]", 
+        "CommonName": [
+            "N(6)-carbamoylmethyladenine"
+        ], 
+        "IUPACName": "[N(2)-1H-purin-6-ylglycinamide]", 
+        "Refname": "N(6)-carbamoylmethyladenine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['2-(9h-purin-6-ylamino)acetamide']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:102719", 
+        "ChemicalFormula": "[C12H16N6O4]", 
+        "CommonName": "N(6)-carbamoylmethyl-2'-deoxyadenosine", 
+        "IUPACName": "[]", 
+        "Refname": "N(6)-carbamoylmethyl-2'-deoxyadenosine", 
+        "Symbol": null, 
+        "Synonyms": "[\"n(6)-carbamoylmethyl-2'-deoxyadenosine\", \"n-(9beta-d-2'-deoxyribofuranosylpurin-6-yl)glycinamide\", 'n(6)-(carbamoylmethyl)deoxyadenosine', 'n(6)-carbamoylmethyldeoxyadenosine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "base J"
+        ], 
+        "ChEBIId": "CHEBI:111511", 
+        "ChemicalFormula": "[C16H25N2O14P]", 
+        "CommonName": [
+            "\u03b2-glucosyl-hydroxymethyluracil"
+        ], 
+        "IUPACName": "[2'-deoxy-5-[(beta-D-glucopyranosyloxy)methyl]uridine 5'-(dihydrogen phosphate)]", 
+        "Refname": "(beta-D-glucopyranosyloxymethyl)deoxyuridine 5'-monophosphate", 
+        "Symbol": [
+            "J"
+        ], 
+        "Synonyms": "[\"5-(beta-d-glucopyranosyloxymethyl)-2'-deoxyuridine 5'-monophosphate\", 'djmp', 'beta-d-glucopyranosyloxymethyl-dump', 'beta-d-glucosyloxymethyl-dump', \"(beta-d-glucosyloxymethyl)deoxyuridine 5'-monophosphate\"]", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "base J"
+        ], 
+        "ChEBIId": "CHEBI:111513", 
+        "ChemicalFormula": "[C16H24N2O11]", 
+        "CommonName": [
+            "\u03b2-glucosyl-hydroxymethyluracil"
+        ], 
+        "IUPACName": "[2'-deoxy-5-[(beta-D-glucopyranosyloxy)methyl]uridine]", 
+        "Refname": "(beta-D-glucopyranosyloxymethyl)deoxyuridine", 
+        "Symbol": [
+            "J"
+        ], 
+        "Synonyms": "[\"5-(beta-d-glucopyranosyloxymethyl)-2'-deoxyuridine\", '(beta-d-glucosyloxymethyl)deoxyuridine', 'dj', 'beta-d-glucosyl-homedu', 'beta-ghmu', 'alpha-(beta-d-glucopyranosyloxy)thymidine', '5-((glucopyranosyloxy)methyl)uridine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:131596", 
+        "ChemicalFormula": "[C18H28N3O16P]", 
+        "CommonName": "CMP-3-deoxy-D-glycero-beta-D-galacto-nonulosonic acid", 
+        "IUPACName": "[cytidine 5'-[(3-deoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonyl) hydrogen phosphate]]", 
+        "Refname": "CMP-3-deoxy-D-glycero-beta-D-galacto-nonulosonic acid", 
+        "Symbol": null, 
+        "Synonyms": "['cmp-deaminoneuraminic acid', 'cmp-3-deoxy-d-glycero-beta-d-galacto-nononic acid', 'cmp-kdn']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:131602", 
+        "ChemicalFormula": "[C17H27N4O14P]", 
+        "CommonName": "CMP-8-amino-3,8-dideoxy-alpha-D-manno-oct-2-ulosonic acid", 
+        "IUPACName": "[cytidine 5'-[(8-amino-3,8-dideoxy-alpha-D-manno-oct-2-ulopyranosonyl) hydrogen phosphate]]", 
+        "Refname": "CMP-8-amino-3,8-dideoxy-alpha-D-manno-oct-2-ulosonic acid", 
+        "Symbol": null, 
+        "Synonyms": "['cmp-kdo8n']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "5gmC"
+        ], 
+        "ChEBIId": "CHEBI:131616", 
+        "ChemicalFormula": "[C11H17N3O7]", 
+        "CommonName": [
+            "5-glucosylmethylcytosine"
+        ], 
+        "IUPACName": "[(4-amino-2-oxo-1,2-dihydropyrimidin-5-yl)methyl beta-D-glucopyranoside]", 
+        "Refname": "5-(beta-D-glucosylmethyl)cytosine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['5-beta-d-glucosylmethylcytosine', '5-gmc', 'beta-d-glucosyl-5-hydroxymethylcytosine', 'beta-glucosyl-5-hydroxymethylcytosine', '5-glucosylmethylcytosine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:131759", 
+        "ChemicalFormula": "[C10H15N3O12P2]", 
+        "CommonName": "CMP-5'-phosphonoformic acid", 
+        "IUPACName": "[5'-O-[{[carboxy(hydroxy)phosphoryl]oxy}(hydroxy)phosphoryl]cytidine]", 
+        "Refname": "CMP-5'-phosphonoformic acid", 
+        "Symbol": null, 
+        "Synonyms": "['phosphonoformyl-cmp']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "ADG"
+        ], 
+        "ChEBIId": "CHEBI:131836", 
+        "ChemicalFormula": "[C12H15N5O6]", 
+        "CommonName": [
+            "7-amido-7-deazaguanosine"
+        ], 
+        "IUPACName": "[2-amino-4-oxo-7-beta-D-ribofuranosyl-4,7-dihydro-1H-pyrrolo[2,3-d]pyrimidine-5-carboxamide]", 
+        "Refname": "7-amido-7-deazaguanosine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "[]", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:132133", 
+        "ChemicalFormula": "[C10H13N3O7]", 
+        "CommonName": "cytosylglucuronic acid", 
+        "IUPACName": "[4-amino-1-beta-D-glucopyranuronosylpyrimidin-2(1H)-one]", 
+        "Refname": "cytosylglucuronic acid", 
+        "Symbol": null, 
+        "Synonyms": "['1-(beta-d-glucuronosyl)cytosine', 'pentopyranic acid', 'cytosyl-beta-d-glucuronic acid', '1-(beta-d-glucopyranosyluronic acid)cytosine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:132134", 
+        "ChemicalFormula": "[C9H13N3O5]", 
+        "CommonName": "1-(beta-D-xylopyranosyl)cytosine", 
+        "IUPACName": "[4-amino-1-beta-D-xylopyranosylpyrimidin-2(1H)-one]", 
+        "Refname": "1-(beta-D-xylopyranosyl)cytosine", 
+        "Symbol": null, 
+        "Synonyms": "['1-(beta-d-xylosyl)cytosine', 'cytosylxylopyranose']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:132169", 
+        "ChemicalFormula": "[C9H15N3O6]", 
+        "CommonName": "2'-deoxy-5,6-dihydroxy-5,6-dihydrocytidine", 
+        "IUPACName": "[2'-deoxy-5,6-dihydroxy-5,6-dihydrocytidine]", 
+        "Refname": "2'-deoxy-5,6-dihydroxy-5,6-dihydrocytidine", 
+        "Symbol": null, 
+        "Synonyms": "['dc_glyc', \"2'-deoxycytidine glycol\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "DHdU"
+        ], 
+        "ChEBIId": "CHEBI:132189", 
+        "ChemicalFormula": "[C9H12N2O7]", 
+        "CommonName": [
+            "5,6-dihydroxy-2'-deoxyuridine"
+        ], 
+        "IUPACName": "[2'-deoxy-5,6-dihydroxyuridine]", 
+        "Refname": "5,6-dihydroxy-2'-deoxyuridine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['dhdu']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "dhpdU"
+        ], 
+        "ChEBIId": "CHEBI:132191", 
+        "ChemicalFormula": "[C14H22N2O7]", 
+        "CommonName": [
+            "2'-deoxy-5-(4,5-dihydroxypentyl)uridine"
+        ], 
+        "IUPACName": "[2'-deoxy-5-(4,5-dihydroxypentyl)uridine]", 
+        "Refname": "2'-deoxy-5-(4,5-dihydroxypentyl)uridine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "[\"5-(4,5-dihydroxypentyl)-2'-deoxyuridine\", 'dhpdu']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "dhpUra"
+        ], 
+        "ChEBIId": "CHEBI:132195", 
+        "ChemicalFormula": "[C9H14N2O4]", 
+        "CommonName": [
+            "5-dihydroxypentyluracil"
+        ], 
+        "IUPACName": "[5-(4,5-dihydroxypentyl)pyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "5-(4,5-dihydroxypentyl)uracil", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "[]", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:132197", 
+        "ChemicalFormula": "[C4H4N2O4]", 
+        "CommonName": "5,6-dihydroxyuracil", 
+        "IUPACName": "[5,6-dihydroxypyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "5,6-dihydroxyuracil", 
+        "Symbol": null, 
+        "Synonyms": "['5,6-dihydroxy-1,2,3,4-tetrahydropyrimidine-2,4-dione', 'isodialuric acid']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "putThy"
+        ], 
+        "ChEBIId": "CHEBI:132931", 
+        "ChemicalFormula": "[C9H16N4O2]", 
+        "CommonName": [
+            "\u03b1-putrescinylthymine"
+        ], 
+        "IUPACName": "[5-{[(4-aminobutyl)amino]methyl}pyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "alpha-putrescinylthymine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['5-(4-aminobutylaminomethyl)uracil', 'putthy', 'n-thyminylputrescine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:133208", 
+        "ChemicalFormula": "[C16H23N5O6]", 
+        "CommonName": "9-(beta-D-glucosyl)-cis-zeatin", 
+        "IUPACName": "[9-beta-D-glucopyranosyl-N-[(2Z)-4-hydroxy-3-methylbut-2-en-1-yl]-9H-purin-6-amine]", 
+        "Refname": "9-(beta-D-glucosyl)-cis-zeatin", 
+        "Symbol": null, 
+        "Synonyms": "['cis-zeatin-9-beta-d-glucoside', 'cis-zeatin-9-beta-glucoside', 'cis-zeatin-9-glucoside']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:133210", 
+        "ChemicalFormula": "[C16H23N5O6]", 
+        "CommonName": "9-(beta-D-glucosyl)-trans-zeatin", 
+        "IUPACName": "[9-beta-D-glucopyranosyl-N-[(2E)-4-hydroxy-3-methylbut-2-en-1-yl]-9H-purin-6-amine]", 
+        "Refname": "9-(beta-D-glucosyl)-trans-zeatin", 
+        "Symbol": null, 
+        "Synonyms": "['trans-zeatin-9-beta-glucoside', 'trans-zeatin-9-beta-d-glucoside', 'trans-zeatin-9-glucoside']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:133211", 
+        "ChemicalFormula": "[C16H23N5O6]", 
+        "CommonName": "7-(beta-D-glucosyl)-cis-zeatin", 
+        "IUPACName": "[9-beta-D-glucopyranosyl-N-[(2Z)-4-hydroxy-3-methylbut-2-en-1-yl]-7H-purin-6-amine]", 
+        "Refname": "7-(beta-D-glucosyl)-cis-zeatin", 
+        "Symbol": null, 
+        "Synonyms": "['cis-zeatin-7-beta-d-glucoside', '(z)-zeatin-7-beta-d-glucoside', 'cis-zeatin-7-beta-glucoside', '(z)-zeatin-7-beta-glucoside', 'cis-zeatin-7-glucoside', '7-beta-d-glucopyranosylzeatin', '(z)-zeatin-7-glucoside']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:133475", 
+        "ChemicalFormula": "[C16H25N5O6]", 
+        "CommonName": "7-(alpha-D-glucosyl)dihydrozeatin", 
+        "IUPACName": "[7-alpha-D-glucopyranosyl-N-(4-hydroxy-3-methylbutyl)-7H-purin-6-amine]", 
+        "Refname": "7-(alpha-D-glucosyl)dihydrozeatin", 
+        "Symbol": null, 
+        "Synonyms": "['(z)-zeatin-7-alpha-glucoside', '(z)-zeatin-7-n-glucoside', '(z)-zeatin-7-glucoside', 'cis-zeatin-7-glucoside', 'cis-zeatin-7-alpha-d-glucoside', 'cis-zeatin-7-alpha-glucoside', '(z)-zeatin-7-alpha-d-glucoside', 'dihydrozeatin-7-n-glucose']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:133477", 
+        "ChemicalFormula": "[C22H35N5O11]", 
+        "CommonName": "dihydrozeatin-9-N-glucoside-O-glucoside", 
+        "IUPACName": "[4-[(9-alpha-D-glucopyranosyl-9H-purin-6-yl)amino]-2-methylbutyl alpha-D-glucopyranoside]", 
+        "Refname": "dihydrozeatin-9-N-glucoside-O-glucoside", 
+        "Symbol": null, 
+        "Synonyms": "['9,o-di(alpha-d-glucosyl)dihydrozeatin']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "N(2),3-\u025bG"
+        ], 
+        "ChEBIId": "CHEBI:134095", 
+        "ChemicalFormula": "[C7H5N5O]", 
+        "CommonName": [
+            "N(2),3-ethenoguanine"
+        ], 
+        "IUPACName": "[1H-imidazo(2,1-b)purin-4(5H)-one]", 
+        "Refname": "N(2),3-ethenoguanine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['n(2),3-epsilong']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "1,N(2)-\u025bG"
+        ], 
+        "ChEBIId": "CHEBI:134096", 
+        "ChemicalFormula": "[C7H5N5O]", 
+        "CommonName": [
+            "1,N(2)-ethenoguanine"
+        ], 
+        "IUPACName": "[1,4-dihydro-9H-imidazo[1,2-a]purin-9-one]", 
+        "Refname": "1,N(2)-ethenoguanine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['1,n(2)-ethenoguanine', '1,n(2)-epsilong']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "O4-meT"
+        ], 
+        "ChEBIId": "CHEBI:134100", 
+        "ChemicalFormula": "[C6H8N2O2]", 
+        "CommonName": [
+            "O4-methylthymine"
+        ], 
+        "IUPACName": "[4-methoxy-5-methylpyrimidin-2(1H)-one]", 
+        "Refname": "O(4)-methylthymine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['o-4-methylthymine', '4-methoxy-5-methylpyrimidin-2-one']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "mT"
+        ], 
+        "ChEBIId": "CHEBI:134101", 
+        "ChemicalFormula": "16", 
+        "CommonName": [
+            "methylthymine"
+        ], 
+        "IUPACName": "[]", 
+        "Refname": "methylthymine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['methylthymines']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "8oxoA"
+        ], 
+        "ChEBIId": "CHEBI:134104", 
+        "ChemicalFormula": "[C5H5N5O]", 
+        "CommonName": [
+            "8-oxoadenine"
+        ], 
+        "IUPACName": "[6-amino-1,7-dihydro-8H-purin-8-one]", 
+        "Refname": "8-oxoadenine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['oxyadenine', '8-oxoa', '8-oxo-7,8-dihydroadenine', '7,8-dihydro-8-oxoadenine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:134105", 
+        "ChemicalFormula": "[C5H5N5O]", 
+        "CommonName": "8-hydroxyadenine", 
+        "IUPACName": "[]", 
+        "Refname": "8-hydroxyadenine", 
+        "Symbol": null, 
+        "Synonyms": "['8-hydroxy-1h-purin-6-amine', '6-amino-8-hydroxypurine', '6-amino-purin-8-ol']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "4mA"
+        ], 
+        "ChEBIId": "CHEBI:134106", 
+        "ChemicalFormula": "[C6H9N5]", 
+        "CommonName": [
+            "4-methyladenine"
+        ], 
+        "IUPACName": "[4-methyl-4,7-dihydro-1H-purin-6-amine]", 
+        "Refname": "4-methyladenine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "[]", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:138221", 
+        "ChemicalFormula": "[C14H23N3O15P2]", 
+        "CommonName": "CDP-D-ribulose", 
+        "IUPACName": "[]", 
+        "Refname": "CDP-D-ribulose", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:138225", 
+        "ChemicalFormula": "[C14H23N3O15P2]", 
+        "CommonName": "CDP-D-ribose", 
+        "IUPACName": "[]", 
+        "Refname": "CDP-D-ribose", 
+        "Symbol": null, 
+        "Synonyms": "['5-cytidyl-d-ribose', '5-cytidyl-aldehydo-d-ribose']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:139396", 
+        "ChemicalFormula": "[C15H23N3O15P2]", 
+        "CommonName": "CDP-4-dehydro-6-deoxy-alpha-D-glucose", 
+        "IUPACName": "[cytidine 5'-[3-(6-deoxy-alpha-D-xylo-hexopyranosyl-4-ulose) dihydrogen diphosphate]]", 
+        "Refname": "CDP-4-dehydro-6-deoxy-alpha-D-glucose", 
+        "Symbol": null, 
+        "Synonyms": "['cdp-4-dehydro-6-deoxy-d-glucose']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "5-NeOmdU"
+        ], 
+        "ChEBIId": "CHEBI:142164", 
+        "ChemicalFormula": "[C12H19N3O6]", 
+        "CommonName": [
+            "5-(2-aminoethoxy)methyluridine"
+        ], 
+        "IUPACName": "[5-[(2-aminoethoxy)methyl]-2'-deoxyuridine]", 
+        "Refname": "5-(2-aminoethoxy)methyl-2'-deoxyuridine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['5-neomdu', '5-(2-aminoethoxymethyl)-1-[(2r,4s,5r)-4-hydroxy-5-(hydroxymethyl)oxolan-2-yl]pyrimidine-2,4-dione', '5-[(2-aminoethoxy)methyl]-1-[(2r,4s,5r)-4-hydroxy-5-(hydroxymethyl)tetrahydrofuran-2-yl]pyrimidine-2,4(1h,3h)-dione']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "5-NedU"
+        ], 
+        "ChEBIId": "CHEBI:142166", 
+        "ChemicalFormula": "[C11H17N3O5]", 
+        "CommonName": [
+            "5-(2-aminoethyl)uridine"
+        ], 
+        "IUPACName": "[5-(2-aminoethyl)-2'-deoxyuridine]", 
+        "Refname": "5-(2-aminoethyl)-2'-deoxyuridine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['5-(2-aminoethyl)-1-[(2r,4s,5r)-4-hydroxy-5-(hydroxymethyl)oxolan-2-yl]pyrimidine-2,4-dione', '5-(2-aminoethyl)-1-[(2r,4s,5r)-4-hydroxy-5-(hydroxymethyl)tetrahydrofuran-2-yl]pyrimidine-2,4(1h,3h)-dione', '5-nedu']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "6hmA"
+        ], 
+        "ChEBIId": "CHEBI:142766", 
+        "ChemicalFormula": "[C6H7N5O]", 
+        "CommonName": [
+            "6-hydroxymethyladenine"
+        ], 
+        "IUPACName": "[(9H-purin-6-ylamino)methanol]", 
+        "Refname": "6-hydroxymethyladenine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['n(6)-hydroxymethyladenine', 'n(6)-hydroxymethyl-adenine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:142824", 
+        "ChemicalFormula": "[C17H17ClF4N4O5S]", 
+        "CommonName": "saflufenacil", 
+        "IUPACName": "[2-chloro-4-fluoro-5-[3-methyl-2,6-dioxo-4-(trifluoromethyl)-3,6-dihydropyrimidin-1(2H)-yl]-N-[methyl(propan-2-yl)sulfamoyl]benzamide, 2-chloro-4-fluoro-N-[isopropyl(methyl)sulfamoyl]-5-[3-methyl-2,6-dioxo-4-(trifluoromethyl)-3,6-dihydropyrimidin-1(2H)-yl]benzamide]", 
+        "Refname": "saflufenacil", 
+        "Symbol": null, 
+        "Synonyms": "['2-chloro-5-[3,6-dihydro-3-methyl-2,6-dioxo-4-(trifluoromethyl)-1(2h)-pyrimidinyl]-4-fluoro-n-[[methyl(1-methylethyl)amino]sulfonyl]benzamide', \"n'-{2-chloro-4-fluoro-5-[1,2,3,6-tetrahydro-3-methyl-2,6-dioxo-4-(trifluoromethyl)pyrimidin-1-yl]benzoyl}-n-isopropyl-n-methylsulfamide\", 'kixor', 'saflufenacile']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:143527", 
+        "ChemicalFormula": "[C13H20N4O3]", 
+        "CommonName": "(R)-lisofylline", 
+        "IUPACName": "[1-[(5R)-5-hydroxyhexyl]-3,7-dimethyl-3,7-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "(R)-lisofylline", 
+        "Symbol": null, 
+        "Synonyms": "['(-)-lisofylline', 'ct-1501r', '(r)-1-(5-hydroxyhexyl)-3,7-dimethylxanthine', 'ct 1501r', 'lisofyllinum', '(r)-lsf', '1-[(5r)-5-hydroxyhexyl]-3,7-dimethyl-2,3,6,7-tetrahydro-1h-purine-2,6-dione', 'lisofylline', '1-(5r-hydroxyhexyl)-3,7-dimethylxanthine', 'lisofilina', '1-[(r)-5-hydroxyhexyl]theobromine', 'protec', 'lisophylline']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:143564", 
+        "ChemicalFormula": "[C13H20N4O3]", 
+        "CommonName": "(S)-lisofylline", 
+        "IUPACName": "[1-[(5S)-5-hydroxyhexyl]-3,7-dimethyl-3,7-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "(S)-lisofylline", 
+        "Symbol": null, 
+        "Synonyms": "['1-[(s)-5-hydroxyhexyl]-3,7-dimethylxanthine', '(s)-lsf', '1-[(5s)-5-hydroxyhexyl]-3,7-dimethyl-2,3,6,7-tetrahydro-1h-purine-2,6-dione', '(+)-lisofylline', '(s)-lisophylline']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:143565", 
+        "ChemicalFormula": "[C13H20N4O3]", 
+        "CommonName": "1-(5-hydroxyhexyl)-3,7-dimethyl-3,7-dihydro-1H-purine-2,6-dione", 
+        "IUPACName": "[1-(5-hydroxyhexyl)-3,7-dimethyl-3,7-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "1-(5-hydroxyhexyl)-3,7-dimethyl-3,7-dihydro-1H-purine-2,6-dione", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:143863", 
+        "ChemicalFormula": "[C20H18ClF3N2O6]", 
+        "CommonName": "butafenacil", 
+        "IUPACName": "[2-methyl-1-oxo-1-[(prop-2-en-1-yl)oxy]propan-2-yl 2-chloro-5-[3-methyl-2,6-dioxo-4-(trifluoromethyl)-3,6-dihydropyrimidin-1(2H)-yl]benzoate]", 
+        "Refname": "butafenacil", 
+        "Symbol": null, 
+        "Synonyms": "['logran b-power', 'cga-276854', '1-(allyloxycarbonyl)-1-methylethyl 2-chloro-5-[1,2,3,6-tetrahydro-3-methyl-2,6-dioxo-4-(trifluoromethyl)pyrimidin-1-yl]benzoate', 'b-power', '1,1-dimethyl-2-oxo-2-(2-propen-1-yloxy)ethyl 2-chloro-5-[3,6-dihydro-3-methyl-2,6-dioxo-4-(trifluoromethyl)-1(2h)-pyrimidinyl]benzoate', 'cga 276854', 'touchdown b-power']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:143867", 
+        "ChemicalFormula": "[C5H8N2O3]", 
+        "CommonName": "(Z)-2-methylureidoacrylic acid", 
+        "IUPACName": "[(2Z)-3-(carbamoylamino)-2-methylacrylic acid]", 
+        "Refname": "(Z)-2-methylureidoacrylic acid", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:145517", 
+        "ChemicalFormula": "[C9H12N4O2]", 
+        "CommonName": "1-methyl-3-propyl-7H-xanthine", 
+        "IUPACName": "[1-methyl-3-propyl-3,7-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "1-methyl-3-propyl-7H-xanthine", 
+        "Symbol": null, 
+        "Synonyms": "['1-methyl-3-propylxanthine', '1-methyl-3-n-propylxanthine', '1-methyl-3-propyl-7h-purine-2,6-dione', '3,7-dihydro-1-methyl-3-propyl-1h-purine-2,6-dione', 'mpx']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "9mHyp"
+        ], 
+        "ChEBIId": "CHEBI:145736", 
+        "ChemicalFormula": "[C6H6N4O]", 
+        "CommonName": [
+            "9-methylhypoxanthine"
+        ], 
+        "IUPACName": "[9-methyl-1,9-dihydro-6H-purin-6-one]", 
+        "Refname": "9-methylhypoxanthine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['9-methylpoxanthine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "7mHyp"
+        ], 
+        "ChEBIId": "CHEBI:145737", 
+        "ChemicalFormula": "[C6H6N4O]", 
+        "CommonName": [
+            "7-methylhypoxanthine"
+        ], 
+        "IUPACName": "[7-methyl-1,7-dihydro-6H-purin-6-one]", 
+        "Refname": "7-methylhypoxanthine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['7-methyl-hypoxanthine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "3mHyp"
+        ], 
+        "ChEBIId": "CHEBI:145739", 
+        "ChemicalFormula": "[C6H6N4O]", 
+        "CommonName": [
+            "3-methylhypoxanthine"
+        ], 
+        "IUPACName": "[3-methyl-3,7-dihydro-6H-purin-6-one]", 
+        "Refname": "3-methylhypoxanthine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['3-methyl-hypoxanthine', '3,7-dihydro-3-methyl-6h-purin-6-one', '3-methyl-7h-purin-6(3h)-one']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:146134", 
+        "ChemicalFormula": "[C6H7N3O2]", 
+        "CommonName": "N(4)-acetylcytosine", 
+        "IUPACName": "[N-(2-oxo-1,2-dihydropyrimidin-4-yl)acetamide]", 
+        "Refname": "N(4)-acetylcytosine", 
+        "Symbol": null, 
+        "Synonyms": "['4-acetylamino-1,2-dihydro-2-pyrimidone', 'n-(1,2-dihydro-2-oxo-4-pyrimidinyl)acetamide', '4-(acetylamino)pyrimidine-2(1h)-one', 'n(4)-acetylcytosine', 'n-acetylcytosine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:15318", 
+        "ChemicalFormula": "[C5H4N4O2]", 
+        "CommonName": "xanthine", 
+        "IUPACName": "[]", 
+        "Refname": "xanthine", 
+        "Symbol": null, 
+        "Synonyms": "['2,6-dioxopurines', 'xanthines', '2,6-dioxopurine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:15333", 
+        "ChemicalFormula": "[C10H13N5O]", 
+        "CommonName": "zeatin", 
+        "IUPACName": "[2-methyl-4-(9H-purin-6-ylamino)but-2-en-1-ol]", 
+        "Refname": "zeatin", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:15698", 
+        "ChemicalFormula": "[C9H13N3O4]", 
+        "CommonName": "2'-deoxycytidine", 
+        "IUPACName": "[2'-deoxycytidine]", 
+        "Refname": "2'-deoxycytidine", 
+        "Symbol": null, 
+        "Synonyms": "['deoxycytidine', 'dcyd', 'dc', '4-amino-1-[(2r,4s,5r)-4-hydroxy-5-(hydroxymethyl)tetrahydrofuran-2-yl]pyrimidin-2(1h)-one']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:15704", 
+        "ChemicalFormula": "[C11H14N5O5R]", 
+        "CommonName": "6-alkylamino-7-beta-D-glucosylpurine", 
+        "IUPACName": "[]", 
+        "Refname": "6-alkylamino-7-beta-D-glucosylpurine", 
+        "Symbol": null, 
+        "Synonyms": "['an n(6)-alkylamino-7-beta-d-glucosylpurine', '6-alkylamino-7-beta-d-glucosylpurines', 'n6-alkylaminopurine-7-beta-d-glucoside']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:15851", 
+        "ChemicalFormula": "[C7H9N3O4]", 
+        "CommonName": "3-(uracil-1-yl)-L-alanine", 
+        "IUPACName": "[3-(2,4-dioxo-3,4-dihydropyrimidin-1(2H)-yl)-L-alanine]", 
+        "Refname": "3-(uracil-1-yl)-L-alanine", 
+        "Symbol": null, 
+        "Synonyms": "['willardiine', '2-amino-3-(2,4-dioxo-3,4-dihydro-2h-pyrimidin-1-yl)-propionic acid', '3-(uracil-1-yl)-l-alanine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:15901", 
+        "ChemicalFormula": "[C4H6N2O2]", 
+        "CommonName": "5,6-dihydrouracil", 
+        "IUPACName": "[dihydropyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "5,6-dihydrouracil", 
+        "Symbol": null, 
+        "Synonyms": "['dihydrouracile', '2,4-dioxotetrahydropyrimidine', 'hydrouracil', 'dihydrouracil', 'dihydro-2,4(1h,3h)-pyrimidinedione', '5,6-dihydro-2,4-dihydroxypyrimidine', '2,4(1h,3h)-pyrimidinedione, dihydro-', 'dihydropyrimidine-2,4(1h,3h)-dione']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:15934", 
+        "ChemicalFormula": "[C9H16N4O6, C9H16N4O6]", 
+        "CommonName": "5-amino-6-(D-ribitylamino)uracil", 
+        "IUPACName": "[1-[(5-amino-2,6-dioxo-1,2,3,6-tetrahydropyrimidin-4-yl)amino]-1-deoxy-D-ribitol]", 
+        "Refname": "5-amino-6-(D-ribitylamino)uracil", 
+        "Symbol": null, 
+        "Synonyms": "['5-amino-6-ribitylamino-2,4-(1h,3h)pyrimidinedione', '5-amino-6-(1-d-ribitylamino)uracil', '6-(1-d-ribitylamino)-5-aminouracil', '4-(1-d-ribitylamino)-5-amino-2,6-dihydroxypyrimidine', '5-amino-2,6-dioxo-4-ribitylaminopyrimidine', '5-a-ru', '5-amino-6-(d-ribitylamino)uracil', '6-(1-d-ribitylamino)-5-amino-2,4-dihydroxypyrimidine', '5-arpd', '5-amino-6-ribitylaminouracil']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:15955", 
+        "ChemicalFormula": "[C14H20N6O2]", 
+        "CommonName": "discadenine", 
+        "IUPACName": "[(2S)-2-amino-4-{6-[(3-methylbut-2-en-1-yl)amino]-3H-purin-3-yl}butanoic acid]", 
+        "Refname": "discadenine", 
+        "Symbol": null, 
+        "Synonyms": "['3-(3-amino-3-carboxypropyl)-n6-(delta2-isopentenyl)-adenine', 'alpha-amino-6-((3-methyl-2-butenyl)amino)-3h-purine-3-butanoic acid', '3-(3-amino-3-carboxypropyl)-n6-(delta2)-isopentenyladenine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:16009", 
+        "ChemicalFormula": "[C10H11N5O5]", 
+        "CommonName": "9-riburonosyladenine", 
+        "IUPACName": "[9-beta-D-ribofuranuronosyladenine]", 
+        "Refname": "9-riburonosyladenine", 
+        "Symbol": null, 
+        "Synonyms": "[\"ado-5'-cooh\", '9-beta-d-ribofuranuronosyl-9h-purin-6-amine', \"adenosine 5'-carboxylic acid\", '1-(6-amino-9h-purin-9-yl)-1-deoxy-beta-d-ribofuranuronic acid', \"adenosine-5'-carboxylic acid\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "3mG"
+        ], 
+        "ChEBIId": "CHEBI:1604", 
+        "ChemicalFormula": "[C6H7N5O]", 
+        "CommonName": [
+            "3-methylguanine"
+        ], 
+        "IUPACName": "[]", 
+        "Refname": "3-methylguanine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "[]", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:16049", 
+        "ChemicalFormula": "[C15H25N3O14P2]", 
+        "CommonName": "CDP-abequose", 
+        "IUPACName": "[cytidine 5'-[3-(3,6-dideoxy-D-xylo-hexopyranosyl) dihydrogen diphosphate]]", 
+        "Refname": "CDP-abequose", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:16335", 
+        "ChemicalFormula": "[C10H13N5O4]", 
+        "CommonName": "adenosine", 
+        "IUPACName": "[adenosine]", 
+        "Refname": "adenosine", 
+        "Symbol": null, 
+        "Synonyms": "['adenosin', '6-amino-9-beta-d-ribofuranosyl-9h-purine', 'adenocard', 'adenocor', 'adenoscan', '9-beta-d-ribofuranosidoadenine', 'adenine deoxyribonucleoside', 'deoxyadenosine', 'ade-rib', 'beta-d-adenosine', 'ado', '9-beta-d-ribofuranosyl-9h-purin-6-amine', 'adenyldeoxyriboside', '(2r,3r,4s,5r)-2-(6-aminopurin-9-yl)-5-(hydroxymethyl)oxolane-3,4-diol', 'desoxyadenosine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:16436", 
+        "ChemicalFormula": "[C14H26N4O11P2]", 
+        "CommonName": "CDP-choline", 
+        "IUPACName": "[5'-O-[hydroxy({[2-(trimethylammonio)ethoxy]phosphinato}oxy)phosphoryl]cytidine]", 
+        "Refname": "CDP-choline", 
+        "Symbol": null, 
+        "Synonyms": "[\"cytidine 5'-diphosphoric choline\", 'citidin difosfato de colina', 'cyticholine', \"[2-cytidylate-o'-phosphonyloxyl]-ethyl-trimethyl-ammonium\", 'cdp-colina', \"cytidine 5'-(choline diphosphate)\", \"cytidine 5'-diphosphocholine\", 'citicoline', 'citicolina', \"cytidine 5'-(cholinyl pyrophosphate)\", 'citicolinum', 'cytidindiphosphocholin']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "dU"
+        ], 
+        "ChEBIId": "CHEBI:16450", 
+        "ChemicalFormula": "[C9H12N2O5]", 
+        "CommonName": [
+            "2'-deoxyuridine"
+        ], 
+        "IUPACName": "[1-(2-deoxy-beta-D-erythro-pentofuranosyl)uracil]", 
+        "Refname": "2'-deoxyuridine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['du', 'deoxyuridine', '2-deoxyuridine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:16522", 
+        "ChemicalFormula": "[C10H13N5O]", 
+        "CommonName": "trans-zeatin", 
+        "IUPACName": "[(2E)-2-methyl-4-(9H-purin-6-ylamino)but-2-en-1-ol]", 
+        "Refname": "trans-zeatin", 
+        "Symbol": null, 
+        "Synonyms": "['n6-(4-hydroxyisopentenyl)adenine', '(e)-2-methyl-4-(purin-6-ylamino)-2-buten-1-ol', '(e)-2-methyl-4-(1h-purin-6-ylamino)but-2-en-1-ol', '(e)-zeatin', 'zeatin', '(e)-2-methyl-4-(1h-purin-6-ylamino)-2-buten-1-ol']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:16556", 
+        "ChemicalFormula": "[C20H31N4O16P]", 
+        "CommonName": "CMP-N-acetyl-beta-neuraminic acid", 
+        "IUPACName": "[cytidine 5'-(5-acetamido-3,5-dideoxy-D-glycero-beta-D-galacto-non-2-ulopyranosylonic acid monophosphate)]", 
+        "Refname": "CMP-N-acetyl-beta-neuraminic acid", 
+        "Symbol": null, 
+        "Synonyms": "['cmp-nana', 'cmp-neunac', \"cytidine-5'-monophosphate-5-n-acetylneuraminic acid\", \"cytidine-5'-monophospho-n-acetylneuraminic acid\", 'cmp-beta-neu5ac', 'cmp acetylneuraminic acid', 'cmp-n-acetylneuraminate', 'cmp-sialic acid', 'cytidine monophosphate n-acetylneuraminic acid', 'cmp-neu5ac', \"cytidine-5'-monophosphono-n-acetylneuraminic acid\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:16704", 
+        "ChemicalFormula": "[C9H12N2O6]", 
+        "CommonName": "uridine", 
+        "IUPACName": "[uridine]", 
+        "Refname": "uridine", 
+        "Symbol": null, 
+        "Synonyms": "['urd', 'uridin', '1-beta-d-ribofuranosyluracil', 'beta-uridine', 'u', '1-beta-d-ribofuranosylpyrimidine-2,4(1h,3h)-dione']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:16742", 
+        "ChemicalFormula": "[C5H4N2O4, C5H4N2O4]", 
+        "CommonName": "orotic acid", 
+        "IUPACName": "[2,6-dioxo-1,2,3,6-tetrahydropyrimidine-4-carboxylic acid]", 
+        "Refname": "orotic acid", 
+        "Symbol": null, 
+        "Synonyms": "['orotsaeure', 'uracil-6-carboxylic acid']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:16750", 
+        "ChemicalFormula": "[C10H13N5O5]", 
+        "CommonName": "guanosine", 
+        "IUPACName": "[guanosine]", 
+        "Refname": "guanosine", 
+        "Symbol": null, 
+        "Synonyms": "['2(3h)-imino-9-beta-d-ribofuranosyl-9h-purin-6(1h)-one', 'g', 'guanine-9-beta-d-ribofuranoside', 'guo', '9-beta-d-ribofuranosyl-guanine', 'guanine riboside', '2-amino-1,9-dihydro-9-beta-d-ribofuranosyl-6h-purin-6-one', 'guanosin', '2-amino-9-beta-d-ribofuranosyl-1,9-dihydro-6h-purin-6-one']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:16788", 
+        "ChemicalFormula": "[C19H28N4O16PR]", 
+        "CommonName": "CMP-N-acyl-beta-neuraminic acid", 
+        "IUPACName": "[]", 
+        "Refname": "CMP-N-acyl-beta-neuraminic acid", 
+        "Symbol": null, 
+        "Synonyms": "['cmp-n-acylneuraminate']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:16806", 
+        "ChemicalFormula": "[C6H3N4O4]", 
+        "CommonName": "xanthine-8-carboxylate", 
+        "IUPACName": "[2,6-dioxo-2,3,6,7-tetrahydro-1H-purine-8-carboxylate]", 
+        "Refname": "xanthine-8-carboxylate", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "5hmU"
+        ], 
+        "ChEBIId": "CHEBI:16964", 
+        "ChemicalFormula": "[C5H6N2O3]", 
+        "CommonName": [
+            "5-hydroxymethyluracil"
+        ], 
+        "IUPACName": "[5-(hydroxymethyl)pyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "5-hydroxymethyluracil", 
+        "Symbol": [
+            "g"
+        ], 
+        "Synonyms": "['5-(hydroxymethyl)uracil', '5-hydroxymethyl uracil', '5-(hydroxymethyl)-2,4(1h,3h)-pyrimidinedione']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:17025", 
+        "ChemicalFormula": "[C5H6N2O4]", 
+        "CommonName": "(S)-dihydroorotic acid", 
+        "IUPACName": "[(4S)-2,6-dioxohexahydropyrimidine-4-carboxylic acid]", 
+        "Refname": "(S)-dihydroorotic acid", 
+        "Symbol": null, 
+        "Synonyms": "['dihydro-l-orotic acid', '(s)-4,5-dihydroorotic acid', 'l-dihydroorotic acid']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:17239", 
+        "ChemicalFormula": "[C9H15N3O11P2]", 
+        "CommonName": "CDP", 
+        "IUPACName": "[cytidine 5'-(trihydrogen diphosphate)]", 
+        "Refname": "CDP", 
+        "Symbol": null, 
+        "Synonyms": "[\"cytidine 5'-diphosphoric acid\", 'cytidine diphosphate', \"cytidine, 5'-(trihydrogen pyrophosphate)\", \"cytidine 5'-pyrophosphate\", 'cdp', \"5'-cdp\", \"cytidine 5'-diphosphate\", \"cytidine-5'-diphosphate\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:17259", 
+        "ChemicalFormula": "[C15H25N3O14P2]", 
+        "CommonName": "CDP-3,6-dideoxy-D-mannose", 
+        "IUPACName": "[cytidine 5'-[3-(3,6-dideoxy-D-arabino-hexopyranosyl) dihydrogen diphosphate]]", 
+        "Refname": "CDP-3,6-dideoxy-D-mannose", 
+        "Symbol": null, 
+        "Synonyms": "['cdp-tyvelose']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:17338", 
+        "ChemicalFormula": "[C15H25N3O14P2]", 
+        "CommonName": "CDP-3,6-dideoxy-D-glucose", 
+        "IUPACName": "[cytidine 5'-[3-(3,6-dideoxy-D-ribo-hexopyranosyl) dihydrogen diphosphate]]", 
+        "Refname": "CDP-3,6-dideoxy-D-glucose", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:17361", 
+        "ChemicalFormula": "[C9H14N3O8P]", 
+        "CommonName": "cytidine 5'-monophosphate", 
+        "IUPACName": "[5'-cytidylic acid]", 
+        "Refname": "cytidine 5'-monophosphate", 
+        "Symbol": null, 
+        "Synonyms": "['pc', \"cytidine-5'-monophosphate\", 'cytidylic acid', 'cytidylate', 'cmp']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "xI"
+        ], 
+        "ChEBIId": "CHEBI:17368", 
+        "ChemicalFormula": "[C5H4N4O]", 
+        "CommonName": [
+            "inosine"
+        ], 
+        "IUPACName": "[1,7-dihydro-6H-purin-6-one]", 
+        "Refname": "hypoxanthine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['purine-6-ol', '9h-purin-6(1h)-one', 'hyp', 'purin-6(1h)-one', '6-oxopurine', '6(1h)-purinone']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:17438", 
+        "ChemicalFormula": "[C15H21N5O5]", 
+        "CommonName": "O-beta-D-xylosylzeatin", 
+        "IUPACName": "[2-methyl-4-(1H-purin-6-ylamino)but-2-en-1-yl beta-D-xylopyranoside]", 
+        "Refname": "O-beta-D-xylosylzeatin", 
+        "Symbol": null, 
+        "Synonyms": "['o-beta-d-xyloxylzeatin', 'o-beta-d-xylosylzeatin']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "5caU"
+        ], 
+        "ChEBIId": "CHEBI:17477", 
+        "ChemicalFormula": "[C5H4N2O4, C5H4N2O4]", 
+        "CommonName": [
+            "5-carboxyluracil"
+        ], 
+        "IUPACName": "[2,4-dioxo-1,2,3,4-tetrahydropyrimidine-5-carboxylic acid]", 
+        "Refname": "uracil-5-carboxylic acid", 
+        "Symbol": [
+            "b"
+        ], 
+        "Synonyms": "['isoorotic acid', 'uracil 5-carboxylic acid', '2,4-dihydroxy-5-pyrimidinecarboxylic acid', 'uracil 5-carboxylate', 'steviolbioside', '5-carboxyuracil']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:17494", 
+        "ChemicalFormula": "[C15H23N3O15P2]", 
+        "CommonName": "CDP-4-dehydro-6-deoxy-D-glucose", 
+        "IUPACName": "[cytidine 5'-[3-(6-deoxy-D-xylo-hexopyranosyl-4-ulose) dihydrogen diphosphate]]", 
+        "Refname": "CDP-4-dehydro-6-deoxy-D-glucose", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:17524", 
+        "ChemicalFormula": "[C5H4N5R]", 
+        "CommonName": "6-alkylaminopurine", 
+        "IUPACName": "[]", 
+        "Refname": "6-alkylaminopurine", 
+        "Symbol": null, 
+        "Synonyms": "['6-alkylaminopurines', 'n6-alkylaminopurine', 'an n(6)-alkylaminopurine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:17562", 
+        "ChemicalFormula": "[C9H13N3O5]", 
+        "CommonName": "cytidine", 
+        "IUPACName": "[cytidine]", 
+        "Refname": "cytidine", 
+        "Symbol": null, 
+        "Synonyms": "['cytosine-1beta-d-ribofuranoside', '1beta-d-ribofuranosylcytosine', '4-amino-1beta-d-ribofuranosyl-2(1h)-pyrimidinone', 'cytosine riboside', '1-beta-d-ribofuranosylcytosine', 'zytidin', 'cytidin', '4-amino-1-beta-d-ribofuranosylpyrimidin-2(1h)-one', 'cyd', '4-amino-1-beta-d-ribofuranosyl-2(1h)-pyrimidinone']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:17596", 
+        "ChemicalFormula": "[C10H12N4O5]", 
+        "CommonName": "inosine", 
+        "IUPACName": "[(2R,3S,4R,5R)-2-(hydroxymethyl)-5-(6-hydroxy-9H-purin-9-yl)tetrahydrofuran-3,4-diol, 9-(beta-D-ribofuranosyl)-9H-purin-6-ol, inosine]", 
+        "Refname": "inosine", 
+        "Symbol": null, 
+        "Synonyms": "['9-beta-d-ribofuranosylhypoxanthine', 'i', 'inosina', 'hypoxanthine d-riboside', 'inosin', 'inosinum', '9-beta-d-ribofuranosyl-9h-purin-6-ol', 'hypoxanthosine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:17643", 
+        "ChemicalFormula": "[C10H10N4O6]", 
+        "CommonName": "9-riburonosylhypoxanthine", 
+        "IUPACName": "[9-(beta-D-ribofuranosyluronic acid)-1,9-dihydro-6H-purin-6-one]", 
+        "Refname": "9-riburonosylhypoxanthine", 
+        "Symbol": null, 
+        "Synonyms": "['9-(beta-d-ribofuranuronosyl)-1,9-dihydro-6h-purin-6-one']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:17660", 
+        "ChemicalFormula": "[C10H13N5]", 
+        "CommonName": "N(6)-dimethylallyladenine", 
+        "IUPACName": "[N-(3-methylbut-2-en-1-yl)-7H-purin-6-amine, N-(3-methylbut-2-en-1-yl)-9H-purin-6-amine]", 
+        "Refname": "N(6)-dimethylallyladenine", 
+        "Symbol": null, 
+        "Synonyms": "['n6-(3-methylbut-2-enyl)adenine', 'n(6)-dimethylallyladenine', 'n6-(delta2-isopentenyl)adenine', 'n(6)-(delta2-isopentenyl)adenine', 'ip', 'n6-isopentenyladenine', '6-(3-methyl-2-buten-1-ylamino)purine', 'n6-dimethylallyladenine', 'isopentenyl adenine', 'isopentenyladenine', 'n6-(delta2-isopentenyl)-adenine', '6-(gamma,gamma-dimethylallylamino)purine', '(3-methyl-but-2-enyl)-(7(9)h-purin-6-yl)-amine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:17677", 
+        "ChemicalFormula": "[C9H16N3O14P3]", 
+        "CommonName": "CTP", 
+        "IUPACName": "[cytidine 5'-(tetrahydrogen triphosphate)]", 
+        "Refname": "CTP", 
+        "Symbol": null, 
+        "Synonyms": "['ctp', \"5'-ctp\", \"cytidine-5'-triphosphate\", 'h4ctp', \"cytidine 5'-triphosphate\", 'cytidine triphosphate']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:17712", 
+        "ChemicalFormula": "[C5H4N4O2]", 
+        "CommonName": "9H-xanthine", 
+        "IUPACName": "[3,9-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "9H-xanthine", 
+        "Symbol": null, 
+        "Synonyms": "['2,6-dihydroxypurine', '9h-purine-2,6-(1h,3h)-dione', 'xanthine', 'xan', 'purine-2(3h),6(1h)-dione', '2,6-dioxo-1,2,3,6-tetrahydropurine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:17748", 
+        "ChemicalFormula": "[C10H14N2O5]", 
+        "CommonName": "thymidine", 
+        "IUPACName": "[thymidine]", 
+        "Refname": "thymidine", 
+        "Symbol": null, 
+        "Synonyms": "['deoxythymidine', \"5-methyl-2'-deoxyuridine\", \"thymine 2'-deoxyriboside\", \"2'-deoxy-5-methyluridine\", \"2'-thymidine\", \"2'-deoxythymidine\", 'dthd', '1-(2-deoxy-beta-d-erythro-pentofuranosyl)-5-methylpyrimidine-2,4(1h,3h)-dione', 't']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:17817", 
+        "ChemicalFormula": "[C15H23N3O14P2]", 
+        "CommonName": "CDP-4-dehydro-3,6-dideoxy-D-glucose", 
+        "IUPACName": "[cytidine 5'-[3-(3,6-dideoxy-D-erythro-hexopyranosyl-4-ulose) dihydrogen diphosphate]]", 
+        "Refname": "CDP-4-dehydro-3,6-dideoxy-D-glucose", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:17874", 
+        "ChemicalFormula": "[C10H15N5O]", 
+        "CommonName": "dihydrozeatin", 
+        "IUPACName": "[(2R)-2-methyl-4-(7H-purin-6-ylamino)butan-1-ol]", 
+        "Refname": "dihydrozeatin", 
+        "Symbol": null, 
+        "Synonyms": "['n(6)-(4-hydroxyisopentanyl)adenine', '2-methyl-4-(1h-purin-6-ylamino)butan-1-ol', 'n6-(4-hydroxyisopentanyl)adenine', '2-methyl-4-(9h-purin-6-ylamino)butan-1-ol']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:18014", 
+        "ChemicalFormula": "[C17H26N3O15P]", 
+        "CommonName": "CMP-3-deoxy-alpha-D-manno-octulosonic acid", 
+        "IUPACName": "[cytidine 5'-[(3-deoxy-alpha-D-manno-oct-2-ulopyranosonyl) hydrogen phosphate]]", 
+        "Refname": "CMP-3-deoxy-alpha-D-manno-octulosonic acid", 
+        "Symbol": null, 
+        "Synonyms": "['cmp-kdo']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "1mA"
+        ], 
+        "ChEBIId": "CHEBI:18083", 
+        "ChemicalFormula": "[C6H7N5]", 
+        "CommonName": [
+            "1-methyladenine"
+        ], 
+        "IUPACName": "[1-methyl-1H-purin-6-amine]", 
+        "Refname": "1-methyladenine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['n1-methyladenine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:18098", 
+        "ChemicalFormula": "[C20H31N4O17P]", 
+        "CommonName": "CMP-N-glycoloyl-beta-neuraminic acid", 
+        "IUPACName": "[cytidine 5'-[3,5-dideoxy-5-(2-hydroxyacetamido)-D-glycero-beta-D-galacto-non-2-ulopyranosylonic acid monophosphate]]", 
+        "Refname": "CMP-N-glycoloyl-beta-neuraminic acid", 
+        "Symbol": null, 
+        "Synonyms": "['cmp-beta-neu5gc', 'cmp-n-glycolylneuraminate', \"cytidine-5'-monophosphono-n-glycoloyllneuraminic acid\", 'cmp-n-glycoloylneuraminate', 'cmp-neungc', 'cmp-neu5gc']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:18247", 
+        "ChemicalFormula": "[C9H17N4O9P]", 
+        "CommonName": "5-amino-6-(5-phospho-D-ribitylamino)uracil", 
+        "IUPACName": "[1-(5-amino-2,6-dioxo-1,2,3,6-tetrahydropyrimidin-4-ylamino)-1-deoxy-5-O-phosphono-D-ribitol, 1-(5-amino-2,6-dioxo-1,2,3,6-tetrahydropyrimidin-4-ylamino)-1-deoxy-D-ribitol 5-(dihydrogen phosphate), 1-[(5-amino-2,6-dioxo-1,2,3,6-tetrahydropyrimidin-4-yl)amino]-1-deoxy-5-O-phosphono-D-ribitol]", 
+        "Refname": "5-amino-6-(5-phospho-D-ribitylamino)uracil", 
+        "Symbol": null, 
+        "Synonyms": "[\"5-amino-2,6-dioxy-4-(5'-phospho-d-ribitylamino)pyrimidine\", '5-amino-6-(5-phospho-d-ribitylamino)uracil', '5-amino-6-(5-phosphoribitylamino)uracil', \"5-amino-2,6-dioxy-4-(5'-phosphoribitylamino)pyrimidine\", \"5-amino-6-(5'-phosphoribitylamino)uracil\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:18337", 
+        "ChemicalFormula": "[C9H15N4O9P]", 
+        "CommonName": "5-amino-6-(5-phospho-beta-D-ribosylamino)uracil", 
+        "IUPACName": "[N-(5-amino-2,6-dioxo-1,2,3,6-tetrahydropyrimidin-4-yl)-5-O-phosphono-beta-D-ribofuranosylamine, N-(5-amino-2,6-dioxo-1,2,3,6-tetrahydropyrimidin-4-yl)-beta-D-ribofuranosylamine 5-(dihydrogen phosphate)]", 
+        "Refname": "5-amino-6-(5-phospho-beta-D-ribosylamino)uracil", 
+        "Symbol": null, 
+        "Synonyms": "[\"5-amino-6-(5'-phosphoribosylamino)uracil\", \"5-amino-6-(ribosylamino)-2,4-(1h,3h)-pyrimidinedione 5'-phosphate\", '5-amino-6-(5-phosphoribosylamino)uracil']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "m22G"
+        ], 
+        "ChEBIId": "CHEBI:19289", 
+        "ChemicalFormula": "[C12H17N5O5]", 
+        "CommonName": [
+            "N(2),N(2)-dimethylguanosine"
+        ], 
+        "IUPACName": "[N,N-dimethylguanosine]", 
+        "Refname": "N(2),N(2)-dimethylguanosine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['m22g', '2-dimethylamino-6-oxypurine riboside', '2,2-dimethylguanosine', 'n2-dimethylguanosine', '2-(dimethylamino)-9-(beta-d-ribofuranosyl)-1,9-dihydro-6h-purin-6-one', 'n(2),n(2)-dimethylguanosine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:20552", 
+        "ChemicalFormula": "[C4H3BrN2O2]", 
+        "CommonName": "5-bromouracil", 
+        "IUPACName": "[5-bromopyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "5-bromouracil", 
+        "Symbol": null, 
+        "Synonyms": "['5-bru', 'bromouracil', '1,2,3,4-tetrahydro-5-bromo-2,4-pyrimidinedione', '5-bromo-2,4(1h,3h)-pyrimidinedione', '5-bu']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "m6G"
+        ], 
+        "ChEBIId": "CHEBI:20689", 
+        "ChemicalFormula": "[C6H7N5O]", 
+        "CommonName": [
+            "6-O-methylguanine"
+        ], 
+        "IUPACName": "[6-methoxy-7H-purin-2-amine]", 
+        "Refname": "6-O-methylguanine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['o-(6)-methylguanine', 'o(6)-methylguanine', '6-methoxyguanine', '6-methoxy-1h-purine-2-amine', '2-amino-6-methoxypurine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:20833", 
+        "ChemicalFormula": "[C15H21N5O5]", 
+        "CommonName": "9-ribosyl-cis-zeatin", 
+        "IUPACName": "[N-[(2Z)-4-hydroxy-3-methylbut-2-en-1-yl]adenosine]", 
+        "Refname": "9-ribosyl-cis-zeatin", 
+        "Symbol": null, 
+        "Synonyms": "['cis-ribosylzeatin', '9-beta-d-ribofuranosyl-cis-zeatin', 'cis-zeatin riboside']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:20838", 
+        "ChemicalFormula": "[C15H21N5O5]", 
+        "CommonName": "9-ribosylzeatin", 
+        "IUPACName": "[N-(4-hydroxy-3-methylbut-2-en-1-yl)adenosine]", 
+        "Refname": "9-ribosylzeatin", 
+        "Symbol": null, 
+        "Synonyms": "['n-(4-hydroxy-3-methyl-2-butenyl)adenosine', 'ribosylzeatin', 'zeatin riboside']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:20873", 
+        "ChemicalFormula": "3", 
+        "CommonName": "CDP-sugar", 
+        "IUPACName": "[]", 
+        "Refname": "CDP-sugar", 
+        "Symbol": null, 
+        "Synonyms": "['cdp-sugar', 'cdp-sugars']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:20878", 
+        "ChemicalFormula": "6", 
+        "CommonName": "CMP-sugar", 
+        "IUPACName": "[]", 
+        "Refname": "CMP-sugar", 
+        "Symbol": null, 
+        "Synonyms": "['cmp-sugar', 'cmp-sugars']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "1mG"
+        ], 
+        "ChEBIId": "CHEBI:21803", 
+        "ChemicalFormula": "[C6H7N5O]", 
+        "CommonName": [
+            "1-methylguanine"
+        ], 
+        "IUPACName": "[2-amino-1-methyl-1,9-dihydro-6H-purin-6-one]", 
+        "Refname": "1-methylguanine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['n1-methylguanine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "2mG"
+        ], 
+        "ChEBIId": "CHEBI:21818", 
+        "ChemicalFormula": "[C6H7N5O]", 
+        "CommonName": [
+            "2-methylguanine"
+        ], 
+        "IUPACName": "[2-(methylamino)-1,7-dihydro-6H-purin-6-one]", 
+        "Refname": "N(2)-methylguanine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['1,7-dihydro-2-(methylamino)-6h-purin-6-one', '2-methylguanine', 'n-methyl-guanine', '2-methylamino-6-oxopurine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "4mC"
+        ], 
+        "ChEBIId": "CHEBI:21839", 
+        "ChemicalFormula": "[C5H7N3O]", 
+        "CommonName": [
+            "4-methylcytosine"
+        ], 
+        "IUPACName": "[4-(methylamino)pyrimidin-2(1H)-one]", 
+        "Refname": "N(4)-methylcytosine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['4-methylamino-1h-pyrimidin-2-one', 'n(4)-methylcytosine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:22260", 
+        "ChemicalFormula": "19", 
+        "CommonName": "adenosines", 
+        "IUPACName": "[]", 
+        "Refname": "adenosines", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:22532", 
+        "ChemicalFormula": "89", 
+        "CommonName": "aminouracil", 
+        "IUPACName": "[]", 
+        "Refname": "aminouracil", 
+        "Symbol": null, 
+        "Synonyms": "['aminouracils']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "7mG"
+        ], 
+        "ChEBIId": "CHEBI:2274", 
+        "ChemicalFormula": "[C6H7N5O]", 
+        "CommonName": [
+            "7-methylguanine"
+        ], 
+        "IUPACName": "[]", 
+        "Refname": "7-methylguanine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "[]", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:23518", 
+        "ChemicalFormula": "15", 
+        "CommonName": "cytidine 3'-phosphate", 
+        "IUPACName": "[]", 
+        "Refname": "cytidine 3'-phosphate", 
+        "Symbol": null, 
+        "Synonyms": "[\"cytidine 3'-phosphates\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:23521", 
+        "ChemicalFormula": "13", 
+        "CommonName": "cytidine 5'-phosphate", 
+        "IUPACName": "[]", 
+        "Refname": "cytidine 5'-phosphate", 
+        "Symbol": null, 
+        "Synonyms": "[\"cytidine 5'-phosphates\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:23523", 
+        "ChemicalFormula": "1", 
+        "CommonName": "cytidine phosphate", 
+        "IUPACName": "[]", 
+        "Refname": "cytidine phosphate", 
+        "Symbol": null, 
+        "Synonyms": "['cytidine phosphates']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:23524", 
+        "ChemicalFormula": "2", 
+        "CommonName": "cytidines", 
+        "IUPACName": "[]", 
+        "Refname": "cytidines", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:23818", 
+        "ChemicalFormula": "60", 
+        "CommonName": "dimethylxanthine", 
+        "IUPACName": "[]", 
+        "Refname": "dimethylxanthine", 
+        "Symbol": null, 
+        "Synonyms": "['dimethylxanthines']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:24458", 
+        "ChemicalFormula": "47", 
+        "CommonName": "guanosines", 
+        "IUPACName": "[]", 
+        "Refname": "guanosines", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:2453", 
+        "ChemicalFormula": "[C8H11N5O3]", 
+        "CommonName": "acyclovir", 
+        "IUPACName": "[2-amino-9-[(2-hydroxyethoxy)methyl]-1,9-dihydro-6H-purin-6-one]", 
+        "Refname": "acyclovir", 
+        "Symbol": null, 
+        "Synonyms": "['aciclovirum', 'acycloguanosine', 'zovir', 'aciclovir']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:2469", 
+        "ChemicalFormula": "[C8H12N5O4P]", 
+        "CommonName": "adefovir", 
+        "IUPACName": "[{[2-(6-amino-9H-purin-9-yl)ethoxy]methyl}phosphonic acid]", 
+        "Refname": "adefovir", 
+        "Symbol": null, 
+        "Synonyms": "['drg-0156', 'n-(2-phosphonylmethoxyethyl)adenine', 'hsdb 8079', 'pmea', '9-(2-(phosphonomethoxy)ethyl)adenine', 'gs 393', '9-(2-phosphonylmethoxyethyl)adenine', 'gs 0393', 'gs-0393']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "mA"
+        ], 
+        "ChEBIId": "CHEBI:25272", 
+        "ChemicalFormula": "17", 
+        "CommonName": [
+            "methyladenine"
+        ], 
+        "IUPACName": "[]", 
+        "Refname": "methyladenine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['methyladenines']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "mG"
+        ], 
+        "ChEBIId": "CHEBI:25305", 
+        "ChemicalFormula": "45", 
+        "CommonName": [
+            "methylguanine"
+        ], 
+        "IUPACName": "[]", 
+        "Refname": "methylguanine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "[]", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:25348", 
+        "ChemicalFormula": "84", 
+        "CommonName": "methylxanthine", 
+        "IUPACName": "[]", 
+        "Refname": "methylxanthine", 
+        "Symbol": null, 
+        "Synonyms": "['methylxanthines']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:25858", 
+        "ChemicalFormula": "[C7H8N4O2]", 
+        "CommonName": "1,7-dimethylxanthine", 
+        "IUPACName": "[1,7-dimethyl-3,7-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "1,7-dimethylxanthine", 
+        "Symbol": null, 
+        "Synonyms": "['3,7-dihydro-1,7-dimethyl-1h-purine-2,6-dione', 'p-xanthine', 'paraxanthine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:27134", 
+        "ChemicalFormula": "58", 
+        "CommonName": "trimethylxanthine", 
+        "IUPACName": "[]", 
+        "Refname": "trimethylxanthine", 
+        "Symbol": null, 
+        "Synonyms": "['trimethylxanthines']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:27242", 
+        "ChemicalFormula": "90", 
+        "CommonName": "uridines", 
+        "IUPACName": "[]", 
+        "Refname": "uridines", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "diHT"
+        ], 
+        "ChEBIId": "CHEBI:27468", 
+        "ChemicalFormula": "[C5H8N2O2]", 
+        "CommonName": [
+            "5,6-dihydrothymine"
+        ], 
+        "IUPACName": "[5,6-dihydrothymine, 5-methyldihydropyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "5,6-dihydrothymine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['5,6-dihydro-5-methyluracil', '5-methyl-5,6-dihydrouracil', 'dihydrothymine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:27549", 
+        "ChemicalFormula": "[C11H15N5O4]", 
+        "CommonName": "O(6)-methyl-2'-deoxyguanosine", 
+        "IUPACName": "[9-(2-deoxy-beta-D-erythro-pentofuranosyl)-6-methoxy-9H-purin-2-amine]", 
+        "Refname": "O(6)-methyl-2'-deoxyguanosine", 
+        "Symbol": null, 
+        "Synonyms": "[\"o(6)-methyl-2'-deoxyguanosine\", 'o(6)-methyldeoxyguanosine', \"2'-deoxy-o(6)-methylguanosine\", \"o6-methyl-2'-deoxyguanosine\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "5mC"
+        ], 
+        "ChEBIId": "CHEBI:27551", 
+        "ChemicalFormula": "[C5H7N3O]", 
+        "CommonName": [
+            "5-methylcytosine"
+        ], 
+        "IUPACName": "[4-amino-5-methylpyrimidin-2(1H)-one]", 
+        "Refname": "5-methylcytosine", 
+        "Symbol": [
+            "m"
+        ], 
+        "Synonyms": "['4-amino-5-methyl-2(1h)-pyrimidinone', '4-amino-5-methyl-2-pyrimidinol']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "3mG"
+        ], 
+        "ChEBIId": "CHEBI:27564", 
+        "ChemicalFormula": "[C6H7N5O]", 
+        "CommonName": [
+            "2-amino-3-methyl-3,7-dihydro-6H-purin-6-one"
+        ], 
+        "IUPACName": "[2-amino-3-methyl-3,7-dihydro-6H-purin-6-one]", 
+        "Refname": "2-amino-3-methyl-3,7-dihydro-6H-purin-6-one", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['n(3)-methylguanine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:27732", 
+        "ChemicalFormula": "[C8H10N4O2]", 
+        "CommonName": "caffeine", 
+        "IUPACName": "[1,3,7-trimethyl-3,7-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "caffeine", 
+        "Symbol": null, 
+        "Synonyms": "['1,3,7-trimethylpurine-2,6-dione', '7-methyltheophylline', 'coffein', 'methyltheobromine', 'koffein', 'guaranine', '1-methyltheobromine', 'thein', 'cafeina', '1,3,7-trimethyl-2,6-dioxopurine', 'mateina', 'cafeine', 'anhydrous caffeine', '1,3,7-trimethylxanthine', 'theine', 'teina', '3,7-dihydro-1,3,7-trimethyl-1h-purin-2,6-dion']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:28177", 
+        "ChemicalFormula": "[C7H8N4O2]", 
+        "CommonName": "theophylline", 
+        "IUPACName": "[1,3-dimethyl-3,7-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "theophylline", 
+        "Symbol": null, 
+        "Synonyms": "['theolair', 'uniphyl', '1,3-dimethylxanthine', 'theophyllin', 'respbid', '1,3-dimethyl-7h-purine-2,6-dione', 'theo-dur', 'elixophyllin', 'theophylline anhydrous']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:28507", 
+        "ChemicalFormula": "[C9H14N3O8P]", 
+        "CommonName": "cytidine 2'-phosphate", 
+        "IUPACName": "[2'-cytidylic acid]", 
+        "Refname": "cytidine 2'-phosphate", 
+        "Symbol": null, 
+        "Synonyms": "[\"cytidine 2'-monophosphate\", \"2'-cytidylic acid\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "7mG"
+        ], 
+        "ChEBIId": "CHEBI:28664", 
+        "ChemicalFormula": "[C6H7N5O]", 
+        "CommonName": [
+            "2-amino-7-methyl-1,7-dihydro-6H-purin-6-one"
+        ], 
+        "IUPACName": "[2-amino-7-methyl-1,7-dihydro-6H-purin-6-one]", 
+        "Refname": "2-amino-7-methyl-1,7-dihydro-6H-purin-6-one", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['7-methylguanine', '2-amino-1,7-dihydro-7-methyl-6h-purin-6-one', '2-amino-7-methylhypoxanthine', 'n(7)-methylguanine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:28680", 
+        "ChemicalFormula": "[C9H13N3O5]", 
+        "CommonName": "cytarabine", 
+        "IUPACName": "[4-amino-1-beta-D-arabinofuranosylpyrimidin-2(1H)-one]", 
+        "Refname": "cytarabine", 
+        "Symbol": null, 
+        "Synonyms": "['1-beta-d-arabinofuranosylcytosine', 'cytosine arabinoside', '4-amino-1-beta-d-arabinofuranosyl-2(1h)-pyrimidinone', 'arabinocytosine', 'cytarabinum', 'arabinoside c', 'ara-c', 'cytosine-1-beta-d-arabinofuranoside', 'citarabina', 'cytosine-beta-d-arabinofuranoside']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:28846", 
+        "ChemicalFormula": "[C9H15N3O10P2]", 
+        "CommonName": "dCDP", 
+        "IUPACName": "[2'-deoxycytidine 5'-(trihydrogen diphosphate)]", 
+        "Refname": "dCDP", 
+        "Symbol": null, 
+        "Synonyms": "[\"2'-deoxycytidine 5'-diphosphate\", 'dcdp', 'deoxycytidine diphosphate', 'd-1beta-ribofuranosylcytosine diphosphate', \"2'-deoxycytidine diphosphate\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "6mA"
+        ], 
+        "ChEBIId": "CHEBI:28871", 
+        "ChemicalFormula": "[C6H7N5]", 
+        "CommonName": [
+            "6-methyladenine"
+        ], 
+        "IUPACName": "[N-methyl-9H-purin-6-amine]", 
+        "Refname": "6-methyladenine", 
+        "Symbol": [
+            "a"
+        ], 
+        "Synonyms": "['6-methylaminopurine', 'n6-methyladenine', '6-map', 'n6-monomethyladenine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "7mA"
+        ], 
+        "ChEBIId": "CHEBI:28921", 
+        "ChemicalFormula": "[C6H7N5]", 
+        "CommonName": [
+            "7-methyladenine"
+        ], 
+        "IUPACName": "[7-methyl-7H-purin-6-amine]", 
+        "Refname": "7-methyladenine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "[]", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:28942", 
+        "ChemicalFormula": "[C15H25N3O16P2]", 
+        "CommonName": "CDP-alpha-D-glucose", 
+        "IUPACName": "[cytidine 5'-[3-(alpha-D-glucopyranosyl) dihydrogen diphosphate]]", 
+        "Refname": "CDP-alpha-D-glucose", 
+        "Symbol": null, 
+        "Synonyms": "['cdp-d-glucose', 'cdp-glc']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:28946", 
+        "ChemicalFormula": "[C7H8N4O2]", 
+        "CommonName": "theobromine", 
+        "IUPACName": "[3,7-dimethyl-3,7-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "theobromine", 
+        "Symbol": null, 
+        "Synonyms": "['theobromin', '3,7-dihydro-3,7-dimethyl-1h-purine-2,6-dione', '3,7-dimethylxanthine', '3,7-dimethylpurine-2,6-dione']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:29022", 
+        "ChemicalFormula": "[C12H11N5]", 
+        "CommonName": "N-benzyladenine", 
+        "IUPACName": "[N-benzyl-9H-purin-6-amine]", 
+        "Refname": "N-benzyladenine", 
+        "Symbol": null, 
+        "Synonyms": "['n(6)-(benzylamino)purine', 'bap', 'n6-benzyladenine', '6-(benzylamino)purine', '6-benzylaminopurine', 'n-benzyl-9h-purin-6-amine', '6-bap', 'n-benzyladenine', 'cytokinin b', 'benzyladenine', '6-[(phenylmethyl)amino]-9h-purine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:29115", 
+        "ChemicalFormula": "[C4H4N2O3]", 
+        "CommonName": "5-hydroxyuracil", 
+        "IUPACName": "[5-hydroxypyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "5-hydroxyuracil", 
+        "Symbol": null, 
+        "Synonyms": "['dihydropyrimidine-2,4,5(3h)-trione', 'isobarbituric acid']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:29127", 
+        "ChemicalFormula": "[C4H7N3O3]", 
+        "CommonName": "cytosine glycol", 
+        "IUPACName": "[4-amino-5,6-dihydroxy-5,6-dihydropyrimidin-2(1H)-one]", 
+        "Refname": "cytosine glycol", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:29128", 
+        "ChemicalFormula": "[C5H8N2O4]", 
+        "CommonName": "thymine glycol", 
+        "IUPACName": "[5,6-dihydroxy-5-methyldihydropyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "thymine glycol", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:29146", 
+        "ChemicalFormula": "[C7H5N5]", 
+        "CommonName": "1H-imidazo[2,1-i]purine", 
+        "IUPACName": "[1H-imidazo[2,1-i]purine]", 
+        "Refname": "1H-imidazo[2,1-i]purine", 
+        "Symbol": null, 
+        "Synonyms": "['ethenoadenine', '1,n(6)-ethenoadenine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "\u025bC"
+        ], 
+        "ChEBIId": "CHEBI:29147", 
+        "ChemicalFormula": "[C6H5N3O]", 
+        "CommonName": [
+            "3,N(4)-ethenocytosine"
+        ], 
+        "IUPACName": "[imidazo[1,2-c]pyrimidin-5(6H)-one]", 
+        "Refname": "3,N(4)-ethenocytosine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['3,n(4)-ethanocytosine', 'ethenocytosine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:30839", 
+        "ChemicalFormula": "[C5H3N2O4]", 
+        "CommonName": "orotate", 
+        "IUPACName": "[2,6-dioxo-1,2,3,6-tetrahydropyrimidine-4-carboxylate]", 
+        "Refname": "orotate", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:30864", 
+        "ChemicalFormula": "[C5H5N2O4]", 
+        "CommonName": "(S)-dihydroorotate", 
+        "IUPACName": "[(4S)-2,6-dioxohexahydropyrimidine-4-carboxylate]", 
+        "Refname": "(S)-dihydroorotate", 
+        "Symbol": null, 
+        "Synonyms": "['4,5-dihydro-l-orotate', '(s)-dihydroorotate', '(s)-4,5-dihydroorotate']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:30865", 
+        "ChemicalFormula": "[C5H6N2O4]", 
+        "CommonName": "dihydroorotic acid", 
+        "IUPACName": "[2,6-dioxohexahydropyrimidine-4-carboxylic acid]", 
+        "Refname": "dihydroorotic acid", 
+        "Symbol": null, 
+        "Synonyms": "['4,5-dihydroorotic acid', 'dl-dihydroortotic acid', '5,6-dihydro-orotic acid', 'hydroorotic acid']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:30866", 
+        "ChemicalFormula": "[C5H6N2O4]", 
+        "CommonName": "(R)-dihydroorotic acid", 
+        "IUPACName": "[(4R)-2,6-dioxohexahydropyrimidine-4-carboxylic acid]", 
+        "Refname": "(R)-dihydroorotic acid", 
+        "Symbol": null, 
+        "Synonyms": "['(r)-4,5-dihydroorotic acid', '4,5-dihydro-d-orotic acid']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:30867", 
+        "ChemicalFormula": "[C5H5N2O4]", 
+        "CommonName": "dihydroorotate", 
+        "IUPACName": "[2,6-dioxohexahydropyrimidine-4-carboxylate]", 
+        "Refname": "dihydroorotate", 
+        "Symbol": null, 
+        "Synonyms": "['4,5-dihydroorotate']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:30881", 
+        "ChemicalFormula": "[C6H4N4O4]", 
+        "CommonName": "xanthine-8-carboxylic acid", 
+        "IUPACName": "[2,6-dioxo-2,3,6,7-tetrahydro-1H-purine-8-carboxylic acid]", 
+        "Refname": "xanthine-8-carboxylic acid", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:31175", 
+        "ChemicalFormula": "[C20H32N5O10P]", 
+        "CommonName": "adefovir pivoxil", 
+        "IUPACName": "[bis{[(tert-butoxycarbonyl)oxy]methyl} {[2-(6-amino-9H-purin-9-yl)ethoxy]methyl}phosphonate]", 
+        "Refname": "adefovir pivoxil", 
+        "Symbol": null, 
+        "Synonyms": "['hepsera', '9-(2-((-bis((pivaloyloxy)methoxy)phosphinyl)methoxy)ethyl)adenine', 'gs 0840', 'gs 840', 'gs-0840', '9-(2-((bis((pivaloyloxy)methoxy)phosphinyl)methoxy)ethyl)adenine', 'adefovir dipivoxil', 'preveon', '(((2-(6-amino-9h-purin-9-yl)ethoxy)methyl)phosphinylidene)bis(oxymethylene) 2,2-dimethylpropanoate']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:32643", 
+        "ChemicalFormula": "[C8H10N4O4]", 
+        "CommonName": "5-acetamido-6-formamido-3-methyluracil", 
+        "IUPACName": "[N-(6-formamido-3-methyl-2,4-dioxo-1,2,3,4-tetrahydropyrimidin-5-yl)acetamide]", 
+        "Refname": "5-acetamido-6-formamido-3-methyluracil", 
+        "Symbol": null, 
+        "Synonyms": "['5-acetylamino-6-formylamino-3-methyluracil', 'afmu']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:34795", 
+        "ChemicalFormula": "[C10H14N4O2]", 
+        "CommonName": "3-isobutyl-1-methyl-7H-xanthine", 
+        "IUPACName": "[1-methyl-3-(2-methylpropyl)-3,7-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "3-isobutyl-1-methyl-7H-xanthine", 
+        "Symbol": null, 
+        "Synonyms": "['3-isobutyl-1-methyxanthine', '1-methyl-3-isobutylxanthine', '1-methyl-3-(2-methylpropyl)-7h-purine-2,6-dione', 'ibmx', '3-isobutyl-1-methyl-3,7-dihydro-1h-purine-2,6-dione', '3-isobutyl-1-methylxanthine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:348530", 
+        "ChemicalFormula": "[C4H4N2OS]", 
+        "CommonName": "thiouracil", 
+        "IUPACName": "[2-thioxo-2,3-dihydropyrimidin-4(1H)-one]", 
+        "Refname": "thiouracil", 
+        "Symbol": null, 
+        "Synonyms": "['2-mercapto-pyrimidin-4-ol', '4-hydroxy-2-pyrimidinethiol', '2-mercapto-4-pyrimidinol', '2-thio-2,4-(1h,3h)-pyrimidinedione', '2-thioxo-2,3-dihydro-1h-pyrimidin-4-one', '2-thiouracil']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:35242", 
+        "ChemicalFormula": "[C15H25N3O16P2]", 
+        "CommonName": "CDP-D-glucose", 
+        "IUPACName": "[cytidine 5'-[3-(D-glucopyranosyl) dihydrogen diphosphate]]", 
+        "Refname": "CDP-D-glucose", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:35854", 
+        "ChemicalFormula": "[C13H20N6O4]", 
+        "CommonName": "valacyclovir", 
+        "IUPACName": "[2-[(2-amino-6-oxo-1,6-dihydro-9H-purin-9-yl)methoxy]ethyl L-valinate]", 
+        "Refname": "valacyclovir", 
+        "Symbol": null, 
+        "Synonyms": "['l-valine, 2-((2-amino-1,6-dihydro-6-oxo-9h-purin-9-yl)methoxy)ethyl ester', 'l-valine ester with 9-((2-hydroxyethoxy)methyl)guanine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "3mA"
+        ], 
+        "ChEBIId": "CHEBI:38635", 
+        "ChemicalFormula": "[C6H7N5]", 
+        "CommonName": [
+            "3-methyladenine"
+        ], 
+        "IUPACName": "[3-methyl-3H-purin-6-amine, 3-methyladenine]", 
+        "Refname": "3-methyladenine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['3-methyl-3h-purin-6-ylamine', '6-amino-3-methylpurine', '3-methyl-3h-adenine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:38638", 
+        "ChemicalFormula": "36", 
+        "CommonName": "N-glycosyldihydrozeatin", 
+        "IUPACName": "[]", 
+        "Refname": "N-glycosyldihydrozeatin", 
+        "Symbol": null, 
+        "Synonyms": "['n-glycosyldihydrozeatins']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:38643", 
+        "ChemicalFormula": "18", 
+        "CommonName": "6-isopentenylaminopurine", 
+        "IUPACName": "[]", 
+        "Refname": "6-isopentenylaminopurine", 
+        "Symbol": null, 
+        "Synonyms": "['6-isopentenylaminopurines']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:38644", 
+        "ChemicalFormula": "27", 
+        "CommonName": "O-beta-D-glucosylzeatins", 
+        "IUPACName": "[]", 
+        "Refname": "O-beta-D-glucosylzeatins", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:38645", 
+        "ChemicalFormula": "28", 
+        "CommonName": "N-glycosylzeatin", 
+        "IUPACName": "[]", 
+        "Refname": "N-glycosylzeatin", 
+        "Symbol": null, 
+        "Synonyms": "['n-glycosylzeatins']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:39579", 
+        "ChemicalFormula": "[C21H22N2O5]", 
+        "CommonName": "5-benzyloxybenzylacyclouridine", 
+        "IUPACName": "[5-[3-(benzyloxy)benzyl]-1-[(2-hydroxyethoxy)methyl]pyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "5-benzyloxybenzylacyclouridine", 
+        "Symbol": null, 
+        "Synonyms": "[\"5-(m-benzyloxybenzyl)-1-(2'-hydroxyethoxymethyl)uracil\", '5-bbau', '1-((2-hydroxyethoxy)methyl)-5-(3-(benzyloxy)benzyl)pyrimidine-2,4(1h,3h)-dione', '5-(benzyloxybenzyl)acyclouridine', 'bbau']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "1mC"
+        ], 
+        "ChEBIId": "CHEBI:39624", 
+        "ChemicalFormula": "[C5H7N3O]", 
+        "CommonName": [
+            "1-methylcytosine"
+        ], 
+        "IUPACName": "[4-amino-1-methylpyrimidin-2(1H)-one]", 
+        "Refname": "1-methylcytosine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "[]", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "3mC"
+        ], 
+        "ChEBIId": "CHEBI:39992", 
+        "ChemicalFormula": "[C5H7N3O]", 
+        "CommonName": [
+            "3-methylcytosine"
+        ], 
+        "IUPACName": "[6-amino-1-methylpyrimidin-2(1H)-one]", 
+        "Refname": "3-methylcytosine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['n3-methylcytosine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:40152", 
+        "ChemicalFormula": "[C16H20N2O3S]", 
+        "CommonName": "1-(ethoxymethyl)-5-isopropyl-6-(phenylsulfanyl)uracil", 
+        "IUPACName": "[1-(ethoxymethyl)-6-(phenylsulfanyl)-5-(propan-2-yl)pyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "1-(ethoxymethyl)-5-isopropyl-6-(phenylsulfanyl)uracil", 
+        "Symbol": null, 
+        "Synonyms": "['5-isopropyl-1-ethoxymethyl-6-(phenylthio)uracil', '5-isopropyl-1-(ethoxymethyl)-6-(phenylthio)uracil']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "m2A"
+        ], 
+        "ChEBIId": "CHEBI:40235", 
+        "ChemicalFormula": "[C5H6N6]", 
+        "CommonName": [
+            "2-aminoadenine"
+        ], 
+        "IUPACName": "[]", 
+        "Refname": "9H-purine-2,6-diamine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['2,6-diaminopurine', '9h-purine-2,6-diamine', '2-aminoadenine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "9mA"
+        ], 
+        "ChEBIId": "CHEBI:40526", 
+        "ChemicalFormula": "[C6H7N5]", 
+        "CommonName": [
+            "9-methyladenine"
+        ], 
+        "IUPACName": "[9-methyl-9H-purin-6-amine]", 
+        "Refname": "9-methyladenine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['n9-methyladenine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:41037", 
+        "ChemicalFormula": "[C14H16N2O4]", 
+        "CommonName": "5-benzyl-1-(2-hydroxyethoxymethyl)uracil", 
+        "IUPACName": "[5-benzyl-1-[(2-hydroxyethoxy)methyl]pyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "5-benzyl-1-(2-hydroxyethoxymethyl)uracil", 
+        "Symbol": null, 
+        "Synonyms": "['5-benzylacyclouridine', 'bau']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:41473", 
+        "ChemicalFormula": "[C9H13N3O10P2]", 
+        "CommonName": "cytidine 5'-phosphate 2',3'-cyclic phosphate", 
+        "IUPACName": "[]", 
+        "Refname": "cytidine 5'-phosphate 2',3'-cyclic phosphate", 
+        "Symbol": null, 
+        "Synonyms": "['pc>p', 'cyclo-cdp', \"o(2'),o(3')-hydroxyphosphoryl-o(5')-phosphono-cytidine\", \"cmp 2',3'-cyclic phosphate\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:41485", 
+        "ChemicalFormula": "[C9H14N2O4]", 
+        "CommonName": "6-(1,3-dihydroxyisobutyl)thymine", 
+        "IUPACName": "[6-[3-hydroxy-2-(hydroxymethyl)propyl]-5-methylpyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "6-(1,3-dihydroxyisobutyl)thymine", 
+        "Symbol": null, 
+        "Synonyms": "['dhbt', '6-[3-hydroxy-2-(hydroxymethyl)propyl]thymine', '6-[3-hydroxy-2-(hydroxymethyl)propyl]-5-methyl-2,4(1h,3h)-pyrimidinedione']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:42248", 
+        "ChemicalFormula": "[C10H15N2O6P]", 
+        "CommonName": "({[(1R,2R)-2-(uracil-1-yl)cyclopentyl]oxy}methyl)phosphonic acid", 
+        "IUPACName": "[({[(1R,2R)-2-(2,4-dioxo-3,4-dihydropyrimidin-1(2H)-yl)cyclopentyl]oxy}methyl)phosphonic acid]", 
+        "Refname": "({[(1R,2R)-2-(uracil-1-yl)cyclopentyl]oxy}methyl)phosphonic acid", 
+        "Symbol": null, 
+        "Synonyms": "['pmcp-u', '1-trans-(2-phosphonomethoxycyclopentyl)uracil']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:42549", 
+        "ChemicalFormula": "[C7H8FN3O4]", 
+        "CommonName": "3-(5-fluorouracil-1-yl)-L-alanine", 
+        "IUPACName": "[3-(5-fluoro-2,4-dioxo-3,4-dihydropyrimidin-1(2H)-yl)-L-alanine]", 
+        "Refname": "3-(5-fluorouracil-1-yl)-L-alanine", 
+        "Symbol": null, 
+        "Synonyms": "['(2s)-2-amino-3-(5-fluoro-2,4-dioxo-1,2,3,4-tetrahydropyrimidin-1-yl)propanoic acid', '2-amino-3-(5-fluoro-2,4-dioxo-3,4-dihydro-2h-pyrimidin-1-yl)-propionic acid', '(s)-alpha-amino-5-fluoro-3,4-dihydro-2,4-dioxo-1(2h)-pyrimmidinepropanoic acid', '(s)-(-)-5-fluorowillardiine', '(s)-f-willardiine', '5-fluorowillardiine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:42702", 
+        "ChemicalFormula": "[C19H26N2O3]", 
+        "CommonName": "6-(3,5-dimethylbenzyl)-1-(ethoxymethyl)-5-isopropyluracil", 
+        "IUPACName": "[6-(3,5-dimethylbenzyl)-1-(ethoxymethyl)-5-(propan-2-yl)pyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "6-(3,5-dimethylbenzyl)-1-(ethoxymethyl)-5-isopropyluracil", 
+        "Symbol": null, 
+        "Synonyms": "['6-(3,5-dimethylbenzyl)-1-(ethoxymethyl)-5-(1-methylethyl)uracil', 'i-ebu-dm', \"6-(3',5'-dimethylbenzyl)-1-ethoxymethyl-5-isopropyluracil\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:43060", 
+        "ChemicalFormula": "[C14H16N2O4S]", 
+        "CommonName": "1-[(2-hydroxyethoxy)methyl]-6-(phenylsulfanyl)thymine", 
+        "IUPACName": "[1-[(2-hydroxyethoxy)methyl]-5-methyl-6-(phenylsulfanyl)pyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "1-[(2-hydroxyethoxy)methyl]-6-(phenylsulfanyl)thymine", 
+        "Symbol": null, 
+        "Synonyms": "['hept', '1-[(2-hydroxyethoxy)methyl]-6-phenylthiothymine', '1-(2-hydroxyethyloxymethyl)-6-phenyl thiothymine', '6-hept', 'hmptt', '1-[(2-hydroxyethoxy)methyl]-6-(phenylthio)thymine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:43253", 
+        "ChemicalFormula": "[C10H14N4O2]", 
+        "CommonName": "3-isobutyl-1-methyl-9H-xanthine", 
+        "IUPACName": "[1-methyl-3-(2-methylpropyl)-3,9-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "3-isobutyl-1-methyl-9H-xanthine", 
+        "Symbol": null, 
+        "Synonyms": "['3-isobutyl-1-methylxanthine', '3-isobutyl-1-methyl-3,9-dihydro-1h-purine-2,6-dione']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:43299", 
+        "ChemicalFormula": "[C8H12N2O3]", 
+        "CommonName": "6-(3-hydroxypropyl)thymine", 
+        "IUPACName": "[6-(3-hydroxypropyl)-5-methylpyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "6-(3-hydroxypropyl)thymine", 
+        "Symbol": null, 
+        "Synonyms": "['6-hydroxypropylthymine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:43636", 
+        "ChemicalFormula": "[C4H3IN2O2]", 
+        "CommonName": "5-iodouracil", 
+        "IUPACName": "[5-iodopyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "5-iodouracil", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:43697", 
+        "ChemicalFormula": "[C11H15N3O5]", 
+        "CommonName": "4-amino-1-[2,5-anhydro-4-(hydroxymethyl)-alpha-L-lyxofuranosyl]-5-methylcytosine", 
+        "IUPACName": "[4-amino-1-[2,5-anhydro-4-(hydroxymethyl)-alpha-L-lyxofuranosyl]-5-methylpyrimidin-2(1H)-one]", 
+        "Refname": "4-amino-1-[2,5-anhydro-4-(hydroxymethyl)-alpha-L-lyxofuranosyl]-5-methylcytosine", 
+        "Symbol": null, 
+        "Synonyms": "['1-[(1s,3r,4r,7s)-7-hydroxy-1-(hydroxymethyl)-2,5-dioxabicyclo[2.2.1]heptan-3-yl]-5-methylcytosine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:43791", 
+        "ChemicalFormula": "[C11H14N5O7P]", 
+        "CommonName": "9-{2,5-anhydro-4-[(phosphonooxy)methyl]-alpha-L-lyxofuranosyl}-9H-purin-6-amine", 
+        "IUPACName": "[9-{2,5-anhydro-4-[(phosphonooxy)methyl]-alpha-L-lyxofuranosyl}-9H-purin-6-amine]", 
+        "Refname": "9-{2,5-anhydro-4-[(phosphonooxy)methyl]-alpha-L-lyxofuranosyl}-9H-purin-6-amine", 
+        "Symbol": null, 
+        "Synonyms": "['[(1r,3r,4r,7s)-7-hydroxy-3-(adenin-9-yl)-2,5-dioxabicyclo[2.2.1]hept-1-yl]methyl dihydrogen phosphate']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:44143", 
+        "ChemicalFormula": "[C17H22N2O3]", 
+        "CommonName": "emivirine", 
+        "IUPACName": "[6-benzyl-1-(ethoxymethyl)-5-(propan-2-yl)pyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "emivirine", 
+        "Symbol": null, 
+        "Synonyms": "['6-benzyl-1-(ethoxymethyl)-5-(1-methylethyl)uracil', '6-benzyl-1-ethoxymethyl-5-isopropyl uracil', 'coactinon', '1-(ethoxymethyl)-5-(1-methylethyl)-6-(phenylmethyl)pyrimidine-2,4(1h,3h)-dione', 'mkc-442']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "8oxoG"
+        ], 
+        "ChEBIId": "CHEBI:44605", 
+        "ChemicalFormula": "[C5H3N5O2]", 
+        "CommonName": [
+            "8-oxoguanine"
+        ], 
+        "IUPACName": "[2-amino-1H-purine-6,8-dione]", 
+        "Refname": "8-oxoguanine", 
+        "Symbol": [
+            "o"
+        ], 
+        "Synonyms": "[]", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:44666", 
+        "ChemicalFormula": "[C10H16N3O8P]", 
+        "CommonName": "2'-O-methylcytidine 5'-monophosphate", 
+        "IUPACName": "[2'-O-methylcytidine 5'-(dihydrogen phosphate)]", 
+        "Refname": "2'-O-methylcytidine 5'-monophosphate", 
+        "Symbol": null, 
+        "Synonyms": "[\"2'-o-methylcytidine 5'-phosphate\", \"2'-o-methyl-cmp\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:45327", 
+        "ChemicalFormula": "[C10H13N5O4]", 
+        "CommonName": "adenine arabinoside", 
+        "IUPACName": "[9-(beta-D-arabinofuranosyl)-9H-adenine, 9H-adenin-9-yl beta-D-arabinofuranoside]", 
+        "Refname": "adenine arabinoside", 
+        "Symbol": null, 
+        "Synonyms": "['2-(6-amino-purin-9-yl)-5-hydroxymethyl-tetrahydro-furan-3,4-diol', 'vidarabine', '9-beta-d-arabinofuranosyl-9h-purin-6-amine', '9-beta-d-arabinofuranosyladenine', 'spongoadenosine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:45366", 
+        "ChemicalFormula": "[C12H16N4O5]", 
+        "CommonName": "6-{[(4R,5R)-4-(hydroxymethyl)thymin-5-yl]methyl}thymine", 
+        "IUPACName": "[6-{[(4R,5R)-4-(hydroxymethyl)-5-methyl-2,6-dioxohexahydropyrimidin-5-yl]methyl}-5-methylpyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "6-{[(4R,5R)-4-(hydroxymethyl)thymin-5-yl]methyl}thymine", 
+        "Symbol": null, 
+        "Synonyms": "['6-{[4-(hydroxymethyl)-5-methyl-2,6-dioxohexahydropyrimidin-5-yl]methyl}-5-methylpyrimidine-2,4(1h,3h)-dione']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:45586", 
+        "ChemicalFormula": "[C12H16N2O4]", 
+        "CommonName": "1-[(1S,3S,4R,5S)-3-hydroxy-4-(hydroxymethyl)bicyclo[3.1.0]hexan-1-yl]thymine", 
+        "IUPACName": "[1-[(1S,3S,4R,5S)-3-hydroxy-4-(hydroxymethyl)bicyclo[3.1.0]hex-1-yl]-5-methylpyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "1-[(1S,3S,4R,5S)-3-hydroxy-4-(hydroxymethyl)bicyclo[3.1.0]hexan-1-yl]thymine", 
+        "Symbol": null, 
+        "Synonyms": "['(1s,3s,4r,5s)-3-hydroxy-4-hydroxymethyl-1-(5-methyl-2,4-dioxo-1,2,3,4-tetrahydropyrimidin-1-yl)bicyclo[3.1.0]hexane', 'south-methanocarbathymidine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:45910", 
+        "ChemicalFormula": "[C22H24N2O3]", 
+        "CommonName": "6-benzyl-1-(benzyloxymethyl)-5-isopropyluracil", 
+        "IUPACName": "[6-benzyl-1-[(benzyloxy)methyl]-5-(propan-2-yl)pyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "6-benzyl-1-(benzyloxymethyl)-5-isopropyluracil", 
+        "Symbol": null, 
+        "Synonyms": "['tnk-651', '5-(1-methylethyl)-1-[(phenylmethoxy)methyl]-6-(phenylmethyl)-2,4(1h,3h)-pyrimidinedione', '6-benzyl-1-benzyloxymethyl-5-isopropyl uracil', 'tnk651', '6-benzyl-1-[(benzyloxy)methyl]-5-(1-methylethyl)uracil']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:46026", 
+        "ChemicalFormula": "[C12H16N2O4]", 
+        "CommonName": "1-[(1S,2S,4S,5R)-4-hydroxy-5-(hydroxymethyl)bicyclo[3.1.0]hexan-2-yl]thymine", 
+        "IUPACName": "[1-[(1S,2S,4S,5R)-4-hydroxy-5-(hydroxymethyl)bicyclo[3.1.0]hex-2-yl]-5-methylpyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "1-[(1S,2S,4S,5R)-4-hydroxy-5-(hydroxymethyl)bicyclo[3.1.0]hexan-2-yl]thymine", 
+        "Symbol": null, 
+        "Synonyms": "['1-[4-hydroxy-5-(hydroxymethyl)bicyclo[3.1.0]hex-2-yl]-5-methylpyrimidine-2,4(1h,3h)-dione', 'north-methanocarbathymidine', \"1-[(1's,2's,4's,5'r)-4'-hydroxy-5'-(hydroxymethyl)bicyclo[3.1.0]hexan-2'-yl]-5-methylpyrimidine-2,4(1h,3h)-dione\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:46252", 
+        "ChemicalFormula": "[C4H6N4O2]", 
+        "CommonName": "5,6-diaminouracil", 
+        "IUPACName": "[5,6-diaminopyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "5,6-diaminouracil", 
+        "Symbol": null, 
+        "Synonyms": "['diaminouracil', '5,6-diaminopyrimidine-2,4-dione', '5,6-diamino-2,4-dihydroxypyrimidine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:46345", 
+        "ChemicalFormula": "[C4H3FN2O2]", 
+        "CommonName": "5-fluorouracil", 
+        "IUPACName": "[5-fluoropyrimidine-2,4(1H,3H)-dione, 5-fluorouracil]", 
+        "Refname": "5-fluorouracil", 
+        "Symbol": null, 
+        "Synonyms": "['5-fu', '5-fluoracil', 'fluorouracil', 'fluorouracilum', '5-fluoropyrimidine-2,4-dione', 'fluorouracilo']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:46371", 
+        "ChemicalFormula": "[C6H6N2O4]", 
+        "CommonName": "uracil-6-ylacetic acid", 
+        "IUPACName": "[(2,6-dioxo-1,2,3,6-tetrahydropyrimidin-4-yl)acetic acid]", 
+        "Refname": "uracil-6-ylacetic acid", 
+        "Symbol": null, 
+        "Synonyms": "['6-carboxymethyluracil', '1,2,3,6-tetrahydro-2,6-dioxo-4-pyrimidineacetic acid']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:46515", 
+        "ChemicalFormula": "[C10H13N5O4]", 
+        "CommonName": "9-beta-D-xylofuranosyladenine", 
+        "IUPACName": "[9-(beta-D-xylofuranosyl)-9H-purin-6-amine]", 
+        "Refname": "9-beta-D-xylofuranosyladenine", 
+        "Symbol": null, 
+        "Synonyms": "['xylosyladenine', 'adenine xyloside']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:465284", 
+        "ChemicalFormula": "[C9H13N5O4]", 
+        "CommonName": "ganciclovir", 
+        "IUPACName": "[2-amino-9-{[(1,3-dihydroxypropan-2-yl)oxy]methyl}-1,9-dihydro-6H-purin-6-one]", 
+        "Refname": "ganciclovir", 
+        "Symbol": null, 
+        "Synonyms": "['2-amino-9-((1,3-dihydroxypropan-2-yloxy)methyl)-1h-purin-6(9h)-one', '2-amino-9-((1,3-dihydroxypropan-2-yloxy)methyl)-9h-purin-6-ol', '9-(1,3-dihydroxy-propoxymethane)guanine', '9-[(1,3-dihydroxy-2-propoxy)methyl]guanine', '2-amino-9-((1,3-dihydroxypropan-2-yloxy)methyl)-3h-purin-6(9h)-one', 'ga2', '2-amino-9-(2-hydroxy-1-hydroxymethylethoxymethyl)-6,9-dihydro-1h-6-purinone', 'gancyclovir', '9-((2-hydroxy-1-(hydroxymethyl)ethoxy)methyl)guanine', 'ganciclovirum', '2-(6-amino-purin-9-ylmethoxy)-propane-1,3-diol', '2-amino-9-(2-hydroxy-1-hydroxymethyl-ethoxymethyl)-1,9-dihydro-purin-6-one']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:46570", 
+        "ChemicalFormula": "[C10H13N5O]", 
+        "CommonName": "cis-zeatin", 
+        "IUPACName": "[(2Z)-2-methyl-4-(9H-purin-6-ylamino)but-2-en-1-ol]", 
+        "Refname": "cis-zeatin", 
+        "Symbol": null, 
+        "Synonyms": "['(z)-2-methyl-4-(1h-purin-6-ylamino)but-2-en-1-ol', '(2z)-2-methyl-4-(9h-purin-6-ylamino)-2-buten-1-ol']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "3mG"
+        ], 
+        "ChEBIId": "CHEBI:46892", 
+        "ChemicalFormula": "[C6H7N5O]", 
+        "CommonName": [
+            "2-amino-3-methyl-3,9-dihydro-6H-purin-6-one"
+        ], 
+        "IUPACName": "[2-amino-3-methyl-3,9-dihydro-6H-purin-6-one]", 
+        "Refname": "2-amino-3-methyl-3,9-dihydro-6H-purin-6-one", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['2-amino-3,7-dihydro-3-methyl-6h-purin-6-one']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "3mG"
+        ], 
+        "ChEBIId": "CHEBI:46893", 
+        "ChemicalFormula": "[C6H7N5O]", 
+        "CommonName": [
+            "2-imino-3-methyl-1,2,3,9-tetrahydro-6H-purin-6-one"
+        ], 
+        "IUPACName": "[2-imino-3-methyl-1,2,3,9-tetrahydro-6H-purin-6-one]", 
+        "Refname": "2-imino-3-methyl-1,2,3,9-tetrahydro-6H-purin-6-one", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "[]", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "7mG"
+        ], 
+        "ChEBIId": "CHEBI:46894", 
+        "ChemicalFormula": "[C6H7N5O]", 
+        "CommonName": [
+            "2-imino-7-methyl-1,2,3,7-tetrahydro-6H-purin-6-one"
+        ], 
+        "IUPACName": "[2-imino-7-methyl-1,2,3,7-tetrahydro-6H-purin-6-one]", 
+        "Refname": "2-imino-7-methyl-1,2,3,7-tetrahydro-6H-purin-6-one", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "[]", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "7mG"
+        ], 
+        "ChEBIId": "CHEBI:46897", 
+        "ChemicalFormula": "[C6H7N5O]", 
+        "CommonName": [
+            "2-amino-7-methyl-7H-purin-6-ol"
+        ], 
+        "IUPACName": "[2-amino-7-methyl-7H-purin-6-ol]", 
+        "Refname": "2-amino-7-methyl-7H-purin-6-ol", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "[]", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:47628", 
+        "ChemicalFormula": "[C20H21ClFN5O3]", 
+        "CommonName": "8-(2-chloro-3,4,5-trimethoxybenzyl)-2-fluoro-9-pent-4-yn-1-yl-9H-purin-6-amine", 
+        "IUPACName": "[8-[(2-chloro-3,4,5-trimethoxyphenyl)methyl]-2-fluoro-9-(pent-4-yn-1-yl)-9H-purin-6-amine]", 
+        "Refname": "8-(2-chloro-3,4,5-trimethoxybenzyl)-2-fluoro-9-pent-4-yn-1-yl-9H-purin-6-amine", 
+        "Symbol": null, 
+        "Synonyms": "['pu24fcl']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:47876", 
+        "ChemicalFormula": "[C10H15N3O4]", 
+        "CommonName": "5-methyl-2'-deoxycytidine", 
+        "IUPACName": "[2'-deoxy-5-methylcytidine]", 
+        "Refname": "5-methyl-2'-deoxycytidine", 
+        "Symbol": null, 
+        "Synonyms": "['5-methyldeoxycytidine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "xG"
+        ], 
+        "ChEBIId": "CHEBI:48517", 
+        "ChemicalFormula": "[C5H4N4O2]", 
+        "CommonName": [
+            "xanthine"
+        ], 
+        "IUPACName": "[3,7-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "7H-xanthine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['xanthine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:48518", 
+        "ChemicalFormula": "[C10H14N4O2]", 
+        "CommonName": "3-isobutyl-1-methylxanthine", 
+        "IUPACName": "[]", 
+        "Refname": "3-isobutyl-1-methylxanthine", 
+        "Symbol": null, 
+        "Synonyms": "['ibmx']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:48991", 
+        "ChemicalFormula": "[C6H6N4O2]", 
+        "CommonName": "7-methylxanthine", 
+        "IUPACName": "[7-methyl-3,7-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "7-methylxanthine", 
+        "Symbol": null, 
+        "Synonyms": "['7-methylxanthin', 'heteroxanthin', '3,7-dihydro-7-methyl-1h-purine-2,6-dione', 'heteroxanthine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:50726", 
+        "ChemicalFormula": "[C52H85N3O13P2]", 
+        "CommonName": "CDP-2,3-bis-O-(geranylgeranyl)-sn-glycerol", 
+        "IUPACName": "[5'-O-[{[{[(2S)-2,3-bis{[(2E,6E,10E)-3,7,11,15-tetramethylhexadeca-2,6,10,14-tetraen-1-yl]oxy}propyl]oxy}(hydroxy)phosphoryl]oxy}(hydroxy)phosphoryl]cytidine]", 
+        "Refname": "CDP-2,3-bis-O-(geranylgeranyl)-sn-glycerol", 
+        "Symbol": null, 
+        "Synonyms": "['cdp-2,3-digeranylgeranyl sn-g-1-p']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:5100", 
+        "ChemicalFormula": "[C4H4FN3O]", 
+        "CommonName": "flucytosine", 
+        "IUPACName": "[4-amino-5-fluoropyrimidin-2(1H)-one]", 
+        "Refname": "flucytosine", 
+        "Symbol": null, 
+        "Synonyms": "['5-fluorocystosine', 'flucytosinum', 'flucytosina', '5-fluorocytosine', 'ancotil', '5-fc', 'ancobon (tn)']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "8oxoG"
+        ], 
+        "ChEBIId": "CHEBI:52617", 
+        "ChemicalFormula": "[C5H5N5O2]", 
+        "CommonName": [
+            "8-oxoguanine"
+        ], 
+        "IUPACName": "[2-amino-7,9-dihydro-1H-purine-6,8-dione]", 
+        "Refname": "7,8-dihydro-8-oxoguanine", 
+        "Symbol": [
+            "o"
+        ], 
+        "Synonyms": "['8-hydroxyguanine', '8-oxoguanine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:53013", 
+        "ChemicalFormula": "[C9H14N3O8P]", 
+        "CommonName": "3'-CMP", 
+        "IUPACName": "[3'-cytidylic acid]", 
+        "Refname": "3'-CMP", 
+        "Symbol": null, 
+        "Synonyms": "[\"cytidine 3'-phosphate\", \"3'-cmp\", \"cytidine 3'-monophosphate\", \"3'-cytidylic acid\", \"cytidine-3'-monophosphate\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:53115", 
+        "ChemicalFormula": "[C16H15ClN4O2]", 
+        "CommonName": "8-(3-chlorostyryl)caffeine", 
+        "IUPACName": "[8-[(E)-2-(3-chlorophenyl)ethenyl]-1,3,7-trimethyl-3,7-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "8-(3-chlorostyryl)caffeine", 
+        "Symbol": null, 
+        "Synonyms": "['csc']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "6-DMA"
+        ], 
+        "ChEBIId": "CHEBI:60281", 
+        "ChemicalFormula": "[C7H9N5]", 
+        "CommonName": [
+            "N(6),N(6)-dimethyladenine"
+        ], 
+        "IUPACName": "[N,N-dimethyl-9H-purin-6-amine]", 
+        "Refname": "N(6),N(6)-dimethyladenine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['n,n-dimethyladenine', 'n(6)-dimethyladenine', 'n,n-dimethyl-6-aminopurine', '6-(dimethylamino)purine', '6-dimethyladenine', 'n(6),n(6)-dimethyladenine', '6-dimethylaminopurine', 'n,n-dimethyl-1h-purin-6-amine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:60762", 
+        "ChemicalFormula": "[C4H3ClN2O2]", 
+        "CommonName": "5-chlorouracil", 
+        "IUPACName": "[5-chloropyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "5-chlorouracil", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:60763", 
+        "ChemicalFormula": "[C4H3N3O4]", 
+        "CommonName": "5-nitrouracil", 
+        "IUPACName": "[5-nitropyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "5-nitrouracil", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:60801", 
+        "ChemicalFormula": "44", 
+        "CommonName": "guanyl deoxyribonucleotide residue", 
+        "IUPACName": "[]", 
+        "Refname": "guanyl deoxyribonucleotide residue", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "5hmU"
+        ], 
+        "ChEBIId": "CHEBI:61288", 
+        "ChemicalFormula": "[C10H14N2O6]", 
+        "CommonName": [
+            "5-hydroxymethyluracil"
+        ], 
+        "IUPACName": "[2'-deoxy-5-(hydroxymethyl)uridine]", 
+        "Refname": "5-hydroxymethyl-2'-deoxyuridine", 
+        "Symbol": [
+            "g"
+        ], 
+        "Synonyms": "['1-((2r,4s,5r)-4-hydroxy-5-(hydroxymethyl)-tetrahydrofuran-2-yl)-5-(2-hydroxymethyl)pyrimidine-2,4(1h,3h)-dione', '5-hmdu', 'hmdu', 'alpha-hydroxy-thymidin', 'alpha-hydroxythymidine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:61292", 
+        "ChemicalFormula": "46", 
+        "CommonName": "guanyl nucleotide", 
+        "IUPACName": "[]", 
+        "Refname": "guanyl nucleotide", 
+        "Symbol": null, 
+        "Synonyms": "['guanine nucleotide']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "CEG"
+        ], 
+        "ChEBIId": "CHEBI:62032", 
+        "ChemicalFormula": "[C8H9N5O3]", 
+        "CommonName": [
+            "N(2)-carboxyethylguanine"
+        ], 
+        "IUPACName": "[N-(6-oxo-6,9-dihydro-1H-purin-2-yl)alanine]", 
+        "Refname": "N(2)-carboxyethylguanine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['n(2)-(1-carboxyethyl)guanine', 'ceguanine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:62205", 
+        "ChemicalFormula": "49", 
+        "CommonName": "3-methylxanthine", 
+        "IUPACName": "[]", 
+        "Refname": "3-methylxanthine", 
+        "Symbol": null, 
+        "Synonyms": "['3-methylxanthines']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:62206", 
+        "ChemicalFormula": "59", 
+        "CommonName": "monomethylxanthine", 
+        "IUPACName": "[]", 
+        "Refname": "monomethylxanthine", 
+        "Symbol": null, 
+        "Synonyms": "['monomethylxanthines']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:62207", 
+        "ChemicalFormula": "[C6H6N4O2]", 
+        "CommonName": "3-methyl-9H-xanthine", 
+        "IUPACName": "[3-methyl-3,9-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "3-methyl-9H-xanthine", 
+        "Symbol": null, 
+        "Synonyms": "['3-methylxanthine', '3-methyl-3,7(9)-dihydro-purine-2,6-dione', '2-oxo-3-methylhypoxanthine', '3 mx', '3-methyl-3,9-dihydro-2h,6h-purine-2,6-dione', '3,9-dihydro-3-methyl-1h-purine-2,6-dione']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:62208", 
+        "ChemicalFormula": "[C6H6N4O2]", 
+        "CommonName": "3-methyl-7H-xanthine", 
+        "IUPACName": "[3-methyl-3,7-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "3-methyl-7H-xanthine", 
+        "Symbol": null, 
+        "Synonyms": "['n(1)-demethyltheophylline', '3-methyl-3,7(9)-dihydro-purine-2,6-dione', '3-methylxanthine', '3,7-dihydro-3-methyl-1h-purine-2,6-dione']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:62566", 
+        "ChemicalFormula": "[C15H25N3O16P2]", 
+        "CommonName": "CDP-1L-myo-inositol", 
+        "IUPACName": "[5'-O-{hydroxy[(hydroxy{[(1R,2S,3R,4R,5S,6S)-2,3,4,5,6-pentahydroxycyclohexyl]oxy}phosphoryl)oxy]phosphoryl}cytidine]", 
+        "Refname": "CDP-1L-myo-inositol", 
+        "Symbol": null, 
+        "Synonyms": "['cdp-3d-myo-inositol']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:62748", 
+        "ChemicalFormula": "[C16H26N2O3S]", 
+        "CommonName": "6-cyclohexylsulfanyl-1-ethoxymethyl-5-isopropyluracil", 
+        "IUPACName": "[6-(cyclohexylsulfanyl)-1-(ethoxymethyl)-5-(propan-2-yl)pyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "6-cyclohexylsulfanyl-1-ethoxymethyl-5-isopropyluracil", 
+        "Symbol": null, 
+        "Synonyms": "['6-cyclohexylthio-1-ethoxymethyl-5-isopropyluracil', '6-(cyclohexylthio)-1-(ethoxymethyl)-5-isopropyluracil']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:62909", 
+        "ChemicalFormula": "[C11H20N3O14P3]", 
+        "CommonName": "ethyl-CTP", 
+        "IUPACName": "[cytidine 5'-(P(3)-ethyl trihydrogen triphosphate)]", 
+        "Refname": "ethyl-CTP", 
+        "Symbol": null, 
+        "Synonyms": "['gamma-monoethyl cytidine triphosphate', 'ethyl cytidine triphosphate', 'gamma-ethyl cytidine triphosphate', 'monoethyl cytidine-triphosphate']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:63577", 
+        "ChemicalFormula": "[C8H11N3O3S]", 
+        "CommonName": "lamivudine", 
+        "IUPACName": "[4-amino-1-[(2R,5S)-2-(hydroxymethyl)-1,3-oxathiolan-5-yl]pyrimidin-2(1H)-one]", 
+        "Refname": "lamivudine", 
+        "Symbol": null, 
+        "Synonyms": "[\"beta-l-3'-thia-2',3'-dideoxycytidine\", \"beta-l-2',3'-dideoxy-3'-thiacytidine\", \"2',3'-dideoxy-3'-thiacytidine\", '3tc', \"(-)-2'-deoxy-3'-thiacytidine\", 'epivir', \"3'-thia-2',3'-dideoxycytidine\", '(-)-1-((2r,5s)-2-(hydroxymethyl)-1,3-oxathiolan-5-yl)cytosine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:63581", 
+        "ChemicalFormula": "[C10H12N2O4]", 
+        "CommonName": "stavudine", 
+        "IUPACName": "[1-[(2R,5S)-5-(hydroxymethyl)-2,5-dihydrofuran-2-yl]-5-methylpyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "stavudine", 
+        "Symbol": null, 
+        "Synonyms": "['1-(2,3-dideoxy-beta-d-glycero-pent-2-enofuranosyl)thymine', 'stv', \"2',3'-didehydro-3'-deoxythimidine\", \"3'-deoxy-2'-thymidinene\", 'sanilvudine', 'estavudina', 'stavudinum', 'd4t']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:63612", 
+        "ChemicalFormula": "[C11H15N5O5]", 
+        "CommonName": "nelarabine", 
+        "IUPACName": "[9-(beta-D-arabinofuranosyl)-6-methoxy-9H-purin-2-amine]", 
+        "Refname": "nelarabine", 
+        "Symbol": null, 
+        "Synonyms": "['2-amino-9-beta-d-arabinofuranosyl-6-methoxy-9h-purine', 'arranon', 'nelzarabine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:63624", 
+        "ChemicalFormula": "[C10H14N2O5]", 
+        "CommonName": "telbivudine", 
+        "IUPACName": "[1-(2-deoxy-beta-L-erythro-pentofuranosyl)-5-methylpyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "telbivudine", 
+        "Symbol": null, 
+        "Synonyms": "['beta-l-thymidine', 'l-dt', 'epavudine', \"2'-deoxy-l-thymidine\", 'l-deoxythymidine', '1-(2-deoxy-beta-l-ribofuranosyl)-5-methyluracil', \"beta-l-2'-deoxythymidine\", 'ldt', 'l-thymidine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:63635", 
+        "ChemicalFormula": "[C14H22N6O5]", 
+        "CommonName": "valganciclovir", 
+        "IUPACName": "[2-[(2-amino-6-oxo-3,6-dihydro-9H-purin-9-yl)methoxy]-3-hydroxypropyl L-valinate]", 
+        "Refname": "valganciclovir", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:63778", 
+        "ChemicalFormula": "[C22H34N5O15P]", 
+        "CommonName": "CMP-pseudaminic acid", 
+        "IUPACName": "[cytidine 5'-[(5,7-diacetamido-3,5,7,9-tetradeoxy-L-glycero-alpha-L-manno-non-2-ulopyranosonyl) hydrogen phosphate]]", 
+        "Refname": "CMP-pseudaminic acid", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:68443", 
+        "ChemicalFormula": "48", 
+        "CommonName": "1-methylxanthine", 
+        "IUPACName": "[]", 
+        "Refname": "1-methylxanthine", 
+        "Symbol": null, 
+        "Synonyms": "['1-methylxanthines']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:68444", 
+        "ChemicalFormula": "[C6H6N4O2]", 
+        "CommonName": "1-methyl-7H-xanthine", 
+        "IUPACName": "[1-methyl-3,7-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "1-methyl-7H-xanthine", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:68610", 
+        "ChemicalFormula": "[C25H28N8O2]", 
+        "CommonName": "linagliptin", 
+        "IUPACName": "[8-[(3R)-3-aminopiperidin-1-yl]-7-(but-2-yn-1-yl)-3-methyl-1-[(4-methylquinazolin-2-yl)methyl]-3,7-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "linagliptin", 
+        "Symbol": null, 
+        "Synonyms": "['(r)-8-(3-aminopiperidin-1-yl)-7-but-2-ynyl-3-methyl-1-(4-methylquinazolin-2-ylmethyl)-3,7-dihydro-purine-2,6-dione', 'bi 1356', 'tradjenta']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:68683", 
+        "ChemicalFormula": "[C22H34N5O15P]", 
+        "CommonName": "CMP-N,N-diacetyllegionaminic acid", 
+        "IUPACName": "[cytidine 5'-(5,7-diacetamido-3,5,7,9-tetradeoxy-D-glycero-beta-D-galacto-non-2-ulopyranosylonic acid monophosphate)]", 
+        "Refname": "CMP-N,N-diacetyllegionaminic acid", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:69445", 
+        "ChemicalFormula": "[C5H6N2O2]", 
+        "CommonName": "1-methyluracil", 
+        "IUPACName": "[1-methylpyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "1-methyluracil", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:70723", 
+        "ChemicalFormula": "[C21H27N7O]", 
+        "CommonName": "reversine", 
+        "IUPACName": "[N(6)-cyclohexyl-N(2)-[4-(morpholin-4-yl)phenyl]-9H-purine-2,6-diamine]", 
+        "Refname": "reversine", 
+        "Symbol": null, 
+        "Synonyms": "['2-(4-morpholinoanilino)-6-cyclohexylaminopurine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:70799", 
+        "ChemicalFormula": "[C15H25N3O14P2]", 
+        "CommonName": "CDP-alpha-D-abequose", 
+        "IUPACName": "[cytidine 5'-[3-(3,6-dideoxy-alpha-D-xylo-hexopyranosyl) dihydrogen diphosphate]]", 
+        "Refname": "CDP-alpha-D-abequose", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:70800", 
+        "ChemicalFormula": "[C15H23N3O14P2]", 
+        "CommonName": "CDP-4-dehydro-3,6-dideoxy-alpha-D-glucose", 
+        "IUPACName": "[cytidine 5'-[3-(3,6-dideoxy-alpha-D-erythro-hexopyranosyl-4-ulose) dihydrogen diphosphate]]", 
+        "Refname": "CDP-4-dehydro-3,6-dideoxy-alpha-D-glucose", 
+        "Symbol": null, 
+        "Synonyms": "['cdp-3,6-dideoxy-d-erythro-hexos-4-ulose', 'cdp-4-dehydro-3,6-dideoxy-d-glucose', 'cytidine diphosphate-4-keto-3,6-dideoxyglucose']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:70802", 
+        "ChemicalFormula": "[C15H25N3O14P2]", 
+        "CommonName": "CDP-3,6-dideoxy-alpha-D-glucose", 
+        "IUPACName": "[cytidine 5'-[3-(3,6-dideoxy-alpha-D-ribo-hexopyranosyl) dihydrogen diphosphate]]", 
+        "Refname": "CDP-3,6-dideoxy-alpha-D-glucose", 
+        "Symbol": null, 
+        "Synonyms": "['cdp-3,6-dideoxy-alpha-d-ribo-hexose', 'cdpparatose', 'cdp-3,6-dideoxy-d-glucose', 'cdp-alpha-d-paratose']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "m2C"
+        ], 
+        "ChEBIId": "CHEBI:70854", 
+        "ChemicalFormula": "[C5H7N3O]", 
+        "CommonName": [
+            "2-O-methylcytosine"
+        ], 
+        "IUPACName": "[2-methoxypyrimidin-4-amine]", 
+        "Refname": "2-O-methylcytosine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['o-2-methylcytosine', '4-amino-2-methoxypyrimidine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:71693", 
+        "ChemicalFormula": "[C15H21N5O5]", 
+        "CommonName": "9-ribosyl-trans-zeatin", 
+        "IUPACName": "[N-[(2E)-4-hydroxy-3-methylbut-2-en-1-yl]adenosine]", 
+        "Refname": "9-ribosyl-trans-zeatin", 
+        "Symbol": null, 
+        "Synonyms": "['(e)-n-(4-hydroxy-3-methyl-2-butenyl)adenosine', 'zeatin riboside', '9-beta-d-ribosyl-trans-zeatin', 'trans-zeatin 9-beta-d-ribofuranoside', '9-beta-d-ribofuranosyl-trans-zeatin', 'trans-zeatin riboside']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:71719", 
+        "ChemicalFormula": "[C15H22N5O8P]", 
+        "CommonName": "9-ribosyl-trans-zeatin 5'-monophosphate", 
+        "IUPACName": "[N-[(2E)-4-hydroxy-3-methylbut-2-en-1-yl]adenosine 5'-(dihydrogen phosphate)]", 
+        "Refname": "9-ribosyl-trans-zeatin 5'-monophosphate", 
+        "Symbol": null, 
+        "Synonyms": "['tzrmp', \"9-beta-d-ribosyl-trans-zeatin 5'-monophosphate\", 'trans-zeatin riboside monophosphate', \"9-beta-d-ribofuranosyl-trans-zeatin 5'-monophosphate\", \"trans-zeatin 9-beta-d-ribofuranoside 5'-monophosphate\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:71875", 
+        "ChemicalFormula": "[C15H23N5O11P2]", 
+        "CommonName": "9-ribosyl-trans-zeatin 5'-diphosphate", 
+        "IUPACName": "[N-[(2E)-4-hydroxy-3-methylbut-2-en-1-yl]adenosine 5'-(trihydrogen diphosphate)]", 
+        "Refname": "9-ribosyl-trans-zeatin 5'-diphosphate", 
+        "Symbol": null, 
+        "Synonyms": "[\"9-beta-d-ribofuranosyl-trans-zeatin 5'-diphosphate\", \"9-beta-d-ribosyl-trans-zeatin 5'-diphosphate\", 'tzrdp', 'trans-zeatin riboside diphosphate', \"trans-zeatin 9-beta-d-ribofuranoside 5'-diphosphate\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:71938", 
+        "ChemicalFormula": "[C15H24N5O14P3]", 
+        "CommonName": "9-ribosyl-trans-zeatin 5'-triphosphate", 
+        "IUPACName": "[]", 
+        "Refname": "9-ribosyl-trans-zeatin 5'-triphosphate", 
+        "Symbol": null, 
+        "Synonyms": "[\"9-beta-d-ribofuranosyl-trans-zeatin 5'-triphosphate\", \"9-beta-d-ribosyl-trans-zeatin 5'-triphosphate\", 'trans-zeatin riboside triphosphate', \"trans-zeatin 9-beta-d-ribofuranoside 5'-triphosphate\", 'tzrtp']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:72604", 
+        "ChemicalFormula": "[C18H21N5O5]", 
+        "CommonName": "N-benzyl-9-(alpha-D-glucosyl)adenine", 
+        "IUPACName": "[N-benzyl-9-(alpha-D-glucopyranosyl)-9H-purin-6-amine]", 
+        "Refname": "N-benzyl-9-(alpha-D-glucosyl)adenine", 
+        "Symbol": null, 
+        "Synonyms": "['benzyladenine-9-n-glucoside', 'n-benzyl-9-(alpha-d-glucopyranosyl)adenine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:72607", 
+        "ChemicalFormula": "[C16H23N5O6]", 
+        "CommonName": "9-(alpha-D-glucosyl)-cis-zeatin", 
+        "IUPACName": "[9-(alpha-D-glucopyranosyl)-N-[(2Z)-4-hydroxy-3-methylbut-2-en-1-yl]-9H-purin-6-amine]", 
+        "Refname": "9-(alpha-D-glucosyl)-cis-zeatin", 
+        "Symbol": null, 
+        "Synonyms": "['cis-zeatin-9-n-glucoside', '9-(alpha-d-glucopyranosyl)-cis-zeatin']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:72609", 
+        "ChemicalFormula": "[C16H23N5O6]", 
+        "CommonName": "9-(alpha-D-glucosyl)-trans-zeatin", 
+        "IUPACName": "[9-(alpha-D-glucopyranosyl)-N-[(2E)-4-hydroxy-3-methylbut-2-en-1-yl]-9H-purin-6-amine]", 
+        "Refname": "9-(alpha-D-glucosyl)-trans-zeatin", 
+        "Symbol": null, 
+        "Synonyms": "['9-(alpha-d-glucopyranosyl)-trans-zeatin', 'trans-zeatin-9-n-glucoside']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:72612", 
+        "ChemicalFormula": "[C16H25N5O6]", 
+        "CommonName": "9-(alpha-D-glucosyl)dihydrozeatin", 
+        "IUPACName": "[]", 
+        "Refname": "9-(alpha-D-glucosyl)dihydrozeatin", 
+        "Symbol": null, 
+        "Synonyms": "['dihydrozeatin-9-n-glucoside', '9-(alpha-d-glucopyranosyl)dihydrozeatin']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:72620", 
+        "ChemicalFormula": "[C16H19N5O6]", 
+        "CommonName": "9-(alpha-D-glucosyl)kinetin", 
+        "IUPACName": "[]", 
+        "Refname": "9-(alpha-D-glucosyl)kinetin", 
+        "Symbol": null, 
+        "Synonyms": "['9-alpha-d-glucopyranosylkinetin', 'kinetin-9-n-glucoside', '9-(alpha-d-glucopyranosyl)kinetin', '9-alpha-d-glucosylkinetin']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:73282", 
+        "ChemicalFormula": "[C16H24N4O2]", 
+        "CommonName": "DPCPX", 
+        "IUPACName": "[8-cyclopentyl-1,3-dipropyl-3,7-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "DPCPX", 
+        "Symbol": null, 
+        "Synonyms": "['pd-116,948', 'pd-116948', 'cpx', '1,3-dipropyl-8-cyclopentylxanthine', 'dipropylcyclopentylxanthine', '1,3-dpcpx', '8-cyclopentyl-1,3-dipropylxanthine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "mHyp"
+        ], 
+        "ChEBIId": "CHEBI:73958", 
+        "ChemicalFormula": "20", 
+        "CommonName": [
+            "methylhypoxanthine"
+        ], 
+        "IUPACName": "[]", 
+        "Refname": "methylhypoxanthine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['methylhypoxanthines']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "1mHyp"
+        ], 
+        "ChEBIId": "CHEBI:73959", 
+        "ChemicalFormula": "[C6H6N4O]", 
+        "CommonName": [
+            "1-methylhypoxanthine"
+        ], 
+        "IUPACName": "[1-methyl-1,7-dihydro-6H-purin-6-one]", 
+        "Refname": "1-methylhypoxanthine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['1-methyl-hypoxanthine', '1,7-dihydro-1-methyl-6h-purin-6-one', '1-methyl-1,9-dihydro-6h-purin-6-one']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "e3C"
+        ], 
+        "ChEBIId": "CHEBI:74029", 
+        "ChemicalFormula": "[C6H9N3O]", 
+        "CommonName": [
+            "3-ethylcytosine"
+        ], 
+        "IUPACName": "[6-amino-1-ethylpyrimidin-2(1H)-one]", 
+        "Refname": "3-ethylcytosine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "[]", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:74064", 
+        "ChemicalFormula": "[C6H7N5O2]", 
+        "CommonName": "8-hydroxy-7-methylguanine", 
+        "IUPACName": "[2-amino-7-methyl-7,9-dihydro-3H-purine-6,8-dione]", 
+        "Refname": "8-hydroxy-7-methylguanine", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:74725", 
+        "ChemicalFormula": "[C10H16N3O8P]", 
+        "CommonName": "5-methylcytidine 5'-monophosphate", 
+        "IUPACName": "[]", 
+        "Refname": "5-methylcytidine 5'-monophosphate", 
+        "Symbol": null, 
+        "Synonyms": "['5-methyl-cmp', '5-methylcytidylic acid', \"5-methylcytidine 5'-phosphate\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:74732", 
+        "ChemicalFormula": "[C5H6N2O2]", 
+        "CommonName": "3-methyluracil", 
+        "IUPACName": "[3-methylpyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "3-methyluracil", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:74733", 
+        "ChemicalFormula": "[C5H6N2O2]", 
+        "CommonName": "6-methyluracil", 
+        "IUPACName": "[6-methylpyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "6-methyluracil", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:74763", 
+        "ChemicalFormula": "[C6H8N2O2]", 
+        "CommonName": "1,3-dimethyluracil", 
+        "IUPACName": "[1,3-dimethylpyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "1,3-dimethyluracil", 
+        "Symbol": null, 
+        "Synonyms": "['2,4-dihydroxy-1,3-dimethylpyrimidine', \"n,n'-dimethyluracil\", 'n1,n3-dimethyluracil']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "1mT"
+        ], 
+        "ChEBIId": "CHEBI:74765", 
+        "ChemicalFormula": "[C6H8N2O2]", 
+        "CommonName": [
+            "1-methylthymine"
+        ], 
+        "IUPACName": "[1,5-dimethylpyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "1,5-dimethyluracil", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['1-methylthymine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "3mT"
+        ], 
+        "ChEBIId": "CHEBI:74766", 
+        "ChemicalFormula": "[C6H8N2O2]", 
+        "CommonName": [
+            "3-methylthymine"
+        ], 
+        "IUPACName": "[3,5-dimethylpyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "3,5-dimethyluracil", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['3-methylthymine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:74778", 
+        "ChemicalFormula": "[C10H16N3O8P]", 
+        "CommonName": "N(4)-methylcytidine 5'-monophosphate", 
+        "IUPACName": "[N-methylcytidine 5'-(dihydrogen phosphate)]", 
+        "Refname": "N(4)-methylcytidine 5'-monophosphate", 
+        "Symbol": null, 
+        "Synonyms": "['n(4)-methyl-cmp', \"n(4)-methylcytidine 5'-phosphate\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:75083", 
+        "ChemicalFormula": "[C10H16N3O8P]", 
+        "CommonName": "N(3)-methylcytidine 5'-monophosphate", 
+        "IUPACName": "[3-methyl-3,4-dihydrocytidine 5'-(dihydrogen phosphate)]", 
+        "Refname": "N(3)-methylcytidine 5'-monophosphate", 
+        "Symbol": null, 
+        "Synonyms": "[\"n(3)-methyl-5'-cytidylic acid\", \"n(3)-methylcytidine 5'-phosphate\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:75086", 
+        "ChemicalFormula": "[C11H16N3O9P]", 
+        "CommonName": "N(4)-acetylcytidine 5'-monophosphate", 
+        "IUPACName": "[N-acetylcytidine 5'-(dihydrogen phosphate)]", 
+        "Refname": "N(4)-acetylcytidine 5'-monophosphate", 
+        "Symbol": null, 
+        "Synonyms": "[\"n(4)-acetylcytidine 5'-phosphate\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "5hmC"
+        ], 
+        "ChEBIId": "CHEBI:76792", 
+        "ChemicalFormula": "[C5H7N3O2]", 
+        "CommonName": [
+            "5-hydroxymethylcytosine"
+        ], 
+        "IUPACName": "[4-amino-5-(hydroxymethyl)pyrimidin-2(1H)-one]", 
+        "Refname": "5-(hydroxymethyl)cytosine", 
+        "Symbol": [
+            "h"
+        ], 
+        "Synonyms": "['4-amino-5-(hydroxymethyl)-2(1h)-pyrimidinone', '5-hydroxymethylcytosine']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "5caC"
+        ], 
+        "ChEBIId": "CHEBI:76793", 
+        "ChemicalFormula": "[C5H5N3O3]", 
+        "CommonName": [
+            "5-carboxylcytosine"
+        ], 
+        "IUPACName": "[4-amino-2-oxo-1,2-dihydropyrimidine-5-carboxylic acid]", 
+        "Refname": "5-carboxycytosine", 
+        "Symbol": [
+            "c"
+        ], 
+        "Synonyms": "['4-amino-2-oxopyrimidine-5-carboxylic acid', '5-carboxylcytosine', 'cytosine-5-carboxylic acid']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "5fC"
+        ], 
+        "ChEBIId": "CHEBI:76794", 
+        "ChemicalFormula": "[C5H5N3O2]", 
+        "CommonName": [
+            "5-formylcytosine"
+        ], 
+        "IUPACName": "[4-amino-2-oxo-1,2-dihydropyrimidine-5-carbaldehyde]", 
+        "Refname": "5-formylcytosine", 
+        "Symbol": [
+            "f"
+        ], 
+        "Synonyms": "['4-amino-2-oxopyrimidine-5-carbaldehyde', 'cytosine-5-carbaldehyde']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": [
+            "HAP"
+        ], 
+        "ChEBIId": "CHEBI:78235", 
+        "ChemicalFormula": "[C5H5N5O]", 
+        "CommonName": [
+            "6-hydroxyaminopurine"
+        ], 
+        "IUPACName": "[N-hydroxy-1H-purin-6-amine]", 
+        "Refname": "N(6)-hydroxyadenine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['6-n-hydroxylaminopurine', '6-hydroxyaminopurine', 'n-hydroxyadenine', '6-hydroxylaminopurine', 'n-(7h-purin-6-yl)hydroxylamine', 'n(6)-hydroxyadenine', 'hap']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:78397", 
+        "ChemicalFormula": "[C11H16N4O7]", 
+        "CommonName": "5-(2-oxoethylideneamino)-6-D-ribitylaminouracil", 
+        "IUPACName": "[1-deoxy-1-({2,6-dioxo-5-[(E)-(2-oxoethylidene)amino]-1,2,3,6-tetrahydropyrimidin-4-yl}amino)-D-ribitol]", 
+        "Refname": "5-(2-oxoethylideneamino)-6-D-ribitylaminouracil", 
+        "Symbol": null, 
+        "Synonyms": "['5-(2-oxoethylideneamino)-6-(d-ribitylamino)uracil', '5-oe-ru']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:78398", 
+        "ChemicalFormula": "[C12H18N4O7]", 
+        "CommonName": "5-(2-oxopropylideneamino)-6-D-ribitylaminouracil", 
+        "IUPACName": "[1-deoxy-1-({2,6-dioxo-5-[(EE)-(2-oxopropylidene)amino]-1,2,3,6-tetrahydropyrimidin-4-yl}amino)-D-ribitol]", 
+        "Refname": "5-(2-oxopropylideneamino)-6-D-ribitylaminouracil", 
+        "Symbol": null, 
+        "Synonyms": "['5-op-ru', '5-(2-oxopropylideneamino)-6-(d-ribitylamino)uracil']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "AHAP"
+        ], 
+        "ChEBIId": "CHEBI:78685", 
+        "ChemicalFormula": "[C5H6N6O]", 
+        "CommonName": [
+            "2-amino-6-hydroxyaminopurine"
+        ], 
+        "IUPACName": "[N(6)-hydroxy-3H-purine-2,6-diamine]", 
+        "Refname": "2-amino-6-hydroxyaminopurine", 
+        "Symbol": [
+            null
+        ], 
+        "Synonyms": "['2-amino-n(6)-hydroxyadenine', '2-amino-n6-hydroxyadenine', 'guanine oxime']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:7956", 
+        "ChemicalFormula": "[C10H15N5O3]", 
+        "CommonName": "penciclovir", 
+        "IUPACName": "[2-amino-9-[4-hydroxy-3-(hydroxymethyl)butyl]-1,9-dihydro-6H-purin-6-one]", 
+        "Refname": "penciclovir", 
+        "Symbol": null, 
+        "Synonyms": "['9-[2-hydroxy-1-(hydroxymethyl)-ethoxymethyl]guanine', '9-[4-hydroxy-3-(hydroxymethyl)but-1-yl]guanine', 'pcv', 'penciclovirum', 'pe2', '9-(4-hydroxy-3-(hydroxymethyl)butyl)guanine', '9-(4-hydroxy-3-hydroxymethylbut-1-yl)-guanine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": [
+            "5fU"
+        ], 
+        "ChEBIId": "CHEBI:80961", 
+        "ChemicalFormula": "[C5H4N2O3]", 
+        "CommonName": [
+            "5-formyluracil"
+        ], 
+        "IUPACName": "[2,4-dioxo-1,2,3,4-tetrahydropyrimidine-5-carbaldehyde]", 
+        "Refname": "5-formyluracil", 
+        "Symbol": [
+            "e"
+        ], 
+        "Synonyms": "['fou', '5fu', 'uracil 5-carbaldehyde']", 
+        "Verified": 1
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:835", 
+        "ChemicalFormula": "[C10H17N3O11P2]", 
+        "CommonName": "2'-deoxy-5-hydroxymethyl-CDP", 
+        "IUPACName": "[2'-deoxy-5-(hydroxymethyl)cytidine 5'-(trihydrogen diphosphate)]", 
+        "Refname": "2'-deoxy-5-hydroxymethyl-CDP", 
+        "Symbol": null, 
+        "Synonyms": "[\"diphosphoric acid mono-(5-hydroxymethyl-2'-deoxy-cytidin-5'-yl ester)\", \"2'-deoxy-5-hydroxymethylcytidine 5'-diphosphate\", \"2'-deoxy-5-hydroxymethylcytidine-5'-diphosphate\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:836", 
+        "ChemicalFormula": "[C10H18N3O14P3]", 
+        "CommonName": "2'-deoxy-5-hydroxymethyl-CTP", 
+        "IUPACName": "[2'-deoxy-5-(hydroxymethyl)cytidine 5'-(tetrahydrogen triphosphate)]", 
+        "Refname": "2'-deoxy-5-hydroxymethyl-CTP", 
+        "Symbol": null, 
+        "Synonyms": "[\"2'-deoxy-5-hydroxymethylcytidine-5'-triphosphate\", \"2'-deoxy-5-hydroxymethylcytidine 5'-triphosphate\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:83661", 
+        "ChemicalFormula": "[C15H26N5O9P]", 
+        "CommonName": "lysidine monophosphate", 
+        "IUPACName": "[N(6)-[4-amino-1-(5-O-phosphono-beta-D-ribofuranosyl)pyrimidin-2(1H)-ylidene]-L-lysine]", 
+        "Refname": "lysidine monophosphate", 
+        "Symbol": null, 
+        "Synonyms": "[\"lysidine 5'-phosphate\", \"lysidine 5'-monophosphate\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:8502", 
+        "ChemicalFormula": "[C7H10N2OS]", 
+        "CommonName": "6-propyl-2-thiouracil", 
+        "IUPACName": "[6-propyl-2-sulfanylidene-2,3-dihydropyrimidin-4(1H)-one]", 
+        "Refname": "6-propyl-2-thiouracil", 
+        "Symbol": null, 
+        "Synonyms": "['propylthiouracile', 'propylthiouracilum', '6-thio-4-propyluracil', '2,3-dihydro-6-propyl-2-thioxo-4(1h)-pyrimidinone', '2-thio-4-oxo-6-propyl-1,3-pyrimidine', '2-mercapto-6-propylpyrimid-4-one', '6-propyl-2-thio-2,4(1h,3h)pyrimidinedione', '4-propyl-2-thiouracil', '2-thio-6-propyl-1,3-pyrimidin-4-one', 'propiltiouracilo', 'propylthiouracil', '6-propylthiouracil', '6-propyl-2-thioxo-2,3-dihydropyrimidin-4(1h)-one', '2-mercapto-6-propyl-4-pyrimidone']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:85182", 
+        "ChemicalFormula": "[C26H27N3O5S]", 
+        "CommonName": "dasabuvir", 
+        "IUPACName": "[N-{6-[3-tert-butyl-5-(2,4-dioxo-3,4-dihydropyrimidin-1(2H)-yl)-2-methoxyphenyl]naphthalen-2-yl}methanesulfonamide]", 
+        "Refname": "dasabuvir", 
+        "Symbol": null, 
+        "Synonyms": "['abt 333']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:86011", 
+        "ChemicalFormula": "[C10H14N5O6P]", 
+        "CommonName": "oxetanocin A 4-(dihydrogen phosphate)", 
+        "IUPACName": "[[(2S,3R,4R)-4-(6-amino-9H-purin-9-yl)-3-(hydroxymethyl)oxetan-2-yl]methyl dihydrogen phosphate]", 
+        "Refname": "oxetanocin A 4-(dihydrogen phosphate)", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:86012", 
+        "ChemicalFormula": "[C10H13N5O3]", 
+        "CommonName": "oxetanocin A", 
+        "IUPACName": "[[(2S,3R,4R)-4-(6-amino-9H-purin-9-yl)oxetane-2,3-diyl]dimethanol]", 
+        "Refname": "oxetanocin A", 
+        "Symbol": null, 
+        "Synonyms": "['(-)-oxetanocin', 'oxetanocin', '(-)-oxetanocin a', 'nk 84-0218', '9-[(2r,3r,4s)-3,4-bis(hydroxymethyl)-2-oxetanyl]adenine', \"9-((2'r,3'r,4's)-3',4'-bis(hydroxymethyl)-2'-oxetanyl)adenine\"]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:86284", 
+        "ChemicalFormula": "[C17H26N3O15P]", 
+        "CommonName": "CMP-3-deoxy-beta-D-manno-octulosonic acid", 
+        "IUPACName": "[cytidine 5'-[(3-deoxy-beta-D-manno-oct-2-ulopyranosonyl) hydrogen phosphate]]", 
+        "Refname": "CMP-3-deoxy-beta-D-manno-octulosonic acid", 
+        "Symbol": null, 
+        "Synonyms": "['cmp-beta-kdo', 'cmp-kdo', 'cmp-3-deoxy-d-manno-octulosonate']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:88237", 
+        "ChemicalFormula": "[C15H25N3O14P2]", 
+        "CommonName": "CDP-3,6-dideoxy-alpha-D-mannose", 
+        "IUPACName": "[cytidine 5'-[3-(3,6-dideoxy-alpha-D-arabino-hexopyranosyl) dihydrogen diphosphate]]", 
+        "Refname": "CDP-3,6-dideoxy-alpha-D-mannose", 
+        "Symbol": null, 
+        "Synonyms": "['cdp-3,6-dideoxy-d-mannose', 'cdp-tyvelose', 'cdp-alpha-d-tyvelose', 'cytidylyldiphosphate-d-tyvelose', 'cdp-3,6-dideoxy-d-arabino-hexose']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:88275", 
+        "ChemicalFormula": "[C21H37N5O14]", 
+        "CommonName": "antelmycin", 
+        "IUPACName": "[]", 
+        "Refname": "antelmycin", 
+        "Symbol": null, 
+        "Synonyms": "['anthelmycin', 'antelmicina', 'nsc 337588', 'antelmycinum', '1-n-(2-o-(3-amino-3-deoxy-beta-d-glucopyranosyl)-4-amino-4-deoxy-d-glycero-d-galacto-d-gluco-beta-d-undecapyranosyl)cytosine', 'l 33876', 'antibiotic 33876', 'hikizimycin', 'antelmycine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:90232", 
+        "ChemicalFormula": "[C9H11N5O]", 
+        "CommonName": "9-(tetrahydrofuryl)adenine", 
+        "IUPACName": "[9-(tetrahydrofuran-2-yl)-9H-purin-6-amine]", 
+        "Refname": "9-(tetrahydrofuryl)adenine", 
+        "Symbol": null, 
+        "Synonyms": "['sq 22536', 'sq22536', 'sq 22,536', '9-(tetrahydro-2-furyl)-adenine', 'sq-22536', '6-amino-9-(tetrahydro-2-furyl)-9h-purine', '9-(tetrahydro-2-furanyl)-9h-purin-6-amine']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:90879", 
+        "ChemicalFormula": "[C9H11ClN4O2]", 
+        "CommonName": "tipiracil", 
+        "IUPACName": "[5-chloro-6-[(2-iminopyrrolidin-1-yl)methyl]pyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "tipiracil", 
+        "Symbol": null, 
+        "Synonyms": "[]", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:90926", 
+        "ChemicalFormula": "[C21H29N6O5P]", 
+        "CommonName": "tenofovir alafenamide", 
+        "IUPACName": "[propan-2-yl N-[(S)-({[(2R)-1-(6-amino-9H-purin-9-yl)propan-2-yl]oxy}methyl)(phenoxy)phosphoryl]-L-alaninate]", 
+        "Refname": "tenofovir alafenamide", 
+        "Symbol": null, 
+        "Synonyms": "['taf', 'gs 7340', 'gs-7340']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:94714", 
+        "ChemicalFormula": "[C11H14N4O4]", 
+        "CommonName": "doxofylline", 
+        "IUPACName": "[7-(1,3-dioxolan-2-ylmethyl)-1,3-dimethyl-3,7-dihydro-1H-purine-2,6-dione]", 
+        "Refname": "doxofylline", 
+        "Symbol": null, 
+        "Synonyms": "['ansimar', 'doxofyllinum', 'doxofilina', 'dioxyfilline']", 
+        "Verified": 0
+    }, 
+    {
+        "Abbreviation": null, 
+        "ChEBIId": "CHEBI:9884", 
+        "ChemicalFormula": "[C8H11Cl2N3O2]", 
+        "CommonName": "5-[bis(2-chloroethyl)amino]uracil", 
+        "IUPACName": "[5-[bis(2-chloroethyl)amino]pyrimidine-2,4(1H,3H)-dione]", 
+        "Refname": "5-[bis(2-chloroethyl)amino]uracil", 
+        "Symbol": null, 
+        "Synonyms": "['aminouracil mustard', '5-n,n-bis(2-chloroethyl)aminouracil', 'uracil nitrogen mustard', '5-aminouracil mustard', 'uracil mustard', '5-[bis(2-chloroethyl)amino]-2,4(1h,3h)-pyrimidinedione', '5-[di(beta-chloroethyl)amino]uracil', '5-(di-2-chloroethyl)aminouracil']", 
+        "Verified": 0
+    }
+]
