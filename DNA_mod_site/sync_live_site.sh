@@ -30,6 +30,8 @@ if [[ ! ($(hostname) =~ 'mordor' && -n $(groups | fgrep 'hoffmangroup')) ]]; the
     exit $ERR_EXIT
 fi
 
+DNAmod_REPO_URL='https://github.com/hoffmangroup/dnamod'
+
 SOURCE_DIR="$(dirname $(readlink -f $0))" # From: https://gist.github.com/tvlooy/cbfbdb111a4ebad8b93e
 CONSTANTS_SCRIPT="$SOURCE_DIR/../constants.sh"
 
@@ -51,7 +53,7 @@ REAL_PATH='/mnt/work1/users/hoffmangroup/www/proj/dnamod'
 
 EXTERNAL_PATH='/mnt/work1/users/hoffmangroup/www-external/proj/dnamod'
 
-REPO_SSH_PATH='ssh://hg@bitbucket.org/hoffmanlab/www-external'
+REPO_SSH_PATH='git@github.com:hoffmangroup/www-external.git'
 
 # array of additional files to sync
 ADDTL_FILES=($($CONSTANTS_SCRIPT 'database'))
@@ -72,9 +74,9 @@ rsync --progress -av --delete "$MAIN_SITE_DIR"/* "${ADDTL_FILES[@]}" "$COPY_PATH
 # push the actual site to the external directory
 if [[ "$TESTING_MODE" == false && "$internal_only" == false ]]; then
 # if tracked files were changed, commit the changes to the lab Bitbucket
-    if [[ -n "$(cd $REAL_PATH && hg diff)" ]]; then
+    if [[ -n "$(cd $REAL_PATH && git diff)" ]]; then
         >&2 echo "Committing and pushing changes."
-        (cd "$REAL_PATH" && hg pull "$REPO_SSH_PATH" && hg update && hg commit --config extensions.hgspellcheck=! -m "Updated DNAmod. Consult its repository ($(cd $SOURCE_DIR && echo $(hg paths default) | sed -r 's|ssh://.*?@|https://|')) for details." . && hg push "$REPO_SSH_PATH")
+        (cd "$REAL_PATH" && git pull "$REPO_SSH_PATH" && git commit -a -m "Updated DNAmod. Consult its repository ($DNAmod_REPO_URL) for details." && git push "$REPO_SSH_PATH")
     fi
 
     >&2 echo "Pushing to www-external."
